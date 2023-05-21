@@ -1,10 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
   runApp(MyApp());
+  HttpOverrides.global = MyHttpOverrides();
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -28,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'My App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -154,24 +165,26 @@ class _StockChartState extends State<StockChart> {
 
   Future<void> fetchData() async {
     try {
-      final response = await http.get(Uri.parse('<API_URL>'));
+      final response =
+          await http.get(Uri.parse('https://localhost:7295/WeatherForecast'));
       if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
-        final List<StockData> fetchedData = [];
-        for (var data in jsonData) {
-          fetchedData.add(
-            StockData(
-              DateTime.parse(data['date']),
-              double.parse(data['low']),
-              double.parse(data['high']),
-              double.parse(data['open']),
-              double.parse(data['close']),
-            ),
-          );
-        }
-        setState(() {
-          _stockData = fetchedData;
-        });
+        print(response.body.toString());
+        // final jsonData = json.decode(response.body);
+        // final List<StockData> fetchedData = [];
+        // for (var data in jsonData) {
+        //   fetchedData.add(
+        //     StockData(
+        //       DateTime.parse(data['date']),
+        //       double.parse(data['low']),
+        //       double.parse(data['high']),
+        //       double.parse(data['open']),
+        //       double.parse(data['close']),
+        //     ),
+        //   );
+        // }
+        // setState(() {
+        //   _stockData = fetchedData;
+        // });
       } else {
         print('Request failed with status: ${response.statusCode}.');
       }
