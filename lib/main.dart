@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-import 'package:rse/widgets/drawer.dart';
-import 'package:rse/widgets/bottom_tab.dart';
+import 'package:rse/common/widgets/drawer.dart';
+import 'package:rse/common/widgets/bottom_tab.dart';
 
-import 'package:rse/utils/constants.dart' as constants;
+import 'package:rse/common/utils/constants.dart' as constants;
 
 void main() {
   runApp(MyApp());
@@ -39,9 +39,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My App',
+      title: 'Royal Stock Exchange',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       home: Scaffold(
         appBar: AppBar(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/widgets/chart.dart';
+import 'package:rse/common/widgets/chart.dart';
 
 class HomeScreen extends StatelessWidget {
   final String title;

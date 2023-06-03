@@ -16,13 +16,13 @@ class _StockChartState extends State<StockChart> {
   void initState() {
     super.initState();
     fetchData();
-    StockOrderService().fetchStockOrders();
+    StockOrderService().fetchPrices();
   }
 
   Future<void> fetchData() async {
     try {
       final response =
-          await http.get(Uri.parse('https://localhost:7295/WeatherForecast'));
+          await http.get(Uri.parse('https://localhost:7254/prices'));
       if (response.statusCode == 200) {
         print(response.body.toString());
         // final jsonData = json.decode(response.body);

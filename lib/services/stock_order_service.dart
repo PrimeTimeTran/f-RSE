@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:rse/models/stock_order.dart';
+import 'package:rse/data/models/stock_order.dart';
 
 class StockOrderService {
   // Replace this with your actual API endpoint or database connection
-  final _apiEndpoint = 'https://localhost:7295/WeatherForecast';
+  final _apiEndpoint = 'https://localhost:7254/pricesR';
 
   // Future<List<StockOrder>> getStockOrders() async {
   //   // Make an HTTP request to fetch stock orders from the server
@@ -34,7 +34,7 @@ class StockOrderService {
   //   // You may choose to return a boolean or throw an exception based on the result
   // }
 
-  Future<void> fetchStockOrders() async {
+  Future<void> fetchPrices() async {
     try {
       final response = await http.get(Uri.parse(_apiEndpoint));
 

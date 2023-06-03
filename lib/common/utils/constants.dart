@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rse/screens/home_screen.dart';
+import 'package:rse/presentation/screens/home_screen.dart';
 
 class TabScreen extends StatelessWidget {
   final String title;
