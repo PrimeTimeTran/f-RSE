@@ -5,12 +5,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:rse/services/portfolio_service.dart';
 
 class StockChart extends StatefulWidget {
+  const StockChart({super.key});
+
   @override
   _StockChartState createState() => _StockChartState();
 }
 
 class _StockChartState extends State<StockChart> {
-  List<StockData> _stockData = [];
+  final List<StockData> _stockData = [];
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _StockChartState extends State<StockChart> {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: SfCartesianChart(
         primaryXAxis: DateTimeAxis(),
         series: <ChartSeries>[

@@ -27,7 +27,7 @@ class _DrawerrState extends State<Drawerr> {
             ),
           ),
           ListTile(
-            title: Text('Investing'),
+            title: const Text('Investing'),
             onTap: () {
               setState(() {
                 _currentIndex = 0;
@@ -36,7 +36,7 @@ class _DrawerrState extends State<Drawerr> {
             },
           ),
           ListTile(
-            title: Text('Spending'),
+            title: const Text('Spending'),
             onTap: () {
               setState(() {
                 _currentIndex = 1;
@@ -45,7 +45,7 @@ class _DrawerrState extends State<Drawerr> {
             },
           ),
           ListTile(
-            title: Text('Crypto'),
+            title: const Text('Crypto'),
             onTap: () {
               setState(() {
                 _currentIndex = 2;
@@ -54,7 +54,7 @@ class _DrawerrState extends State<Drawerr> {
             },
           ),
           ListTile(
-            title: Text('Transfers'),
+            title: const Text('Transfers'),
             onTap: () {
               setState(() {
                 _currentIndex = 2;
@@ -63,7 +63,7 @@ class _DrawerrState extends State<Drawerr> {
             },
           ),
           ListTile(
-            title: Text('Gold'),
+            title: const Text('Gold'),
             onTap: () {
               setState(() {
                 _currentIndex = 2;

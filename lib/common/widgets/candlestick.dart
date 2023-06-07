@@ -6,7 +6,7 @@ import 'package:rse/data/models/candlestick_data.dart';
 class CandlestickChartExample extends StatelessWidget {
   final List<CandleStickData> stockData;
 
-  CandlestickChartExample({required this.stockData});
+  const CandlestickChartExample({super.key, required this.stockData});
 
   @override
   Widget build(BuildContext context) {

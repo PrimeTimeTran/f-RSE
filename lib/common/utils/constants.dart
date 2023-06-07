@@ -9,7 +9,7 @@ class TabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(this.title),
+      child: Text(title),
     );
   }
 }

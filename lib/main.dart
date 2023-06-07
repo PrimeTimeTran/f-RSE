@@ -7,7 +7,7 @@ import 'package:rse/common/widgets/bottom_tab.dart';
 import 'package:rse/common/utils/constants.dart' as constants;
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
   HttpOverrides.global = MyHttpOverrides();
 }
 
@@ -21,6 +21,8 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -45,9 +47,9 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('RSE'),
+          title: const Text('RSE'),
         ),
-        drawer: Drawerr(),
+        drawer: const Drawerr(),
         body: constants.TABS[_currentIndex],
         bottomNavigationBar:
             BottomTab(change: changeTabIndex, index: _currentIndex),
