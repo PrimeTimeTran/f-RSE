@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/services/stock_order_service.dart';
+import 'package:rse/services/portfolio_service.dart';
 
 class StockChart extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _StockChartState extends State<StockChart> {
   void initState() {
     super.initState();
     fetchData();
-    StockOrderService().fetchPrices();
+    PortfolioService().fetchValues();
   }
 
   Future<void> fetchData() async {
@@ -24,23 +24,6 @@ class _StockChartState extends State<StockChart> {
       final response =
           await http.get(Uri.parse('https://localhost:7254/prices'));
       if (response.statusCode == 200) {
-        print(response.body.toString());
-        // final jsonData = json.decode(response.body);
-        // final List<StockData> fetchedData = [];
-        // for (var data in jsonData) {
-        //   fetchedData.add(
-        //     StockData(
-        //       DateTime.parse(data['date']),
-        //       double.parse(data['low']),
-        //       double.parse(data['high']),
-        //       double.parse(data['open']),
-        //       double.parse(data['close']),
-        //     ),
-        //   );
-        // }
-        // setState(() {
-        //   _stockData = fetchedData;
-        // });
       } else {
         print('Request failed with status: ${response.statusCode}.');
       }

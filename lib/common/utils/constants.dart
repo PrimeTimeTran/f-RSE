@@ -19,3 +19,5 @@ const List<Widget> TABS = [
   TabScreen(title: 'Tab 2'),
   TabScreen(title: 'Tab 3'),
 ];
+
+const API = "https://localhost:7254";

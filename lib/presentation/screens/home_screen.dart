@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:rse/common/widgets/candlestick.dart';
 
-import 'package:rse/common/widgets/chart.dart';
+import 'package:rse/data/models/candlestick_data.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'package:rse/services/portfolio_service.dart';
+
+class HomeScreen extends StatefulWidget {
   final String title;
 
-  const HomeScreen({super.key, required this.title});
+  const HomeScreen({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<CandleStickData>? stockDataList;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final service = PortfolioService();
+    final data = await service.fetchValues();
+    setState(() {
+      stockDataList = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: StockChart(),
+      child: Column(
+        children: [
+          if (stockDataList != null)
+            CandlestickChartExample(stockData: stockDataList!),
+        ],
+      ),
     );
   }
 }
