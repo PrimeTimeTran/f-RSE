@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:rse/services/all.dart';
+import 'package:rse/data/services/all.dart';
 import 'package:rse/data/models/all.dart';
-import 'package:rse/services/news_service.dart';
+import 'package:rse/data/services/news_service.dart';
 
 class NewsCubit extends Cubit<List<Article>> {
   final NewsService _newsService = NewsService();

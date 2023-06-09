@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/blocs/all.dart';
-import 'package:rse/common/navigation/all.dart';
-import 'package:rse/common/utils/constants.dart' as constants;
+import 'package:rse/data/cubits/all.dart';
+import 'package:rse/presentation/navigation/all.dart';
+import 'package:rse/presentation/utils/constants.dart' as constants;
 
 void main() {
   Bloc.observer = SimpleBlocObserver();

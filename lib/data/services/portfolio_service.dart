@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:rse/data/models/portfolio.dart';
-import 'package:rse/common/utils/constants.dart';
+import 'package:rse/presentation/utils/constants.dart';
 
 class PortfolioService {
   Future<Portfolio> fetchPortfolio(String id) async {

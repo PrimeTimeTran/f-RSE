@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/common/widgets/all.dart';
+import 'package:rse/presentation/widgets/all.dart';
 
 class InvestingScreen extends StatefulWidget {
   final String title;
