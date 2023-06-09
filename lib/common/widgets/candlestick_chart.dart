@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/data/models/chart.dart';
+import 'package:rse/data/models/all.dart';
 
 class CandleStickChart extends StatelessWidget {
   final List<CandleStick> data;
@@ -10,7 +10,6 @@ class CandleStickChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(data[0].toString());
     return Center(
       child: SfCartesianChart(
         primaryXAxis: CategoryAxis(),

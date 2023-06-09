@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/models/all.dart';
 
-import 'package:rse/services/portfolio_service.dart';
+import 'package:rse/services/all.dart';
 
 abstract class PortfolioEvent extends Equatable {
   @override

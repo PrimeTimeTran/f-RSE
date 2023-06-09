@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/data/models/chart.dart';
+import 'package:rse/data/models/all.dart';
 
 class LineChart extends StatefulWidget {
   final List<DataPoint> data;

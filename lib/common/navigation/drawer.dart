@@ -8,7 +8,7 @@ class Drawerr extends StatefulWidget {
 }
 
 class _DrawerrState extends State<Drawerr> {
-  int _currentIndex = 0;
+  int _idx = 0;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,7 +30,7 @@ class _DrawerrState extends State<Drawerr> {
             title: const Text('Investing'),
             onTap: () {
               setState(() {
-                _currentIndex = 0;
+                _idx = 0;
               });
               Navigator.pop(context);
             },
@@ -39,7 +39,7 @@ class _DrawerrState extends State<Drawerr> {
             title: const Text('Spending'),
             onTap: () {
               setState(() {
-                _currentIndex = 1;
+                _idx = 1;
               });
               Navigator.pop(context);
             },
@@ -48,7 +48,7 @@ class _DrawerrState extends State<Drawerr> {
             title: const Text('Crypto'),
             onTap: () {
               setState(() {
-                _currentIndex = 2;
+                _idx = 2;
               });
               Navigator.pop(context);
             },
@@ -57,7 +57,7 @@ class _DrawerrState extends State<Drawerr> {
             title: const Text('Transfers'),
             onTap: () {
               setState(() {
-                _currentIndex = 2;
+                _idx = 2;
               });
               Navigator.pop(context);
             },
@@ -66,7 +66,7 @@ class _DrawerrState extends State<Drawerr> {
             title: const Text('Gold'),
             onTap: () {
               setState(() {
-                _currentIndex = 2;
+                _idx = 2;
               });
               Navigator.pop(context);
             },

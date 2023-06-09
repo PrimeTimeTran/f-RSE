@@ -16,9 +16,9 @@ class _BottomTabState extends State<BottomTab> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: widget.index,
-      onTap: (index) {
+      onTap: (idx) {
         setState(() {
-          widget.change(index);
+          widget.change(idx);
         });
       },
       items: const [

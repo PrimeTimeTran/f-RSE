@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
-import 'package:rse/common/widgets/drawer.dart';
-import 'package:rse/common/widgets/bottom_tab.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rse/data/blocs/portfolio_bloc.dart';
+
+import 'package:rse/data/blocs/all.dart';
+import 'package:rse/common/navigation/all.dart';
 import 'package:rse/common/utils/constants.dart' as constants;
 
 void main() {
@@ -40,11 +38,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 0;
+  int _idx = 0;
 
-  void changeTabIndex(int newIndex) {
+  void change(int idx) {
     setState(() {
-      _currentIndex = newIndex;
+      _idx = idx;
     });
   }
 
@@ -58,8 +56,8 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         drawer: const Drawerr(),
-        body: constants.TABS[_currentIndex],
-        bottomNavigationBar: BottomTab(change: changeTabIndex, index: _currentIndex),
+        body: constants.TABS[_idx],
+        bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),
         ),
