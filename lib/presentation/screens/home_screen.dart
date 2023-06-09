@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rse/common/widgets/candlestick.dart';
-import 'package:rse/common/widgets/options_chain.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/models/candlestick_data.dart';
+import 'package:rse/data/blocs/portfolio_bloc.dart';
 
-import 'package:rse/services/portfolio_service.dart';
+import 'package:rse/common/widgets/all.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -16,20 +15,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<CandleStickData>? stockDataList;
+  late PortfolioBloc _portfolioBloc;
 
   @override
   void initState() {
     super.initState();
+    _portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     fetchData();
   }
 
   Future<void> fetchData() async {
-    final service = PortfolioService();
-    final data = await service.fetchValues();
-    setState(() {
-      stockDataList = data;
-    });
+    _portfolioBloc.add(FetchPortfolio("1"));
+  }
+
+  @override
+  void dispose() {
+    _portfolioBloc.close();
+    super.dispose();
   }
 
   List<OptionData> optionsData = [
@@ -41,9 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       askIv: 0.8,
       strike: 100.0,
       bidIv: 0.9,
-    )
-
-    // Add more OptionData objects as needed
+    ),
   ];
 
   @override
@@ -51,11 +51,34 @@ class _HomeScreenState extends State<HomeScreen> {
     return Center(
       child: Column(
         children: [
-          if (stockDataList != null)
-            CandlestickChartExample(stockData: stockDataList!),
+          BlocConsumer<PortfolioBloc, PortfolioState>(
+            builder: (c, s) {
+              if (s is PortfolioLoading) {
+                return const CircularProgressIndicator();
+              } else if (s is PortfolioLoaded) {
+                final dataPoints = _portfolioBloc.getDataPoints();
+                return Column(
+                  children: [
+                    LineChart(data: dataPoints),
+                    CandleStickChart(data: s.portfolio.series)
+                  ],
+                );
+              } else if (s is PortfolioError) {
+                return Text('Error: ${s.errorMessage}');
+              } else {
+                return const Text('Unknown state');
+              }
+            },
+            listener: (c, s) {
+            },
+            buildWhen: (previous, current) {
+              return true;
+            },
+          ),
           OptionsTable(optionsData: optionsData),
         ],
       ),
     );
   }
 }
+

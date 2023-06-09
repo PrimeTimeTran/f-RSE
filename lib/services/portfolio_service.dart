@@ -1,25 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:rse/data/models/candlestick_data.dart';
-
+import 'package:rse/data/models/portfolio.dart';
 import 'package:rse/common/utils/constants.dart';
 
 class PortfolioService {
-  Future<List<CandleStickData>?> fetchValues() async {
+  Future<Portfolio> fetchPortfolio(String id) async {
     try {
-      final response = await http.get(Uri.parse("$API/prices"));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body) as List<dynamic>;
-        final stockData = data.map((d) => CandleStickData.fromJson(d)).toList();
-        return stockData;
-      } else {
-        print('Failure fetching portfolio');
-      }
+      final response = await http.get(Uri.parse("$API/portfolios/$id"));
+      final d = Portfolio.fromJson(json.decode(response.body));
+      return d;
     } catch (e) {
       print('Error fetching portfolio');
     }
-    return null;
+    return Portfolio.defaultPortfolio();
   }
 }

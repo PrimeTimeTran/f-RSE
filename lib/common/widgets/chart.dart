@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/services/portfolio_service.dart';
-
 class StockChart extends StatefulWidget {
   const StockChart({super.key});
 
@@ -12,13 +10,10 @@ class StockChart extends StatefulWidget {
 }
 
 class _StockChartState extends State<StockChart> {
-  final List<StockData> _stockData = [];
-
   @override
   void initState() {
     super.initState();
     fetchData();
-    PortfolioService().fetchValues();
   }
 
   Future<void> fetchData() async {

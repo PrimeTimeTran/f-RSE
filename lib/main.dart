@@ -4,11 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:rse/common/widgets/drawer.dart';
 import 'package:rse/common/widgets/bottom_tab.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rse/data/blocs/portfolio_bloc.dart';
 import 'package:rse/common/utils/constants.dart' as constants;
 
 void main() {
-  runApp(const MyApp());
+  Bloc.observer = SimpleBlocObserver();
   HttpOverrides.global = MyHttpOverrides();
+  final portfolioBloc = PortfolioBloc();
+
+  runApp(
+    BlocProvider<PortfolioBloc>(
+      child: const MyApp(),
+      create: (_) => portfolioBloc
+    ),
+  );
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -42,18 +52,25 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Royal Stock Exchange',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+        drawer: const Drawerr(),
+        body: constants.TABS[_currentIndex],
+        bottomNavigationBar: BottomTab(change: changeTabIndex, index: _currentIndex),
         appBar: AppBar(
           title: const Text('RSE'),
         ),
-        drawer: const Drawerr(),
-        body: constants.TABS[_currentIndex],
-        bottomNavigationBar:
-            BottomTab(change: changeTabIndex, index: _currentIndex),
       ),
     );
+  }
+}
+
+class SimpleBlocObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+    super.onChange(bloc, change);
   }
 }
