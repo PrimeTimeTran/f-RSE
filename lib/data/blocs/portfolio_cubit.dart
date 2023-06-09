@@ -46,33 +46,27 @@ class PortfolioError extends PortfolioState {
   List<Object?> get props => [errorMessage];
 }
 
-class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
+class PortfolioCubit extends Cubit<PortfolioState> {
   final PortfolioService portfolioService = PortfolioService();
   List<DataPoint> dataPoints = [];
 
-  PortfolioBloc() : super(PortfolioInitial()) {
-    on<FetchPortfolio>(fetchPortfolio);
-  }
+  PortfolioCubit() : super(PortfolioInitial());
 
-  void fetchPortfolio(FetchPortfolio e, Emitter<PortfolioState> emit) async {
+  Future<void> fetchPortfolio(String id) async {
     emit(PortfolioLoading());
 
     try {
-      final p = await portfolioService.fetchPortfolio(e.id);
-      dataPoints = convertToDataPoints(p.series);
+      final p = await portfolioService.fetchPortfolio(id);
+      dataPoints = getDataPoints(p.series);
       emit(PortfolioLoaded(p));
     } catch (e) {
       emit(PortfolioError('Error fetching portfolio'));
     }
   }
 
-  List<DataPoint> convertToDataPoints(List<CandleStick> list) {
+  List<DataPoint> getDataPoints(List<CandleStick> list) {
     return list
         .map((time) => DataPoint(time.date ?? '', time.value ?? 0))
         .toList();
-  }
-
-  List<DataPoint> getDataPoints() {
-    return dataPoints;
   }
 }

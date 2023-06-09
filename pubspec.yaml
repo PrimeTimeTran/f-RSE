@@ -15,6 +15,9 @@ dependencies:
   flutter_bloc: ^8.0.0
   equatable: ^2.0.5
   shared_preferences: ^2.1.2
+  intl: ^0.18.0
+  flutter_chart: ^0.1.6
+  bloc: ^8.1.2
 
 
 dev_dependencies:

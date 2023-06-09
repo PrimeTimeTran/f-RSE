@@ -1,1 +1,2 @@
-export 'portfolio_bloc.dart';
+export 'news_cubit.dart';
+export 'portfolio_cubit.dart';

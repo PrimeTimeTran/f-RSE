@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rse/presentation/screens/home_screen.dart';
+import 'package:rse/presentation/screens/all.dart';
+
+const api = "https://192.168.0.22:7254";
+const newsApi = "https://newsdata.io/api/1/news?apikey=1&q=business";
+
+const List<Widget> tabs = [
+  HomeScreen(title: 'Home'),
+  InvestingScreen(title: 'Tab 2'),
+  TabScreen(title: 'Tab 3'),
+];
 
 class TabScreen extends StatelessWidget {
   final String title;
@@ -14,10 +23,4 @@ class TabScreen extends StatelessWidget {
   }
 }
 
-const List<Widget> TABS = [
-  HomeScreen(title: 'Home'),
-  TabScreen(title: 'Tab 2'),
-  TabScreen(title: 'Tab 3'),
-];
 
-const API = "https://192.168.0.22:7254";

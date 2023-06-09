@@ -9,12 +9,18 @@ import 'package:rse/common/utils/constants.dart' as constants;
 void main() {
   Bloc.observer = SimpleBlocObserver();
   HttpOverrides.global = MyHttpOverrides();
-  final portfolioBloc = PortfolioBloc();
 
   runApp(
-    BlocProvider<PortfolioBloc>(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<PortfolioCubit>(
+          create: (_) => PortfolioCubit(),
+        ),
+        BlocProvider<NewsCubit>(
+          create: (_) => NewsCubit(),
+        ),
+      ],
       child: const MyApp(),
-      create: (_) => portfolioBloc
     ),
   );
 }
@@ -38,7 +44,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _idx = 0;
+  int _idx = 1;
 
   void change(int idx) {
     setState(() {
@@ -56,7 +62,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         drawer: const Drawerr(),
-        body: constants.TABS[_idx],
+        body: constants.tabs[_idx],
         bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),

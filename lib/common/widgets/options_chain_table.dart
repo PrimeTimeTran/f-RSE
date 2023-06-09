@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 
-class OptionsTable extends StatefulWidget {
-  final List<OptionData> optionsData;
+List<OptionData> optionsData = [
+  OptionData(
+    bid: 10.0,
+    ask: 12.0,
+    delta: 0.5,
+    bidIv: 0.9,
+    askIv: 0.8,
+    volume: 100,
+    strike: 100.0,
+  ),
+];
 
-  OptionsTable({required this.optionsData});
+class OptionsTable extends StatefulWidget {
+  late List<OptionData>? optionsData;
+
+  OptionsTable({this.optionsData});
 
   @override
   _OptionsTableState createState() => _OptionsTableState();

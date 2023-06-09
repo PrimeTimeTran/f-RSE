@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/blocs/all.dart';
+import 'package:rse/data/models/all.dart';
 import 'package:rse/common/widgets/all.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,69 +15,79 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late PortfolioBloc _portfolioBloc;
+  late NewsCubit _newsCubit;
+  late PortfolioCubit _portfolioCubit;
 
   @override
   void initState() {
     super.initState();
-    _portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
+    _newsCubit = context.read<NewsCubit>();
+    _portfolioCubit = context.read<PortfolioCubit>();
     fetchData();
   }
 
   Future<void> fetchData() async {
-    _portfolioBloc.add(FetchPortfolio("1"));
+    _newsCubit.fetchArticles();
+    _portfolioCubit.fetchPortfolio("1");
   }
 
   @override
   void dispose() {
-    _portfolioBloc.close();
+    _newsCubit.close();
+    _portfolioCubit.close();
     super.dispose();
   }
 
-  List<OptionData> optionsData = [
-    OptionData(
-      delta: 0.5,
-      volume: 100,
-      bid: 10.0,
-      ask: 12.0,
-      askIv: 0.8,
-      strike: 100.0,
-      bidIv: 0.9,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          BlocConsumer<PortfolioBloc, PortfolioState>(
-            builder: (c, s) {
-              if (s is PortfolioLoading) {
-                return const CircularProgressIndicator();
-              } else if (s is PortfolioLoaded) {
-                final dataPoints = _portfolioBloc.getDataPoints();
-                return Column(
-                  children: [
-                    LineChart(data: dataPoints),
-                    CandleStickChart(data: s.portfolio.series)
-                  ],
-                );
-              } else if (s is PortfolioError) {
-                return Text('Error: ${s.errorMessage}');
-              } else {
-                return const Text('Unknown state');
-              }
-            },
-            listener: (c, s) {
-            },
-            buildWhen: (previous, current) {
-              return true;
-            },
+    return SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              BlocConsumer<PortfolioCubit, PortfolioState>(
+                builder: (context, state) {
+                  if (state is PortfolioLoading) {
+                    return const CircularProgressIndicator();
+                  } else if (state is PortfolioLoaded) {
+                    final dataPoints = context.read<PortfolioCubit>().dataPoints;
+                    return Column(
+                      children: [
+                        LineChart(data: dataPoints),
+                        CandleStickChart(data: state.portfolio.series),
+                      ],
+                    );
+                  } else if (state is PortfolioError) {
+                    return Text('Error: ${state.errorMessage}');
+                  } else {
+                    return const Text('Unknown state');
+                  }
+                },
+                listener: (context, state) {
+                  // Listener logic goes here if needed
+                },
+                buildWhen: (previous, current) {
+                  return true;
+                },
+              ),
+              OptionsTable(),
+              BlocBuilder<NewsCubit, List<Article>>(
+                builder: (context, articles) {
+                  if (articles.isEmpty) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: articles.length,
+                      itemBuilder: (context, index) {
+                        return ArticleWidget(article: articles[index]);
+                      },
+                    );
+                  }
+                },
+              ),
+            ],
           ),
-          OptionsTable(optionsData: optionsData),
-        ],
-      ),
+        )
     );
   }
 }
