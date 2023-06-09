@@ -12,6 +12,9 @@ dependencies:
   flutter_localization: ^0.1.11
   http: ^0.13.6
   syncfusion_flutter_charts: ^21.2.9
+  flutter_bloc: ^8.0.0
+  equatable: ^2.0.5
+
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -21,3 +24,5 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+
