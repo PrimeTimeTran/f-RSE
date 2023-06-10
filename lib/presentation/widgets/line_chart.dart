@@ -1,20 +1,38 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:rse/data/models/all.dart';
+import 'package:rse/presentation/widgets/all.dart';
 
 class LineChart extends StatefulWidget {
   final List<DataPoint> data;
 
-  LineChart({required this.data});
+  const LineChart({super.key, required this.data});
 
   @override
   _LineChartState createState() => _LineChartState(data: data);
 }
 
 class _LineChartState extends State<LineChart> {
-  late List<DataPoint> data;
+  String period = 'live';
   double? tappedXPosition;
+  double? draggedXPosition;
+  late List<DataPoint> data;
+  final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  late TrackballBehavior _trackballBehavior = TrackballBehavior(
+    enable: true,
+    lineWidth: 2,
+    shouldAlwaysShow: true,
+    lineColor: Colors.blue,
+    activationMode: ActivationMode.singleTap,
+    tooltipSettings: InteractiveTooltip(
+      enable: true,
+      borderWidth: 1,
+      color: Colors.grey[900]!,
+      borderColor: Colors.blue,
+    ),
+  );
 
   _LineChartState({required this.data});
 
@@ -24,53 +42,73 @@ class _LineChartState extends State<LineChart> {
     data = widget.data;
   }
 
+  void changePeriod(String p) {
+    print(p);
+    setState(() {
+      period = p;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (TapDownDetails details) {
-        final RenderBox referenceBox = context.findRenderObject() as RenderBox;
-        final tappedPosition = referenceBox.globalToLocal(details.globalPosition);
-        setState(() {
-          tappedXPosition = tappedPosition.dx;
-        });
-      },
-      child: Stack(
-        children: [
-          SfCartesianChart(
-            primaryXAxis: CategoryAxis(),
-            series: <LineSeries<DataPoint, String>>[
-              LineSeries<DataPoint, String>(
-                dataSource: data,
-                xValueMapper: (DataPoint d, _) => d.x,
-                yValueMapper: (DataPoint d, _) => d.y,
-              ),
-            ],
-            trackballBehavior: TrackballBehavior(
-              enable: true,
-              tooltipSettings: InteractiveTooltip(
-                enable: true,
-                borderWidth: 1,
-                color: Colors.grey[900]!,
-                borderColor: Colors.blue,
-              ),
-              lineColor: Colors.blue,
-              lineWidth: 2,
-              activationMode: ActivationMode.singleTap,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30),
+          child: GestureDetector(
+            onTapDown: (TapDownDetails details) {
+              final RenderBox referenceBox =
+                  context.findRenderObject() as RenderBox;
+              final tappedPosition =
+                  referenceBox.globalToLocal(details.globalPosition);
+              setState(() {
+                tappedXPosition = tappedPosition.dx;
+              });
+            },
+            child: Stack(
+              children: [
+                KeyedSubtree(
+                  key: UniqueKey(),
+                  child: SfCartesianChart(
+                    tooltipBehavior: _tooltipBehavior,
+                    trackballBehavior: _trackballBehavior,
+                    title: ChartTitle(text: 'Portfolio Value'),
+                    primaryXAxis: DateTimeAxis(
+                      isVisible: true,
+                      labelRotation: 45,
+                      dateFormat: DateFormat.Hm(),
+                      intervalType: DateTimeIntervalType.hours,
+                    ),
+                    series: <LineSeries<DataPoint, DateTime>>[
+                      LineSeries<DataPoint, DateTime>(
+                        dataSource: data.take(50).toList(),
+                        yValueMapper: (DataPoint d, _) => d.y,
+                        xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                      ),
+                    ],
+                  )
+                ),
+                if (tappedXPosition != null)
+                  Positioned.fill(
+                    left: tappedXPosition!,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        width: 1,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
-          if (tappedXPosition != null)
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: 1,
-                  color: Colors.red,
-                ),
-              ),
-              left: tappedXPosition!,
-            ),
-        ],
-      ),
+        ),
+        PeriodSelector(
+          changePeriod: changePeriod,
+          periods: ['live', '1d', '1w', '1m', '3m', '1y', '5y', 'all'],
+        ),
+      ],
     );
   }
 }
+

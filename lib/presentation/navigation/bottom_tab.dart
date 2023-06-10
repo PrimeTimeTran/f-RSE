@@ -16,23 +16,33 @@ class _BottomTabState extends State<BottomTab> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: widget.index,
-      onTap: (idx) {
-        setState(() {
-          widget.change(idx);
-        });
-      },
-      items: const [
+      onTap: (idx) => widget.change(idx),
+      selectedItemColor: Colors.amber[800],
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.auto_graph),
           label: 'Stocks',
+          icon: Icon(Icons.auto_graph),
+          backgroundColor: Colors.black,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.explore),
-          label: 'Crypto',
+          label: 'Spending',
+          icon: Icon(Icons.credit_card),
+          backgroundColor: Colors.black,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
+          label: 'Browse',
+          icon: Icon(Icons.newspaper),
+          backgroundColor: Colors.black,
+        ),
+        BottomNavigationBarItem(
+          label: 'News',
+          icon: Icon(Icons.newspaper),
+          backgroundColor: Colors.black,
+        ),
+        BottomNavigationBarItem(
           label: 'Profile',
+          icon: Icon(Icons.person_2_outlined),
+          backgroundColor: Colors.black,
         ),
       ],
     );

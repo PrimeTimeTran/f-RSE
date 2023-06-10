@@ -32,3 +32,17 @@ String shortenMoney(String value) {
 
   return numberFormat.format(moneyValue);
 }
+
+String formatUtcToDM(DateTime utcTime) {
+  // Convert the UTC time to the local time zone
+  final localTime = utcTime.toLocal();
+
+  // Extract the day and month components
+  final day = localTime.day;
+  final month = localTime.month;
+
+  // Format the day and month as 'd/m'
+  final formattedDate = '$day/$month';
+
+  return formattedDate;
+}

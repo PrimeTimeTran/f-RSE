@@ -53,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       children: [
                         LineChart(data: dataPoints),
-                        CandleStickChart(data: state.portfolio.series),
                       ],
                     );
                   } else if (state is PortfolioError) {

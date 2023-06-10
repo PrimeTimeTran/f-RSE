@@ -6,8 +6,10 @@ const newsApi = "https://newsdata.io/api/1/news?apikey=1&q=business";
 
 const List<Widget> tabs = [
   HomeScreen(title: 'Home'),
-  InvestingScreen(title: 'Tab 2'),
-  TabScreen(title: 'Tab 3'),
+  InvestingScreen(title: 'Spending'),
+  TabScreen(title: 'Explore'),
+  TabScreen(title: 'News'),
+  TabScreen(title: 'Profile'),
 ];
 
 class TabScreen extends StatelessWidget {
