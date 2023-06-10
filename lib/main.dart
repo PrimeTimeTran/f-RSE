@@ -13,11 +13,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<PortfolioCubit>(
-          create: (_) => PortfolioCubit(),
-        ),
         BlocProvider<NewsCubit>(
           create: (_) => NewsCubit(),
+        ),
+        BlocProvider<PortfolioCubit>(
+          create: (_) => PortfolioCubit(),
         ),
       ],
       child: const MyApp(),

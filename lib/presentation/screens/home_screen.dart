@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
-import 'package:rse/data/models/all.dart';
+import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/widgets/all.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -68,8 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return true;
                 },
               ),
-              OptionsTable(),
-              BlocBuilder<NewsCubit, List<Article>>(
+              BlocBuilder<NewsCubit, List<models.Article>>(
                 builder: (context, articles) {
                   if (articles.isEmpty) {
                     return const CircularProgressIndicator();
@@ -78,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       itemCount: articles.length,
                       itemBuilder: (context, index) {
-                        return ArticleWidget(article: articles[index]);
+                        return Article(article: articles[index]);
                       },
                     );
                   }

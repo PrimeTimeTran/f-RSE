@@ -1,11 +1,27 @@
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+Future<dynamic> loadJsonFile(String path) async {
+  try {
+    String content = await rootBundle.loadString(path);
+    return json.decode(content);
+  } catch (e) {
+    if (kDebugMode) {
+      debugPrint('Error loading JSON file: $e');
+    }
+  }
+  return null;
+}
 
 void printResponse(http.Response response) {
   final responseMap = json.decode(response.body) as Map<String, dynamic>;
   responseMap.forEach((key, value) {
-    print('$key: $value');
+    if (kDebugMode) {
+      debugPrint('$key: $value');
+    }
   });
 }
 
@@ -34,15 +50,9 @@ String shortenMoney(String value) {
 }
 
 String formatUtcToDM(DateTime utcTime) {
-  // Convert the UTC time to the local time zone
   final localTime = utcTime.toLocal();
-
-  // Extract the day and month components
   final day = localTime.day;
   final month = localTime.month;
-
-  // Format the day and month as 'd/m'
   final formattedDate = '$day/$month';
-
   return formattedDate;
 }

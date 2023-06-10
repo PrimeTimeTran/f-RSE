@@ -1,6 +1,6 @@
 name: rse
 description: A new Flutter project.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.0+1
 environment:
   sdk: '>=3.0.1 <4.0.0'
@@ -14,10 +14,13 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.9
   flutter_bloc: ^8.0.0
   equatable: ^2.0.5
-  shared_preferences: ^2.1.2
+  shared_preferences: ^2.0.9
   intl: ^0.18.0
   flutter_chart: ^0.1.6
   bloc: ^8.1.2
+
+assets:
+  - assets/news.json
 
 
 dev_dependencies:

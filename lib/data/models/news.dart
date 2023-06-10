@@ -40,6 +40,27 @@ class Article {
     publishedAt: DateTime.now(),
     source: Source(id: 'default', name: 'Default')
   );
+
+  bool isValid() {
+    return (url != null && title != null && author != null && content != null && urlToImage != null &&
+        description != null && publishedAt != null && source.isValid());
+  }
+
+  @override
+  String toString() {
+    return '''
+      Article {
+        url: $url,
+        title: $title,
+        author: $author,
+        content: $content,
+        urlToImage: $urlToImage,
+        source: $source,
+        description: $description,
+        publishedAt: $publishedAt,
+      }
+    ''';
+  }
 }
 
 class Source {
@@ -51,5 +72,9 @@ class Source {
   Source.fromJson(Map<String, dynamic> j) {
     id = j['id'];
     name = j['name'];
+  }
+
+  bool isValid() {
+    return (id != null && name != null);
   }
 }

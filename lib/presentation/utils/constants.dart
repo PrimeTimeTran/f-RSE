@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rse/presentation/screens/all.dart';
 
 const api = "https://192.168.0.22:7254";
-const newsApi = "https://newsdata.io/api/1/news?apikey=1&q=business";
+const newsApi = "https://newsdata.io/api/1/news?apikey=1&category=business&language=en";
 
 const List<Widget> tabs = [
   HomeScreen(title: 'Home'),

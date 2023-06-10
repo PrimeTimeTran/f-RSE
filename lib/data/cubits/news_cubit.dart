@@ -11,7 +11,6 @@ class NewsCubit extends Cubit<List<Article>> {
   Future<void> fetchArticles() async {
     try {
       final articles = await _newsService.fetchArticles();
-      print(articles);
       emit(articles);
     } catch (error) {
       print('Error fetching articles: $error');
