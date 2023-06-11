@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
           child: Column(
             children: [
+              const TickerCarousel(),
               BlocConsumer<PortfolioCubit, PortfolioState>(
                 builder: (context, state) {
                   if (state is PortfolioLoading) {
