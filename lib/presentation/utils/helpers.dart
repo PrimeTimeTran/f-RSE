@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -55,4 +56,10 @@ String formatUtcToDM(DateTime utcTime) {
   final month = localTime.month;
   final formattedDate = '$day/$month';
   return formattedDate;
+}
+
+int randomInt(int to, int from) {
+  Random random = Random();
+  int randomNumber = random.nextInt(from - to + 1) + to;
+  return randomNumber;
 }

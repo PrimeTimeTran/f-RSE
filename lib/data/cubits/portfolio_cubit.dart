@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/models/all.dart';
-
 import 'package:rse/data/services/all.dart';
 
 abstract class PortfolioEvent extends Equatable {
@@ -47,8 +46,8 @@ class PortfolioError extends PortfolioState {
 }
 
 class PortfolioCubit extends Cubit<PortfolioState> {
-  final PortfolioService portfolioService = PortfolioService();
   List<DataPoint> dataPoints = [];
+  final PortfolioService portfolioService = PortfolioService();
 
   PortfolioCubit() : super(PortfolioInitial());
 

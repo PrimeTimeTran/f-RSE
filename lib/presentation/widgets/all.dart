@@ -1,7 +1,9 @@
 export 'article.dart';
+export 'doughnut.dart';
 export 'line_chart.dart';
 export 'summary_table.dart';
 export 'ticker_carousel.dart';
 export 'period_selector.dart';
+export 'investment_group.dart';
 export 'candlestick_chart.dart';
 export 'options_chain_table.dart';
