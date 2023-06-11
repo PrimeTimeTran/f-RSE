@@ -6,6 +6,8 @@ class SummaryTable extends StatefulWidget {
   final String title;
   final List<models.Investment> items;
   final Function(int index) onCategoryTap;
+  final ValueNotifier<int> hoveredCellIndex;
+  final Function(int index) onCategoryHover;
 
   SummaryTable({
     Key? key,
@@ -13,7 +15,10 @@ class SummaryTable extends StatefulWidget {
     required this.title,
     required this.items,
     required this.onCategoryTap,
-  }) : super(key: key);
+    required this.onCategoryHover,
+
+  })  : hoveredCellIndex = ValueNotifier(-1),
+        super(key: key);
 
   @override
   State<SummaryTable> createState() => _SummaryTableState();
@@ -23,10 +28,11 @@ class _SummaryTableState extends State<SummaryTable> {
   late final int num;
   late final String title;
   late final List<models.Investment> items;
+  late ValueNotifier<int> hoveredCellIndex;
   late final Function(int index) onCategoryTap;
-  List<bool> selected = [];
+
+  int sortedColumnIndex = 0;
   bool sortAscending = true;
-  int? sortedColumnIndex;
 
   @override
   void initState() {
@@ -34,8 +40,14 @@ class _SummaryTableState extends State<SummaryTable> {
     title = widget.title;
     items = widget.items;
     onCategoryTap = widget.onCategoryTap;
+    hoveredCellIndex = widget.hoveredCellIndex;
     super.initState();
-    selected = List<bool>.generate(widget.num, (int index) => false);
+  }
+
+  @override
+  void dispose() {
+    hoveredCellIndex.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,19 +55,11 @@ class _SummaryTableState extends State<SummaryTable> {
     return Expanded(
       child: DataTable(
         columns: rowHeaders(),
-        sortColumnIndex: sortedColumnIndex,
-        sortAscending: sortAscending,
         showCheckboxColumn: false,
         rows: List<DataRow>.generate(
-          num,
-              (int idx) => DataRow(
+          num, (int idx) => DataRow(
             cells: rowCells(idx),
-            selected: selected[idx],
-            onSelectChanged: (bool? value) {
-              setState(() {
-                selected[idx] = value!;
-              });
-            },
+            onSelectChanged: (_) => onCategoryTap(idx),
             color: MaterialStateProperty.resolveWith<Color?>(
                   (Set<MaterialState> states) {
                 if (states.contains(MaterialState.selected)) {
@@ -73,11 +77,9 @@ class _SummaryTableState extends State<SummaryTable> {
   List<DataColumn> rowHeaders() {
     return [
       DataColumn(
-        label: Expanded(
-          child: InkWell(
-            child: const Text('Name'),
-            onTap: () => sortColumn(0, 'name'),
-          ),
+        label: InkWell(
+          child: const Text('Name'),
+          onTap: () => sortColumn(0, 'name'),
         ),
       ),
       DataColumn(
@@ -108,40 +110,51 @@ class _SummaryTableState extends State<SummaryTable> {
   }
 
   void sortColumn(int columnIndex, String field) {
-    if (columnIndex == sortedColumnIndex) {
-      setState(() {
+    setState(() {
+      if (columnIndex == sortedColumnIndex) {
         sortAscending = !sortAscending;
-        items.sort((a, b) {
-          return sortAscending ? a.compareTo(b, field) : b.compareTo(a, field);
-        });
-      });
-    } else {
-      setState(() {
-        sortedColumnIndex = columnIndex;
+        items.sort((a, b) => sortAscending ? a.compareTo(b, field) : b.compareTo(a, field));
+      } else {
         sortAscending = true;
-        items.sort((a, b) {
-          return a.compareTo(b, field);
-        });
-      });
-    }
+        sortedColumnIndex = columnIndex;
+        items.sort((a, b) => a.compareTo(b, field));
+      }
+    });
   }
 
   List<DataCell> rowCells(int idx) {
     var item = items[idx];
     return [
       DataCell(
-        SizedBox(
-          width: 200,
-          child: InkWell(
-            child: Text(item.name),
-            onTap: () => onCategoryTap(idx),
+        wrapHover(item, item.name),
+      ),
+      DataCell(
+        wrapHover(item, item.quantity.toString()),
+      ),
+      DataCell(
+        wrapHover(item, item.value.toString()),
+      ),
+      DataCell(
+        wrapHover(item, item.percentage.toString()),
+      ),
+      DataCell(
+        wrapHover(item, item.totalValue.toString()),
+      ),
+    ];
+  }
+
+  MouseRegion wrapHover(models.Investment item, String val) {
+    return MouseRegion(
+        onEnter: (_) {
+          widget.onCategoryHover(item.idx);
+        },
+        child: InkWell(
+          onTap: () => onCategoryTap(item.idx),
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(val),
           ),
         ),
-      ),
-      DataCell(Text(item.quantity.toString())),
-      DataCell(Text(item.value.toString())),
-      DataCell(Text(item.percentage.toString())),
-      DataCell(Text(item.totalValue.toString())),
-    ];
+      );
   }
 }

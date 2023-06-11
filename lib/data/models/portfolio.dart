@@ -69,6 +69,7 @@ class Current {
 }
 
 class Investment {
+  final int idx;
   final String name;
   final double value;
   final double quantity;
@@ -76,6 +77,7 @@ class Investment {
   final double percentage;
 
   Investment({
+    required this.idx,
     required this.name,
     required this.value,
     required this.quantity,
@@ -101,9 +103,8 @@ class Investment {
     }
   }
 
-
   factory Investment.fromJson(Map<String, dynamic> j) =>
-      Investment(name: j['symbol'], value: j['value'], percentage: j['percentage'], quantity: j['quantity'], totalValue: j['totalValue']);
+      Investment(idx: j['idx'], name: j['symbol'], value: j['value'], percentage: j['percentage'], quantity: j['quantity'], totalValue: j['totalValue']);
 }
 
 class StocksAndOptions {

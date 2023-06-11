@@ -8,7 +8,9 @@ class InvestmentGroup extends StatefulWidget {
   final String title;
   final models.Current current;
   final List<models.Investment> securities;
-  const InvestmentGroup({Key? key,
+
+  const InvestmentGroup({
+    Key? key,
     required this.num,
     required this.title,
     required this.current,
@@ -21,6 +23,7 @@ class InvestmentGroup extends StatefulWidget {
 
 class _InvestmentGroupState extends State<InvestmentGroup> {
   int? _selectedSliceIndex;
+  int _hoveredRowIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +40,17 @@ class _InvestmentGroupState extends State<InvestmentGroup> {
                 _selectedSliceIndex = idx;
               });
             },
+            onCategoryHover: (int idx) {
+              setState(() {
+                _hoveredRowIndex = idx;
+              });
+            },
           ),
-          Dougnut(data: widget.securities)
+          Doughnut(
+            data: widget.securities,
+            hoveredRowIndex: _hoveredRowIndex,
+            hoveredCellIndex: ValueNotifier(_selectedSliceIndex ?? -1),
+          ),
         ],
       ),
     );

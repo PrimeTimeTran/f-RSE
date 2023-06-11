@@ -4,67 +4,53 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:rse/data/models/all.dart' as models;
 
-class Dougnut extends StatefulWidget {
+class Doughnut extends StatelessWidget {
+  final int hoveredRowIndex;
   final List<models.Investment> data;
+  final ValueNotifier<int> hoveredCellIndex;
+  Doughnut({
+    Key? key,
+    required this.data,
+    required this.hoveredRowIndex,
+    required this.hoveredCellIndex,
+  }) : super(key: key);
 
-  const Dougnut({super.key, required this.data});
-
-  @override
-  State<Dougnut> createState() => _DougnutState();
-}
-
-class _DougnutState extends State<Dougnut> with SingleTickerProviderStateMixin {
-  late List<models.Investment> _chartData;
-  late AnimationController _animationController;
-  late int _animationDuration;
-
-  @override
-  void initState() {
-    _chartData = widget.data;
-    _animationDuration = randomInt(500, 1500);
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: _animationDuration),
-    );
-    _animationController.forward();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  final List<Color> sliceColors = [
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
+  final List<Color> segmentColors = [
+    Colors.blue[200]!,
+    Colors.blue[400]!,
+    Colors.blue[600]!,
+    Colors.blue[800]!,
+    // Add more shades of blue or other colors as needed
   ];
 
   @override
   Widget build(BuildContext context) {
-    print('Animation duration: $_animationDuration');
-
+    print(hoveredCellIndex);
     return Expanded(
       flex: 1,
       child: SfCircularChart(
         series: <CircularSeries>[
           DoughnutSeries<models.Investment, String>(
+            strokeWidth: 1,
+            dataSource: data,
             enableTooltip: true,
+            strokeColor: Colors.white, // Border color for all segments
             dataLabelSettings: DataLabelSettings(isVisible: true),
             xValueMapper: (models.Investment data, _) => data.name,
             yValueMapper: (models.Investment data, _) => data.percentage,
-            onPointTap: (ChartPointDetails details) {
-              print(details.pointIndex);
+            pointColorMapper: (models.Investment data, _) {
+              if (hoveredRowIndex != -1 && hoveredRowIndex == data.idx) {
+                return Colors.green;
+              }
+              if (hoveredCellIndex.value != -1 && hoveredCellIndex.value == data.idx) {
+                return Colors.blue; // Apply a different color for the hovered cell
+              }
+              return segmentColors[data.idx % segmentColors.length];
             },
-            dataSource: widget.data,
-            animationDuration: _animationDuration.toDouble(), // Apply the specific animation duration to the series
-            // pointColorMapper: (models.Investment data, _) =>
-            // sliceColors[widget.data],
           ),
         ],
       ),
     );
   }
+
 }
