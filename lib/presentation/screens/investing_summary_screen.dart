@@ -28,7 +28,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
         child: Center(
           child: Column(
             children: [

@@ -24,35 +24,44 @@ class InvestmentGroup extends StatefulWidget {
 class _InvestmentGroupState extends State<InvestmentGroup> {
   int? _selectedSliceIndex;
   int _hoveredRowIndex = -1;
+  String _sortField = 'name';
+
+  List<models.Investment> orderedSecurities = [];
+
+  sortSecurities(List<models.Investment> newOrder, String field) {
+    setState(() {
+      _sortField = field;
+      orderedSecurities = newOrder;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-      child: Row(
-        children: [
-          SummaryTable(
-            num: widget.num,
-            title: widget.title,
-            items: widget.securities,
-            onCategoryTap: (int idx) {
-              setState(() {
-                _selectedSliceIndex = idx;
-              });
-            },
-            onCategoryHover: (int idx) {
-              setState(() {
-                _hoveredRowIndex = idx;
-              });
-            },
-          ),
-          Doughnut(
-            data: widget.securities,
-            hoveredRowIndex: _hoveredRowIndex,
-            hoveredCellIndex: ValueNotifier(_selectedSliceIndex ?? -1),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        SummaryTable(
+          num: widget.num,
+          title: widget.title,
+          items: widget.securities,
+          sortSecurities: sortSecurities,
+          onCategoryTap: (int idx) {
+            setState(() {
+              _selectedSliceIndex = idx;
+            });
+          },
+          onCategoryHover: (int idx) {
+            setState(() {
+              _hoveredRowIndex = idx;
+            });
+          },
+        ),
+        Doughnut(
+          field: _sortField,
+          data: widget.securities,
+          hoveredRowIndex: _hoveredRowIndex,
+          hoveredCellIndex: ValueNotifier(_selectedSliceIndex ?? -1),
+        ),
+      ],
     );
   }
 }

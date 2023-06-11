@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rse/data/models/all.dart' as models;
+import 'package:rse/presentation/utils/all.dart';
 
 class SummaryTable extends StatefulWidget {
   final int num;
@@ -8,6 +9,7 @@ class SummaryTable extends StatefulWidget {
   final Function(int index) onCategoryTap;
   final ValueNotifier<int> hoveredCellIndex;
   final Function(int index) onCategoryHover;
+  final Function(List<models.Investment> newOrder, String field) sortSecurities;
 
   SummaryTable({
     Key? key,
@@ -15,6 +17,7 @@ class SummaryTable extends StatefulWidget {
     required this.title,
     required this.items,
     required this.onCategoryTap,
+    required this.sortSecurities,
     required this.onCategoryHover,
   }) : hoveredCellIndex = ValueNotifier(-1),
         super(key: key);
@@ -66,22 +69,20 @@ class _SummaryTableState extends State<SummaryTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: DataTable(
-        columns: rowHeaders(),
-        showCheckboxColumn: false,
-        rows: List<DataRow>.generate(
-          num, (int idx) => DataRow(
-            cells: rowCells(idx),
-            onSelectChanged: (_) => onCategoryTap(idx),
-            color: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.selected)) {
-                  return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                }
-                return null;
-              },
-            ),
+    return DataTable(
+      columns: rowHeaders(),
+      showCheckboxColumn: false,
+      rows: List<DataRow>.generate(
+        num, (int idx) => DataRow(
+          cells: rowCells(idx),
+          onSelectChanged: (_) => onCategoryTap(idx),
+          color: MaterialStateProperty.resolveWith<Color?>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+              }
+              return null;
+            },
           ),
         ),
       ),
@@ -98,25 +99,25 @@ class _SummaryTableState extends State<SummaryTable> {
       ),
       DataColumn(
         label: InkWell(
-          child: const Text('Shares'),
+          child: const Text('# Shares'),
           onTap: () => sortColumn(1, 'quantity'),
         ),
       ),
       DataColumn(
         label: InkWell(
-          child: const Text('Price'),
+          child: const Text('\$ Price'),
           onTap: () => sortColumn(2, 'value'),
         ),
       ),
       DataColumn(
         label: InkWell(
-          child: const Text('Percentage'),
+          child: const Text('Percentage %'),
           onTap: () => sortColumn(3, 'percentage'),
         ),
       ),
       DataColumn(
         label: InkWell(
-          child: const Text('Total \$'),
+          child: const Text('\$ Total'),
           onTap: () => sortColumn(4, 'totalValue'),
         ),
       ),
@@ -128,10 +129,12 @@ class _SummaryTableState extends State<SummaryTable> {
       if (columnIndex == sortedColumnIndex) {
         sortAscending = !sortAscending;
         items.sort((a, b) => sortAscending ? a.compareTo(b, field) : b.compareTo(a, field));
+        widget.sortSecurities(items, field);
       } else {
         sortAscending = true;
         sortedColumnIndex = columnIndex;
         items.sort((a, b) => a.compareTo(b, field));
+        widget.sortSecurities(items, field);
       }
     });
   }
@@ -146,13 +149,13 @@ class _SummaryTableState extends State<SummaryTable> {
         wrapHover(item, item.quantity.toString()),
       ),
       DataCell(
-        wrapHover(item, item.value.toString()),
+        wrapHover(item, formatMoney(item.value.toString())),
       ),
       DataCell(
-        wrapHover(item, item.percentage.toString()),
+        wrapHover(item, item.percentage.toString() + '%'),
       ),
       DataCell(
-        wrapHover(item, item.totalValue.toString()),
+        wrapHover(item, formatMoney(item.totalValue.toString())),
       ),
     ];
   }

@@ -85,6 +85,16 @@ class Investment {
     required this.totalValue,
   });
 
+  double getValue(String key) {
+    final Map<String, double> properties = {
+      'value': value,
+      'quantity': quantity,
+      'percentage': percentage,
+      'totalValue': totalValue,
+    };
+    return properties[key] ?? 0.0;
+  }
+
   int compareTo(Investment other, String sortByProperty) {
     switch (sortByProperty) {
       case 'name':
