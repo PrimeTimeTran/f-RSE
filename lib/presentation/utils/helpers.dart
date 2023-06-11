@@ -63,3 +63,16 @@ int randomInt(int to, int from) {
   int randomNumber = random.nextInt(from - to + 1) + to;
   return randomNumber;
 }
+
+formatField(data, field) {
+  switch (field) {
+    case 'name':
+      return data.name;
+    case 'value' || 'totalValue':
+      return formatMoney(data.getValue(field).toString());
+    case 'quantity':
+      return data.quantity.toString();
+    default:
+      return "${data.getValue(field)}%";
+  };
+}

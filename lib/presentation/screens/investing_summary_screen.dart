@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/portfolio_cubit.dart';
-
-import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/widgets/all.dart';
 
 class InvestingSummaryScreen extends StatefulWidget {
@@ -44,31 +42,13 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
                           title: 'Stocks',
                           current: p.current,
                           num: p.stocks.length,
-                          securities: p.stocks.mapIndexed((idx, s) =>
-                              models.Investment(
-                                idx: idx,
-                                name: s.symbol,
-                                value: s.price,
-                                quantity: s.quantity,
-                                totalValue: s.totalValue,
-                                percentage: s.percentOfGroup,
-                              ),
-                          ).toList(),
+                          securities: p.stocks
                         ),
                         InvestmentGroup(
                           title: 'Cryptos',
                           current: p.current,
                           num: p.cryptos.length,
-                          securities: p.cryptos.mapIndexed((idx, c) =>
-                              models.Investment(
-                                idx: idx,
-                                name: c.symbol,
-                                value: c.price,
-                                quantity: c.quantity,
-                                totalValue: c.totalValue,
-                                percentage: c.percentOfGroup,
-                              ),
-                          ).toList(),
+                          securities: p.cryptos
                         ),
                       ],
                     );

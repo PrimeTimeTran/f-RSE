@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
+
 import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/utils/all.dart';
 
@@ -6,9 +8,8 @@ class SummaryTable extends StatefulWidget {
   final int num;
   final String title;
   final List<models.Investment> items;
-  final Function(int index) onCategoryTap;
-  final ValueNotifier<int> hoveredCellIndex;
-  final Function(int index) onCategoryHover;
+  final Function(int idx) onCategoryHover;
+  final Function(int idx) onCategoryExit;
   final Function(List<models.Investment> newOrder, String field) sortSecurities;
 
   SummaryTable({
@@ -16,11 +17,10 @@ class SummaryTable extends StatefulWidget {
     required this.num,
     required this.title,
     required this.items,
-    required this.onCategoryTap,
     required this.sortSecurities,
     required this.onCategoryHover,
-  }) : hoveredCellIndex = ValueNotifier(-1),
-        super(key: key);
+    required this.onCategoryExit,
+  }) : super(key: key);
 
   @override
   State<SummaryTable> createState() => _SummaryTableState();
@@ -45,8 +45,6 @@ class _SummaryTableState extends State<SummaryTable> {
   late final int num;
   late final String title;
   late final List<models.Investment> items;
-  late ValueNotifier<int> hoveredCellIndex;
-  late final Function(int index) onCategoryTap;
 
   int sortedColumnIndex = 0;
   bool sortAscending = true;
@@ -56,14 +54,11 @@ class _SummaryTableState extends State<SummaryTable> {
     num = widget.num;
     title = widget.title;
     items = widget.items;
-    onCategoryTap = widget.onCategoryTap;
-    hoveredCellIndex = widget.hoveredCellIndex;
     super.initState();
   }
 
   @override
   void dispose() {
-    hoveredCellIndex.dispose();
     super.dispose();
   }
 
@@ -75,7 +70,11 @@ class _SummaryTableState extends State<SummaryTable> {
       rows: List<DataRow>.generate(
         num, (int idx) => DataRow(
           cells: rowCells(idx),
-          onSelectChanged: (_) => onCategoryTap(idx),
+          onSelectChanged: (bool? value) {
+            // For hover shadow
+            setState(() {
+            });
+          },
           color: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
               if (states.contains(MaterialState.selected)) {
@@ -129,11 +128,17 @@ class _SummaryTableState extends State<SummaryTable> {
       if (columnIndex == sortedColumnIndex) {
         sortAscending = !sortAscending;
         items.sort((a, b) => sortAscending ? a.compareTo(b, field) : b.compareTo(a, field));
+        // items.mapIndexed((idx, e) => {
+        //   e.idx = idx
+        // });
         widget.sortSecurities(items, field);
       } else {
         sortAscending = true;
         sortedColumnIndex = columnIndex;
         items.sort((a, b) => a.compareTo(b, field));
+        // items.mapIndexed((idx, e) => {
+        //   e.idx = idx
+        // });
         widget.sortSecurities(items, field);
       }
     });
@@ -152,7 +157,7 @@ class _SummaryTableState extends State<SummaryTable> {
         wrapHover(item, formatMoney(item.value.toString())),
       ),
       DataCell(
-        wrapHover(item, item.percentage.toString() + '%'),
+        wrapHover(item, '${item.percentage}%'),
       ),
       DataCell(
         wrapHover(item, formatMoney(item.totalValue.toString())),
@@ -165,8 +170,10 @@ class _SummaryTableState extends State<SummaryTable> {
         onEnter: (_) {
           widget.onCategoryHover(item.idx);
         },
+        onExit: (_) {
+          widget.onCategoryExit(item.idx);
+        },
         child: InkWell(
-          onTap: () => onCategoryTap(item.idx),
           child: Container(
             padding: const EdgeInsets.all(8.0),
             child: Text(val),

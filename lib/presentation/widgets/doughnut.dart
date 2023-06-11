@@ -4,63 +4,100 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/data/models/all.dart' as models;
 
-class Doughnut extends StatelessWidget {
+class Doughnut extends StatefulWidget {
   final String field;
+  final int explodeIdx;
+  final bool shouldExplode;
   final int hoveredRowIndex;
   final List<models.Investment> data;
-  final ValueNotifier<int> hoveredCellIndex;
-  Doughnut({
+  final ActivationMode activationMode;
+
+  const Doughnut({
     Key? key,
     required this.data,
     required this.field,
+    required this.explodeIdx,
+    required this.shouldExplode,
+    required this.activationMode,
     required this.hoveredRowIndex,
-    required this.hoveredCellIndex,
   }) : super(key: key);
 
-  final List<Color> segmentColors = [
+  @override
+  DoughnutState createState() => DoughnutState();
+}
+
+class DoughnutState extends State<Doughnut> {
+  final List<Color> colors = [
+    Colors.blue[100]!,
     Colors.blue[200]!,
+    Colors.blue[300]!,
     Colors.blue[400]!,
-    Colors.blue[600]!,
-    Colors.blue[800]!,
   ];
 
   @override
   Widget build(BuildContext context) {
+    const chartSizePercentage = 0.5;
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
+
+    final chartWidth = screenWidth * chartSizePercentage;
+    final chartHeight = screenHeight * chartSizePercentage;
+    final String field = widget.data[widget.explodeIdx].totalValue.toString();
+
     return Expanded(
       flex: 1,
-      child: SfCircularChart(
-        legend: Legend(isVisible: true),
-        series: <CircularSeries>[
-          DoughnutSeries<models.Investment, String>(
-            strokeWidth: 1,
-            dataSource: data,
-            enableTooltip: true,
-            strokeColor: Colors.white,
-            xValueMapper: (models.Investment data, _) => data.name,
-            yValueMapper: (models.Investment data, _) =>
-              field == 'name' ? data.percentage : data.getValue(field),
-            dataLabelMapper: (models.Investment data, _) =>
-              field == 'name' ? data.name
-                  : (field == 'value' || field == 'totalValue')
-                  ? formatMoney(data.getValue(field).toString())
-                  : field == 'quantity' ? data.quantity.toString() : data.getValue(field).toString(),
-            dataLabelSettings: DataLabelSettings(
-              // Renders the data label
-                isVisible: true
+      child: Column(
+        children: [
+          SizedBox(
+            width: chartWidth,
+            height: chartHeight,
+            child: SfCircularChart(
+              legend: Legend(
+                  isVisible: true,
+                  offset: const Offset(50, 40),
+                  position: LegendPosition.left,
+              ),
+              annotations: <CircularChartAnnotation>[
+                CircularChartAnnotation(
+                  widget: Text(
+                      field,
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromRGBO(216, 225, 227, 1),
+                      )
+                    ),
+                )
+              ],
+              series: <CircularSeries>[
+                DoughnutSeries<models.Investment, String>(
+                  strokeWidth: 1,
+                  enableTooltip: true,
+                  // explodeOffset: '3%',
+                  dataSource: widget.data,
+                  strokeColor: Colors.white,
+                  // explode: widget.shouldExplode,
+                  // explodeIndex: widget.explodeIdx,
+                  // explodeGesture: widget.activationMode,
+                  xValueMapper: (models.Investment data, _) => data.name,
+                  dataLabelMapper: (models.Investment data, _) => formatField(data, widget.field),
+                  yValueMapper: (models.Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),
+                  dataLabelSettings: const DataLabelSettings(
+                    isVisible: true,
+                  ),
+                  pointColorMapper: (models.Investment data, _) {
+                    if (widget.hoveredRowIndex != -1 && widget.hoveredRowIndex == data.idx) {
+                      return Colors.lightGreenAccent;
+                    }
+                    return colors[data.idx % colors.length];
+                  },
+                ),
+              ],
             ),
-            pointColorMapper: (models.Investment data, _) {
-              if (hoveredRowIndex != -1 && hoveredRowIndex == data.idx) {
-                return Colors.lightGreenAccent;
-              }
-              if (hoveredCellIndex.value != -1 && hoveredCellIndex.value == data.idx) {
-                return Colors.blue;
-              }
-              return segmentColors[data.idx % segmentColors.length];
-            },
           ),
         ],
       ),
     );
   }
-
 }
