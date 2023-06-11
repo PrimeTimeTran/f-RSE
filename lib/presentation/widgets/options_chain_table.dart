@@ -13,15 +13,15 @@ List<OptionData> optionsData = [
 ];
 
 class OptionsTable extends StatefulWidget {
-  late List<OptionData>? optionsData;
+  final List<OptionData> optionsData;
 
-  OptionsTable({this.optionsData});
+  const OptionsTable({super.key, required this.optionsData});
 
   @override
-  _OptionsTableState createState() => _OptionsTableState();
+  OptionsTableState createState() => OptionsTableState();
 }
 
-class _OptionsTableState extends State<OptionsTable> {
+class OptionsTableState extends State<OptionsTable> {
   List<OptionData> optionsData = [
     OptionData(
       delta: 0.1,
@@ -71,7 +71,7 @@ class _OptionsTableState extends State<OptionsTable> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,

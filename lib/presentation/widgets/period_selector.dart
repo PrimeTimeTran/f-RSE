@@ -21,13 +21,13 @@ class PeriodSelector extends StatelessWidget {
               },
               child: Container(
                 height: 20, // Adjust the height as needed
-                margin: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Center(
-                  child: Text(period, style: TextStyle(fontSize: 10)),
+                  child: Text(period, style: const TextStyle(fontSize: 10)),
                 ),
               ),
             ),

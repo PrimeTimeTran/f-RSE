@@ -13,20 +13,15 @@ class InvestingSummaryScreen extends StatefulWidget {
   const InvestingSummaryScreen({Key? key, required this.title}) : super(key: key);
 
   @override
-  _InvestingSummaryScreenState createState() => _InvestingSummaryScreenState();
+  InvestingSummaryScreenState createState() => InvestingSummaryScreenState();
 }
 
-class _InvestingSummaryScreenState extends State<InvestingSummaryScreen>
+class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
     with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

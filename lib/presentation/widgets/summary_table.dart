@@ -16,12 +16,26 @@ class SummaryTable extends StatefulWidget {
     required this.items,
     required this.onCategoryTap,
     required this.onCategoryHover,
-
-  })  : hoveredCellIndex = ValueNotifier(-1),
+  }) : hoveredCellIndex = ValueNotifier(-1),
         super(key: key);
 
   @override
   State<SummaryTable> createState() => _SummaryTableState();
+}
+
+extension DataRowExtensions on DataRow {
+  Widget wrapWithMouseRegion({
+    required VoidCallback onEnter,
+    required VoidCallback onExit,
+  }) {
+    return MouseRegion(
+      onEnter: (event) => onEnter(),
+      onExit: (event) => onExit(),
+      child: Container(
+        child: this as Widget,
+      ),
+    );
+  }
 }
 
 class _SummaryTableState extends State<SummaryTable> {

@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        drawer: const Drawerr(),
+        drawer: const MyDrawer(),
         body: constants.tabs[_idx],
         bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(

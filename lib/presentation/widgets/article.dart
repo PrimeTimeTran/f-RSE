@@ -45,17 +45,17 @@ class Article extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   article.description ?? '',
-                  style: TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Published on: ${article.publishedAt?.toString() ?? ''}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   article.url?.toString() ?? '',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 const SizedBox(height: 8),
               ],

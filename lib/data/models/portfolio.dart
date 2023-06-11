@@ -85,7 +85,6 @@ class Investment {
     required this.totalValue,
   });
 
-  @override
   int compareTo(Investment other, String sortByProperty) {
     switch (sortByProperty) {
       case 'name':

@@ -6,11 +6,11 @@ class Carousel extends StatefulWidget {
   const Carousel({super.key, required this.tickers});
 
   @override
-  _CarouselState createState() =>
-      _CarouselState();
+  CarouselState createState() =>
+      CarouselState();
 }
 
-class _CarouselState
+class CarouselState
     extends State<Carousel>
     with SingleTickerProviderStateMixin {
   late Animation<Offset> _animation;
@@ -141,10 +141,10 @@ class TickerCarousel extends StatefulWidget {
   const TickerCarousel({super.key});
 
   @override
-  _TickerCarouselState createState() => _TickerCarouselState();
+  TickerCarouselState createState() => TickerCarouselState();
 }
 
-class _TickerCarouselState extends State<TickerCarousel> {
+class TickerCarouselState extends State<TickerCarousel> {
   final List<Ticker> tickers = [
     Ticker('WMT', 152.51, 1.32, 0.87),
     Ticker('AMZN', 3311.37, 11.61, 0.35),

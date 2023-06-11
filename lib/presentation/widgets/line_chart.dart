@@ -11,16 +11,16 @@ class LineChart extends StatefulWidget {
   const LineChart({super.key, required this.data});
 
   @override
-  _LineChartState createState() => _LineChartState(data: data);
+  LineChartState createState() => LineChartState();
 }
 
-class _LineChartState extends State<LineChart> {
+class LineChartState extends State<LineChart> {
   String period = 'live';
   double? tappedXPosition;
   double? draggedXPosition;
   late List<DataPoint> data;
   final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
-  late TrackballBehavior _trackballBehavior = TrackballBehavior(
+  final TrackballBehavior _trackballBehavior = TrackballBehavior(
     enable: true,
     lineWidth: 2,
     shouldAlwaysShow: true,
@@ -34,8 +34,6 @@ class _LineChartState extends State<LineChart> {
     ),
   );
 
-  _LineChartState({required this.data});
-
   @override
   void initState() {
     super.initState();
@@ -43,7 +41,6 @@ class _LineChartState extends State<LineChart> {
   }
 
   void changePeriod(String p) {
-    print(p);
     setState(() {
       period = p;
     });
@@ -105,7 +102,7 @@ class _LineChartState extends State<LineChart> {
         ),
         PeriodSelector(
           changePeriod: changePeriod,
-          periods: ['live', '1d', '1w', '1m', '3m', '1y', '5y', 'all'],
+          periods: const ['live', '1d', '1w', '1m', '3m', '1y', '5y', 'all'],
         ),
       ],
     );

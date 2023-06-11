@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:rse/data/models/portfolio.dart';
@@ -11,7 +12,9 @@ class PortfolioService {
       final d = Portfolio.fromJson(json.decode(response.body));
       return d;
     } catch (e) {
-      print('Error fetching portfolio');
+      if (kDebugMode) {
+        print('Error fetching portfolio: $e');
+      }
     }
     return Portfolio.defaultPortfolio();
   }

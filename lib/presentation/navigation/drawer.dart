@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Drawerr extends StatefulWidget {
-  const Drawerr({super.key});
+class MyDrawer extends StatefulWidget {
+  const MyDrawer({super.key});
 
   @override
-  State<Drawerr> createState() => _DrawerrState();
+  State<MyDrawer> createState() => DrawerState();
 }
 
-class _DrawerrState extends State<Drawerr> {
+class DrawerState extends State<MyDrawer> {
   int _idx = 0;
   @override
   Widget build(BuildContext context) {

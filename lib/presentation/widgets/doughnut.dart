@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rse/presentation/utils/helpers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:rse/data/models/all.dart' as models;
@@ -20,12 +19,10 @@ class Doughnut extends StatelessWidget {
     Colors.blue[400]!,
     Colors.blue[600]!,
     Colors.blue[800]!,
-    // Add more shades of blue or other colors as needed
   ];
 
   @override
   Widget build(BuildContext context) {
-    print(hoveredCellIndex);
     return Expanded(
       flex: 1,
       child: SfCircularChart(
@@ -35,7 +32,7 @@ class Doughnut extends StatelessWidget {
             dataSource: data,
             enableTooltip: true,
             strokeColor: Colors.white, // Border color for all segments
-            dataLabelSettings: DataLabelSettings(isVisible: true),
+            dataLabelSettings: const DataLabelSettings(isVisible: true),
             xValueMapper: (models.Investment data, _) => data.name,
             yValueMapper: (models.Investment data, _) => data.percentage,
             pointColorMapper: (models.Investment data, _) {
