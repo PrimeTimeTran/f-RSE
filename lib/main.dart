@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/navigation/all.dart';
+import 'package:rse/presentation/navigation/navbar_icons.dart';
 import 'package:rse/presentation/utils/constants.dart' as constants;
 
 void main() {
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),
+          actions: navbarIcons(context),
         ),
       ),
     );

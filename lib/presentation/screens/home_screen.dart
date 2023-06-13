@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
-import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/widgets/all.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,54 +39,23 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
         child: Center(
-          child: Column(
-            children: [
-              const TickerCarousel(),
-              BlocConsumer<PortfolioCubit, PortfolioState>(
-                builder: (context, state) {
-                  if (state is PortfolioLoading) {
-                    return const CircularProgressIndicator();
-                  } else if (state is PortfolioLoaded) {
-                    final dataPoints = context.read<PortfolioCubit>().dataPoints;
-                    return Column(
-                      children: [
-                        LineChart(data: dataPoints),
-                      ],
-                    );
-                  } else if (state is PortfolioError) {
-                    return Text('Error: ${state.errorMessage}');
-                  } else {
-                    return const Text('Unknown state');
-                  }
-                },
-                listener: (context, state) {
-                  // Listener logic goes here if needed
-                },
-                buildWhen: (previous, current) {
-                  return true;
-                },
-              ),
-              BlocBuilder<NewsCubit, List<models.Article>>(
-                builder: (context, articles) {
-                  if (articles.isEmpty) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: articles.length,
-                      itemBuilder: (context, index) {
-                        return Article(article: articles[index]);
-                      },
-                    );
-                  }
-                },
-              ),
-            ],
+      child: Column(
+        children: [
+          TickerCarousel(),
+          PortfolioLineChart(),
+          Padding(
+            padding: EdgeInsets.only(left: 50.0, right: 50),
+            child: Row(
+              children: [
+                Articles(),
+                Watchlist(),
+              ],
+            ),
           ),
-        )
-    );
+        ],
+      ),
+    ));
   }
 }
-

@@ -22,7 +22,6 @@ class LocalStorageService {
     var data = await loadData('articles');
 
     if (data != null && data.isNotEmpty) {
-    // if (false && data != null && data.isNotEmpty) {
       return _mapArticlesFromData(jsonDecode(data)['results']);
     } else {
       final d = await loadJsonFile('assets/news.json');

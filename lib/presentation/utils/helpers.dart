@@ -74,5 +74,5 @@ formatField(data, field) {
       return data.quantity.toString();
     default:
       return "${data.getValue(field)}%";
-  };
+  }
 }
