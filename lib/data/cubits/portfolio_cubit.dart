@@ -57,6 +57,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     try {
       final p = await portfolioService.fetchPortfolio(id);
       dataPoints = getDataPoints(p.series);
+
       emit(PortfolioLoaded(p));
     } catch (e) {
       emit(PortfolioError('Error fetching portfolio'));

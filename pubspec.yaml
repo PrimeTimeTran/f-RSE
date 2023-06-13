@@ -22,6 +22,7 @@ dependencies:
 
 assets:
   - assets/news.json
+  - assets/portfolio.json
 
 
 dev_dependencies:

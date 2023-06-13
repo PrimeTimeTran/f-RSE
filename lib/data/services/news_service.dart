@@ -24,7 +24,7 @@ class NewsService {
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint("Error: Fetching articles, loading from cache.");
+        debugPrint("Error: Fetching articles. Loading from cache");
       }
       return await _localStorage.getCachedArticles();
     }

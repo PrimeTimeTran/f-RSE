@@ -39,4 +39,17 @@ class LocalStorageService {
         .map((item) => Article.fromJson(item as Map<String, dynamic>))
         .toList();
   }
+
+  Future<Portfolio> getCachedPortfolio() async {
+    var data = await loadData('portfolio');
+    if (data != null && data.isNotEmpty) {
+      return Portfolio.fromJson(data as Map<String, dynamic>);
+    } else {
+      final d = await loadJsonFile('assets/portfolio.json');
+      if (d != null && d.isNotEmpty) {
+        return Portfolio.fromJson(d);
+      }
+    }
+    return Portfolio.defaultPortfolio();
+  }
 }
