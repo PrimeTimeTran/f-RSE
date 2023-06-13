@@ -19,8 +19,10 @@ dependencies:
   flutter_chart: ^0.1.6
   bloc: ^8.1.2
   collection: ^1.17.1
+  flutter_dotenv: ^5.1.0
 
 assets:
+  - .env
   - assets/news.json
   - assets/portfolio.json
 

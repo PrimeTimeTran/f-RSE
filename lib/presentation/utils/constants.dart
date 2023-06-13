@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rse/presentation/screens/all.dart';
 import 'package:rse/presentation/screens/notifications_screen.dart';
 import 'package:rse/presentation/screens/spending_screen.dart';
 
 const api = "http://localhost:7254";
-const newsApi =
-    "https://newsdata.io/api/1/news?apikey=1&category=business&language=en";
+
+String? apiKey = dotenv.env['API_KEY'];
+late String newsApi;
+
+void initializeNewsApi() {
+  newsApi =
+      "https://newsdata.io/api/1/news?category=business&language=en&${apiKey ?? ''}";
+}
 
 const investmentTypes = ['Stocks', 'Options', 'Cryptos'];
 
@@ -24,6 +31,7 @@ class TabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeNewsApi();
     return Center(
       child: Text(title),
     );
