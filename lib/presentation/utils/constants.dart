@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rse/presentation/screens/all.dart';
-import 'package:rse/presentation/screens/notifications_screen.dart';
-import 'package:rse/presentation/screens/spending_screen.dart';
 
 const api = "http://localhost:7254";
 
@@ -21,7 +19,7 @@ const List<Widget> tabs = [
   InvestingSummaryScreen(title: 'Spending'),
   NotificationsScreen(),
   SpendingScreen(),
-  TabScreen(title: 'Profile'),
+  AssetScreen(),
 ];
 
 class TabScreen extends StatelessWidget {

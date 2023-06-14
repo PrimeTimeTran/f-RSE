@@ -11,7 +11,7 @@ class PortfolioService {
 
   Future<Portfolio> fetchPortfolio(String id) async {
     try {
-      if (kDebugMode) throw Error();
+      // if (kDebugMode) throw Error();
       final response = await http.get(Uri.parse("$api/portfolios/$id"));
       if (response.statusCode == 200) {
         final d = Portfolio.fromJson(json.decode(response.body));

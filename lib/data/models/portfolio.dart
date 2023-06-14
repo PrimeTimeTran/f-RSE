@@ -26,7 +26,7 @@ class Portfolio {
         for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)
       ],
       series: [
-        for (var cs in v['timeSeries']) CandleStick.fromJson(cs)
+        for (var cs in v['series']) CandleStick.fromJson(cs)
       ],
     );
   }

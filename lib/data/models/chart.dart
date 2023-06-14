@@ -16,13 +16,13 @@ class CandleStick {
   });
 
   factory CandleStick.fromJson(Map<String, dynamic> j) => CandleStick(
-    low: j['value'],
-    open: j['value'],
-    high: j['value'],
-    close: j['value'],
-    value: j['value'],
-    date: j['timestamp'],
-  );
+        low: j['l'],
+        open: j['o'],
+        high: j['h'],
+        close: j['c'],
+        value: j['c'] ?? j['value'],
+        date: j['time'],
+      );
 
   @override
   String toString() {

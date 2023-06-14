@@ -23,6 +23,9 @@ Future<void> main() async {
         BlocProvider<PortfolioCubit>(
           create: (_) => PortfolioCubit(),
         ),
+        BlocProvider<AssetCubit>(
+          create: (_) => AssetCubit(),
+        ),
       ],
       child: const MyApp(),
     ),

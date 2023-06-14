@@ -60,7 +60,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
 
       emit(PortfolioLoaded(p));
     } catch (e) {
-      emit(PortfolioError('Error fetching portfolio'));
+      emit(PortfolioError('fetching portfolio'));
     }
   }
 
