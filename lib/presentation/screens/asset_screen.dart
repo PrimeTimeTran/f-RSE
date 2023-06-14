@@ -36,7 +36,7 @@ class _AssetScreeState extends State<AssetScreen> {
               if (state is AssetLoading) {
                 return const CircularProgressIndicator();
               } else if (state is AssetLoaded) {
-                final data = context.read<AssetCubit>().live;
+                final data = context.read<AssetCubit>().current;
                 return Column(
                   children: [
                     CandleStickChart(data: data),

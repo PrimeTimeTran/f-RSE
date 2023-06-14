@@ -40,12 +40,6 @@ class LineChartState extends State<LineChart> {
     data = widget.data;
   }
 
-  void changePeriod(String p) {
-    setState(() {
-      period = p;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -101,7 +95,6 @@ class LineChartState extends State<LineChart> {
           ),
         ),
         PeriodSelector(
-          changePeriod: changePeriod,
           periods: const ['live', '1d', '1w', '1m', '3m', '1y', '5y', 'all'],
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/models/all.dart';
@@ -46,20 +47,27 @@ class AssetError extends AssetState {
 }
 
 class AssetCubit extends Cubit<AssetState> {
-  List<CandleStick> live = [];
+  String assetId = '';
+  String period = 'live';
+  List<CandleStick> current = [];
   final AssetService assetService = AssetService();
 
   AssetCubit() : super(AssetInitial());
 
   Future<void> fetchAsset(String id) async {
     emit(AssetLoading());
-
     try {
-      final p = await assetService.fetchAsset(id);
-      live = p.live;
+      assetId = id;
+      final p = await assetService.fetchAsset(assetId, period);
+      current = p.current;
       emit(AssetLoaded(p));
     } catch (e) {
       emit(AssetError('Error fetching asset'));
     }
+  }
+
+  void setPeriod(String p) async {
+    period = p;
+    await fetchAsset(assetId);
   }
 }

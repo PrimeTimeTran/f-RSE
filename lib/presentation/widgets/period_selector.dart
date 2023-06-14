@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:rse/data/cubits/all.dart';
 
 class PeriodSelector extends StatelessWidget {
   final List<String> periods;
-  final Function(String) changePeriod;
 
-  const PeriodSelector({super.key, required this.periods, required this.changePeriod});
+  const PeriodSelector({super.key, required this.periods });
 
   @override
   Widget build(BuildContext context) {
+    final assetCubit = BlocProvider.of<AssetCubit>(context);
+
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -17,7 +21,7 @@ class PeriodSelector extends StatelessWidget {
             fit: FlexFit.tight,
             child: GestureDetector(
               onTap: () {
-                changePeriod(period);
+                assetCubit.setPeriod(period);
               },
               child: Container(
                 height: 20, // Adjust the height as needed
@@ -36,4 +40,6 @@ class PeriodSelector extends StatelessWidget {
       ),
     );
   }
+
+  void setPeriod(String period) {}
 }
