@@ -10,10 +10,10 @@ import 'package:rse/presentation/widgets/all.dart';
 
 class PlaceholderScreen extends StatefulWidget {
   @override
-  PlacerholderState createState() => PlacerholderState();
+  PlaceholderState createState() => PlaceholderState();
 }
 
-class PlacerholderState extends State<PlaceholderScreen> {
+class PlaceholderState extends State<PlaceholderScreen> {
   bool isLoading = true;
 
   @override
