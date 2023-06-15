@@ -8,10 +8,79 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
+class PlaceholderScreen extends StatefulWidget {
+  @override
+  PlacerholderState createState() => PlacerholderState();
+}
+
+class PlacerholderState extends State<PlaceholderScreen> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Placeholder Screen'),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (isLoading) {
+            // Placeholder widget while loading
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            // Your content widget
+            return const Center(
+              child: Text('Content Loaded'),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class ChartBody extends StatelessWidget {
+  final List<CandleStick> data;
+
+  const ChartBody({Key? key, required this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AssetCubit, AssetState>(
+      builder: (context, state) {
+        if (state is AssetInitial) {
+          return PlaceholderScreen();
+        } else if (state is AssetLoading) {
+          return PlaceholderScreen();
+        } else if (state is AssetLoaded) {
+          return Text('sksk');
+        } else if (state is AssetError) {
+          return const Center(child: Text('Error'));
+        } else {
+          return const Center(child: Text('Error'));
+        }
+      },
+    );
+  }
+}
+
 class CandleStickChart extends StatefulWidget {
   final List<CandleStick> data;
 
   const CandleStickChart({Key? key, required this.data}) : super(key: key);
+
 
   @override
   CandleStickChartState createState() => CandleStickChartState(data: data);
@@ -37,43 +106,6 @@ class CandleStickChartState extends State<CandleStickChart> {
     });
   }
 
-  int calculateIntervals(period){
-    switch (period) {
-      case 'live':
-        return 5;
-      case '1d':
-        return (data.length /24).toInt();
-      case '1w':
-        return 30;
-      case '1m':
-        return 30;
-      case '3m':
-        return 30;
-      case '1y':
-        return 12;
-    }
-    return 1;
-  }
-
-  String chooseFormat(period, d, index) {
-    String val = '';
-    switch (period) {
-      case 'live':
-        val = 'h:mma';
-      case '1d':
-        val = 'h:mma';
-      case '1w':
-        val = 'h:mma MMMM d';
-      case '1m':
-        val = 'h:mma MMMM d';
-      case '3m':
-        val = 'M/d';
-      case '1y':
-        val = 'yMd';
-    }
-    return DateFormat(val).format(DateTime.parse(d.time)).toString();
-  }
-
   @override
   Widget build(BuildContext context) {
     final assetCubit = BlocProvider.of<AssetCubit>(context);
@@ -91,7 +123,25 @@ class CandleStickChartState extends State<CandleStickChart> {
     );
   }
 
-  LayoutBuilder _buildLayoutBuilder(AssetCubit assetCubit) {
+  void onHoverChart(RenderBox? renderBox, Offset? positionInChart, double labelsWidth, double availableWidth, double candlestickWidth) {
+    if (renderBox != null && positionInChart != null && positionInChart.dx >= labelsWidth && positionInChart.dx <= availableWidth) {
+      setState(() {
+        hoveredPointIndex = _findNearestDataPointIndex(positionInChart.dx - labelsWidth, candlestickWidth);
+        isHovered = true;
+      });
+
+      if (hoveredPointIndex != null) {
+        final CandleStick hoveredCandle = data[hoveredPointIndex!];
+        onHoveredCandle(hoveredCandle);
+      }
+    } else {
+      setState(() {
+        isHovered = false;
+      });
+    }
+  }
+
+  _buildLayoutBuilder(assetCubit) {
     return LayoutBuilder(
       builder: (context, constraints) {
         const double labelsWidth = 50;
@@ -124,7 +174,7 @@ class CandleStickChartState extends State<CandleStickChart> {
                 highValueMapper: (CandleStick d, _) => d.high,
                 openValueMapper: (CandleStick d, _) => d.open,
                 closeValueMapper: (CandleStick d, _) => d.close,
-                xValueMapper: (CandleStick d, int index) => chooseFormat(assetCubit.period.toString(), d, index),
+                xValueMapper: (CandleStick d, int index) => chooseFormat(assetCubit.period.toString(), d),
               ),
             ],
             trackballBehavior: TrackballBehavior(
@@ -145,27 +195,46 @@ class CandleStickChartState extends State<CandleStickChart> {
     );
   }
 
-  void onHoverChart(RenderBox? renderBox, Offset? positionInChart, double labelsWidth, double availableWidth, double candlestickWidth) {
-    if (renderBox != null && positionInChart != null && positionInChart.dx >= labelsWidth && positionInChart.dx <= availableWidth) {
-      setState(() {
-        hoveredPointIndex = _findNearestDataPointIndex(positionInChart.dx - labelsWidth, candlestickWidth);
-        isHovered = true;
-      });
-
-      if (hoveredPointIndex != null) {
-        final CandleStick hoveredCandle = data[hoveredPointIndex!];
-        onHoveredCandle(hoveredCandle);
-      }
-    } else {
-      setState(() {
-        isHovered = false;
-      });
+  int calculateIntervals(period){
+    switch (period) {
+      case 'live':
+        return 5;
+      case '1d':
+        return (data.length /24).toInt();
+      case '1w':
+        return 30;
+      case '1m':
+        return 30;
+      case '3m':
+        return 30;
+      case '1y':
+        return 12;
     }
+    return 1;
+  }
+
+  String chooseFormat(period, d) {
+    String val = '';
+    switch (period) {
+      case 'live':
+        val = 'h:mma';
+      case '1d':
+        val = 'h:mma';
+      case '1w':
+        val = 'h:mma MMMM d';
+      case '1m':
+        val = 'h:mma MMMM d';
+      case '3m':
+        val = 'M/d';
+      case '1y':
+        val = 'yMd';
+    }
+    return DateFormat(val).format(DateTime.parse(d.time)).toString();
   }
 
   Padding _indicator() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 600),
+      padding: const EdgeInsets.symmetric(horizontal: 600),
       child: Row(
         children: [
           Expanded(

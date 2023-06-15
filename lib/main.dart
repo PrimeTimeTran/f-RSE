@@ -51,7 +51,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _idx = 0;
+  int _idx = 4;
 
   void change(int idx) {
     setState(() {
