@@ -1,16 +1,17 @@
-# Royal Stock Exchange(RSE) client
+# Royal Stock Exchange(RSE) Flutter Client
 
-A new Flutter project.
+![Preview](https://s11.gifyu.com/images/SQLgu.gif)
+
+A stock exchange for the next generation
+
+## Dependencies
+
+- Fluter
+- Bloc
+- SyncFusion
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Get a copy of `.env`
+- Create a NOTES.md for saving code snippets and notes for yourself.
+- Create a SCRATCHPAD.md for saving snippets while working which you don't necessarily want to keep "long term"
