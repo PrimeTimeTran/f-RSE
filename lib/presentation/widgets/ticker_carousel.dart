@@ -15,12 +15,12 @@ class CarouselState
     with SingleTickerProviderStateMixin {
   late Animation<Offset> _animation;
   late AnimationController _animationController;
-  late GlobalKey _tickerBarKey; // Added GlobalKey declaration
+  late GlobalKey _tickerBarKey;
 
   @override
   void initState() {
     super.initState();
-    _tickerBarKey = GlobalKey(); // Initialize GlobalKey
+    _tickerBarKey = GlobalKey();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 60),
@@ -63,64 +63,67 @@ class CarouselState
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      width: double.infinity,
-      child: ClipRect(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: AnimatedBuilder(
-            animation: _animationController,
-            builder: (BuildContext context, Widget? child) {
-              return SlideTransition(
-                position: _animation,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    key: _tickerBarKey,
-                    children: widget.tickers.map((ticker) {
-                      MaterialColor color = getIndicationColor(ticker);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              ticker.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                Icon(
-                                  getArrow(ticker),
-                                  size: 16.0,
-                                  color: color,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  ticker.pointsUpDown.toStringAsFixed(2),
-                                  style: TextStyle(
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: SizedBox(
+        height: 40,
+        width: double.infinity,
+        child: ClipRect(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: AnimatedBuilder(
+              animation: _animationController,
+              builder: (BuildContext context, Widget? child) {
+                return SlideTransition(
+                  position: _animation,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      key: _tickerBarKey,
+                      children: widget.tickers.map((ticker) {
+                        MaterialColor color = getIndicationColor(ticker);
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                ticker.name,
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Icon(
+                                    getArrow(ticker),
+                                    size: 16.0,
                                     color: color,
                                   ),
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '(${ticker.percentage.toStringAsFixed(2)}%)',
-                                  style: TextStyle(
-                                    color: color,
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    ticker.pointsUpDown.toStringAsFixed(2),
+                                    style: TextStyle(
+                                      color: color,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '(${ticker.percentage.toStringAsFixed(2)}%)',
+                                    style: TextStyle(
+                                      color: color,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -180,8 +183,8 @@ class TickerCarouselState extends State<TickerCarousel> {
 class Ticker {
   final String name;
   final double price;
-  final double pointsUpDown;
   final double percentage;
+  final double pointsUpDown;
 
   Ticker(this.name, this.price, this.pointsUpDown, this.percentage);
 }

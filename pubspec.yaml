@@ -6,7 +6,6 @@ environment:
   sdk: '>=3.0.1 <4.0.0'
 dependencies:
   cupertino_icons: ^1.0.2
-  fl_chart: ^0.62.0
   flutter:
     sdk: flutter
   flutter_localization: ^0.1.11
@@ -21,19 +20,17 @@ dependencies:
   collection: ^1.17.1
   flutter_dotenv: ^5.1.0
 
-assets:
-  - .env
-  - assets/news.json
-  - assets/portfolio.json
-
-
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true
+  assets:
+    - assets/.env
+    - assets/news.json
+    - assets/portfolio.json
+
 
 

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/presentation/utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -39,23 +40,22 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-        child: Center(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          TickerCarousel(),
-          PortfolioLineChart(),
+          const TickerCarousel(),
+          const PortfolioLineChart(),
           Padding(
-            padding: EdgeInsets.only(left: 50.0, right: 50),
+            padding: isWeb ? const EdgeInsets.only(left: 50.0, right: 50) : const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
-              children: [
+              children: const [
                 Articles(),
-                Watchlist(),
+                if (isWeb) Watchlist()
               ],
             ),
           ),
         ],
       ),
-    ));
+    );
   }
 }

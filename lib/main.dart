@@ -9,7 +9,7 @@ import 'package:rse/presentation/navigation/navbar_icons.dart';
 import 'package:rse/presentation/utils/constants.dart' as constants;
 
 Future<void> main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "assets/.env");
 
   Bloc.observer = SimpleBlocObserver();
   HttpOverrides.global = MyHttpOverrides();

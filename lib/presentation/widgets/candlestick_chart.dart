@@ -55,30 +55,30 @@ class CandleStickChartState extends State<CandleStickChart> {
     return 1;
   }
 
-  String chooseFormat(period, d, index){
+  String chooseFormat(period, d, index) {
+    String val = '';
     switch (period) {
       case 'live':
-        return DateFormat('h:mma').format(DateTime.parse(d.time)).toString();
+        val = 'h:mma';
       case '1d':
-        return DateFormat('h:mma').format(DateTime.parse(d.time)).toString();
+        val = 'h:mma';
       case '1w':
-        return DateFormat('h:mma MMMM d').format(DateTime.parse(d.time)).toString();
+        val = 'h:mma MMMM d';
       case '1m':
-        return DateFormat('h:mma MMMM d').format(DateTime.parse(d.time)).toString();
+        val = 'h:mma MMMM d';
       case '3m':
-        return DateFormat('M/d').format(DateTime.parse(d.time)).toString();
+        val = 'M/d';
       case '1y':
-        return DateFormat('yMd').format(DateTime.parse(d.time)).toString();
+        val = 'yMd';
     }
-    return '1';
+    return DateFormat(val).format(DateTime.parse(d.time)).toString();
   }
 
   @override
   Widget build(BuildContext context) {
     final assetCubit = BlocProvider.of<AssetCubit>(context);
     return Padding(
-      // padding: const EdgeInsets.all(8.0),
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
+      padding: isWeb ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Column(
         children: [
           _indicator(),
@@ -93,56 +93,56 @@ class CandleStickChartState extends State<CandleStickChart> {
 
   LayoutBuilder _buildLayoutBuilder(AssetCubit assetCubit) {
     return LayoutBuilder(
-          builder: (context, constraints) {
-            final double labelsWidth = 50;
-            final double availableWidth = constraints.maxWidth;
-            final double chartWidth = availableWidth - labelsWidth;
-            final double candlestickWidth = chartWidth / (data.length + 1);
+      builder: (context, constraints) {
+        const double labelsWidth = 50;
+        final double availableWidth = constraints.maxWidth;
+        final double chartWidth = availableWidth - labelsWidth;
+        final double candlestickWidth = chartWidth / (data.length + 1);
 
-            return MouseRegion(
-              onHover: (event) {
-                final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-                final positionInChart = renderBox?.globalToLocal(event.position);
-                onHoverChart(renderBox, positionInChart, labelsWidth, availableWidth, candlestickWidth);
-              },
-              child: SfCartesianChart(
-                primaryYAxis: NumericAxis(
-                  numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
-                  minimum: (data.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
-                ),
-                primaryXAxis: CategoryAxis(
-                  labelRotation: 45,
-                  maximumLabels: 30,
-                  labelPlacement: LabelPlacement.betweenTicks,
-                  labelIntersectAction: AxisLabelIntersectAction.hide,
-                  desiredIntervals: calculateIntervals(assetCubit.period.toString()),
-                ),
-                series: <CandleSeries<CandleStick, String>>[
-                  CandleSeries<CandleStick, String>(
-                    dataSource: data,
-                    lowValueMapper: (CandleStick d, _) => d.low,
-                    highValueMapper: (CandleStick d, _) => d.high,
-                    openValueMapper: (CandleStick d, _) => d.open,
-                    closeValueMapper: (CandleStick d, _) => d.close,
-                    xValueMapper: (CandleStick d, int index) => chooseFormat(assetCubit.period.toString(), d, index),
-                  ),
-                ],
-                trackballBehavior: TrackballBehavior(
-                  enable: true,
-                  lineWidth: 2,
-                  lineColor: Colors.blue,
-                  activationMode: ActivationMode.singleTap,
-                  tooltipSettings: InteractiveTooltip(
-                    enable: true,
-                    borderWidth: 1,
-                    color: Colors.grey[900]!,
-                    borderColor: Colors.blue,
-                  ),
-                ),
-              ),
-            );
+        return MouseRegion(
+          onHover: (event) {
+            final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
+            final positionInChart = renderBox?.globalToLocal(event.position);
+            onHoverChart(renderBox, positionInChart, labelsWidth, availableWidth, candlestickWidth);
           },
+          child: SfCartesianChart(
+            primaryYAxis: NumericAxis(
+              numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
+              minimum: (data.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
+            ),
+            primaryXAxis: CategoryAxis(
+              labelRotation: 45,
+              maximumLabels: 30,
+              labelPlacement: LabelPlacement.betweenTicks,
+              labelIntersectAction: AxisLabelIntersectAction.hide,
+              desiredIntervals: calculateIntervals(assetCubit.period.toString()),
+            ),
+            series: <CandleSeries<CandleStick, String>>[
+              CandleSeries<CandleStick, String>(
+                dataSource: data,
+                lowValueMapper: (CandleStick d, _) => d.low,
+                highValueMapper: (CandleStick d, _) => d.high,
+                openValueMapper: (CandleStick d, _) => d.open,
+                closeValueMapper: (CandleStick d, _) => d.close,
+                xValueMapper: (CandleStick d, int index) => chooseFormat(assetCubit.period.toString(), d, index),
+              ),
+            ],
+            trackballBehavior: TrackballBehavior(
+              enable: true,
+              lineWidth: 2,
+              lineColor: Colors.blue,
+              activationMode: ActivationMode.singleTap,
+              tooltipSettings: InteractiveTooltip(
+                enable: true,
+                borderWidth: 1,
+                color: Colors.grey[900]!,
+                borderColor: Colors.blue,
+              ),
+            ),
+          ),
         );
+      },
+    );
   }
 
   void onHoverChart(RenderBox? renderBox, Offset? positionInChart, double labelsWidth, double availableWidth, double candlestickWidth) {

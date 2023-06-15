@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rse/presentation/screens/all.dart';
 
@@ -21,6 +22,9 @@ const List<Widget> tabs = [
   SpendingScreen(),
   AssetScreen(),
 ];
+
+//detect if the device is a web browser
+const bool isWeb = kIsWeb;
 
 class TabScreen extends StatelessWidget {
   final String title;
