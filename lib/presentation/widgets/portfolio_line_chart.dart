@@ -18,11 +18,7 @@ class PortfolioLineChart extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (state is PortfolioLoaded) {
           final dataPoints = context.read<PortfolioCubit>().dataPoints;
-          return Column(
-            children: [
-              LineChart(data: dataPoints),
-            ],
-          );
+          return LineChart(data: dataPoints);
         } else if (state is PortfolioError) {
           return Text('Error: ${state.errorMessage}');
         } else {

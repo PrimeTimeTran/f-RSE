@@ -37,11 +37,7 @@ class _AssetScreeState extends State<AssetScreen> {
                 return const CircularProgressIndicator();
               } else if (state is AssetLoaded) {
                 final data = context.read<AssetCubit>().current;
-                return Column(
-                  children: [
-                    CandleStickChart(data: data),
-                  ],
-                );
+                return CandleStickChart(data: data);
               } else if (state is AssetError) {
                 return Text('Error: ${state.errorMessage}');
               } else {
@@ -54,15 +50,6 @@ class _AssetScreeState extends State<AssetScreen> {
               return true;
             },
           ),
-          // Padding(
-          //   padding: EdgeInsets.only(left: 50.0, right: 50),
-          //   child: Row(
-          //     children: [
-          //       Articles(),
-          //       Watchlist(),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     ));

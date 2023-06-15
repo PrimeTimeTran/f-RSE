@@ -56,7 +56,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
 
     try {
       final p = await portfolioService.fetchPortfolio(id);
-      dataPoints = getDataPoints(p.series);
+      dataPoints = p.series;
 
       emit(PortfolioLoaded(p));
     } catch (e) {
@@ -66,7 +66,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
 
   List<DataPoint> getDataPoints(List<CandleStick> list) {
     return list
-        .map((time) => DataPoint(time.date ?? '', time.value ?? 0))
+        .map((time) => DataPoint(time.time, 0))
         .toList();
   }
 }

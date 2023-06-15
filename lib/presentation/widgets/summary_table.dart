@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 
 import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/utils/all.dart';

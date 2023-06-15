@@ -21,9 +21,7 @@ class PortfolioService {
         throw Error();
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error: Fetching portfolios. Loading from cache');
-      }
+      debugPrint("Error: Portfolio fetching. Loading from cache");
       return await _localStorage.getCachedPortfolio();
     }
   }

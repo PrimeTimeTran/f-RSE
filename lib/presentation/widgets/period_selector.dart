@@ -11,7 +11,6 @@ class PeriodSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final assetCubit = BlocProvider.of<AssetCubit>(context);
-
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -29,6 +28,7 @@ class PeriodSelector extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(5.0),
+                  color: assetCubit.period.toString() == period ? Colors.red : Colors.white,
                 ),
                 child: Center(
                   child: Text(period, style: const TextStyle(fontSize: 10)),

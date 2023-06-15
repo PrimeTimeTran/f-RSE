@@ -1,18 +1,18 @@
 class CandleStick {
-  final double? low;
-  final String? date;
-  final double? open;
-  final double? high;
-  final double? close;
-  final double? value;
+  final double low;
+  final String time;
+  final double open;
+  final double high;
+  final double close;
+  final double value;
 
   CandleStick({
-    this.low,
-    this.date,
-    this.open,
-    this.high,
-    this.close,
-    this.value,
+    required this.low,
+    required this.open,
+    required this.high,
+    required this.close,
+    required this.value,
+    required this.time,
   });
 
   factory CandleStick.fromJson(Map<String, dynamic> j) => CandleStick(
@@ -20,15 +20,15 @@ class CandleStick {
         open: j['o'],
         high: j['h'],
         close: j['c'],
+        time: j['time'],
         value: j['c'] ?? j['value'],
-        date: j['time'],
       );
 
   @override
   String toString() {
     return 'CandleStick { '
         'low: $low, '
-        'date: $date, '
+        'time: $time, '
         'open: $open, '
         'high: $high, '
         'value: $value, '

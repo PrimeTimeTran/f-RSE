@@ -58,9 +58,7 @@ class AssetService {
         throw Error();
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error: Fetching asset. Loading from cache $e');
-      }
+      debugPrint("Error: Portfolio Asset. Loading from cache");
       // return await _localStorage.getCachedAsset();
     }
 

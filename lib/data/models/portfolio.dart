@@ -6,7 +6,7 @@ class Portfolio {
   final Current current;
   final List<Stock> stocks;
   final List<Crypto> cryptos;
-  final List<CandleStick> series;
+  final List<DataPoint> series;
 
   Portfolio({
     required this.stocks,
@@ -26,7 +26,7 @@ class Portfolio {
         for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)
       ],
       series: [
-        for (var cs in v['series']) CandleStick.fromJson(cs)
+        for (var cs in v['series']) DataPoint(cs['time'], cs['value'])
       ],
     );
   }
