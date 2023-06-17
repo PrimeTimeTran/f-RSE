@@ -6,7 +6,8 @@ import 'package:rse/data/models/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 
 class LocalStorageService {
-  Future<void> saveData(String key, String value, {bool overwrite = true}) async {
+  Future<void> saveData(String key, String value,
+      {bool overwrite = true}) async {
     final prefs = await SharedPreferences.getInstance();
     if (overwrite || !prefs.containsKey(key)) {
       await prefs.setString(key, value);
@@ -24,7 +25,7 @@ class LocalStorageService {
     if (data != null && data.isNotEmpty) {
       return _mapArticlesFromData(jsonDecode(data)['results']);
     } else {
-      final d = await loadJsonFile('assets/news.json');
+      final d = await loadJsonFile('news.json');
       if (d != null && d.isNotEmpty) {
         return _mapArticlesFromData(d['results']);
       }
@@ -44,7 +45,7 @@ class LocalStorageService {
     if (data != null && data.isNotEmpty) {
       return Portfolio.fromJson(data as Map<String, dynamic>);
     } else {
-      final d = await loadJsonFile('assets/portfolio.json');
+      final d = await loadJsonFile('portfolio.json');
       if (d != null && d.isNotEmpty) {
         return Portfolio.fromJson(d);
       }

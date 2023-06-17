@@ -31,5 +31,9 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    "assets": [
+        "assets/news.json",
+        "assets/portfolio.json"
     ]
 }
