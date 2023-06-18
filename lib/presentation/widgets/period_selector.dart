@@ -28,7 +28,7 @@ class PeriodSelector extends StatelessWidget {
                       assetCubit.setPeriod(p);
                     },
                     child: Container(
-                      height: 20, // Adjust the height as needed
+                      height: 30, // Adjust the height as needed
                       margin: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
@@ -42,7 +42,7 @@ class PeriodSelector extends StatelessWidget {
                   );
                 } else {
                   return Container(
-                    height: 20, // Adjust the height as needed
+                    height: 30, // Adjust the height as needed
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),

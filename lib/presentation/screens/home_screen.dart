@@ -17,26 +17,22 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late NewsCubit _newsCubit;
   late PortfolioCubit _portfolioCubit;
+  late AssetCubit _assetCubit;
 
   @override
   void initState() {
     super.initState();
     _newsCubit = context.read<NewsCubit>();
     _portfolioCubit = context.read<PortfolioCubit>();
+    _assetCubit = context.read<AssetCubit>();
     fetchData();
   }
 
   Future<void> fetchData() async {
     _newsCubit.fetchArticles();
     _portfolioCubit.fetchPortfolio("1");
+    _assetCubit.fetchAsset("1");
   }
-
-  // @override
-  // void dispose() {
-  //   _newsCubit.close();
-  //   _portfolioCubit.close();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
