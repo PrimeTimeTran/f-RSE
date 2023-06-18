@@ -36,8 +36,8 @@ class LocalStorageService {
 
   List<Article> _mapArticlesFromData(dynamic data) {
     return (data as List<dynamic>)
-        .map((item) => Article.fromJson(item as Map<String, dynamic>))
-        .toList();
+      .map((item) => Article.fromJson(item as Map<String, dynamic>))
+      .toList();
   }
 
   Future<Portfolio> getCachedPortfolio() async {
@@ -51,5 +51,18 @@ class LocalStorageService {
       }
     }
     return Portfolio.defaultPortfolio();
+  }
+
+  Future<Asset> getCachedAsset(String symbol, period) async {
+    var data = await loadData('$symbol-$period');
+    if (data != null && data.isNotEmpty) {
+      return Asset.fromJson(data as Map<String, dynamic>, period);
+    } else {
+      final d = await loadJsonFile('$symbol-$period.json');
+      if (d != null && d.isNotEmpty) {
+        return Asset.fromJson(d as Map<String, dynamic>, period);
+      }
+    }
+    return Asset.defaultAsset();
   }
 }

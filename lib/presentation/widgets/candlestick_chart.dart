@@ -8,8 +8,8 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
-class Placeholder extends StatelessWidget {
-  const Placeholder({super.key});
+class PlacerHolderChart extends StatelessWidget {
+  const PlacerHolderChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +96,9 @@ class CandleStickChartState extends State<CandleStickChart> {
     return BlocConsumer<AssetCubit, AssetState>(
       builder: (context, state) {
         if (state is AssetLoading) {
-          return const Placeholder();
+          return const PlacerHolderChart();
         } else if (state is AssetLoaded) {
-          final data = context.read<AssetCubit>().current;
+          final series = context.read<AssetCubit>().current;
           final period = context.read<AssetCubit>().period;
           return SfCartesianChart(
             tooltipBehavior: _tooltipBehavior,
@@ -106,23 +106,22 @@ class CandleStickChartState extends State<CandleStickChart> {
             trackballBehavior: _trackballBehavior,
             primaryYAxis: NumericAxis(
               numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
-              minimum: (data.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
+              minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
             ),
             onTrackballPositionChanging: (TrackballArgs args) {
               final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-              final CandleStick candle = data[dataPoint!];
+              final CandleStick candle = series[dataPoint!];
               context.read<PortfolioCubit>().setHoveredCandle(candle);
             },
             primaryXAxis: CategoryAxis(
               labelRotation: 45,
               maximumLabels: 30,
-              labelPlacement: LabelPlacement.betweenTicks,
               labelIntersectAction: AxisLabelIntersectAction.hide,
-              desiredIntervals: calculateIntervals(period.toString(), data),
+              desiredIntervals: calculateIntervals(period.toString(), series),
             ),
             series: <CandleSeries<CandleStick, String>>[
               CandleSeries<CandleStick, String>(
-                dataSource: data,
+                dataSource: series,
                 lowValueMapper: (CandleStick d, _) => d.low,
                 highValueMapper: (CandleStick d, _) => d.high,
                 openValueMapper: (CandleStick d, _) => d.open,
@@ -134,7 +133,7 @@ class CandleStickChartState extends State<CandleStickChart> {
         } else if (state is PortfolioError) {
           return const Text('Error:');
         } else {
-          return const Placeholder();
+          return const PlacerHolderChart();
         }
       },
       listener: (context, state) {

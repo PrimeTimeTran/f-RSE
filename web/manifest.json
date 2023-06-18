@@ -34,6 +34,12 @@
     ],
     "assets": [
         "assets/news.json",
-        "assets/portfolio.json"
+        "assets/portfolio.json",
+        "assets/GOOGL-live.json",
+        "assets/GOOGL-1d.json",
+        "assets/GOOGL-1w.json",
+        "assets/GOOGL-1m.json",
+        "assets/GOOGL-3m.json",
+        "assets/GOOGL-1y.json"
     ]
 }
