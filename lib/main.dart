@@ -93,7 +93,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
-        // highlightColor: Colors.lightGreenAccent,
         highlightColor: Colors.green[900],
       ),
       home: Scaffold(

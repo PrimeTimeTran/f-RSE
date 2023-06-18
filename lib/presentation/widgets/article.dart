@@ -116,7 +116,7 @@ class ArticleState extends State<Article> {
           image: DecorationImage(
             onError: (_, __) {
               setState(() {
-                imageUrl = "https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
+                imageUrl = "https://cors-anywhere.herokuapp.com/https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
               });
             },
             image: NetworkImage(imageUrl),
