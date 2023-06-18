@@ -92,7 +92,9 @@ class _MyAppState extends State<MyApp> {
       title: 'Royal Stock Exchange',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
+        // highlightColor: Colors.lightGreenAccent,
+        highlightColor: Colors.green[900],
       ),
       home: Scaffold(
         drawer: const MyDrawer(),

@@ -20,23 +20,13 @@ class LineChartState extends State<LineChart> {
   double? tappedXPosition;
   double? draggedXPosition;
   late List<DataPoint> data;
+  late TrackballBehavior _trackballBehavior;
   final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
-  final TrackballBehavior _trackballBehavior = TrackballBehavior(
-    enable: true,
-    lineWidth: 2,
-    shouldAlwaysShow: true,
-    lineColor: Colors.blue,
-    activationMode: ActivationMode.singleTap,
-    tooltipSettings: InteractiveTooltip(
-      enable: true,
-      borderWidth: 1,
-      color: Colors.grey[900]!,
-      borderColor: Colors.blue,
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
+    _setupTheme(context);
+
     return BlocConsumer<PortfolioCubit, PortfolioState>(
       builder: (context, state) {
         if (state is PortfolioLoading) {
@@ -76,6 +66,7 @@ class LineChartState extends State<LineChart> {
                                 dataSource: data.take(50).toList(),
                                 yValueMapper: (DataPoint d, _) => d.y,
                                 xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                                color: Colors.green,
                               ),
                             ],
                           )
@@ -110,6 +101,24 @@ class LineChartState extends State<LineChart> {
       buildWhen: (previous, current) {
         return true;
       },
+    );
+  }
+
+  _setupTheme(BuildContext context) {
+    final primarySwatch = Theme.of(context).primaryColor;
+    final highlightSwatch = Theme.of(context).highlightColor;
+    _trackballBehavior = TrackballBehavior(
+      enable: true,
+      lineWidth: 2,
+      shouldAlwaysShow: true,
+      lineColor: highlightSwatch,
+      activationMode: ActivationMode.singleTap,
+      tooltipSettings: InteractiveTooltip(
+        enable: true,
+        borderWidth: 1,
+        color: primarySwatch,
+        borderColor: Colors.lightGreenAccent,
+      ),
     );
   }
 }
