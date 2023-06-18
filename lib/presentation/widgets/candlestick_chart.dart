@@ -8,7 +8,6 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
-
 class CandleStickChart extends StatefulWidget {
   const CandleStickChart({Key? key }) : super(key: key);
 
@@ -78,7 +77,7 @@ class CandleStickChartState extends State<CandleStickChart> {
           final sym = context.read<AssetCubit>().sym;
           if (hoveredCandle?.time == '') {
             final candle = series[0];
-            context.read<PortfolioCubit>().setHoveredCandle(candle);
+            context.read<ChartCubit>().setHoveredSeriesItem(candle);
           }
           return SfCartesianChart(
             tooltipBehavior: _tooltipBehavior,
@@ -102,7 +101,7 @@ class CandleStickChartState extends State<CandleStickChart> {
             onTrackballPositionChanging: (TrackballArgs args) {
               final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
               final CandleStick candle = series[dataPoint!];
-              context.read<PortfolioCubit>().setHoveredCandle(candle);
+              context.read<ChartCubit>().setHoveredSeriesItem(candle);
             },
             primaryXAxis: CategoryAxis(
               labelRotation: 45,
@@ -138,35 +137,24 @@ class CandleStickChartState extends State<CandleStickChart> {
   Padding _indicator() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 600),
-      child: BlocConsumer<PortfolioCubit, PortfolioState>(
+      child: BlocConsumer<ChartCubit, ChartState>(
         builder: (context, state) {
-          if (state is PortfolioLoading) {
+          if (state is ChartInitial) {
             return const CircularProgressIndicator();
-          } else if (state is CandleLoaded) {
-            final c = context.read<PortfolioCubit>().candle;
-            // final p = context.read<AssetCubit>().period;
+          } else if (state is ChartLoaded) {
+            final c = context.read<ChartCubit>().candle;
             return Row(
               children: [
-                //   Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text("Date: "),
-                //     Text(
-                //       DateFormat(chooseFormat(p, c)).format(DateTime.parse(c.time)).toString(),
-                //       style: const TextStyle(fontWeight: FontWeight.bold),
-                //     ),
-                //   ],
-                // ),
                 _indicatorItem(c.open, 'Open: '),
                 _indicatorItem(c.low, 'Low: '),
                 _indicatorItem(c.high, 'High: '),
                 _indicatorItem(c.close, 'Close: '),
               ],
             );
-          } else if (state is PortfolioError) {
+          } else if (state is ChartError) {
             return Text('Error: ${state.errorMessage}');
           } else {
-            return const Text('');
+            return const Text('Error');
           }
         },
         listener: (context, state) {

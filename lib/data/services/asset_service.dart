@@ -23,7 +23,7 @@ class AssetService {
         throw Error();
       }
     } catch (e) {
-      debugPrint("Error: Asset fetching. Loading from cache.");
+      debugPrint("Error: Fetching asset. Loading from cache.");
       return await _localStorage.getCachedAsset('GOOGL', period);
     }
   }

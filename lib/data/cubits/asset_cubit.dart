@@ -59,8 +59,8 @@ class AssetCubit extends Cubit<AssetState> {
     try {
       assetId = id;
       final a = await assetService.fetchAsset(assetId, period);
-      current = a.current;
       sym = a.sym!;
+      current = a.current;
       emit(AssetLoaded(a));
     } catch (e) {
       emit(AssetError('Error fetching asset'));

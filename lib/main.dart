@@ -29,6 +29,9 @@ Future<void> main() async {
         BlocProvider<AssetCubit>(
           create: (_) => AssetCubit(),
         ),
+        BlocProvider<ChartCubit>(
+          create: (_) => ChartCubit(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -58,6 +61,7 @@ class _MyAppState extends State<MyApp> {
   late NewsCubit _newsCubit;
   late PortfolioCubit _portfolioCubit;
   late AssetCubit _assetCubit;
+  late ChartCubit _chartCubit;
 
   @override
   void initState() {
@@ -65,6 +69,7 @@ class _MyAppState extends State<MyApp> {
     _newsCubit = context.read<NewsCubit>();
     _portfolioCubit = context.read<PortfolioCubit>();
     _assetCubit = context.read<AssetCubit>();
+    _chartCubit = context.read<ChartCubit>();
     fetchData();
   }
 
@@ -72,6 +77,7 @@ class _MyAppState extends State<MyApp> {
     _newsCubit.fetchArticles();
     _portfolioCubit.fetchPortfolio("1");
     _assetCubit.fetchAsset("1");
+    _chartCubit.initializeChartCandle();
   }
 
   void change(int idx) {
