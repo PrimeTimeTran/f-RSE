@@ -18,8 +18,7 @@ class HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           TickerCarousel(),
-          PortfolioLineChart(),
-          ResponsiveLayout()
+          ResponsiveLayout(),
         ],
       ),
     );
@@ -47,7 +46,14 @@ class ResponsiveLayout extends StatelessWidget {
   }
 
   Widget buildSingleColumnLayout() {
-    return const SingleChildScrollView(child: Articles());
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          LineChart(),
+          Articles(),
+        ],
+      ),
+    );
   }
 
   Widget buildTwoColumnLayout() {
@@ -55,8 +61,15 @@ class ResponsiveLayout extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
       child: Row(
         children: [
-          SingleChildScrollView(
-            child: Articles(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  LineChart(),
+                  Articles(),
+                ],
+              ),
+            ),
           ),
           SingleChildScrollView(
             child: Watchlist(),
