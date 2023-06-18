@@ -75,6 +75,10 @@ class CandleStickChartState extends State<CandleStickChart> {
         } else if (state is AssetLoaded) {
           final series = context.read<AssetCubit>().current;
           final period = context.read<AssetCubit>().period;
+          if (hoveredCandle?.time == '') {
+            final candle = series[0];
+            context.read<PortfolioCubit>().setHoveredCandle(candle);
+          }
           return SfCartesianChart(
             tooltipBehavior: _tooltipBehavior,
             crosshairBehavior: _crosshairBehavior,
