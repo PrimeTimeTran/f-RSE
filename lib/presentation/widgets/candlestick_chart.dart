@@ -8,48 +8,31 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
-class PlaceholderScreen extends StatefulWidget {
-  const PlaceholderScreen({super.key});
-
-  @override
-  PlaceholderState createState() => PlaceholderState();
-}
-
-class PlaceholderState extends State<PlaceholderScreen> {
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        isLoading = false;
-      });
-    });
-  }
+class Placeholder extends StatelessWidget {
+  const Placeholder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Placeholder Screen'),
+    return SfCartesianChart(
+      primaryXAxis: CategoryAxis(
+        isVisible: false,
+        labelStyle: const TextStyle(color: Colors.transparent),
+        labelIntersectAction: AxisLabelIntersectAction.none,
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return const Center(
-              child: Text('Content Loaded'),
-            );
-          }
-        },
-      ),
+      series: <CandleSeries<CandleStick, String>>[
+        CandleSeries<CandleStick, String>(
+            dataSource: [],
+            lowValueMapper: (CandleStick d, _) => d.low,
+            highValueMapper: (CandleStick d, _) => d.high,
+            openValueMapper: (CandleStick d, _) => d.open,
+            closeValueMapper: (CandleStick d, _) => d.close,
+            xValueMapper: (CandleStick d, int index) => index.toString()
+        ),
+      ],
     );
   }
 }
+
 
 class CandleStickChart extends StatefulWidget {
   const CandleStickChart({Key? key }) : super(key: key);
@@ -110,11 +93,10 @@ class CandleStickChartState extends State<CandleStickChart> {
   }
 
   _buildLayoutBuilder() {
-    // TODO: Does not re render perfect like _indicator()
     return BlocConsumer<AssetCubit, AssetState>(
       builder: (context, state) {
         if (state is AssetLoading) {
-          return const CircularProgressIndicator();
+          return const Placeholder();
         } else if (state is AssetLoaded) {
           final data = context.read<AssetCubit>().current;
           final period = context.read<AssetCubit>().period;
@@ -152,7 +134,7 @@ class CandleStickChartState extends State<CandleStickChart> {
         } else if (state is PortfolioError) {
           return const Text('Error:');
         } else {
-          return const Text('');
+          return const Placeholder();
         }
       },
       listener: (context, state) {
@@ -164,7 +146,6 @@ class CandleStickChartState extends State<CandleStickChart> {
   }
 
   Padding _indicator() {
-    // TODO: Perfect re render after cubit state change
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 600),
       child: BlocConsumer<PortfolioCubit, PortfolioState>(

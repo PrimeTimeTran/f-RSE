@@ -41,7 +41,18 @@ class PeriodSelector extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return const Text('');
+                  return Container(
+                    height: 20, // Adjust the height as needed
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Text(p, style: const TextStyle(fontSize: 10)),
+                    ),
+                  );
                 }
               },
               listener: (context, state) {
