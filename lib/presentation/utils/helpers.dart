@@ -102,3 +102,4 @@ int calculateIntervals(period, data){
 
   return map[period] ?? 0;
 }
+

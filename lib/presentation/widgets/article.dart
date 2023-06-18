@@ -8,10 +8,10 @@ class Article extends StatefulWidget {
   const Article({Key? key, required this.article}) : super(key: key);
 
   @override
-  _ArticleState createState() => _ArticleState();
+  ArticleState createState() => ArticleState();
 }
 
-class _ArticleState extends State<Article> {
+class ArticleState extends State<Article> {
   late String imageUrl;
 
   @override

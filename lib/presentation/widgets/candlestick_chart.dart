@@ -55,89 +55,95 @@ class CandleStickChartState extends State<CandleStickChart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: isWeb ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Column(
-        children: [
-          _indicator(),
-          _buildLayoutBuilder(),
-          PeriodSelector(),
-        ],
+      padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _indicator(),
+            _buildLayoutBuilder(),
+            PeriodSelector(),
+          ],
+        ),
       ),
     );
   }
 
   _buildLayoutBuilder() {
-    return BlocConsumer<AssetCubit, AssetState>(
-      builder: (context, state) {
-        if (state is AssetLoading) {
-          return const PlaceholderCandleStickChart();
-        } else if (state is AssetLoaded) {
-          final sym = context.read<AssetCubit>().sym;
-          final period = context.read<AssetCubit>().period;
-          final series = context.read<AssetCubit>().current;
-          if (hoveredCandle?.time == '') {
-            final candle = series[0];
-            context.read<ChartCubit>().setHoveredSeriesItem(candle);
-          }
-          return SfCartesianChart(
-            tooltipBehavior: _tooltipBehavior,
-            crosshairBehavior: _crosshairBehavior,
-            trackballBehavior: _trackballBehavior,
-            primaryYAxis: NumericAxis(
-              numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
-              minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
-            ),
-            onTrackballPositionChanging: (TrackballArgs args) {
-              final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-              final CandleStick candle = series[dataPoint!];
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * .7,
+      child: BlocConsumer<AssetCubit, AssetState>(
+        builder: (context, state) {
+          if (state is AssetLoading) {
+            return const PlaceholderCandleStickChart();
+          } else if (state is AssetLoaded) {
+            final sym = context.read<AssetCubit>().sym;
+            final period = context.read<AssetCubit>().period;
+            final series = context.read<AssetCubit>().current;
+            if (hoveredCandle?.time == '') {
+              final candle = series[0];
               context.read<ChartCubit>().setHoveredSeriesItem(candle);
-            },
-            primaryXAxis: CategoryAxis(
-              labelRotation: 45,
-              maximumLabels: 30,
-              labelIntersectAction: AxisLabelIntersectAction.hide,
-              desiredIntervals: calculateIntervals(period.toString(), series),
-            ),
-            series: <CandleSeries<CandleStick, String>>[
-              CandleSeries<CandleStick, String>(
-                dataSource: series,
-                lowValueMapper: (CandleStick d, _) => d.low,
-                highValueMapper: (CandleStick d, _) => d.high,
-                openValueMapper: (CandleStick d, _) => d.open,
-                closeValueMapper: (CandleStick d, _) => d.close,
-                xValueMapper: (CandleStick d, int index) => chooseFormat(period, d),
+            }
+            return SfCartesianChart(
+              tooltipBehavior: _tooltipBehavior,
+              crosshairBehavior: _crosshairBehavior,
+              trackballBehavior: _trackballBehavior,
+              primaryYAxis: NumericAxis(
+                numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
+                minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
               ),
-            ],
-            title: ChartTitle(
-                text: sym,
-                borderWidth: 2,
-                alignment: ChartAlignment.near,
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.red,
-                  fontFamily: 'Roboto',
-                  fontStyle: FontStyle.italic,
-                )
-            ),
-          );
-        } else if (state is AssetError) {
-          return const Text('Error:');
-        } else {
-          return const PlaceholderCandleStickChart();
-        }
-      },
-      listener: (context, state) {
-      },
-      buildWhen: (previous, current) {
-        return true;
-      },
+              onTrackballPositionChanging: (TrackballArgs args) {
+                final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                final CandleStick candle = series[dataPoint!];
+                context.read<ChartCubit>().setHoveredSeriesItem(candle);
+              },
+              primaryXAxis: CategoryAxis(
+                labelRotation: 45,
+                maximumLabels: 30,
+                labelIntersectAction: AxisLabelIntersectAction.hide,
+                desiredIntervals: calculateIntervals(period.toString(), series),
+              ),
+              series: <CandleSeries<CandleStick, String>>[
+                CandleSeries<CandleStick, String>(
+                  dataSource: series,
+                  lowValueMapper: (CandleStick d, _) => d.low,
+                  highValueMapper: (CandleStick d, _) => d.high,
+                  openValueMapper: (CandleStick d, _) => d.open,
+                  closeValueMapper: (CandleStick d, _) => d.close,
+                  xValueMapper: (CandleStick d, int index) => chooseFormat(period, d),
+                ),
+              ],
+              title: ChartTitle(
+                  text: sym,
+                  borderWidth: 2,
+                  alignment: ChartAlignment.near,
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.red,
+                    fontFamily: 'Roboto',
+                    fontStyle: FontStyle.italic,
+                  )
+              ),
+            );
+          } else if (state is AssetError) {
+            return const Text('Error:');
+          } else {
+            return const PlaceholderCandleStickChart();
+          }
+        },
+        listener: (context, state) {
+        },
+        buildWhen: (previous, current) {
+          return true;
+        },
+      ),
     );
   }
 
   Padding _indicator() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 600),
-      child: BlocConsumer<ChartCubit, ChartState>(
+        padding: EdgeInsets.symmetric(horizontal: isWeb && isMed(context) ? 600 : 0),
+        child: BlocConsumer<ChartCubit, ChartState>(
         builder: (context, state) {
           if (state is ChartInitial) {
             return const CircularProgressIndicator();
