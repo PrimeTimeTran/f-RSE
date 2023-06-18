@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,9 @@ import 'package:rse/presentation/navigation/navbar_icons.dart';
 import 'package:rse/presentation/utils/constants.dart' as constants;
 
 Future<void> main() async {
-  // await dotenv.load(fileName: ".env");
+  if (!kReleaseMode) {
+    await dotenv.load(fileName: ".env");
+  }
 
   Bloc.observer = SimpleBlocObserver();
   HttpOverrides.global = MyHttpOverrides();
@@ -51,7 +54,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _idx = 0;
+  int _idx = 4;
 
   void change(int idx) {
     setState(() {

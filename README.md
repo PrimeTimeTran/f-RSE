@@ -22,3 +22,8 @@ A stock exchange for the next generation
 
 - flutter build web
 - flutter run -d chrome
+
+## FAW
+
+- Why isn't an asset in assets available on web?
+  - Because we have to include them in web/assets & declare them in web/manifest.json for them to be bundled in the build process
