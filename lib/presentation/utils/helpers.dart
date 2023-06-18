@@ -76,3 +76,29 @@ formatField(data, field) {
       return "${data.getValue(field)}%";
   }
 }
+
+String chooseFormat(String period, d, int index) {
+  final map = {
+    'live': 'h:mma',
+    '1d': 'h:mma',
+    '1w': 'h:mma MMMM d',
+    '1m': 'h:mma MMMM d',
+    '3m': 'M/d',
+  };
+
+  final dateFormat = map[period] ?? 'yMd';
+  return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
+}
+
+int calculateIntervals(period, data){
+  final map = {
+    'live': 5,
+    '1d': data.length ~/ 24,
+    '1w': 30,
+    '1m': 30,
+    '3m': 30,
+    '1y': 12,
+  };
+
+  return map[period] ?? 0;
+}

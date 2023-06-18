@@ -11,7 +11,7 @@ class SummaryTable extends StatefulWidget {
   final Function(int idx) onCategoryExit;
   final Function(List<models.Investment> newOrder, String field) sortSecurities;
 
-  SummaryTable({
+  const SummaryTable({
     Key? key,
     required this.num,
     required this.title,

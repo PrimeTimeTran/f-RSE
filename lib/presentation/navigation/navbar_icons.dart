@@ -8,7 +8,7 @@ navbarIcons(context) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Text('Hi'),
+            builder: (context) => const Text('Hi'),
           ),
         );
       },
@@ -19,7 +19,7 @@ navbarIcons(context) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Text('Hi'),
+            builder: (context) => const Text('Hi'),
           ),
         );
       },
@@ -30,7 +30,7 @@ navbarIcons(context) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Text('Hi'),
+            builder: (context) => const Text('Hi'),
           ),
         );
       },
@@ -41,7 +41,7 @@ navbarIcons(context) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Text('Hi'),
+            builder: (context) => const Text('Hi'),
           ),
         );
       },
@@ -52,7 +52,7 @@ navbarIcons(context) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Text('Hi'),
+            builder: (context) => const Text('Hi'),
           ),
         );
       },

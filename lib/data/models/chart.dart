@@ -35,6 +35,15 @@ class CandleStick {
         'close: $close, '
         '}';
   }
+
+  factory CandleStick.defaultCandle() => CandleStick(
+    low: 0,
+    open: 0,
+    high: 0,
+    close: 0,
+    time: '',
+    value: 0,
+  );
 }
 
 class DataPoint {

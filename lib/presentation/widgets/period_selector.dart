@@ -18,6 +18,7 @@ class PeriodSelector extends StatelessWidget {
         children: periods.map((p) {
           return Flexible(
             fit: FlexFit.tight,
+            // TODO: Does not re render perfect like _indicator()
             child: BlocConsumer<AssetCubit, AssetState>(
               builder: (c, state) {
                 if (state is AssetLoaded) {
