@@ -14,7 +14,12 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
-        child: CandleStickChart()
+        child: Column(
+          children: [
+            CandleChart(),
+            AssetOverview(),
+          ],
+        )
     );
   }
 }

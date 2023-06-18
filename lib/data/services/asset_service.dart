@@ -12,7 +12,7 @@ class AssetService {
 
   Future<Asset> fetchAsset(String sym, String period) async {
     try {
-      if (kDebugMode) throw Error();
+      // if (kDebugMode) throw Error();
       final response = await http.get(Uri.parse("$api/assets/$sym?period=$period"));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);

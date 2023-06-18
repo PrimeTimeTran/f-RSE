@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
+import 'package:rse/presentation/widgets/all.dart';
 
 class PeriodSelector extends StatelessWidget {
   final List<String> periods = ['live', '1d', '1w', '1m', '3m', '1y'];
@@ -10,6 +11,7 @@ class PeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primarySwatch = Theme.of(context).primaryColor;
 
     return SizedBox(
       width: double.infinity,
@@ -18,7 +20,6 @@ class PeriodSelector extends StatelessWidget {
         children: periods.map((p) {
           return Flexible(
             fit: FlexFit.tight,
-            // TODO: Does not re render perfect like _indicator()
             child: BlocConsumer<AssetCubit, AssetState>(
               builder: (c, state) {
                 if (state is AssetLoaded) {
@@ -28,21 +29,21 @@ class PeriodSelector extends StatelessWidget {
                       assetCubit.setPeriod(p);
                     },
                     child: Container(
-                      height: 30, // Adjust the height as needed
+                      height: 30,
                       margin: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(5.0),
-                        color: assetCubit.period == p ? Colors.red : Colors.white,
+                        color: assetCubit.period == p ? primarySwatch : Colors.white,
                       ),
                       child: Center(
-                        child: Text(p, style: const TextStyle(fontSize: 10)),
+                        child: HoverText(p),
                       ),
                     ),
                   );
                 } else {
                   return Container(
-                    height: 30, // Adjust the height as needed
+                    height: 30,
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
@@ -50,7 +51,7 @@ class PeriodSelector extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: Center(
-                      child: Text(p, style: const TextStyle(fontSize: 10)),
+                      child: HoverText(p),
                     ),
                   );
                 }

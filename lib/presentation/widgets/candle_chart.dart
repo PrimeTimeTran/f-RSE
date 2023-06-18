@@ -8,14 +8,14 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
-class CandleStickChart extends StatefulWidget {
-  const CandleStickChart({Key? key }) : super(key: key);
+class CandleChart extends StatefulWidget {
+  const CandleChart({Key? key }) : super(key: key);
 
   @override
-  CandleStickChartState createState() => CandleStickChartState();
+  CandleChartState createState() => CandleChartState();
 }
 
-class CandleStickChartState extends State<CandleStickChart> {
+class CandleChartState extends State<CandleChart> {
   late CandleStick? hoveredCandle;
   late TooltipBehavior _tooltipBehavior;
   late CrosshairBehavior _crosshairBehavior;
@@ -26,7 +26,6 @@ class CandleStickChartState extends State<CandleStickChart> {
     _tooltipBehavior = TooltipBehavior(
       enable: true,
     );
-
     _trackballBehavior = TrackballBehavior(
       enable: true,
       lineWidth: 0,
@@ -37,7 +36,6 @@ class CandleStickChartState extends State<CandleStickChart> {
         enable: false,
       ),
     );
-
     _crosshairBehavior = CrosshairBehavior(
         enable: true,
         lineWidth: 2,
@@ -49,6 +47,7 @@ class CandleStickChartState extends State<CandleStickChart> {
         activationMode: ActivationMode.singleTap,
     );
     hoveredCandle = CandleStick.defaultCandle();
+
     super.initState();
   }
 
