@@ -28,30 +28,7 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Center(
-      child: Column(
-        children: [
-          BlocConsumer<AssetCubit, AssetState>(
-            builder: (context, state) {
-              if (state is AssetLoading) {
-                return const CircularProgressIndicator();
-              } else if (state is AssetLoaded) {
-                final data = context.read<AssetCubit>().current;
-                return CandleStickChart(data: data);
-              } else if (state is AssetError) {
-                return Text('Error: ${state.errorMessage}');
-              } else {
-                return const Text('Unknown state');
-              }
-            },
-            listener: (context, state) {
-            },
-            buildWhen: (previous, current) {
-              return true;
-            },
-          ),
-        ],
-      ),
-    ));
+        child: CandleStickChart()
+    );
   }
 }

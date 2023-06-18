@@ -56,8 +56,8 @@ class PortfolioError extends PortfolioState {
 
 class PortfolioCubit extends Cubit<PortfolioState> {
   List<DataPoint> dataPoints = [];
-  CandleStick candle = CandleStick(time: DateTime.now().toString(), open: 0, high: 0, low: 0, close: 0, value: 0);
   final PortfolioService portfolioService = PortfolioService();
+  CandleStick candle = CandleStick(time: DateTime.now().toString(), open: 0, high: 0, low: 0, close: 0, value: 0);
 
   PortfolioCubit() : super(PortfolioInitial());
 

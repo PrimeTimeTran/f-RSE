@@ -75,10 +75,8 @@ class CandleStickChartState extends State<CandleStickChart> {
       child: Column(
         children: [
           _indicator(),
-          _buildLayoutBuilder(assetCubit),
-          const PeriodSelector(
-            periods: ['live', '1d', '1w', '1m', '3m', '1y'],
-          ),
+          _buildLayoutBuilder(),
+          PeriodSelector(),
         ],
       ),
     );
