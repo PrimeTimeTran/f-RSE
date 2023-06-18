@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/data/models/all.dart' as models;
-import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/data/all.dart' as models;
+import 'package:rse/presentation/all.dart';
 
 class InvestmentGroup extends StatefulWidget {
   final int num;

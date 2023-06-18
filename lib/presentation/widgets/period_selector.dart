@@ -5,15 +5,13 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
 class PeriodSelector extends StatefulWidget {
-
-
-  PeriodSelector({Key? key});
+  const PeriodSelector({super.key});
 
   @override
-  _PeriodSelectorState createState() => _PeriodSelectorState();
+  PeriodSelectorState createState() => PeriodSelectorState();
 }
 
-class _PeriodSelectorState extends State<PeriodSelector> {
+class PeriodSelectorState extends State<PeriodSelector> {
   late String hoveredPeriod;
   final List<String> periods = ['live', '1d', '1w', '1m', '3m', '1y'];
 

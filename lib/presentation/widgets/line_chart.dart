@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/cubits/all.dart';
-import 'package:rse/data/models/all.dart';
-import 'package:rse/presentation/widgets/all.dart';
-
+import 'package:rse/data/all.dart';
+import 'package:rse/presentation/all.dart';
 
 class LineChart extends StatefulWidget {
   const LineChart({super.key});
@@ -86,7 +84,7 @@ class LineChartState extends State<LineChart> {
                   ),
                 ),
               ),
-              PeriodSelector(),
+              const PeriodSelector(),
             ],
           );
         } else if (state is PortfolioError) {

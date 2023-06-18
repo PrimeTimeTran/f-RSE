@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/data/models/all.dart';
-import 'package:rse/data/cubits/all.dart';
-import 'package:rse/presentation/utils/all.dart';
-import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/data/all.dart';
+import 'package:rse/presentation/all.dart';
 
 class CandleChart extends StatefulWidget {
   const CandleChart({Key? key }) : super(key: key);
@@ -31,7 +29,7 @@ class CandleChartState extends State<CandleChart> {
           children: [
             _indicator(),
             _buildLayoutBuilder(),
-            PeriodSelector(),
+            const PeriodSelector(),
           ],
         ),
       ),
@@ -144,7 +142,6 @@ class CandleChartState extends State<CandleChart> {
 
   void _setupTheme(BuildContext context) {
     final primarySwatch = Theme.of(context).primaryColor;
-    final highlightSwatch = Theme.of(context).highlightColor;
     _tooltipBehavior = TooltipBehavior(
       enable: true,
     );

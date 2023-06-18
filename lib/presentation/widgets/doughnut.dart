@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/presentation/utils/all.dart';
+import 'package:rse/presentation/all.dart';
 import 'package:rse/data/models/all.dart' as models;
 
 class Doughnut extends StatefulWidget {
@@ -74,12 +74,8 @@ class DoughnutState extends State<Doughnut> {
                 DoughnutSeries<models.Investment, String>(
                   strokeWidth: 1,
                   enableTooltip: true,
-                  // explodeOffset: '3%',
                   dataSource: widget.data,
                   strokeColor: Colors.white,
-                  // explode: widget.shouldExplode,
-                  // explodeIndex: widget.explodeIdx,
-                  // explodeGesture: widget.activationMode,
                   xValueMapper: (models.Investment data, _) => data.name,
                   dataLabelMapper: (models.Investment data, _) => formatField(data, widget.field),
                   yValueMapper: (models.Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),

@@ -82,15 +82,15 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: DefaultTabController(
-        length: 11,
+        length: 12,
         child: Column(
           children: [
             TabBar(
+              labelColor: Colors.green,
+              indicatorColor: Colors.green,
               unselectedLabelColor: Colors.black,
               overlayColor: MaterialStateProperty.all(Colors.transparent),
-              indicatorColor: Colors.green,
-              labelColor: Colors.green,
-              tabs: [
+              tabs: const [
                 Tab(text: 'Investing'),
                 Tab(text: 'Spending'),
                 Tab(text: 'Crypto'),
@@ -118,6 +118,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
                   const Text('Reports & Statements'),
                   const Text('Tax Center'),
                   const Text('History'),
+                  const Text('Settings'),
                   const Text('Help'),
                 ],
               ),

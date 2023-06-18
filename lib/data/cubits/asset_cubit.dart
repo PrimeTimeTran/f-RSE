@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/models/all.dart';
-import 'package:rse/data/services/all.dart';
+import 'package:rse/data/all.dart';
 
 abstract class AssetEvent extends Equatable {
   @override

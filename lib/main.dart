@@ -55,7 +55,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _idx = 1;
+  int _idx = 0;
   late NewsCubit _newsCubit;
   late PortfolioCubit _portfolioCubit;
   late AssetCubit _assetCubit;
@@ -92,8 +92,8 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       routes: {
-        '/home': (context) => HomeScreen(title: "RSE"),
-        '/profile': (context) => AssetScreen(),
+        '/home': (context) => const HomeScreen(title: "RSE"),
+        '/profile': (context) => const AssetScreen(),
       },
       home: Scaffold(
         drawer: const MyDrawer(),

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
-import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/presentation/all.dart';
 import 'package:rse/data/models/all.dart' as models;
-import 'package:rse/presentation/utils/all.dart';
 
 class Articles extends StatelessWidget {
   const Articles({
@@ -14,7 +13,7 @@ class Articles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * (isWeb ? 0.60 : .95),
+      width: MediaQuery.of(context).size.width * (isWeb && isMed(context) ? 0.60 : .99),
       child: Column(
         children: [
           const Padding(

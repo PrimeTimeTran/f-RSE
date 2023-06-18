@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rse/data/models/all.dart';
+
+import 'package:rse/data/all.dart';
 
 abstract class ChartEvent extends Equatable {
   @override

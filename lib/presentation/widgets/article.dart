@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/utils/all.dart';
+
+const placeholder = "https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
 
 class Article extends StatefulWidget {
   final models.Article article;
@@ -17,7 +20,7 @@ class ArticleState extends State<Article> {
   @override
   void initState() {
     super.initState();
-    imageUrl = widget.article.urlToImage ?? "https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
+    imageUrl = widget.article.urlToImage ?? placeholder;
   }
 
   @override
@@ -116,7 +119,7 @@ class ArticleState extends State<Article> {
           image: DecorationImage(
             onError: (_, __) {
               setState(() {
-                imageUrl = "https://cors-anywhere.herokuapp.com/https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
+                imageUrl = placeholder;
               });
             },
             image: NetworkImage(imageUrl),
