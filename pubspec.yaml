@@ -20,17 +20,12 @@ dependencies:
   collection: ^1.17.1
   flutter_dotenv: ^5.1.0
 
+assets:
+  - assets/
+
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-
-flutter:
-  uses-material-design: true
-  assets:
-    - assets/.env
-    - assets/news.json
-    - assets/portfolio.json
-
 
 

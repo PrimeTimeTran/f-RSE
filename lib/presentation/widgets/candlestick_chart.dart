@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +37,6 @@ class PlaceholderState extends State<PlaceholderScreen> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (isLoading) {
-            // Placeholder widget while loading
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -83,7 +84,7 @@ class CandleStickChart extends StatefulWidget {
 
 
   @override
-  CandleStickChartState createState() => CandleStickChartState(data: data);
+  CandleStickChartState createState() => CandleStickChartState(data);
 }
 
 class CandleStickChartState extends State<CandleStickChart> {
@@ -91,13 +92,41 @@ class CandleStickChartState extends State<CandleStickChart> {
   final List<CandleStick> data;
   late CandleStick? hoveredCandle;
   late int? hoveredPointIndex = -1;
+  late TooltipBehavior _tooltipBehavior;
+  late CrosshairBehavior _crosshairBehavior;
+  late TrackballBehavior _trackballBehavior;
 
-  CandleStickChartState({required this.data});
+  CandleStickChartState(this.data);
 
   @override
   initState() {
-    super.initState();
+    _tooltipBehavior = TooltipBehavior(
+      enable: true,
+    );
+
+    _trackballBehavior = TrackballBehavior(
+      enable: true,
+      lineWidth: 0,
+      lineColor: Colors.blue,
+      lineType: TrackballLineType.vertical,
+      activationMode: ActivationMode.singleTap,
+      tooltipSettings: const InteractiveTooltip(
+        enable: false,
+      ),
+    );
+
+    _crosshairBehavior = CrosshairBehavior(
+        enable: true,
+        lineWidth: 2,
+        hideDelay: 5  ,
+        lineColor: Colors.red,
+        shouldAlwaysShow: true,
+        lineDashArray: <double>[5,5],
+        lineType: CrosshairLineType.both,
+        activationMode: ActivationMode.singleTap,
+    );
     hoveredCandle = data.last;
+    super.initState();
   }
 
   onHoveredCandle(CandleStick candle) {
@@ -123,174 +152,121 @@ class CandleStickChartState extends State<CandleStickChart> {
     );
   }
 
-  void onHoverChart(RenderBox? renderBox, Offset? positionInChart, double labelsWidth, double availableWidth, double candlestickWidth) {
-    if (renderBox != null && positionInChart != null && positionInChart.dx >= labelsWidth && positionInChart.dx <= availableWidth) {
-      setState(() {
-        hoveredPointIndex = _findNearestDataPointIndex(positionInChart.dx - labelsWidth, candlestickWidth);
-        isHovered = true;
-      });
-
-      if (hoveredPointIndex != null) {
-        final CandleStick hoveredCandle = data[hoveredPointIndex!];
-        onHoveredCandle(hoveredCandle);
-      }
-    } else {
-      setState(() {
-        isHovered = false;
-      });
-    }
-  }
-
-  _buildLayoutBuilder(assetCubit) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const double labelsWidth = 50;
-        final double availableWidth = constraints.maxWidth;
-        final double chartWidth = availableWidth - labelsWidth;
-        final double candlestickWidth = chartWidth / (data.length + 1);
-
-        return MouseRegion(
-          onHover: (event) {
-            final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-            final positionInChart = renderBox?.globalToLocal(event.position);
-            onHoverChart(renderBox, positionInChart, labelsWidth, availableWidth, candlestickWidth);
-          },
-          child: SfCartesianChart(
-            primaryYAxis: NumericAxis(
-              numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
-              minimum: (data.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
-            ),
-            primaryXAxis: CategoryAxis(
-              labelRotation: 45,
-              maximumLabels: 30,
-              labelPlacement: LabelPlacement.betweenTicks,
-              labelIntersectAction: AxisLabelIntersectAction.hide,
-              desiredIntervals: calculateIntervals(assetCubit.period.toString()),
-            ),
-            series: <CandleSeries<CandleStick, String>>[
-              CandleSeries<CandleStick, String>(
-                dataSource: data,
-                lowValueMapper: (CandleStick d, _) => d.low,
-                highValueMapper: (CandleStick d, _) => d.high,
-                openValueMapper: (CandleStick d, _) => d.open,
-                closeValueMapper: (CandleStick d, _) => d.close,
-                xValueMapper: (CandleStick d, int index) => chooseFormat(assetCubit.period.toString(), d),
-              ),
-            ],
-            trackballBehavior: TrackballBehavior(
-              enable: true,
-              lineWidth: 2,
-              lineColor: Colors.blue,
-              activationMode: ActivationMode.singleTap,
-              tooltipSettings: InteractiveTooltip(
-                enable: true,
-                borderWidth: 1,
-                color: Colors.grey[900]!,
-                borderColor: Colors.blue,
-              ),
-            ),
-          ),
-        );
+  _buildLayoutBuilder(AssetCubit assetCubit) {
+    return SfCartesianChart(
+      tooltipBehavior: _tooltipBehavior,
+      crosshairBehavior: _crosshairBehavior,
+      trackballBehavior: _trackballBehavior,
+      primaryYAxis: NumericAxis(
+        numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
+        minimum: (data.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
+      ),
+      indicators: <TechnicalIndicators>[
+        BollingerBandIndicator<dynamic, dynamic>(
+          period: 20,
+          standardDeviation: 2,
+        ),
+      ],
+      onTrackballPositionChanging: (TrackballArgs args) {
+        if (args != null && args.chartPointInfo != null) {
+          final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+          final CandleStick candle = data[dataPoint!];
+          context.read<PortfolioCubit>().setHoveredCandle(candle);
+        }
       },
+      primaryXAxis: CategoryAxis(
+        labelRotation: 45,
+        maximumLabels: 30,
+        labelPlacement: LabelPlacement.betweenTicks,
+        labelIntersectAction: AxisLabelIntersectAction.hide,
+        desiredIntervals: calculateIntervals(assetCubit.period.toString(), data),
+      ),
+      series: <CandleSeries<CandleStick, String>>[
+        CandleSeries<CandleStick, String>(
+          dataSource: data,
+          enableTooltip: true,
+          lowValueMapper: (CandleStick d, _) => d.low,
+          highValueMapper: (CandleStick d, _) => d.high,
+          openValueMapper: (CandleStick d, _) => d.open,
+          closeValueMapper: (CandleStick d, _) => d.close,
+          xValueMapper: (CandleStick d, int index) => chooseFormat(assetCubit.period, d, index),
+        ),
+      ],
     );
-  }
-
-  int calculateIntervals(period){
-    switch (period) {
-      case 'live':
-        return 5;
-      case '1d':
-        return (data.length /24).toInt();
-      case '1w':
-        return 30;
-      case '1m':
-        return 30;
-      case '3m':
-        return 30;
-      case '1y':
-        return 12;
-    }
-    return 1;
-  }
-
-  String chooseFormat(period, d) {
-    String val = '';
-    switch (period) {
-      case 'live':
-        val = 'h:mma';
-      case '1d':
-        val = 'h:mma';
-      case '1w':
-        val = 'h:mma MMMM d';
-      case '1m':
-        val = 'h:mma MMMM d';
-      case '3m':
-        val = 'M/d';
-      case '1y':
-        val = 'yMd';
-    }
-    return DateFormat(val).format(DateTime.parse(d.time)).toString();
   }
 
   Padding _indicator() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 600),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      child: BlocConsumer<PortfolioCubit, PortfolioState>(
+        builder: (context, state) {
+          if (state is PortfolioLoading) {
+            return const CircularProgressIndicator();
+          } else if (state is CandleLoaded) {
+            final c = context.read<PortfolioCubit>().candle;
+            return Row(
               children: [
-                const Text('Open: '),
-                Text(formatMoney(hoveredCandle!.open.toString())),
+                _indicatorItem(c.open, 'Open: '),
+                _indicatorItem(c.low, 'Low: '),
+                _indicatorItem(c.high, 'High: '),
+                _indicatorItem(c.close, 'Close: '),
               ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Low: '),
-                Text(formatMoney(hoveredCandle!.low.toString())),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('High: '),
-                Text(formatMoney(hoveredCandle!.high.toString())),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Close: '),
-                Text(formatMoney(hoveredCandle!.close.toString())),
-              ],
-            ),
-          ),
-        ],
-      ),
+            );
+          } else if (state is PortfolioError) {
+            return Text('Error: ${state.errorMessage}');
+          } else {
+            return const Text('');
+          }
+        },
+        listener: (context, state) {
+        },
+        buildWhen: (previous, current) {
+          return true;
+        },
+      )
     );
   }
-
-  int _findNearestDataPointIndex(double xPosition, double width) {
-    double minDistance = double.infinity;
-    int nearestIndex = -1;
-
-    for (int i = 0; i < data.length; i++) {
-      final double distance = (xPosition - (i + 0.5) * width).abs();
-
-      if (distance < minDistance) {
-        minDistance = distance;
-        nearestIndex = i;
-      }
-    }
-
-    return nearestIndex;
-  }
 }
+
+String chooseFormat(String period, d, int index) {
+  final map = {
+    'live': 'h:mma',
+    '1d': 'h:mma',
+    '1w': 'h:mma MMMM d',
+    '1m': 'h:mma MMMM d',
+    '3m': 'M/d',
+  };
+
+  final dateFormat = map[period] ?? 'yMd';
+  return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
+}
+
+Expanded _indicatorItem(double price, String title) {
+  return Expanded(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(title),
+        Text(
+          formatMoney(price.toString()),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
+}
+
+int calculateIntervals(period, data){
+  final map = {
+    'live': 5,
+    '1d': data.length ~/ 24,
+    '1w': 30,
+    '1m': 30,
+    '3m': 30,
+    '1y': 12,
+  };
+
+  return map[period] ?? 0;
+}
+
+
