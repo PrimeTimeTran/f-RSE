@@ -11,14 +11,16 @@ class DrawerState extends State<MyDrawer> {
   int _idx = 0;
   @override
   Widget build(BuildContext context) {
+    Color primarySwatch = Theme.of(context).primaryColor;
+
     return Drawer(
       child: ListView(
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: primarySwatch,
             ),
-            child: Text(
+            child: const Text(
               'Drawer Header',
               style: TextStyle(
                 color: Colors.white,
@@ -29,19 +31,13 @@ class DrawerState extends State<MyDrawer> {
           ListTile(
             title: const Text('Investing'),
             onTap: () {
-              setState(() {
-                _idx = 0;
-              });
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/');
             },
           ),
           ListTile(
             title: const Text('Spending'),
             onTap: () {
-              setState(() {
-                _idx = 1;
-              });
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/go');
             },
           ),
           ListTile(

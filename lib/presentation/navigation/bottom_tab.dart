@@ -14,10 +14,12 @@ class BottomTab extends StatefulWidget {
 class _BottomTabState extends State<BottomTab> {
   @override
   Widget build(BuildContext context) {
+    final primarySwatch = Theme.of(context).primaryColor;
+
     return BottomNavigationBar(
       currentIndex: widget.index,
       onTap: (idx) => widget.change(idx),
-      selectedItemColor: Colors.amber[800],
+      selectedItemColor: primarySwatch,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           label: 'Stocks',

@@ -5,9 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
-import 'package:rse/presentation/navigation/all.dart';
-import 'package:rse/presentation/navigation/navbar_icons.dart';
-import 'package:rse/presentation/utils/constants.dart' as constants;
+import 'package:rse/presentation/all.dart';
 
 Future<void> main() async {
   if (!kReleaseMode) {
@@ -57,7 +55,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _idx = 0;
+  int _idx = 1;
   late NewsCubit _newsCubit;
   late PortfolioCubit _portfolioCubit;
   late AssetCubit _assetCubit;
@@ -91,13 +89,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Royal Stock Exchange',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        highlightColor: Colors.green[900],
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      routes: {
+        '/home': (context) => HomeScreen(title: "RSE"),
+        '/profile': (context) => AssetScreen(),
+      },
       home: Scaffold(
         drawer: const MyDrawer(),
-        body: constants.tabs[_idx],
+        body: tabs[_idx],
         bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),

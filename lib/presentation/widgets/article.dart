@@ -127,5 +127,4 @@ class ArticleState extends State<Article> {
       ),
     );
   }
-
 }

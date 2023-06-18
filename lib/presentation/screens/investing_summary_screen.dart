@@ -24,52 +24,110 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
 
   @override
   Widget build(BuildContext context) {
+    return _buildTabContainer();
+  }
+
+  SingleChildScrollView buildSingleChildScrollView() {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
-        child: Center(
-          child: Column(
-            children: [
-              BlocConsumer<PortfolioCubit, PortfolioState>(
-                builder: (context, state) {
-                  if (state is PortfolioLoading) {
-                    return const CircularProgressIndicator();
-                  } else if (state is PortfolioLoaded) {
-                    final p = state.portfolio;
-                    return Column(
-                      children: [
-                        InvestmentGroup(
-                          title: 'Stocks',
-                          current: p.current,
-                          num: p.stocks.length,
-                          securities: p.stocks
-                        ),
-                        InvestmentGroup(
-                          title: 'Cryptos',
-                          current: p.current,
-                          num: p.cryptos.length,
-                          securities: p.cryptos
-                        ),
-                      ],
-                    );
-                  } else if (state is PortfolioError) {
-                    return Text('Error: ${state.errorMessage}');
-                  } else {
-                    return const Text('Unknown state');
-                  }
-                },
-                listener: (context, state) {
-                  // Listener logic goes here if needed
-                },
-                buildWhen: (previous, current) {
-                  return true;
-                },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
+      child: Center(
+        child: Column(
+          children: [
+            BlocConsumer<PortfolioCubit, PortfolioState>(
+              builder: (context, state) {
+                if (state is PortfolioLoading) {
+                  return const CircularProgressIndicator();
+                } else if (state is PortfolioLoaded) {
+                  final p = state.portfolio;
+                  return Column(
+                    children: [
+                      InvestmentGroup(
+                        title: 'Stocks',
+                        current: p.current,
+                        num: p.stocks.length,
+                        securities: p.stocks
+                      ),
+                      InvestmentGroup(
+                        title: 'Cryptos',
+                        current: p.current,
+                        num: p.cryptos.length,
+                        securities: p.cryptos
+                      ),
+                    ],
+                  );
+                } else if (state is PortfolioError) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unknown state');
+                }
+              },
+              listener: (context, state) {
+                // Listener logic goes here if needed
+              },
+              buildWhen: (previous, current) {
+                return true;
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  }
+
+
+  // Create a method which returns a widget. The widget is a container with top tab navigation
+  Widget _buildTabContainer() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DefaultTabController(
+        length: 11,
+        child: Column(
+          children: [
+            TabBar(
+              unselectedLabelColor: Colors.black,
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              indicatorColor: Colors.green,
+              labelColor: Colors.green,
+              tabs: [
+                Tab(text: 'Investing'),
+                Tab(text: 'Spending'),
+                Tab(text: 'Crypto'),
+                Tab(text: 'Transfers'),
+                Tab(text: 'Recurring'),
+                Tab(text: 'Stock Lending'),
+                Tab(text: 'Margin Investing'),
+                Tab(text: 'Reports & Statements'),
+                Tab(text: 'Tax Center'),
+                Tab(text: 'History'),
+                Tab(text: 'Settings'),
+                Tab(text: 'Help'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  buildSingleChildScrollView(),
+                  const Text('Spending'),
+                  const Text('Crypto'),
+                  const Text('Transfers'),
+                  const Text('Recurring'),
+                  const Text('Stock Lending'),
+                  const Text('Margin Investing'),
+                  const Text('Reports & Statements'),
+                  const Text('Tax Center'),
+                  const Text('History'),
+                  const Text('Help'),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+
 }
 

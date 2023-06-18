@@ -22,37 +22,8 @@ class CandleChartState extends State<CandleChart> {
   late TrackballBehavior _trackballBehavior;
 
   @override
-  initState() {
-    _tooltipBehavior = TooltipBehavior(
-      enable: true,
-    );
-    _trackballBehavior = TrackballBehavior(
-      enable: true,
-      lineWidth: 0,
-      lineColor: Colors.blue,
-      lineType: TrackballLineType.vertical,
-      activationMode: ActivationMode.singleTap,
-      tooltipSettings: const InteractiveTooltip(
-        enable: false,
-      ),
-    );
-    _crosshairBehavior = CrosshairBehavior(
-        enable: true,
-        lineWidth: 2,
-        hideDelay: 5,
-        lineColor: Colors.red,
-        shouldAlwaysShow: true,
-        lineDashArray: <double>[5,5],
-        lineType: CrosshairLineType.both,
-        activationMode: ActivationMode.singleTap,
-    );
-    hoveredCandle = CandleStick.defaultCandle();
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _setupTheme(context);
     return Padding(
       padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: SingleChildScrollView(
@@ -169,6 +140,35 @@ class CandleChartState extends State<CandleChart> {
         },
       )
     );
+  }
+
+  void _setupTheme(BuildContext context) {
+    final primarySwatch = Theme.of(context).primaryColor;
+    final highlightSwatch = Theme.of(context).highlightColor;
+    _tooltipBehavior = TooltipBehavior(
+      enable: true,
+    );
+    _trackballBehavior = TrackballBehavior(
+      enable: true,
+      lineWidth: 0,
+      lineColor: primarySwatch,
+      lineType: TrackballLineType.vertical,
+      activationMode: ActivationMode.singleTap,
+      tooltipSettings: const InteractiveTooltip(
+        enable: false,
+      ),
+    );
+    _crosshairBehavior = CrosshairBehavior(
+      enable: true,
+      lineWidth: 2,
+      hideDelay: 5,
+      lineColor: Colors.green,
+      shouldAlwaysShow: true,
+      lineDashArray: <double>[5,5],
+      lineType: CrosshairLineType.both,
+      activationMode: ActivationMode.singleTap,
+    );
+    hoveredCandle = CandleStick.defaultCandle();
   }
 }
 
