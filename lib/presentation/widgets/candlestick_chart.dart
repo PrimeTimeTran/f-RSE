@@ -72,9 +72,9 @@ class CandleStickChartState extends State<CandleStickChart> {
         if (state is AssetLoading) {
           return const PlaceholderCandleStickChart();
         } else if (state is AssetLoaded) {
-          final series = context.read<AssetCubit>().current;
-          final period = context.read<AssetCubit>().period;
           final sym = context.read<AssetCubit>().sym;
+          final period = context.read<AssetCubit>().period;
+          final series = context.read<AssetCubit>().current;
           if (hoveredCandle?.time == '') {
             final candle = series[0];
             context.read<ChartCubit>().setHoveredSeriesItem(candle);
@@ -83,17 +83,6 @@ class CandleStickChartState extends State<CandleStickChart> {
             tooltipBehavior: _tooltipBehavior,
             crosshairBehavior: _crosshairBehavior,
             trackballBehavior: _trackballBehavior,
-            title:  ChartTitle(
-                text: sym,
-                borderWidth: 2,
-                alignment: ChartAlignment.near,
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.red,
-                  fontFamily: 'Roboto',
-                  fontStyle: FontStyle.italic,
-                )
-            ),
             primaryYAxis: NumericAxis(
               numberFormat: NumberFormat.simpleCurrency(decimalDigits: 2),
               minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
@@ -119,8 +108,19 @@ class CandleStickChartState extends State<CandleStickChart> {
                 xValueMapper: (CandleStick d, int index) => chooseFormat(period, d),
               ),
             ],
+            title: ChartTitle(
+                text: sym,
+                borderWidth: 2,
+                alignment: ChartAlignment.near,
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.red,
+                  fontFamily: 'Roboto',
+                  fontStyle: FontStyle.italic,
+                )
+            ),
           );
-        } else if (state is PortfolioError) {
+        } else if (state is AssetError) {
           return const Text('Error:');
         } else {
           return const PlaceholderCandleStickChart();

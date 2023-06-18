@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rse/presentation/screens/all.dart';
 
@@ -13,7 +12,6 @@ void initializeNewsApi() {
       "https://newsdata.io/api/1/news?category=business&language=en&${apiKey ?? ''}";
 }
 
-const bool isWeb = kIsWeb;
 const investmentTypes = ['Stocks', 'Options', 'Cryptos'];
 
 const List<Widget> tabs = [

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 import 'package:rse/data/models/all.dart' as models;
-import 'package:rse/presentation/utils/constants.dart';
+import 'package:rse/presentation/utils/all.dart';
 
 class Articles extends StatelessWidget {
   const Articles({
@@ -17,11 +17,9 @@ class Articles extends StatelessWidget {
       width: MediaQuery.of(context).size.width * (isWeb ? 0.60 : .95),
       child: Column(
         children: [
-          Container(
-            margin: isWeb
-                ? const EdgeInsets.only(top: 20.0, bottom: 10.0, left: 10.0)
-                : const EdgeInsets.only(top: 0, bottom: 0),
-            child: const Align(
+          const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Trending News",
@@ -32,7 +30,6 @@ class Articles extends StatelessWidget {
               ),
             ),
           ),
-          // const NewsList(),
           BlocBuilder<NewsCubit, List<models.Article>>(
             builder: (context, articles) {
               if (articles.isEmpty) {
