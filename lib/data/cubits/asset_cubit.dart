@@ -48,6 +48,7 @@ class AssetError extends AssetState {
 class AssetCubit extends Cubit<AssetState> {
   String assetId = '';
   String period = 'live';
+  String SYM = 'GOOGL';
   List<CandleStick> current = [];
   final AssetService assetService = AssetService();
 
@@ -57,9 +58,10 @@ class AssetCubit extends Cubit<AssetState> {
     emit(AssetLoading());
     try {
       assetId = id;
-      final p = await assetService.fetchAsset(assetId, period);
-      current = p.current;
-      emit(AssetLoaded(p));
+      final a = await assetService.fetchAsset(assetId, period);
+      current = a.current;
+      SYM = a.SYM!;
+      emit(AssetLoaded(a));
     } catch (e) {
       emit(AssetError('Error fetching asset'));
     }

@@ -10,3 +10,4 @@ export 'investment_group.dart';
 export 'candlestick_chart.dart';
 export 'options_chain_table.dart';
 export 'portfolio_line_chart.dart';
+export 'placeholder_candlestick_chart.dart';

@@ -31,12 +31,12 @@ class HomeScreenState extends State<HomeScreen> {
     _portfolioCubit.fetchPortfolio("1");
   }
 
-  @override
-  void dispose() {
-    _newsCubit.close();
-    _portfolioCubit.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _newsCubit.close();
+  //   _portfolioCubit.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

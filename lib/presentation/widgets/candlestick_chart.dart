@@ -8,31 +8,6 @@ import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
-class PlacerHolderChart extends StatelessWidget {
-  const PlacerHolderChart({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SfCartesianChart(
-      primaryXAxis: CategoryAxis(
-        isVisible: false,
-        labelStyle: const TextStyle(color: Colors.transparent),
-        labelIntersectAction: AxisLabelIntersectAction.none,
-      ),
-      series: <CandleSeries<CandleStick, String>>[
-        CandleSeries<CandleStick, String>(
-            dataSource: [],
-            lowValueMapper: (CandleStick d, _) => d.low,
-            highValueMapper: (CandleStick d, _) => d.high,
-            openValueMapper: (CandleStick d, _) => d.open,
-            closeValueMapper: (CandleStick d, _) => d.close,
-            xValueMapper: (CandleStick d, int index) => index.toString()
-        ),
-      ],
-    );
-  }
-}
-
 
 class CandleStickChart extends StatefulWidget {
   const CandleStickChart({Key? key }) : super(key: key);
@@ -96,7 +71,7 @@ class CandleStickChartState extends State<CandleStickChart> {
     return BlocConsumer<AssetCubit, AssetState>(
       builder: (context, state) {
         if (state is AssetLoading) {
-          return const PlacerHolderChart();
+          return const PlaceholderCandleStickChart();
         } else if (state is AssetLoaded) {
           final series = context.read<AssetCubit>().current;
           final period = context.read<AssetCubit>().period;
@@ -133,7 +108,7 @@ class CandleStickChartState extends State<CandleStickChart> {
         } else if (state is PortfolioError) {
           return const Text('Error:');
         } else {
-          return const PlacerHolderChart();
+          return const PlaceholderCandleStickChart();
         }
       },
       listener: (context, state) {

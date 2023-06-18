@@ -3,11 +3,11 @@ import 'package:rse/data/models/all.dart';
 
 class Asset {
   final String? name;
-  final String? symbol;
+  final String? SYM;
   final List<CandleStick> current;
   Asset({
     required this.name,
-    required this.symbol,
+    required this.SYM,
     required this.current,
   });
   factory Asset.fromJson(Map<String, dynamic> j , String period) {
@@ -23,15 +23,15 @@ class Asset {
     };
     return Asset(
       name: j['name'],
-      symbol: j['symbol'],
+      SYM: j['sym'],
       current: [
         for (var cs in jsonDecode(j[mapping[period]])['series']) CandleStick.fromJson(cs)
       ],
     );
   }
   factory Asset.defaultAsset() => Asset(
+    SYM: '',
     name: '',
     current: [],
-    symbol: '',
   );
 }
