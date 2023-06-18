@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/presentation/utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -46,7 +47,7 @@ class HomeScreenState extends State<HomeScreen> {
           TickerCarousel(),
           PortfolioLineChart(),
           Padding(
-            padding: EdgeInsets.only(left: 50.0, right: 50),
+            padding: isWeb ? EdgeInsets.only(left: 50.0, right: 50) : EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               children: [
                 Articles(),

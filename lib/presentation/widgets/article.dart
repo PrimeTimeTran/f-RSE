@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rse/data/models/all.dart' as models;
+import 'package:rse/presentation/utils/constants.dart';
 
 class Article extends StatelessWidget {
   final models.Article article;
@@ -9,7 +10,7 @@ class Article extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 30),
+      padding: isWeb ? const EdgeInsets.all(50) : const EdgeInsets.symmetric(vertical: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +22,7 @@ class Article extends StatelessWidget {
                 Text(
                   article.title ?? '',
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize: isWeb ? 30 : 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
