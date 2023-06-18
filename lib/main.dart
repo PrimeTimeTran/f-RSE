@@ -55,6 +55,24 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _idx = 0;
+  late NewsCubit _newsCubit;
+  late PortfolioCubit _portfolioCubit;
+  late AssetCubit _assetCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _newsCubit = context.read<NewsCubit>();
+    _portfolioCubit = context.read<PortfolioCubit>();
+    _assetCubit = context.read<AssetCubit>();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    _newsCubit.fetchArticles();
+    _portfolioCubit.fetchPortfolio("1");
+    _assetCubit.fetchAsset("1");
+  }
 
   void change(int idx) {
     setState(() {

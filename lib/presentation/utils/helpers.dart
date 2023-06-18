@@ -77,7 +77,7 @@ formatField(data, field) {
   }
 }
 
-String chooseFormat(String period, d, int index) {
+String chooseFormat(String period, d) {
   final map = {
     'live': 'h:mma',
     '1d': 'h:mma',

@@ -16,7 +16,7 @@ class PlaceholderCandleStickChart extends StatelessWidget {
       ),
       series: <CandleSeries<CandleStick, String>>[
         CandleSeries<CandleStick, String>(
-            dataSource: [],
+            dataSource: const [],
             lowValueMapper: (CandleStick d, _) => d.low,
             highValueMapper: (CandleStick d, _) => d.high,
             openValueMapper: (CandleStick d, _) => d.open,
