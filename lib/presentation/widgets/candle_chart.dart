@@ -254,8 +254,8 @@ class CandleChartState extends State<CandleChart> {
     );
     _trackballBehavior = TrackballBehavior(
       enable: true,
-      lineWidth: 0,
-      lineColor: color,
+      lineWidth: 1,
+      lineColor: Colors.white,
       lineType: TrackballLineType.vertical,
       activationMode: ActivationMode.singleTap,
       tooltipSettings: const InteractiveTooltip(

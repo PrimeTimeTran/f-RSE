@@ -18,27 +18,33 @@ class _AssetScreeState extends State<AssetScreen> {
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           if (constraints.maxWidth <= 600) {
-            return buildSingleColumnLayout(context);
+            return buildOneColumn(context);
           } else {
-            return buildTwoColumnLayout();
+            return buildTwoColumn();
           }
         },
       ),
     );
   }
 
-  Widget buildSingleColumnLayout(context) {
+  Widget buildOneColumn(context) {
     return const SingleChildScrollView(
       child: Column(
         children: [
           CandleChart(),
+          AssetOverview(),
+          AssetOverview(),
+          AssetOverview(),
+          AssetOverview(),
+          AssetOverview(),
+          AssetOverview(),
           AssetOverview(),
         ],
       ),
     );
   }
 
-  Widget buildTwoColumnLayout() {
+  Widget buildTwoColumn() {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
       child: Row(
@@ -50,6 +56,12 @@ class _AssetScreeState extends State<AssetScreen> {
               child: Column(
                 children: [
                   CandleChart(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
                   AssetOverview(),
                 ],
               ),

@@ -5,26 +5,31 @@ class AssetOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          color: Colors.lightBlueAccent,
-          child: const Column(
-            children: [
-              Row(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        color: Colors.red,
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .3,
+              child: Row(
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Your Market Value', style: TextStyle(fontSize: 15),),
-                        Text('\$100,000', style: TextStyle(fontSize: 25),),
-                      ],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white)
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Your Market Value', style: TextStyle(fontSize: 15),),
+                          Text('\$100,000', style: TextStyle(fontSize: 25),),
+                        ],
+                      ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -37,8 +42,8 @@ class AssetOverview extends StatelessWidget {
                   ),
                 ],
               ),
-            ]
-          ),
+            ),
+          ]
         ),
       ),
     );
