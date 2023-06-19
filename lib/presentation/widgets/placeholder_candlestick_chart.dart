@@ -4,7 +4,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:rse/data/models/all.dart';
 
 class PlaceholderCandleStickChart extends StatelessWidget {
-  const PlaceholderCandleStickChart({super.key});
+  final double low;
+  final double high;
+  const PlaceholderCandleStickChart({super.key, required this.low, required this.high});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,8 @@ class PlaceholderCandleStickChart extends StatelessWidget {
       series: <CandleSeries<CandleStick, String>>[
         CandleSeries<CandleStick, String>(
             dataSource: const [],
-            lowValueMapper: (CandleStick d, _) => d.low,
-            highValueMapper: (CandleStick d, _) => d.high,
+            lowValueMapper: (CandleStick d, _) => low,
+            highValueMapper: (CandleStick d, _) => high,
             openValueMapper: (CandleStick d, _) => d.open,
             closeValueMapper: (CandleStick d, _) => d.close,
             xValueMapper: (CandleStick d, int index) => index.toString()

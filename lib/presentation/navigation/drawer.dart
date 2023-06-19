@@ -15,7 +15,7 @@ class DrawerState extends State<MyDrawer> {
   late bool isDark = isDarkMode(context);
   @override
   Widget build(BuildContext context) {
-    Color primarySwatch = Theme.of(context).primaryColor;
+    final color = T(context, 'primary');
 
     var dark = isDarkMode(context);
 
@@ -26,7 +26,7 @@ class DrawerState extends State<MyDrawer> {
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: primarySwatch,
+                  color: color,
                 ),
                 child: const Text(
                   'Drawer Header',

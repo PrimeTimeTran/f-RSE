@@ -103,7 +103,7 @@ class LineChartState extends State<LineChart> {
   }
 
   _setupTheme(BuildContext context) {
-    final primarySwatch = Theme.of(context).primaryColor;
+    final color = T(context, 'primary');
     final highlightSwatch = Theme.of(context).highlightColor;
     _trackballBehavior = TrackballBehavior(
       enable: true,
@@ -114,7 +114,7 @@ class LineChartState extends State<LineChart> {
       tooltipSettings: InteractiveTooltip(
         enable: true,
         borderWidth: 1,
-        color: primarySwatch,
+        color: color,
         borderColor: Colors.lightGreenAccent,
       ),
     );

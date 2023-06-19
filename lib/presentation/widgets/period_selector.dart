@@ -23,92 +23,92 @@ class PeriodSelectorState extends State<PeriodSelector> {
 
   @override
   Widget build(BuildContext context) {
-    final primarySwatch = Theme.of(context).primaryColor;
-    final highlightColor = Theme.of(context).highlightColor;
+    final color = T(context, 'primary');
+    final highlightColor = T(context, 'secondary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
 
     final width = isMed(context) ? MediaQuery.of(context).size.width * 0.5 : double.infinity;
 
-    return SizedBox(
-      width: width,
-      child: Row(
-        mainAxisAlignment: isMed(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
-        children: periods.map((p) {
-          return Flexible(
-            fit: FlexFit.tight,
-            child: BlocConsumer<AssetCubit, AssetState>(
-              builder: (c, state) {
-                if (state is AssetLoaded) {
-                  final assetCubit = BlocProvider.of<AssetCubit>(context);
-                  final period = assetCubit.period;
-                  return GestureDetector(
-                    onTap: () {
-                      assetCubit.setPeriod(p);
-                    },
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: Container(
-                        height: 30,
-                        margin: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          border: Border.all(color: period == p ? primarySwatch : hoveredPeriod == p ? highlightColor : unselectedColor),
-                          // border: Border(
-                          //     bottom: BorderSide(width: 2.0, color: period == p ? primarySwatch : hoveredPeriod == p ? highlightColor : unselectedColor),
-                          //   )
-                        ),
-                        child: Center(
-                          child: HoverText(
-                            p,
-                            textStyle: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: period == p ? primarySwatch : hoveredPeriod == p ? highlightColor : unselectedColor
+    return Container(
+      margin: const EdgeInsets.only(bottom: 50.0),
+      child: SizedBox(
+        width: width,
+        child: Row(
+          mainAxisAlignment: isMed(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
+          children: periods.map((p) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: BlocConsumer<AssetCubit, AssetState>(
+                builder: (c, state) {
+                  if (state is AssetLoaded) {
+                    final assetCubit = BlocProvider.of<AssetCubit>(context);
+                    final period = assetCubit.period;
+                    return GestureDetector(
+                      onTap: () {
+                        assetCubit.setPeriod(p);
+                      },
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Container(
+                          height: 30,
+                          margin: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor),
+                          ),
+                          child: Center(
+                            child: HoverText(
+                              p,
+                              textStyle: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
+                              ),
                             ),
                           ),
                         ),
+                        onHover: (_) {
+                          setState(() {
+                            hoveredPeriod = p;
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            hoveredPeriod = '';
+                          });
+                        },
                       ),
-                      onHover: (_) {
-                        setState(() {
-                          hoveredPeriod = p;
-                        });
-                      },
-                      onExit: (_) {
-                        setState(() {
-                          hoveredPeriod = '';
-                        });
-                      },
-                    ),
-                  );
-                } else {
-                  return Container(
-                    height: 30,
-                    margin: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      border: Border.all(color: unselectedColor),
-                    ),
-                    child: Center(
-                      child: HoverText(
-                        p,
-                        textStyle: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: unselectedColor
+                    );
+                  } else {
+                    return Container(
+                      height: 30,
+                      margin: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        border: Border.all(color: unselectedColor),
+                      ),
+                      child: Center(
+                        child: HoverText(
+                          p,
+                          textStyle: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: unselectedColor
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }
-              },
-              listener: (context, state) {
-              },
-              buildWhen: (previous, current) {
-                return true;
-              },
-            ),
-          );
-        }).toList(),
+                    );
+                  }
+                },
+                listener: (context, state) {
+                },
+                buildWhen: (previous, current) {
+                  return true;
+                },
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

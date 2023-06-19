@@ -77,7 +77,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
   }
 
   Widget _buildTabContainer(context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final color = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
 
     return Padding(
@@ -87,8 +87,8 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
         child: Column(
           children: [
             TabBar(
-              labelColor: primaryColor,
-              indicatorColor: primaryColor,
+              labelColor: color,
+              indicatorColor: color,
               isScrollable: isSmall(context),
               unselectedLabelColor: unselectedColor,
               tabs: const [

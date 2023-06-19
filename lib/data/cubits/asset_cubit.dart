@@ -54,7 +54,6 @@ class AssetCubit extends Cubit<AssetState> {
   AssetCubit() : super(AssetInitial());
 
   Future<void> fetchAsset(String id) async {
-    emit(AssetLoading());
     try {
       assetId = id;
       final a = await assetService.fetchAsset(assetId, period);

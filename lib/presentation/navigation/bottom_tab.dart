@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:rse/presentation/all.dart';
+
 class BottomTab extends StatefulWidget {
   final Function(int) change;
   final int index;
@@ -14,35 +16,39 @@ class BottomTab extends StatefulWidget {
 class _BottomTabState extends State<BottomTab> {
   @override
   Widget build(BuildContext context) {
-    final primarySwatch = Theme.of(context).primaryColor;
-    final unselectedLabelColor = Theme.of(context).bottomAppBarTheme.color;
+    final unselectedLabelColor = T(context, 'inversePrimary');
 
     return BottomNavigationBar(
       currentIndex: widget.index,
-      fixedColor: primarySwatch,
       showUnselectedLabels: true,
       onTap: (idx) => widget.change(idx),
       unselectedItemColor: unselectedLabelColor,
+      selectedItemColor: T(context, 'primaryContainer'),
       unselectedLabelStyle: TextStyle(color: unselectedLabelColor),
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           label: 'Stocks',
+          backgroundColor: T(context, 'background'),
           icon: Icon(Icons.auto_graph),
         ),
         BottomNavigationBarItem(
           label: 'Spending',
+          backgroundColor: T(context, 'background'),
           icon: Icon(Icons.credit_card),
         ),
         BottomNavigationBarItem(
           label: 'Browse',
+          backgroundColor: T(context, 'background'),
           icon: Icon(Icons.newspaper),
         ),
         BottomNavigationBarItem(
           label: 'News',
+          backgroundColor: T(context, 'background'),
           icon: Icon(Icons.newspaper),
         ),
         BottomNavigationBarItem(
           label: 'Profile',
+          backgroundColor: T(context, 'background'),
           icon: Icon(Icons.person_2_outlined),
         ),
       ],

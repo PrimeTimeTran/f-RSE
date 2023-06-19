@@ -90,6 +90,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).primaryColor;
     return MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,
@@ -107,6 +108,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('RSE'),
           actions: navbarIcons(context),
+          // backgroundColor: Colors.green,
+          // backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       ),
     );
