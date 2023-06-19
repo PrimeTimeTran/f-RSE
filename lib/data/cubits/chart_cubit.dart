@@ -27,13 +27,22 @@ class ChartInitial extends ChartState {}
 
 class ChartLoading extends ChartState {}
 
-class ChartLoaded extends ChartState {
-  final CandleStick candle;
+class ChartError extends ChartState {
+  final String errorMessage;
 
-  ChartLoaded(this.candle);
+  ChartError(this.errorMessage);
 
   @override
-  List<Object?> get props => [candle];
+  List<Object?> get props => [errorMessage];
+}
+
+class HoverUpdated extends ChartState {
+  final Chart chart;
+
+  HoverUpdated(this.chart);
+
+  @override
+  List<Object?> get props => [chart];
 }
 
 class ChartUpdated extends ChartState {
@@ -45,37 +54,17 @@ class ChartUpdated extends ChartState {
   List<Object?> get props => [chart];
 }
 
-class ChartError extends ChartState {
-  final String errorMessage;
-
-  ChartError(this.errorMessage);
-
-  @override
-  List<Object?> get props => [errorMessage];
-}
-
 class ChartCubit extends Cubit<ChartState> {
   double xOffSet = 0;
   Chart chart = Chart.defaultChart();
-  CandleStick candle = CandleStick.defaultCandle();
-
   ChartCubit() : super(ChartInitial());
 
-  Future<void> initializeChartCandle(CandleStick c) async {
+  Future<void> setHoveredCandle(c, x) async {
     try {
-      emit(ChartLoaded(candle));
-    } catch (e) {
-      emit(ChartError(e.toString()));
-    }
-  }
-
-  Future<void> setHoveredCandle(CandleStick c, x) async {
-    try {
-      candle = c;
       chart.xOffSet = x;
       chart.hoveredCandle = c;
-      emit(ChartLoaded(c));
       emit(ChartUpdated(chart));
+      emit(HoverUpdated(chart));
     } catch (e) {
       emit(ChartError(e.toString()));
     }

@@ -13,7 +13,7 @@ class CandleHoveredDetails extends StatelessWidget {
       builder: (context, state) {
         if (state is ChartInitial) {
           return const CircularProgressIndicator();
-        } else if (state is ChartUpdated) {
+        } else if (state is HoverUpdated) {
           final c = state.chart.hoveredCandle;
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,

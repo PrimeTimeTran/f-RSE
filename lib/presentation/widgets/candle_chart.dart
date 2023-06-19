@@ -49,7 +49,7 @@ class CandleChartState extends State<CandleChart> {
   BlocConsumer<ChartCubit, ChartState> buildTimeLabel() {
     return BlocConsumer<ChartCubit, ChartState>(
       builder: (c, state) {
-        if (state is ChartUpdated) {
+        if (state is HoverUpdated) {
           final p = c.read<AssetCubit>().period;
           final candle = state.chart.hoveredCandle;
           final value = state.chart.xOffSet;
