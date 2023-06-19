@@ -84,7 +84,10 @@ class LineChartState extends State<LineChart> {
                   ),
                 ),
               ),
-              const PeriodSelector(),
+              const Align(
+                  alignment: Alignment.centerLeft,
+                  child: PeriodSelector()
+              ),
             ],
           );
         } else if (state is PortfolioError) {

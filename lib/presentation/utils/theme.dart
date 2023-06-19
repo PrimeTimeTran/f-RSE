@@ -56,11 +56,7 @@ class ThemeModel with ChangeNotifier {
   }
 
   void _handleBrightnessChange() {
-    if (window.platformBrightness == Brightness.dark) {
-      _isDarkMode = true;
-    } else {
-      _isDarkMode = false;
-    }
+    _isDarkMode = window.platformBrightness == Brightness.dark;
     notifyListeners();
   }
 
