@@ -62,7 +62,6 @@ class _MyAppState extends State<MyApp> {
   int _idx = 0;
   late NewsCubit _newsCubit;
   late AssetCubit _assetCubit;
-  late ChartCubit _chartCubit;
   late PortfolioCubit _portfolioCubit;
 
   @override
@@ -71,7 +70,6 @@ class _MyAppState extends State<MyApp> {
     _newsCubit = context.read<NewsCubit>();
     _portfolioCubit = context.read<PortfolioCubit>();
     _assetCubit = context.read<AssetCubit>();
-    _chartCubit = context.read<ChartCubit>();
     fetchData();
   }
 
@@ -79,7 +77,6 @@ class _MyAppState extends State<MyApp> {
     _newsCubit.fetchArticles();
     _portfolioCubit.fetchPortfolio("1");
     _assetCubit.fetchAsset("1");
-    _chartCubit.initializeChartCandle();
   }
 
   void change(int idx) {

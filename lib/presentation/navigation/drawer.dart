@@ -16,9 +16,7 @@ class DrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     final color = T(context, 'primary');
-
     var dark = isDarkMode(context);
-
     return Drawer(
       child: Consumer<ThemeModel> (
         builder: (context, themeModel, _) {
@@ -29,7 +27,7 @@ class DrawerState extends State<MyDrawer> {
                   color: color,
                 ),
                 child: const Text(
-                  'Drawer Header',
+                  'Royal Stock Exchange',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,

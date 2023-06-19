@@ -28,10 +28,7 @@ class Doughnut extends StatefulWidget {
 
 class DoughnutState extends State<Doughnut> {
   final List<Color> colors = [
-    Colors.blue[100]!,
-    Colors.blue[200]!,
-    Colors.blue[300]!,
-    Colors.blue[400]!,
+    Colors.grey[900]!,
   ];
 
   @override
@@ -79,12 +76,14 @@ class DoughnutState extends State<Doughnut> {
                   xValueMapper: (models.Investment data, _) => data.name,
                   dataLabelMapper: (models.Investment data, _) => formatField(data, widget.field),
                   yValueMapper: (models.Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),
-                  dataLabelSettings: const DataLabelSettings(
+                  dataLabelSettings: DataLabelSettings(
                     isVisible: true,
+                    color: T(context, 'inversePrimary'),
                   ),
+
                   pointColorMapper: (models.Investment data, _) {
                     if (widget.hoveredRowIndex != -1 && widget.hoveredRowIndex == data.idx) {
-                      return Colors.lightGreenAccent;
+                      return T(context, 'primary');
                     }
                     return colors[data.idx % colors.length];
                   },

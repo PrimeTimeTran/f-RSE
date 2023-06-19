@@ -24,7 +24,7 @@ class _BottomTabState extends State<BottomTab> {
       type: BottomNavigationBarType.fixed,
       onTap: (idx) => widget.change(idx),
       unselectedItemColor: unselectedLabelColor,
-      selectedItemColor: T(context, 'primaryContainer'),
+      selectedItemColor: T(context, 'primary'),
       unselectedLabelStyle: TextStyle(color: unselectedLabelColor),
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(

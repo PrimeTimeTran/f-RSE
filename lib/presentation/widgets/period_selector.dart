@@ -24,10 +24,10 @@ class PeriodSelectorState extends State<PeriodSelector> {
   @override
   Widget build(BuildContext context) {
     final color = T(context, 'primary');
-    final highlightColor = T(context, 'secondary');
+    final highlightColor = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
 
-    final width = isMed(context) ? MediaQuery.of(context).size.width * 0.5 : double.infinity;
+    final width = isMed(context) ? MediaQuery.of(context).size.width * 0.2 : double.infinity;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 50.0),
@@ -50,19 +50,23 @@ class PeriodSelectorState extends State<PeriodSelector> {
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: Container(
-                          height: 30,
-                          margin: const EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.only(right: 5.0),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            border: Border.all(color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor),
+                            border: Border(
+                            bottom: BorderSide(width: 1.5, color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor),
+                            ),
                           ),
-                          child: Center(
-                            child: HoverText(
-                              p,
-                              textStyle: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: HoverText(
+                                p,
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
+                                ),
                               ),
                             ),
                           ),
@@ -80,24 +84,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
                       ),
                     );
                   } else {
-                    return Container(
-                      height: 30,
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(color: unselectedColor),
-                      ),
-                      child: Center(
-                        child: HoverText(
-                          p,
-                          textStyle: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: unselectedColor
-                          ),
-                        ),
-                      ),
-                    );
+                    return Text('');
                   }
                 },
                 listener: (context, state) {

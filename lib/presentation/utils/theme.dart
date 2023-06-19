@@ -66,7 +66,6 @@ class ThemeModel with ChangeNotifier {
   }
 }
 
-
 bool isDarkMode(BuildContext context) {
   final theme = Theme.of(context).brightness;
   return theme == Brightness.dark;
