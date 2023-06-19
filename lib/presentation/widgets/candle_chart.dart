@@ -14,24 +14,31 @@ class CandleChart extends StatefulWidget {
 }
 
 class CandleChartState extends State<CandleChart> {
+  bool showCrosshair = true;
+  late double previousLow = 10;
+  late double previousHigh = 0;
   late CandleStick? hoveredCandle;
   late ZoomPanBehavior _zoomPanBehavior;
   late TooltipBehavior _tooltipBehavior;
   late CrosshairBehavior _crosshairBehavior;
   late TrackballBehavior _trackballBehavior;
-  late double previousLow = 10;
-  late double previousHigh = 0;
 
   @override
-  Widget build(BuildContext context) {
-    _setupTheme(context);
+  void initState() {
+    hoveredCandle = CandleStick.defaultCandle();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext c) {
+    _setupTheme(c);
     return Padding(
-      padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: isWeb && isMed(c) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: SingleChildScrollView(
         child: Column(
           children: [
             _indicator(),
-            _buildLayoutBuilder(context),
+            _buildLayoutBuilder(),
             const Align(
               alignment: Alignment.centerLeft,
               child: PeriodSelector()
@@ -42,7 +49,7 @@ class CandleChartState extends State<CandleChart> {
     );
   }
 
-  _buildLayoutBuilder(c) {
+  _buildLayoutBuilder() {
     final color = T(context, 'primary');
     return SizedBox(
       width: MediaQuery.of(context).size.width,
@@ -53,23 +60,28 @@ class CandleChartState extends State<CandleChart> {
             final sym = context.read<AssetCubit>().sym;
             final period = context.read<AssetCubit>().period;
             final series = context.read<AssetCubit>().current;
-            if(previousLow == 0) {
+            if (previousLow == 0) {
               setState(() {
                 previousLow = series.reduce((value, element) => value.low < element.low ? value : element).low;
                 previousHigh = series.reduce((value, element) => value.high > element.high ? value : element).high;
               });
-
             }
             if (hoveredCandle?.time == '') {
               final candle = series[0];
               context.read<ChartCubit>().setHoveredSeriesItem(candle);
+              hoveredCandle = candle;
             }
             return RepaintBoundary(
               child: SfCartesianChart(
                 tooltipBehavior: _tooltipBehavior,
                 zoomPanBehavior: _zoomPanBehavior,
-                crosshairBehavior: _crosshairBehavior,
                 trackballBehavior: _trackballBehavior,
+                crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
+                onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
+                  setState(() {
+                    showCrosshair = !showCrosshair;
+                  });
+                },
                 primaryYAxis: NumericAxis(
                   numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
                   minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
@@ -185,7 +197,6 @@ class CandleChartState extends State<CandleChart> {
       lineType: CrosshairLineType.both,
       activationMode: ActivationMode.singleTap,
     );
-    hoveredCandle = CandleStick.defaultCandle();
   }
 }
 

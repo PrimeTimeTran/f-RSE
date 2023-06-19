@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
@@ -41,7 +42,7 @@ final darkTheme = ThemeData(
 );
 
 class ThemeModel with ChangeNotifier {
-  bool _isDarkMode = false;
+  bool _isDarkMode = window.platformBrightness == Brightness.dark;
 
   bool get isDarkMode => _isDarkMode;
 
@@ -49,7 +50,26 @@ class ThemeModel with ChangeNotifier {
     _isDarkMode = !_isDarkMode;
     notifyListeners();
   }
+
+  ThemeModel() {
+    window.onPlatformBrightnessChanged = _handleBrightnessChange;
+  }
+
+  void _handleBrightnessChange() {
+    if (window.platformBrightness == Brightness.dark) {
+      _isDarkMode = true;
+    } else {
+      _isDarkMode = false;
+    }
+    notifyListeners();
+  }
+
+  void dispose() {
+    window.onPlatformBrightnessChanged = null;
+    super.dispose();
+  }
 }
+
 
 bool isDarkMode(BuildContext context) {
   final theme = Theme.of(context).brightness;
