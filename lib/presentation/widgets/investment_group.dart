@@ -26,8 +26,8 @@ class InvestmentGroup extends StatefulWidget {
 class InvestmentGroupState extends State<InvestmentGroup> {
   int explodeIdx = 0;
   int hoveredRowIdx = 0;
-  String _sortField = 'totalValue';
   bool shouldExplode = false;
+  String _sortField = 'totalValue';
   List<models.Investment> sortedSecurities = [];
   late ActivationMode activationMode = ActivationMode.none;
 

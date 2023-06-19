@@ -37,6 +37,7 @@ class Articles extends StatelessWidget {
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: articles.length,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Article(article: articles[index]);
                   },
