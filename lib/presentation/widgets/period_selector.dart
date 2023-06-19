@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/cubits/all.dart';
-import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/presentation/all.dart';
 
 class PeriodSelector extends StatefulWidget {
   const PeriodSelector({super.key});
@@ -24,11 +24,15 @@ class PeriodSelectorState extends State<PeriodSelector> {
   @override
   Widget build(BuildContext context) {
     final primarySwatch = Theme.of(context).primaryColor;
+    final highlightColor = Theme.of(context).highlightColor;
+    final unselectedColor = Theme.of(context).unselectedWidgetColor;
+
+    final width = isMed(context) ? MediaQuery.of(context).size.width * 0.5 : double.infinity;
 
     return SizedBox(
-      width: double.infinity,
+      width: width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: isMed(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
         children: periods.map((p) {
           return Flexible(
             fit: FlexFit.tight,
@@ -36,6 +40,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
               builder: (c, state) {
                 if (state is AssetLoaded) {
                   final assetCubit = BlocProvider.of<AssetCubit>(context);
+                  final period = assetCubit.period;
                   return GestureDetector(
                     onTap: () {
                       assetCubit.setPeriod(p);
@@ -46,15 +51,19 @@ class PeriodSelectorState extends State<PeriodSelector> {
                         height: 30,
                         margin: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
-                          border: Border.all(color: hoveredPeriod == p ? primarySwatch : Colors.black),
                           borderRadius: BorderRadius.circular(5.0),
-                          color: assetCubit.period == p ? Colors.lightGreenAccent : Colors.white,
+                          border: Border.all(color: period == p ? primarySwatch : hoveredPeriod == p ? highlightColor : unselectedColor),
+                          // border: Border(
+                          //     bottom: BorderSide(width: 2.0, color: period == p ? primarySwatch : hoveredPeriod == p ? highlightColor : unselectedColor),
+                          //   )
                         ),
                         child: Center(
                           child: HoverText(
                             p,
                             textStyle: TextStyle(
-                              color: hoveredPeriod == p ? primarySwatch : Colors.black,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: period == p ? primarySwatch : hoveredPeriod == p ? highlightColor : unselectedColor
                             ),
                           ),
                         ),
@@ -76,12 +85,18 @@ class PeriodSelectorState extends State<PeriodSelector> {
                     height: 30,
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5.0),
-                      color: Colors.white,
+                      border: Border.all(color: unselectedColor),
                     ),
                     child: Center(
-                      child: HoverText(p),
+                      child: HoverText(
+                        p,
+                        textStyle: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: unselectedColor
+                        ),
+                      ),
                     ),
                   );
                 }

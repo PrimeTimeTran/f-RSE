@@ -29,7 +29,10 @@ class CandleChartState extends State<CandleChart> {
           children: [
             _indicator(),
             _buildLayoutBuilder(),
-            const PeriodSelector(),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: PeriodSelector()
+            ),
           ],
         ),
       ),
@@ -159,8 +162,8 @@ class CandleChartState extends State<CandleChart> {
       enable: true,
       lineWidth: 2,
       hideDelay: 5,
-      lineColor: Colors.green,
       shouldAlwaysShow: true,
+      lineColor: Colors.green,
       lineDashArray: <double>[5,5],
       lineType: CrosshairLineType.both,
       activationMode: ActivationMode.singleTap,

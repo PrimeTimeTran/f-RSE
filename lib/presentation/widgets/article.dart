@@ -122,7 +122,7 @@ class ArticleState extends State<Article> {
                 imageUrl = placeholder;
               });
             },
-            image: NetworkImage(imageUrl),
+            image: NetworkImage("https://cros-anywhere.herokuapp.com/$imageUrl"),
             fit: BoxFit.cover,
             alignment: Alignment.center,
           ),

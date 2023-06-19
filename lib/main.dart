@@ -57,9 +57,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _idx = 0;
   late NewsCubit _newsCubit;
-  late PortfolioCubit _portfolioCubit;
   late AssetCubit _assetCubit;
   late ChartCubit _chartCubit;
+  late PortfolioCubit _portfolioCubit;
 
   @override
   void initState() {
@@ -90,6 +90,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Royal Stock Exchange',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
+      // theme: darkTheme,
       darkTheme: darkTheme,
       routes: {
         '/home': (context) => const HomeScreen(title: "RSE"),
