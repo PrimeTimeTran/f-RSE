@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:rse/data/models/all.dart';
 
 class Asset {
+  final double o;
+  final String sym;
   final String? name;
-  final String? sym;
+  final double value;
   final List<CandleStick> current;
   Asset({
-    required this.name,
+    required this.o,
+    required this.value,
     required this.sym,
+    required this.name,
     required this.current,
   });
   factory Asset.fromJson(Map<String, dynamic> j , String period) {
@@ -22,17 +26,20 @@ class Asset {
       "1y": "oneYear",
       "all": "allData",
     };
+    var series = [for (var cs in jsonDecode(j[mapping[period]])['series']) CandleStick.fromJson(cs)];
     return Asset(
-      name: j['name'],
+      o: j['o'],
       sym: j['sym'],
-      current: [
-        for (var cs in jsonDecode(j[mapping[period]])['series']) CandleStick.fromJson(cs)
-      ],
+      name: j['name'],
+      current: series,
+      value: series[series.length - 1].close,
     );
   }
   factory Asset.defaultAsset() => Asset(
+    o: 0,
     sym: '',
     name: '',
+    value: 0,
     current: [],
   );
 }

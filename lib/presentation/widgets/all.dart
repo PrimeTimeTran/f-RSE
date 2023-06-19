@@ -7,6 +7,7 @@ export 'hover_text.dart';
 export 'line_chart.dart';
 export 'candle_chart.dart';
 export 'summary_table.dart';
+export 'indicator_item.dart';
 export 'asset_overview.dart';
 export 'ticker_carousel.dart';
 export 'period_selector.dart';

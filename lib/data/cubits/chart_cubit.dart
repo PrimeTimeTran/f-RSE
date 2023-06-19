@@ -46,13 +46,13 @@ class ChartError extends ChartState {
 }
 
 class ChartCubit extends Cubit<ChartState> {
-  List<DataPoint> dataPoints = [];
   double offsetX = 0;
+  List<DataPoint> dataPoints = [];
   CandleStick candle = CandleStick(time: DateTime.now().toString(), open: 0, high: 0, low: 0, close: 0, value: 0);
 
   ChartCubit() : super(ChartInitial());
 
-  Future<void> initializeChartCandle() async {
+  Future<void> initializeChartCandle(CandleStick c) async {
     try {
       emit(ChartLoading());
       candle = CandleStick.defaultCandle();
@@ -63,7 +63,6 @@ class ChartCubit extends Cubit<ChartState> {
   }
 
   Future<void> setHoveredSeriesItem(CandleStick c) async {
-    emit(ChartLoading());
     try {
       candle = c;
       emit(ChartLoaded(c));

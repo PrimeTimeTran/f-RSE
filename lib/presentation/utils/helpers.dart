@@ -26,7 +26,8 @@ void printResponse(http.Response response) {
   });
 }
 
-String formatMoney(String value) {
+String formatMoney(value) {
+  value = value.toString();
   final numberFormat = NumberFormat.currency(symbol: '\$');
   final moneyValue = double.parse(value.replaceAll(',', ''));
   return numberFormat.format(moneyValue);
@@ -75,6 +76,24 @@ formatField(data, field) {
     default:
       return "${data.getValue(field)}%";
   }
+}
+
+String formatPercent(double value) {
+  return (value * 100).toStringAsFixed(2) + '%';
+}
+
+String calculatePercentageChange(double newValue, double oldValue) {
+  double percentageChange = ((newValue - oldValue) / oldValue) * 100;
+  String sign = (percentageChange >= 0) ? '+' : '-';
+  double absoluteChange = percentageChange.abs();
+  return '$sign ${absoluteChange.toStringAsFixed(2)} %';
+}
+
+String calculateValueChange(double newValue, double oldValue) {
+  double valueChange = newValue - oldValue;
+  String sign = (valueChange >= 0) ? '+' : '-';
+  double absoluteChange = valueChange.abs();
+  return '$sign ${formatMoney(absoluteChange.toStringAsFixed(2))}';
 }
 
 String chooseFormat(String period, d) {
