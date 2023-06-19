@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:rse/data/all.dart';
 
 Future<dynamic> loadJsonFile(String path) async {
   try {
@@ -24,6 +25,12 @@ void printResponse(http.Response response) {
       debugPrint('$key: $value');
     }
   });
+}
+
+int randomInt(int to, int from) {
+  Random random = Random();
+  int randomNumber = random.nextInt(from - to + 1) + to;
+  return randomNumber;
 }
 
 String formatMoney(value) {
@@ -59,12 +66,6 @@ String formatUtcToDM(DateTime utcTime) {
   return formattedDate;
 }
 
-int randomInt(int to, int from) {
-  Random random = Random();
-  int randomNumber = random.nextInt(from - to + 1) + to;
-  return randomNumber;
-}
-
 formatField(data, field) {
   switch (field) {
     case 'name':
@@ -79,7 +80,7 @@ formatField(data, field) {
 }
 
 String formatPercent(double value) {
-  return (value * 100).toStringAsFixed(2) + '%';
+  return '${(value * 100).toStringAsFixed(2)}%';
 }
 
 String calculatePercentageChange(double newValue, double oldValue) {
@@ -94,6 +95,13 @@ String calculateValueChange(double newValue, double oldValue) {
   String sign = (valueChange >= 0) ? '+' : '-';
   double absoluteChange = valueChange.abs();
   return '$sign ${formatMoney(absoluteChange.toStringAsFixed(2))}';
+}
+
+double getLowestVal(List<CandleStick> series) {
+  return series.reduce((value, element) => value.low < element.low ? value : element).low;
+}
+double getHighestVal(List<CandleStick> series) {
+  return series.reduce((value, element) => value.high > element.high ? value : element).high;
 }
 
 String chooseFormat(String period, d) {

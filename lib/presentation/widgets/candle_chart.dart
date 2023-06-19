@@ -40,36 +40,39 @@ class CandleChartState extends State<CandleChart> {
             _indicator(),
             Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                height: isWeb && isMed(context) ? 100 : 300,
+              child: SizedBox(
+                height: 100,
                 child: BlocConsumer<ChartCubit, ChartState>(
                   builder: (c, state) {
-                    if (state is ChartLoaded) {
+                    if (state is ChartUpdated) {
                       final asset = c.read<AssetCubit>().asset;
-                      var hoveredVal = c.read<ChartCubit>().candle.value;
-                      var gain = calculatePercentageChange(hoveredVal, asset.o);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              formatMoney(hoveredVal),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
+                      final cursorVal = state.chart.hoveredCandle.value;
+                      var gain = calculatePercentageChange(cursorVal, asset.o);
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                formatMoney(cursorVal),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${calculateValueChange(hoveredVal, asset.o)} ($gain)',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
+                            Expanded(
+                              child: Text(
+                                '${calculateValueChange(cursorVal, asset.o)} ($gain)',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     } else {
                       return const Text('');
@@ -85,10 +88,10 @@ class CandleChartState extends State<CandleChart> {
                 _buildLayoutBuilder(),
                 BlocConsumer<ChartCubit, ChartState>(
                     builder: (c, state) {
-                    if (state is ChartLoaded) {
+                    if (state is ChartUpdated) {
                       final p = c.read<AssetCubit>().period;
-                      final candle = c.read<ChartCubit>().candle;
-                      final value = c.read<ChartCubit>().offsetX;
+                      final candle = state.chart.hoveredCandle;
+                      final value = state.chart.xOffSet;
                        return Positioned(
                          top: -10,
                          left: value - 30,
@@ -135,13 +138,13 @@ class CandleChartState extends State<CandleChart> {
             final series = asset.current;
             if (previousLow == 0) {
               setState(() {
-                previousLow = series.reduce((value, element) => value.low < element.low ? value : element).low;
-                previousHigh = series.reduce((value, element) => value.high > element.high ? value : element).high;
+                previousLow = getLowestVal(series);
+                previousHigh = getHighestVal(series);
               });
             }
             if (hoveredCandle?.time == '') {
               final candle = series[0];
-              context.read<ChartCubit>().setHoveredSeriesItem(candle);
+              context.read<ChartCubit>().setHoveredCandle(candle, 0);
               hoveredCandle = candle;
             }
             return RepaintBoundary(
@@ -163,8 +166,8 @@ class CandleChartState extends State<CandleChart> {
                   final xOffSet = args.chartPointInfo.xPosition;
                   final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
                   final CandleStick candle = series[dataPoint!];
-                  context.read<ChartCubit>().setHoveredSeriesItem(candle);
-                  context.read<ChartCubit>().setOffsetX(xOffSet!);
+                  context.read<ChartCubit>().setHoveredCandle(candle, xOffSet!);
+                  // context.read<ChartCubit>().setOffsetX(xOffSet!);
                 },
                 primaryXAxis: CategoryAxis(
                   labelRotation: 45,
@@ -206,8 +209,8 @@ class CandleChartState extends State<CandleChart> {
         builder: (context, state) {
           if (state is ChartInitial) {
             return const CircularProgressIndicator();
-          } else if (state is ChartLoaded) {
-            final c = context.read<ChartCubit>().candle;
+          } else if (state is ChartUpdated) {
+            final c = state.chart.hoveredCandle;
             return Row(
               children: [
                 IndicatorItem(c.open, 'Open: '),

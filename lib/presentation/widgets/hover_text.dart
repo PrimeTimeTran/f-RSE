@@ -15,7 +15,7 @@ class HoverTextState extends State<HoverText> {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTextStyle = TextStyle(fontSize: 14, color: textColor);
+    final defaultTextStyle = TextStyle(fontSize: 10, color: textColor);
     final mergedTextStyle = widget.textStyle != null
         ? defaultTextStyle.merge(widget.textStyle!)
         : defaultTextStyle;

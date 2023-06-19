@@ -63,7 +63,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
                               child: HoverText(
                                 p,
                                 textStyle: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                   color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
                                 ),

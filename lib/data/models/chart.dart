@@ -1,3 +1,15 @@
+class Chart {
+  late double xOffSet;
+  late CandleStick hoveredCandle;
+
+  Chart(this.xOffSet, this.hoveredCandle);
+
+  factory Chart.defaultChart() => Chart(
+    0,
+    CandleStick.defaultCandle(),
+  );
+}
+
 class CandleStick {
   final double low;
   final String time;

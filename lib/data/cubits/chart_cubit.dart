@@ -36,6 +36,15 @@ class ChartLoaded extends ChartState {
   List<Object?> get props => [candle];
 }
 
+class ChartUpdated extends ChartState {
+  final Chart chart;
+
+  ChartUpdated(this.chart);
+
+  @override
+  List<Object?> get props => [chart];
+}
+
 class ChartError extends ChartState {
   final String errorMessage;
 
@@ -46,31 +55,29 @@ class ChartError extends ChartState {
 }
 
 class ChartCubit extends Cubit<ChartState> {
-  double offsetX = 0;
-  List<DataPoint> dataPoints = [];
-  CandleStick candle = CandleStick(time: DateTime.now().toString(), open: 0, high: 0, low: 0, close: 0, value: 0);
+  double xOffSet = 0;
+  Chart chart = Chart.defaultChart();
+  CandleStick candle = CandleStick.defaultCandle();
 
   ChartCubit() : super(ChartInitial());
 
   Future<void> initializeChartCandle(CandleStick c) async {
     try {
-      emit(ChartLoading());
-      candle = CandleStick.defaultCandle();
       emit(ChartLoaded(candle));
     } catch (e) {
       emit(ChartError(e.toString()));
     }
   }
 
-  Future<void> setHoveredSeriesItem(CandleStick c) async {
+  Future<void> setHoveredCandle(CandleStick c, x) async {
     try {
       candle = c;
+      chart.xOffSet = x;
+      chart.hoveredCandle = c;
       emit(ChartLoaded(c));
+      emit(ChartUpdated(chart));
     } catch (e) {
       emit(ChartError(e.toString()));
     }
-  }
-  setOffsetX(double x) {
-    offsetX = x;
   }
 }
