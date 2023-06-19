@@ -46,7 +46,7 @@ class _AssetScreeState extends State<AssetScreen> {
 
   Widget buildTwoColumn() {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 60),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,12 +56,6 @@ class _AssetScreeState extends State<AssetScreen> {
               child: Column(
                 children: [
                   CandleChart(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
                   AssetOverview(),
                 ],
               ),

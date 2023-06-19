@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:rse/data/all.dart';
-import 'package:rse/presentation/utils/constants.dart';
+import 'package:rse/presentation/all.dart';
 
 class AssetService {
   final LocalStorageService _localStorage = LocalStorageService();

@@ -10,7 +10,8 @@ class IndicatorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
