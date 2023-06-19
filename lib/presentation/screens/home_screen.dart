@@ -46,7 +46,6 @@ class ResponsiveLayout extends StatelessWidget {
   }
 
   Widget buildSingleColumnLayout(context) {
-
     return const SingleChildScrollView(
       child: Column(
         children: [
@@ -62,6 +61,16 @@ class ResponsiveLayout extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
       child: Row(
         children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  LineChart(),
+                  Articles(),
+                ],
+              ),
+            ),
+          ),
           SingleChildScrollView(
             child: Watchlist(),
           ),

@@ -15,6 +15,7 @@ class CandleChart extends StatefulWidget {
 
 class CandleChartState extends State<CandleChart> {
   late CandleStick? hoveredCandle;
+  late ZoomPanBehavior _zoomPanBehavior;
   late TooltipBehavior _tooltipBehavior;
   late CrosshairBehavior _crosshairBehavior;
   late TrackballBehavior _trackballBehavior;
@@ -57,6 +58,7 @@ class CandleChartState extends State<CandleChart> {
             }
             return SfCartesianChart(
               tooltipBehavior: _tooltipBehavior,
+              zoomPanBehavior: _zoomPanBehavior,
               crosshairBehavior: _crosshairBehavior,
               trackballBehavior: _trackballBehavior,
               primaryYAxis: NumericAxis(
@@ -147,6 +149,11 @@ class CandleChartState extends State<CandleChart> {
     final primarySwatch = Theme.of(context).primaryColor;
     _tooltipBehavior = TooltipBehavior(
       enable: true,
+    );
+    _zoomPanBehavior = ZoomPanBehavior(
+        enablePanning: true,
+        enablePinching: true,
+        enableMouseWheelZooming : true,
     );
     _trackballBehavior = TrackballBehavior(
       enable: true,
