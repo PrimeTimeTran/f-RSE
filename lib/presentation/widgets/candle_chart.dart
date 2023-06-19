@@ -30,15 +30,47 @@ class CandleChartState extends State<CandleChart> {
   }
 
   @override
-  Widget build(BuildContext c) {
-    _setupTheme(c);
+  Widget build(BuildContext context) {
+    _setupTheme(context);
     return Padding(
-      padding: isWeb && isMed(c) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: SingleChildScrollView(
         child: Column(
           children: [
             _indicator(),
-            _buildLayoutBuilder(),
+            Stack(
+              children: [
+                _buildLayoutBuilder(),
+                BlocConsumer<ChartCubit, ChartState>(
+                    builder: (c, state) {
+                    if (state is ChartLoaded) {
+                      final p = c.read<AssetCubit>().period;
+                      final candle = c.read<ChartCubit>().candle;
+                      final value = c.read<ChartCubit>().offsetX;
+                       return Positioned(
+                         top: 10,
+                         left: value - 30,
+                         child: Container(
+                           padding: const EdgeInsets.all(8),
+                           color: T(context, 'primary'),
+                           child: Text(
+                             candle.time != '' ? chooseFormat(p, candle).toString() : '',
+                             style: const TextStyle(
+                               color: Colors.white,
+                               fontSize: 16,
+                             ),
+                           ),
+                         ),
+                       );
+                    } else {
+                      return const Text('');
+                    }
+                  },
+                  listener: (context, state) {
+                  },
+                ),
+              ],
+            ),
             const Align(
               alignment: Alignment.centerLeft,
               child: PeriodSelector()
@@ -87,9 +119,11 @@ class CandleChartState extends State<CandleChart> {
                   minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
                 ),
                 onTrackballPositionChanging: (TrackballArgs args) {
+                  final xOffSet = args.chartPointInfo.xPosition;
                   final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
                   final CandleStick candle = series[dataPoint!];
                   context.read<ChartCubit>().setHoveredSeriesItem(candle);
+                  context.read<ChartCubit>().setOffsetX(xOffSet!);
                 },
                 primaryXAxis: CategoryAxis(
                   labelRotation: 45,

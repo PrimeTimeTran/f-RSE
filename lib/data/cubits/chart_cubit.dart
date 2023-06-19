@@ -47,6 +47,7 @@ class ChartError extends ChartState {
 
 class ChartCubit extends Cubit<ChartState> {
   List<DataPoint> dataPoints = [];
+  double offsetX = 0;
   CandleStick candle = CandleStick(time: DateTime.now().toString(), open: 0, high: 0, low: 0, close: 0, value: 0);
 
   ChartCubit() : super(ChartInitial());
@@ -69,5 +70,8 @@ class ChartCubit extends Cubit<ChartState> {
     } catch (e) {
       emit(ChartError(e.toString()));
     }
+  }
+  setOffsetX(double x) {
+    offsetX = x;
   }
 }
