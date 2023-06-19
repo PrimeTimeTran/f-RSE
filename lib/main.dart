@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:rse/data/cubits/all.dart';
 import 'package:rse/presentation/all.dart';
@@ -16,22 +17,25 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<NewsCubit>(
-          create: (_) => NewsCubit(),
-        ),
-        BlocProvider<PortfolioCubit>(
-          create: (_) => PortfolioCubit(),
-        ),
-        BlocProvider<AssetCubit>(
-          create: (_) => AssetCubit(),
-        ),
-        BlocProvider<ChartCubit>(
-          create: (_) => ChartCubit(),
-        ),
-      ],
-      child: const MyApp(),
+    ChangeNotifierProvider(
+      create: (_) => ThemeModel(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<NewsCubit>(
+            create: (_) => NewsCubit(),
+          ),
+          BlocProvider<PortfolioCubit>(
+            create: (_) => PortfolioCubit(),
+          ),
+          BlocProvider<AssetCubit>(
+            create: (_) => AssetCubit(),
+          ),
+          BlocProvider<ChartCubit>(
+            create: (_) => ChartCubit(),
+          ),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -87,11 +91,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: lightTheme,
+      darkTheme: darkTheme,
       title: 'Royal Stock Exchange',
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      // theme: darkTheme,
-      darkTheme: darkTheme,
+      themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
       routes: {
         '/home': (context) => const HomeScreen(title: "RSE"),
         '/profile': (context) => const AssetScreen(),

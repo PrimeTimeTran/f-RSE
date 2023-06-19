@@ -1,4 +1,5 @@
 export 'article.dart';
+export 'toggler.dart';
 export 'doughnut.dart';
 export 'articles.dart';
 export 'watchlist.dart';

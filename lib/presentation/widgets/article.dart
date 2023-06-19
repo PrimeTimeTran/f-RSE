@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/data/models/all.dart' as models;
 import 'package:rse/presentation/utils/all.dart';
+import 'package:rse/data/models/all.dart' as models;
 
 const placeholder = "https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
 
@@ -122,7 +122,7 @@ class ArticleState extends State<Article> {
                 imageUrl = placeholder;
               });
             },
-            image: NetworkImage("https://cros-anywhere.herokuapp.com/$imageUrl"),
+            image: NetworkImage(imageUrl),
             fit: BoxFit.cover,
             alignment: Alignment.center,
           ),

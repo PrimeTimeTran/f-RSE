@@ -29,3 +29,19 @@ final darkTheme = ThemeData(
     indicatorColor: Colors.white,
   ),
 );
+
+class ThemeModel with ChangeNotifier {
+  bool _isDarkMode = false;
+
+  bool get isDarkMode => _isDarkMode;
+
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners();
+  }
+}
+
+bool isDarkMode(BuildContext context) {
+  final theme = Theme.of(context).brightness;
+  return theme == Brightness.dark;
+}

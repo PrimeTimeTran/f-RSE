@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/presentation/all.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -36,7 +36,7 @@ class ResponsiveLayout extends StatelessWidget {
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           if (constraints.maxWidth <= 600) {
-            return buildSingleColumnLayout();
+            return buildSingleColumnLayout(context);
           } else {
             return buildTwoColumnLayout();
           }
@@ -45,7 +45,8 @@ class ResponsiveLayout extends StatelessWidget {
     );
   }
 
-  Widget buildSingleColumnLayout() {
+  Widget buildSingleColumnLayout(context) {
+
     return const SingleChildScrollView(
       child: Column(
         children: [
@@ -61,16 +62,6 @@ class ResponsiveLayout extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
       child: Row(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  LineChart(),
-                  Articles(),
-                ],
-              ),
-            ),
-          ),
           SingleChildScrollView(
             child: Watchlist(),
           ),
