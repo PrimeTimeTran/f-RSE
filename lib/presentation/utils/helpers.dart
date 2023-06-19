@@ -111,6 +111,13 @@ DateTime roundDownToNearest5Minutes(DateTime dateTime) {
   return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, roundedMinute);
 }
 
+DateTime roundToNearestHour(DateTime dateTime) {
+  final minutes = dateTime.minute;
+  final roundedMinutes = (minutes >= 30) ? 0 : 30;
+  return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour)
+      .add(Duration(minutes: roundedMinutes));
+}
+
 String chooseFormat(String period, d) {
   final map = {
     'live': 'h:mma',
@@ -121,6 +128,9 @@ String chooseFormat(String period, d) {
   };
 
   final dateFormat = map[period] ?? 'yMd';
+  if (period == '1w' || period == '1m') {
+    return DateFormat(dateFormat).format(roundToNearestHour(DateTime.parse(d.time))).toString();
+  }
   return DateFormat(dateFormat).format(roundDownToNearest5Minutes(DateTime.parse(d.time))).toString();
 }
 
