@@ -100,8 +100,15 @@ String calculateValueChange(double newValue, double oldValue) {
 double getLowestVal(List<CandleStick> series) {
   return series.reduce((value, element) => value.low < element.low ? value : element).low;
 }
+
 double getHighestVal(List<CandleStick> series) {
   return series.reduce((value, element) => value.high > element.high ? value : element).high;
+}
+
+DateTime roundDownToNearest5Minutes(DateTime dateTime) {
+  final minute = dateTime.minute;
+  final roundedMinute = (minute ~/ 5) * 5;
+  return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, roundedMinute);
 }
 
 String chooseFormat(String period, d) {
@@ -114,7 +121,7 @@ String chooseFormat(String period, d) {
   };
 
   final dateFormat = map[period] ?? 'yMd';
-  return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
+  return DateFormat(dateFormat).format(roundDownToNearest5Minutes(DateTime.parse(d.time))).toString();
 }
 
 int calculateIntervals(period, data){
@@ -129,4 +136,5 @@ int calculateIntervals(period, data){
 
   return map[period] ?? 0;
 }
+
 

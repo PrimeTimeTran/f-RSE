@@ -170,11 +170,25 @@ class CandleChartState extends State<CandleChart> {
                   // context.read<ChartCubit>().setOffsetX(xOffSet!);
                 },
                 primaryXAxis: CategoryAxis(
+                  isVisible: false,
                   labelRotation: 45,
                   maximumLabels: 30,
                   labelIntersectAction: AxisLabelIntersectAction.hide,
                   desiredIntervals: calculateIntervals(period.toString(), series),
                 ),
+                onMarkerRender: (MarkerRenderArgs args) {
+                  print(args.pointIndex);
+                  final CandleStick candle = series[args!.pointIndex!];
+                  if (candle.high == previousHigh) {
+                    args.color = Colors.green;
+                  } else if (candle.low == previousLow) {
+                    args.color = Colors.red;
+                  } else {
+                    args.color = Colors.white;
+                  }
+                  args.borderColor = Colors.pink;
+                  args.borderWidth = 10;
+                },
                 series: <CandleSeries<CandleStick, String>>[
                   CandleSeries<CandleStick, String>(
                     dataSource: series,
