@@ -9,12 +9,10 @@ class CandleHoveredDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ChartCubit, ChartState>(
+    return BlocBuilder<ChartCubit, Chart>(
       builder: (context, state) {
-        if (state is ChartInitial) {
-          return const CircularProgressIndicator();
-        } else if (state is HoverUpdated) {
-          final c = state.chart.hoveredCandle;
+        if (state is Chart) {
+          final c = state.hoveredCandle;
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -24,17 +22,10 @@ class CandleHoveredDetails extends StatelessWidget {
               IndicatorItem(c.close, 'Close: '),
             ],
           );
-        } else if (state is ChartError) {
-          return Text('Error: ${state.errorMessage}');
         } else {
           return const Text('Error');
         }
-      },
-      listener: (context, state) {
-      },
-      buildWhen: (previous, current) {
-        return true;
-      },
+      }
     );
   }
 }

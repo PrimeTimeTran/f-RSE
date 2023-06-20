@@ -46,13 +46,13 @@ class CandleChartState extends State<CandleChart> {
     );
   }
 
-  BlocConsumer<ChartCubit, ChartState> buildTimeLabel() {
-    return BlocConsumer<ChartCubit, ChartState>(
+  BlocBuilder<ChartCubit, Chart> buildTimeLabel() {
+    return BlocBuilder<ChartCubit, Chart>(
       builder: (c, state) {
-        if (state is HoverUpdated) {
+        if (state is Chart) {
           final p = c.read<AssetCubit>().period;
-          final candle = state.chart.hoveredCandle;
-          final value = state.chart.xOffSet;
+          final candle = state.hoveredCandle;
+          final value = state.xOffSet;
           return Positioned(
             top: -10,
             left: value - 30,
@@ -71,9 +71,7 @@ class CandleChartState extends State<CandleChart> {
         } else {
           return const Text('');
         }
-      },
-      listener: (context, state) {
-      },
+      }
     );
   }
 

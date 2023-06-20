@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:rse/data/cubits/all.dart';
+import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
 Future<void> main() async {
@@ -31,7 +31,7 @@ Future<void> main() async {
             create: (_) => AssetCubit(),
           ),
           BlocProvider<ChartCubit>(
-            create: (_) => ChartCubit(),
+            create: (_) => ChartCubit(Chart.defaultChart()),
           ),
         ],
         child: const MyApp(),

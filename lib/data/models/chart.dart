@@ -1,13 +1,27 @@
 class Chart {
   late double xOffSet;
   late CandleStick hoveredCandle;
+  late List<CandleStick> data = [];
 
-  Chart(this.xOffSet, this.hoveredCandle);
+  Chart(this.xOffSet, this.hoveredCandle, this.data);
 
   factory Chart.defaultChart() => Chart(
     0,
     CandleStick.defaultCandle(),
+    [],
   );
+
+  Chart copyWith({
+    double? xOffSet,
+    CandleStick? hoveredCandle,
+    List<CandleStick>? data,
+  }) {
+    return Chart(
+      xOffSet ?? this.xOffSet,
+      hoveredCandle ?? this.hoveredCandle,
+      data ?? this.data,
+    );
+  }
 }
 
 class CandleStick {
