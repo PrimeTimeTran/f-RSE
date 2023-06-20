@@ -1,12 +1,16 @@
-# Royal Stock Exchange(RSE) Flutter Client
+# [Royal Stock Exchange(RSE) Flutter Client](https://github.com/PrimeTimeTran/f-RSE)
+# [Royal Stock Exchange(RSE) Flutter Client](https://royal-stock-exchange.netlify.app/)
 
 ![Preview](https://s11.gifyu.com/images/SQLgu.gif)
 
-A stock exchange for the next generation
+A stock exchange for the next generation.
+
+- [Demo](https://royal-stock-exchange.netlify.app/)
+- [Client Code](https://github.com/PrimeTimeTran/f-RSE)
 
 ## Dependencies
 
-- Fluter
+- Flutter
 - Bloc
 - SyncFusion
 
@@ -23,7 +27,7 @@ A stock exchange for the next generation
 - flutter build web
 - flutter run -d chrome
 
-## FAW
+## FAQ
 
 - Why isn't an asset in assets available on web?
   - Because we have to include them in web/assets & declare them in web/manifest.json for them to be bundled in the build process

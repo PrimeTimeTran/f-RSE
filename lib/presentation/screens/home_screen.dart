@@ -14,12 +14,15 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          TickerCarousel(),
-          ResponsiveLayout(),
-        ],
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(8, 20, 8, 20),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TickerCarousel(),
+            ResponsiveLayout(),
+          ],
+        ),
       ),
     );
   }
