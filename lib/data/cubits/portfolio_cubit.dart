@@ -35,15 +35,6 @@ class PortfolioLoaded extends PortfolioState {
   List<Object?> get props => [portfolio];
 }
 
-class CandleLoaded extends PortfolioState {
-  final CandleStick candle;
-
-  CandleLoaded(this.candle);
-
-  @override
-  List<Object?> get props => [candle];
-}
-
 class PortfolioError extends PortfolioState {
   final String errorMessage;
 
@@ -56,7 +47,7 @@ class PortfolioError extends PortfolioState {
 class PortfolioCubit extends Cubit<PortfolioState> {
   List<DataPoint> dataPoints = [];
   final PortfolioService portfolioService = PortfolioService();
-  CandleStick candle = CandleStick(time: DateTime.now().toString(), open: 0, high: 0, low: 0, close: 0, value: 0);
+  CandleStick candle = CandleStick.defaultCandle();
 
   PortfolioCubit() : super(PortfolioInitial());
 

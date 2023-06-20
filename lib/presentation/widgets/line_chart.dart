@@ -25,82 +25,65 @@ class LineChartState extends State<LineChart> {
   Widget build(BuildContext context) {
     _setupTheme(context);
 
-    return BlocConsumer<PortfolioCubit, PortfolioState>(
+    return BlocBuilder<PortfolioCubit, PortfolioState>(
       builder: (context, state) {
         if (state is PortfolioLoading) {
           return const CircularProgressIndicator();
         } else if (state is PortfolioLoaded) {
           final data = context.read<PortfolioCubit>().dataPoints;
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: GestureDetector(
-                  onTapDown: (TapDownDetails details) {
-                    final RenderBox referenceBox =
-                    context.findRenderObject() as RenderBox;
-                    final tappedPosition =
-                    referenceBox.globalToLocal(details.globalPosition);
-                    setState(() {
-                      tappedXPosition = tappedPosition.dx;
-                    });
-                  },
-                  child: Stack(
-                    children: [
-                      KeyedSubtree(
-                          key: UniqueKey(),
-                          child: SfCartesianChart(
-                            tooltipBehavior: _tooltipBehavior,
-                            trackballBehavior: _trackballBehavior,
-                            title: ChartTitle(text: 'Portfolio Value'),
-                            primaryXAxis: DateTimeAxis(
-                              isVisible: true,
-                              labelRotation: 45,
-                              dateFormat: DateFormat.Hm(),
-                              intervalType: DateTimeIntervalType.hours,
-                            ),
-                            series: <LineSeries<DataPoint, DateTime>>[
-                              LineSeries<DataPoint, DateTime>(
-                                dataSource: data.take(50).toList(),
-                                yValueMapper: (DataPoint d, _) => d.y,
-                                xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
-                                color: Colors.green,
-                              ),
-                            ],
-                          )
-                      ),
-                      if (tappedXPosition != null)
-                        Positioned.fill(
-                          left: tappedXPosition!,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              width: 1,
-                              color: Colors.red,
-                            ),
+          return SingleChildScrollView(
+            child: Container(
+              color: Colors.blue,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .5,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: GestureDetector(
+                        onTapDown: (TapDownDetails details) {
+                          final RenderBox referenceBox =
+                          context.findRenderObject() as RenderBox;
+                          final tappedPosition =
+                          referenceBox.globalToLocal(details.globalPosition);
+                          setState(() {
+                            tappedXPosition = tappedPosition.dx;
+                          });
+                        },
+                        child: SfCartesianChart(
+                          tooltipBehavior: _tooltipBehavior,
+                          trackballBehavior: _trackballBehavior,
+                          title: ChartTitle(text: 'Portfolio Value'),
+                          primaryXAxis: DateTimeAxis(
+                            isVisible: true,
+                            labelRotation: 45,
+                            dateFormat: DateFormat.Hm(),
+                            intervalType: DateTimeIntervalType.hours,
                           ),
-                        ),
-                    ],
+                          series: <LineSeries<DataPoint, DateTime>>[
+                            LineSeries<DataPoint, DateTime>(
+                              dataSource: data.take(50).toList(),
+                              yValueMapper: (DataPoint d, _) => d.y,
+                              xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                              color: Colors.green,
+                            ),
+                          ],
+                        )
+                      ),
+                    ),
                   ),
-                ),
+                  const PeriodSelector(),
+                ],
               ),
-              const Align(
-                  alignment: Alignment.centerLeft,
-                  child: PeriodSelector()
-              ),
-            ],
+            ),
           );
         } else if (state is PortfolioError) {
           return Text('Error: ${state.errorMessage}');
         } else {
           return const Text('Unknown state');
         }
-      },
-      listener: (context, state) {
-        // Listener logic goes here if needed
-      },
-      buildWhen: (previous, current) {
-        return true;
       },
     );
   }
