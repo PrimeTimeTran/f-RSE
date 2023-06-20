@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rse/data/all.dart';
+import 'package:rse/presentation/all.dart';
 
 class WatchItem extends StatefulWidget {
   final Watch item;
@@ -39,11 +40,10 @@ class WatchItemState extends State<WatchItem> {
           child: Container(
             height: 100,
             decoration: BoxDecoration(
-              // borderRadius: BorderRadius.circular(10),
               border: Border(
                 bottom: BorderSide(
                   width: 2,
-                  color: Colors.white,
+                  color: T(context, 'outline'),
                 ),
               ),
             ),

@@ -63,7 +63,7 @@ class ArticleState extends State<Article> {
       Text(
         widget.article.title ?? '',
         style: TextStyle(
-          fontSize: isWeb && isMed(context) ? 30 : 15,
+          fontSize: isWeb && isMed(context) ? 18 : 15,
           fontWeight: FontWeight.bold,
         ),
       ),

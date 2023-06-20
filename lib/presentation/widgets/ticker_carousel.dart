@@ -64,7 +64,7 @@ class CarouselState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 35,
       width: double.infinity,
       child: ClipRect(
         child: SingleChildScrollView(
@@ -87,7 +87,7 @@ class CarouselState
                           children: [
                             Text(
                               ticker.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
                             ),
                             const SizedBox(height: 4),
                             Row(
@@ -102,6 +102,7 @@ class CarouselState
                                   ticker.pointsUpDown.toStringAsFixed(2),
                                   style: TextStyle(
                                     color: color,
+                                    fontSize: 10
                                   ),
                                 ),
                                 const SizedBox(width: 4),
@@ -109,6 +110,7 @@ class CarouselState
                                   '(${ticker.percentage.toStringAsFixed(2)}%)',
                                   style: TextStyle(
                                     color: color,
+                                    fontSize: 10
                                   ),
                                 ),
                               ],

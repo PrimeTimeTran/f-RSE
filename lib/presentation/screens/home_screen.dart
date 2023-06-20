@@ -15,7 +15,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.fromLTRB(8, 20, 8, 20),
+      padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -61,7 +61,7 @@ class ResponsiveLayout extends StatelessWidget {
 
   Widget buildTwoColumn(context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 60),
       child: Row(
         children: [
           Expanded(

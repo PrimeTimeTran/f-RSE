@@ -16,7 +16,7 @@ class BottomTab extends StatefulWidget {
 class _BottomTabState extends State<BottomTab> {
   @override
   Widget build(BuildContext context) {
-    final unselectedLabelColor = T(context, 'inversePrimary');
+    final unselectedLabelColor = T(context, 'outline');
 
     return BottomNavigationBar(
       currentIndex: widget.index,

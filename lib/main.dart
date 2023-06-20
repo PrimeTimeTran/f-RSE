@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
@@ -97,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                   child: tabs[_idx],
                 ),
               ),
-              bottomNavigationBar: BottomTab(change: change, index: _idx),
+              bottomNavigationBar: kIsWeb ? null : BottomTab(change: change, index: _idx),
               appBar: AppBar(
                 title: const Text('RSE'),
                 actions: navbarIcons(context),
@@ -115,7 +116,6 @@ class _MyAppState extends State<MyApp> {
                   child: AssetScreen(sym: sym),
                 ),
               ),
-              bottomNavigationBar: BottomTab(change: change, index: _idx),
               appBar: AppBar(
                 title: const Text('RSE'),
                 actions: navbarIcons(context),
@@ -131,10 +131,10 @@ class _MyAppState extends State<MyApp> {
         body: SingleChildScrollView(
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: tabs[_idx],
+            child: HomeScreen(title: "RSE")
           ),
         ),
-        bottomNavigationBar: BottomTab(change: change, index: _idx),
+        bottomNavigationBar: kIsWeb ? null : BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),
           actions: navbarIcons(context),

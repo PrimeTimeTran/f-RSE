@@ -17,6 +17,7 @@ final lightTheme = ThemeData(
     inversePrimary: Colors.white,
     onPrimaryContainer: Colors.white,
     background: Colors.green,
+    outline: Colors.black26,
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.green,
@@ -88,8 +89,8 @@ Color T(BuildContext context, String key) {
       return colorScheme.onPrimaryContainer;
     case 'background':
       return colorScheme.background;
-    case 'primaryContainer':
-      return colorScheme.primaryContainer;
+    case 'outline':
+      return colorScheme.outline;
     case 'secondary':
       return colorScheme.secondary;
     case 'surface':
