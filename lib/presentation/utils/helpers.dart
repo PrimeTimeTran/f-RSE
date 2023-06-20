@@ -129,9 +129,9 @@ String chooseFormat(String period, d) {
 
   final dateFormat = map[period] ?? 'yMd';
   if (period == '1w' || period == '1m') {
-    return DateFormat(dateFormat).format(roundToNearestHour(DateTime.parse(d.time))).toString();
+    return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
   }
-  return DateFormat(dateFormat).format(roundDownToNearest5Minutes(DateTime.parse(d.time))).toString();
+  return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
 }
 
 int calculateIntervals(period, data){

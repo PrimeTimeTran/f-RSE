@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:rse/data/all.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
 class AssetScreen extends StatefulWidget {
@@ -11,6 +13,15 @@ class AssetScreen extends StatefulWidget {
 }
 
 class _AssetScreeState extends State<AssetScreen> {
+  late AssetCubit _assetCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _assetCubit = context.read<AssetCubit>();
+    _assetCubit.fetchAsset(widget.sym);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -47,12 +58,12 @@ class _AssetScreeState extends State<AssetScreen> {
 
   Widget buildTwoColumn() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 60),
+      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.sym),
-          Expanded(
+          const Expanded(
             flex: 3,
             child: SingleChildScrollView(
               child: Column(
@@ -63,7 +74,7 @@ class _AssetScreeState extends State<AssetScreen> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: SingleChildScrollView(
               child: Text('sksisis'),

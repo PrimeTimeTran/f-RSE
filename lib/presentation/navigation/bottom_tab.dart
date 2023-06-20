@@ -30,27 +30,27 @@ class _BottomTabState extends State<BottomTab> {
         BottomNavigationBarItem(
           label: 'Home',
           backgroundColor: T(context, 'background'),
-          icon: Icon(Icons.auto_graph),
+          icon: const Icon(Icons.auto_graph),
         ),
         BottomNavigationBarItem(
           label: 'Spending',
           backgroundColor: T(context, 'background'),
-          icon: Icon(Icons.credit_card),
+          icon: const Icon(Icons.credit_card),
         ),
         BottomNavigationBarItem(
           label: 'Browse',
           backgroundColor: T(context, 'background'),
-          icon: Icon(Icons.newspaper),
+          icon: const Icon(Icons.newspaper),
         ),
         BottomNavigationBarItem(
           label: 'News',
           backgroundColor: T(context, 'background'),
-          icon: Icon(Icons.newspaper),
+          icon: const Icon(Icons.newspaper),
         ),
         BottomNavigationBarItem(
           label: 'Profile',
           backgroundColor: T(context, 'background'),
-          icon: Icon(Icons.person_2_outlined),
+          icon: const Icon(Icons.person_2_outlined),
         ),
       ],
     );

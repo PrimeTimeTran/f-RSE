@@ -84,52 +84,54 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
       padding: const EdgeInsets.all(8.0),
       child: DefaultTabController(
         length: 12,
-        child: Column(
-          children: [
-            TabBar(
-              labelColor: color,
-              indicatorColor: color,
-              isScrollable: isSmall(context),
-              unselectedLabelColor: unselectedColor,
-              tabs: const [
-                Tab(text: 'Investing'),
-                Tab(text: 'Spending'),
-                Tab(text: 'Crypto'),
-                Tab(text: 'Transfers'),
-                Tab(text: 'Recurring'),
-                Tab(text: 'Stock Lending'),
-                Tab(text: 'Margin Investing'),
-                Tab(text: 'Reports & Statements'),
-                Tab(text: 'Tax Center'),
-                Tab(text: 'History'),
-                Tab(text: 'Settings'),
-                Tab(text: 'Help'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  buildSingleChildScrollView(),
-                  const Text('Spending'),
-                  const Text('Crypto'),
-                  const Text('Transfers'),
-                  const Text('Recurring'),
-                  const Text('Stock Lending'),
-                  const Text('Margin Investing'),
-                  const Text('Reports & Statements'),
-                  const Text('Tax Center'),
-                  const Text('History'),
-                  const Text('Settings'),
-                  const Text('Help'),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              TabBar(
+                labelColor: color,
+                indicatorColor: color,
+                isScrollable: isSmall(context),
+                unselectedLabelColor: unselectedColor,
+                tabs: const [
+                  Tab(text: 'Investing'),
+                  Tab(text: 'Spending'),
+                  Tab(text: 'Crypto'),
+                  Tab(text: 'Transfers'),
+                  Tab(text: 'Recurring'),
+                  Tab(text: 'Stock Lending'),
+                  Tab(text: 'Margin Investing'),
+                  Tab(text: 'Reports & Statements'),
+                  Tab(text: 'Tax Center'),
+                  Tab(text: 'History'),
+                  Tab(text: 'Settings'),
+                  Tab(text: 'Help'),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    buildSingleChildScrollView(),
+                    const Text('Spending'),
+                    const Text('Crypto'),
+                    const Text('Transfers'),
+                    const Text('Recurring'),
+                    const Text('Stock Lending'),
+                    const Text('Margin Investing'),
+                    const Text('Reports & Statements'),
+                    const Text('Tax Center'),
+                    const Text('History'),
+                    const Text('Settings'),
+                    const Text('Help'),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-
-
 }
 
