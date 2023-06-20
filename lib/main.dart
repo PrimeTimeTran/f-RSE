@@ -1,18 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
+void setupMobile() {
+  HttpOverrides.global = MyHttpOverrides();
+}
+
 Future<void> main() async {
-  if (!kReleaseMode) {
-    await dotenv.load(fileName: ".env");
-  }
+  // await dotenv.load(fileName: "/assets/.env");
 
   Bloc.observer = SimpleBlocObserver();
   HttpOverrides.global = MyHttpOverrides();
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                   child: tabs[_idx],
                 ),
               ),
-              bottomNavigationBar: kIsWeb ? null : BottomTab(change: change, index: _idx),
+              bottomNavigationBar: BottomTab(change: change, index: _idx),
               appBar: AppBar(
                 title: const Text('RSE'),
                 actions: navbarIcons(context),
@@ -116,6 +116,7 @@ class _MyAppState extends State<MyApp> {
                   child: AssetScreen(sym: sym),
                 ),
               ),
+              bottomNavigationBar: BottomTab(change: change, index: _idx),
               appBar: AppBar(
                 title: const Text('RSE'),
                 actions: navbarIcons(context),
@@ -131,10 +132,10 @@ class _MyAppState extends State<MyApp> {
         body: SingleChildScrollView(
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: HomeScreen(title: "RSE")
+            child: tabs[_idx],
           ),
         ),
-        bottomNavigationBar: kIsWeb ? null : BottomTab(change: change, index: _idx),
+        bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),
           actions: navbarIcons(context),
@@ -142,7 +143,6 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
 }
 
 class SimpleBlocObserver extends BlocObserver {

@@ -25,7 +25,7 @@ class LocalStorageService {
     if (data != null && data.isNotEmpty) {
       return _mapArticlesFromData(jsonDecode(data)['results']);
     } else {
-      final d = await loadJsonFile('news.json');
+      final d = await loadJsonFile('assets/news.json');
       if (d != null && d.isNotEmpty) {
         return _mapArticlesFromData(d['results']);
       }
@@ -43,9 +43,9 @@ class LocalStorageService {
   Future<Portfolio> getCachedPortfolio() async {
     var data = await loadData('portfolio');
     if (data != null && data.isNotEmpty) {
-      return Portfolio.fromJson(data as Map<String, dynamic>);
+      return Portfolio.fromJson(jsonDecode(data));
     } else {
-      final d = await loadJsonFile('portfolio.json');
+      final d = await loadJsonFile('assets/portfolio.json');
       if (d != null && d.isNotEmpty) {
         return Portfolio.fromJson(d);
       }
@@ -56,9 +56,9 @@ class LocalStorageService {
   Future<Asset> getCachedAsset(String symbol, period) async {
     var data = await loadData('$symbol-$period');
     if (data != null && data.isNotEmpty) {
-      return Asset.fromJson(data as Map<String, dynamic>, period);
+      return Asset.fromJson(jsonDecode(data), period);
     } else {
-      final d = await loadJsonFile('$symbol-$period.json');
+      final d = await loadJsonFile('assets/$symbol-$period.json');
       if (d != null && d.isNotEmpty) {
         return Asset.fromJson(d as Map<String, dynamic>, period);
       }
