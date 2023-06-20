@@ -13,9 +13,9 @@ class ChartHeader extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: SizedBox(
         height: 100,
-        child: BlocBuilder<ChartCubit, Chart>(
+        child: BlocBuilder<ChartCubit, ChartState>(
           builder: (c, state) {
-            if (state is Chart) {
+            if (state is HoveredCandleState) {
               final asset = c.read<AssetCubit>().asset;
               final cursorVal = state.hoveredCandle.value;
               var gain = calculatePercentageChange(cursorVal, asset.o);

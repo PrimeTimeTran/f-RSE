@@ -45,10 +45,9 @@ class AssetError extends AssetState {
 }
 
 class AssetCubit extends Cubit<AssetState> {
-  late Asset asset;
   String period = 'live';
-
   List<CandleStick> current = [];
+  Asset asset = Asset.defaultAsset();
   final AssetService assetService = AssetService();
 
   AssetCubit() : super(AssetInitial());

@@ -9,9 +9,9 @@ class CandleHoveredDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChartCubit, Chart>(
+    return BlocBuilder<ChartCubit, ChartState>(
       builder: (context, state) {
-        if (state is Chart) {
+        if (state is HoveredCandleState) {
           final c = state.hoveredCandle;
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,

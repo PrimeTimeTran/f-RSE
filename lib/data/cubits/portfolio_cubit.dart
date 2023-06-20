@@ -78,9 +78,4 @@ class PortfolioCubit extends Cubit<PortfolioState> {
         .map((time) => DataPoint(time.time, 0))
         .toList();
   }
-
-  setHoveredCandle(CandleStick candle) {
-    this.candle = candle;
-    emit(CandleLoaded(candle));
-  }
 }

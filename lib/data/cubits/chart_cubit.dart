@@ -1,28 +1,48 @@
-import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:rse/data/all.dart';
 
-sealed class ChartEvent {}
-
-class HoveredCandle extends ChartEvent {
-  final CandleStick hoveredCandle;
-
-  HoveredCandle(this.hoveredCandle);
+abstract class ChartEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
 }
 
-class ChartCubit extends Bloc<ChartEvent, Chart> {
-  double xOffSet = 0;
-  ChartCubit(chart) : super(chart) {
+class HoveredCandle extends ChartEvent {
+  final double xOffSet;
+  final CandleStick hoveredCandle;
+
+  HoveredCandle(this.hoveredCandle, this.xOffSet);
+
+  @override
+  List<Object?> get props => [hoveredCandle, xOffSet];
+}
+
+abstract class ChartState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class HoveredCandleState extends ChartState {
+  final double xOffSet;
+  final CandleStick hoveredCandle;
+
+  HoveredCandleState(this.hoveredCandle, this.xOffSet);
+
+  @override
+  List<Object?> get props => [hoveredCandle, xOffSet];
+}
+
+class ChartInitial extends ChartState {}
+
+class ChartCubit extends Bloc<ChartEvent, ChartState> {
+  ChartCubit() : super(ChartInitial()) {
     on<HoveredCandle>((event, emit) {
-      final newChart = state.copyWith(hoveredCandle: event.hoveredCandle);
-      emit(newChart);
+      emit(HoveredCandleState(event.hoveredCandle, event.xOffSet));
     });
   }
 
-  void setHoveredCandle(CandleStick hoveredCandle, double xOffSet) {
-    this.xOffSet = xOffSet;
-    emit(state.copyWith(hoveredCandle: hoveredCandle, xOffSet: xOffSet));
+  void setHoveredCandle(CandleStick candle, double xOffSet) {
+    add(HoveredCandle(candle, xOffSet));
   }
 }

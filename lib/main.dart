@@ -31,7 +31,7 @@ Future<void> main() async {
             create: (_) => AssetCubit(),
           ),
           BlocProvider<ChartCubit>(
-            create: (_) => ChartCubit(Chart.defaultChart()),
+            create: (_) => ChartCubit(),
           ),
         ],
         child: const MyApp(),
