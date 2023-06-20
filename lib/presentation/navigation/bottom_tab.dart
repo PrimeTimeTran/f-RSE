@@ -28,7 +28,7 @@ class _BottomTabState extends State<BottomTab> {
       unselectedLabelStyle: TextStyle(color: unselectedLabelColor),
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          label: 'Stocks',
+          label: 'Home',
           backgroundColor: T(context, 'background'),
           icon: Icon(Icons.auto_graph),
         ),

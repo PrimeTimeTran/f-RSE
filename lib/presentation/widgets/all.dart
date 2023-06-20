@@ -5,6 +5,7 @@ export 'articles.dart';
 export 'watchlist.dart';
 export 'hover_text.dart';
 export 'line_chart.dart';
+export 'watch_item.dart';
 export 'candle_chart.dart';
 export 'chart_header.dart';
 export 'summary_table.dart';

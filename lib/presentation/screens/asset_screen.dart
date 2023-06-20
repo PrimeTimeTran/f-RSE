@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rse/presentation/widgets/all.dart';
 
 class AssetScreen extends StatefulWidget {
-  const AssetScreen({super.key});
+  final String sym;
+  const AssetScreen({super.key, required this.sym});
 
   @override
   State<AssetScreen> createState() => _AssetScreeState();
@@ -45,11 +46,12 @@ class _AssetScreeState extends State<AssetScreen> {
   }
 
   Widget buildTwoColumn() {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 60),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(widget.sym),
           Expanded(
             flex: 3,
             child: SingleChildScrollView(

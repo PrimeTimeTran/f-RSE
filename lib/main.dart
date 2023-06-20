@@ -86,13 +86,53 @@ class _MyAppState extends State<MyApp> {
       themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
       routes: {
         '/home': (context) => const HomeScreen(title: "RSE"),
-        '/profile': (context) => const AssetScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/') {
+          return MaterialPageRoute(
+            builder: (context) => Scaffold(
+              body: SingleChildScrollView(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                  child: tabs[_idx],
+                ),
+              ),
+              bottomNavigationBar: BottomTab(change: change, index: _idx),
+              appBar: AppBar(
+                title: const Text('RSE'),
+                actions: navbarIcons(context),
+              ),
+            ),
+            settings: settings,
+          );
+        } else if (settings.name!.startsWith('/assets/')) {
+          final sym = settings.name!.substring('/assets/'.length);
+          return MaterialPageRoute(
+            builder: (context) => Scaffold(
+              body: SingleChildScrollView(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                  child: AssetScreen(sym: sym),
+                ),
+              ),
+              bottomNavigationBar: BottomTab(change: change, index: _idx),
+              appBar: AppBar(
+                title: const Text('RSE'),
+                actions: navbarIcons(context),
+              ),
+            ),
+            settings: settings,
+          );
+        }
+        return null; // Return null for unknown routes
       },
       home: Scaffold(
         drawer: const MyDrawer(),
-        body: ScrollConfiguration(
+        body: SingleChildScrollView(
+          child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: tabs[_idx]
+            child: tabs[_idx],
+          ),
         ),
         bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
@@ -102,6 +142,7 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+
 }
 
 class SimpleBlocObserver extends BlocObserver {

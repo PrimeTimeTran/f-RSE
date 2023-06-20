@@ -8,5 +8,5 @@ const List<Widget> tabs = [
   InvestingSummaryScreen(title: 'Spending'),
   NotificationsScreen(),
   SpendingScreen(),
-  AssetScreen(),
+  AssetScreen(sym: 'BAC'),
 ];
