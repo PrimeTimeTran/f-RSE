@@ -90,7 +90,10 @@ class _MyAppState extends State<MyApp> {
       },
       home: Scaffold(
         drawer: const MyDrawer(),
-        body: tabs[_idx],
+        body: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: tabs[_idx]
+        ),
         bottomNavigationBar: BottomTab(change: change, index: _idx),
         appBar: AppBar(
           title: const Text('RSE'),

@@ -41,7 +41,7 @@ class ResponsiveLayout extends StatelessWidget {
           if (constraints.maxWidth <= 600) {
             return buildOneColumn(context);
           } else {
-            return buildTwoColumn();
+            return buildTwoColumn(context);
           }
         },
       ),
@@ -59,24 +59,25 @@ class ResponsiveLayout extends StatelessWidget {
     );
   }
 
-  Widget buildTwoColumn() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+  Widget buildTwoColumn(context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
       child: Row(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  LineChart(),
-                  Articles(),
-                ],
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: const SingleChildScrollView(
+                child: Column(
+                  children: [
+                    LineChart(),
+                    Articles(),
+                  ],
+                ),
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Watchlist(),
-          ),
+          const Watchlist(),
         ],
       ),
     );

@@ -14,12 +14,10 @@ class LineChart extends StatefulWidget {
 }
 
 class LineChartState extends State<LineChart> {
-  String period = 'live';
   double? tappedXPosition;
   double? draggedXPosition;
   late List<DataPoint> data;
   late TrackballBehavior _trackballBehavior;
-  final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
 
   @override
   Widget build(BuildContext context) {
@@ -32,51 +30,36 @@ class LineChartState extends State<LineChart> {
         } else if (state is PortfolioLoaded) {
           final data = context.read<PortfolioCubit>().dataPoints;
           return SingleChildScrollView(
-            child: Container(
-              color: Colors.blue,
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .5,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30),
-                      child: GestureDetector(
-                        onTapDown: (TapDownDetails details) {
-                          final RenderBox referenceBox =
-                          context.findRenderObject() as RenderBox;
-                          final tappedPosition =
-                          referenceBox.globalToLocal(details.globalPosition);
-                          setState(() {
-                            tappedXPosition = tappedPosition.dx;
-                          });
-                        },
-                        child: SfCartesianChart(
-                          tooltipBehavior: _tooltipBehavior,
-                          trackballBehavior: _trackballBehavior,
-                          title: ChartTitle(text: 'Portfolio Value'),
-                          primaryXAxis: DateTimeAxis(
-                            isVisible: true,
-                            labelRotation: 45,
-                            dateFormat: DateFormat.Hm(),
-                            intervalType: DateTimeIntervalType.hours,
-                          ),
-                          series: <LineSeries<DataPoint, DateTime>>[
-                            LineSeries<DataPoint, DateTime>(
-                              dataSource: data.take(50).toList(),
-                              yValueMapper: (DataPoint d, _) => d.y,
-                              xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
-                              color: Colors.green,
-                            ),
-                          ],
-                        )
-                      ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * .8,
+                  height: MediaQuery.of(context).size.height * .4,
+                  child: SfCartesianChart(
+                    borderWidth: 0,
+                    plotAreaBorderWidth: 0,
+                    borderColor: Colors.transparent,
+                    trackballBehavior: _trackballBehavior,
+                    primaryYAxis: NumericAxis(majorGridLines: const MajorGridLines(width: 0)),
+                    primaryXAxis: DateTimeAxis(
+                      isVisible: true,
+                      labelRotation: 45,
+                      dateFormat: DateFormat.Hm(),
+                      majorGridLines: const MajorGridLines(width: 0)
                     ),
+                    series: <LineSeries<DataPoint, DateTime>>[
+                      LineSeries<DataPoint, DateTime>(
+                        dataSource: data.take(50).toList(),
+                        yValueMapper: (DataPoint d, _) => d.y,
+                        xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                        color: Colors.green,
+                      ),
+                    ],
                   ),
-                  const PeriodSelector(),
-                ],
-              ),
+                ),
+                const PeriodSelector(),
+              ],
             ),
           );
         } else if (state is PortfolioError) {
@@ -90,18 +73,25 @@ class LineChartState extends State<LineChart> {
 
   _setupTheme(BuildContext context) {
     final color = T(context, 'primary');
-    final highlightSwatch = Theme.of(context).highlightColor;
     _trackballBehavior = TrackballBehavior(
       enable: true,
-      lineWidth: 2,
-      shouldAlwaysShow: true,
-      lineColor: highlightSwatch,
+      lineWidth: 1,
+      lineColor: color,
+      lineType: TrackballLineType.vertical,
+      tooltipAlignment: ChartAlignment.near,
       activationMode: ActivationMode.singleTap,
-      tooltipSettings: InteractiveTooltip(
+      tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+      tooltipSettings: const InteractiveTooltip(
         enable: true,
-        borderWidth: 1,
-        color: color,
-        borderColor: Colors.lightGreenAccent,
+        borderWidth: 5,
+        color: Colors.red,
+        canShowMarker: true,
+        borderColor: Colors.green,
+        format: 'point.x : point.y',
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 13,
+        ),
       ),
     );
   }
