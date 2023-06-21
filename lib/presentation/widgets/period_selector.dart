@@ -13,7 +13,7 @@ class PeriodSelector extends StatefulWidget {
 
 class PeriodSelectorState extends State<PeriodSelector> {
   late String hoveredPeriod;
-  final List<String> periods = ['live', '1d', '1w', '1m', '3m', '1y'];
+  final List<String> periods = ['live', '1d', '1w', '1m', '3m', 'ytd', '1y'];
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 50.0),
+        margin: const EdgeInsets.only(bottom: 30.0),
         child: SizedBox(
           width: width,
           child: Row(

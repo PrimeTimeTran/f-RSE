@@ -43,12 +43,15 @@ class HomeScreenState extends State<HomeScreen> {
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: const SingleChildScrollView(
-                child: Column(
-                  children: [
-                    TickerCarousel(),
-                    LineChart(),
-                    Articles(),
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.only(right: 35, left: 20),
+                  child: Column(
+                    children: [
+                      TickerCarousel(),
+                      LineChart(),
+                      Articles(),
+                    ],
+                  ),
                 ),
               ),
             ),

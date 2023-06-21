@@ -122,9 +122,11 @@ String chooseFormat(String period, time) {
   final map = {
     'live': 'h:mma',
     '1d': 'h:mma',
-    '1w': 'h:mma MMMM d',
-    '1m': 'h:mma MMMM d',
-    '3m': 'M/d',
+    '1w': 'hh:mma, MMM d',
+    '1m': 'hh:mma, MMM d',
+    '3m': 'MMM d, yyyy',
+    '1y': 'MMM d, yyyy',
+    'ytd': 'MMM d, yyyy',
   };
 
   final dateFormat = map[period] ?? 'yMd';
@@ -141,6 +143,7 @@ int calculateIntervals(period, data){
     '1w': 30,
     '1m': 30,
     '3m': 30,
+    'ytd': 12,
     '1y': 12,
   };
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/all.dart';
@@ -16,20 +17,32 @@ class ChartHeader extends StatelessWidget {
         child: BlocBuilder<ChartCubit, ChartState>(
           builder: (c, state) {
             if (state is HoveredChart) {
-              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.read<PortfolioCubit>().open;
               final cursorVal = state.value;
-              var gain = calculatePercentageChange(cursorVal, val);
+              final goRouter = GoRouter.of(context);
+              final currentRoute = goRouter.location;
+              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.read<PortfolioCubit>().open;
+
+              final gain = calculatePercentageChange(cursorVal, val);
+
               return Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (currentRoute.length > 1) Text(
+                      currentRoute.substring(1),
+                      style: TextStyle(
+                        color: T(context, 'primary'),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Expanded(
                       child: Text(
                         formatMoney(cursorVal),
                         style: TextStyle(
                           color: T(context, 'primary'),
-                          fontSize: 25,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -38,8 +51,8 @@ class ChartHeader extends StatelessWidget {
                       child: Text(
                         '${calculateValueChange(cursorVal, val)} ($gain)',
                         style: TextStyle(
-                          color: T(context, 'primary'),
-                          fontSize: 15,
+                          color: T(context, 'inversePrimary'),
+                          fontSize: 14,
                         ),
                       ),
                     ),

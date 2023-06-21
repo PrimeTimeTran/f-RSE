@@ -40,6 +40,7 @@ class HoveredChart extends ChartState {
 class ChartInitial extends ChartState {}
 
 class ChartCubit extends Bloc<ChartEvent, ChartState> {
+  late String type = 'portfolio';
   ChartCubit() : super(ChartInitial()) {
     on<ChartHover>((e, emit) {
       emit(HoveredChart(e.offset, e.time, e.value, e.candle, e.type));
@@ -48,11 +49,12 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
 
   void setHoveredPoint(p, double xOffSet) {
     var candle = p is CandleStick;
+    type = candle ? 'candle' : 'portfolio';
     add(ChartHover(
         xOffSet,
         candle ? p.time : p.x,
         candle ? p.value : p.y,
-        candle ? 'candle' : 'portfolio',
+        type,
         candle ? p : CandleStick.fact(),
       )
     );

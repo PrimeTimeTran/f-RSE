@@ -51,7 +51,7 @@ class _AssetScreeState extends State<AssetScreen> {
 
   Widget buildTwoColumn() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 60),
+      padding: const EdgeInsets.symmetric(horizontal: 60),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,11 +60,14 @@ class _AssetScreeState extends State<AssetScreen> {
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: const SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CandleChart(),
-                    AssetOverview(),
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Column(
+                    children: [
+                      CandleChart(),
+                      AssetOverview(),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -36,9 +36,16 @@ class CandleChartState extends State<CandleChart> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const CandleHoveredDetails(),
             const ChartHeader(),
-            buildChart(),
+            buildChart(context),
+            if (isSmall(context)) const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Positioned(
+                left: 0,
+                right: 0,
+                child: CandleHoveredDetails()
+              ),
+            ),
             const PeriodSelector(),
           ],
         ),
@@ -46,9 +53,16 @@ class CandleChartState extends State<CandleChart> {
     );
   }
 
-  buildChart() {
+  buildChart(context) {
     return Stack(
+      clipBehavior: Clip.none,
       children: [
+        if (!isSmall(context)) const Positioned(
+          top: -40,
+          left: 0,
+          right: 0,
+          child: CandleHoveredDetails()
+        ),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * .5,
@@ -56,7 +70,6 @@ class CandleChartState extends State<CandleChart> {
             builder: (context, state) {
               if (state is AssetLoaded) {
                 final asset = context.read<AssetCubit>();
-                final period = asset.period;
                 final series = asset.current;
                 if (previousLow == 0) {
                   setState(() {
@@ -71,6 +84,7 @@ class CandleChartState extends State<CandleChart> {
                 }
                 return RepaintBoundary(
                   child: SfCartesianChart(
+                    plotAreaBorderWidth: 0,
                     zoomPanBehavior: _zoomPanBehavior,
                     trackballBehavior: _trackballBehavior,
                     crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
@@ -80,6 +94,7 @@ class CandleChartState extends State<CandleChart> {
                       });
                     },
                     primaryYAxis: NumericAxis(
+                      isVisible: false,
                       numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
                       minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
                     ),
@@ -91,10 +106,6 @@ class CandleChartState extends State<CandleChart> {
                     },
                     primaryXAxis: CategoryAxis(
                       isVisible: false,
-                      labelRotation: 45,
-                      maximumLabels: 30,
-                      labelIntersectAction: AxisLabelIntersectAction.hide,
-                      desiredIntervals: calculateIntervals(period.toString(), series),
                     ),
                     series: <CandleSeries<CandleStick, String>>[
                       CandleSeries<CandleStick, String>(
@@ -103,7 +114,7 @@ class CandleChartState extends State<CandleChart> {
                         highValueMapper: (CandleStick d, _) => d.high,
                         openValueMapper: (CandleStick d, _) => d.open,
                         closeValueMapper: (CandleStick d, _) => d.close,
-                        xValueMapper: (CandleStick d, int index) => chooseFormat(period, d.time),
+                        xValueMapper: (CandleStick d, int index) => d.time,
                       ),
                     ],
                   ),

@@ -22,17 +22,15 @@ class TimeLabel extends StatelessWidget {
   }
 
   buildTimeLabel(c, p, value, time) {
+    var length = chooseFormat(p, time).length / 2;
     return Positioned(
       top: -10,
-      left: value - 30,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Text(
-          time == '' ? '' :  chooseFormat(p, time),
-          style: TextStyle(
-            fontSize: 16,
-            color: T(c, 'inversePrimary'),
-          ),
+      left: value - length,
+      child: Text(
+        time == '' ? '' :  chooseFormat(p, time),
+        style: TextStyle(
+          fontSize: 10,
+          color: T(c, 'inversePrimary'),
         ),
       ),
     );
