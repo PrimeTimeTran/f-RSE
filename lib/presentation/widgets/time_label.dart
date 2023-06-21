@@ -13,7 +13,7 @@ class TimeLabel extends StatelessWidget {
         builder: (c, state) {
           if (state is HoveredChart) {
             final p = c.read<AssetCubit>().period;
-            return buildTimeLabel(p, state.offset, state.time);
+            return buildTimeLabel(context, p, state.offset, state.time);
           } else {
             return const SizedBox.shrink();
           }
@@ -21,17 +21,17 @@ class TimeLabel extends StatelessWidget {
     );
   }
 
-  buildTimeLabel(p, value, time) {
+  buildTimeLabel(c, p, value, time) {
     return Positioned(
       top: -10,
       left: value - 30,
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Text(
-          time != '' ?  chooseFormat(p, time).toString() : '',
-          style: const TextStyle(
+          time == '' ? '' :  chooseFormat(p, time),
+          style: TextStyle(
             fontSize: 16,
-            color: Colors.white,
+            color: T(c, 'inversePrimary'),
           ),
         ),
       ),

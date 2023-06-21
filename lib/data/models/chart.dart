@@ -7,7 +7,7 @@ class Chart {
 
   factory Chart.defaultChart() => Chart(
     0,
-    CandleStick.defaultCandle(),
+    CandleStick.fact(),
     [],
   );
 
@@ -62,7 +62,7 @@ class CandleStick {
         '}';
   }
 
-  factory CandleStick.defaultCandle() => CandleStick(
+  factory CandleStick.fact() => CandleStick(
     low: 0,
     open: 0,
     high: 0,

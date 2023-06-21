@@ -14,7 +14,7 @@ final lightTheme = ThemeData(
     primary: Colors.green,
     primaryContainer: Colors.lightGreenAccent,
     secondary: Colors.green.shade900,
-    inversePrimary: Colors.white,
+    inversePrimary: Colors.black,
     onPrimaryContainer: Colors.white,
     background: Colors.green,
     outline: Colors.black26,

@@ -24,7 +24,7 @@ class CandleChartState extends State<CandleChart> {
 
   @override
   void initState() {
-    hoveredCandle = CandleStick.defaultCandle();
+    hoveredCandle = CandleStick.fact();
     super.initState();
   }
 

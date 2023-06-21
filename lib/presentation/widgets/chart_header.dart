@@ -27,17 +27,18 @@ class ChartHeader extends StatelessWidget {
                     Expanded(
                       child: Text(
                         formatMoney(cursorVal),
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: T(context, 'primary'),
                           fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         '${calculateValueChange(cursorVal, val)} ($gain)',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: T(context, 'primary'),
                           fontSize: 15,
                         ),
                       ),

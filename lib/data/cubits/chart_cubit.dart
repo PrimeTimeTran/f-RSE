@@ -10,11 +10,11 @@ abstract class ChartEvent extends Equatable {
 
 class ChartHover extends ChartEvent {
   final String time;
+  final String type;
   final double value;
   final double offset;
-  final String type;
   final CandleStick candle;
-  ChartHover(this.offset, this.time, this.value, this.candle, this.type);
+  ChartHover(this.offset, this.time, this.value, this.type, this.candle);
 
   @override
   List<Object?> get props => [offset, time, value, candle, type];
@@ -27,10 +27,10 @@ abstract class ChartState extends Equatable {
 
 class HoveredChart extends ChartState {
   final String time;
+  final String type;
   final double value;
   final double offset;
   final CandleStick candle;
-  final String type;
   HoveredChart(this.offset, this.time, this.value, this.candle, this.type);
 
   @override
@@ -41,17 +41,20 @@ class ChartInitial extends ChartState {}
 
 class ChartCubit extends Bloc<ChartEvent, ChartState> {
   ChartCubit() : super(ChartInitial()) {
-    on<ChartHover>((event, emit) {
-      emit(HoveredChart(event.offset, event.time, event.value, event.candle, event.type));
+    on<ChartHover>((e, emit) {
+      emit(HoveredChart(e.offset, e.time, e.value, e.candle, e.type));
     });
   }
 
-  void setHoveredPoint(point, double xOffSet) {
-    if (point is CandleStick) {
-      add(ChartHover(xOffSet, point.time, point.value, point, 'candle'));
-    } else {
-      add(ChartHover(xOffSet, point.x, point.y, CandleStick.defaultCandle(), 'portfolio'));
-
-    }
+  void setHoveredPoint(p, double xOffSet) {
+    var candle = p is CandleStick;
+    add(ChartHover(
+        xOffSet,
+        candle ? p.time : p.x,
+        candle ? p.value : p.y,
+        candle ? 'candle' : 'portfolio',
+        candle ? p : CandleStick.fact(),
+      )
+    );
   }
 }
