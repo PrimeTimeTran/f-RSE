@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
@@ -31,8 +32,7 @@ class WatchItemState extends State<WatchItem> {
       },
       child: GestureDetector(
         onTap: () {
-          String route = '/assets/${item.sym}';
-          Navigator.pushNamed(context, route);
+          context.go("/${item.sym}");
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),

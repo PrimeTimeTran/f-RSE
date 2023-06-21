@@ -78,7 +78,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
 
   Widget _buildTabContainer(context) {
     final color = T(context, 'primary');
-    final unselectedColor = Theme.of(context).unselectedWidgetColor;
+    final unselectedColor = T(context, 'inversePrimary');
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:rse/presentation/all.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String title;
+  const HomeScreen({required this.label, required this.detailsPath, Key? key})
+      : super(key: key);
 
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  final String label;
+  final String detailsPath;
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -14,14 +15,16 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            TickerCarousel(),
-            ResponsiveLayout(),
-          ],
+    return const Scaffold(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TickerCarousel(),
+              ResponsiveLayout(),
+            ],
+          ),
         ),
       ),
     );
@@ -60,24 +63,21 @@ class ResponsiveLayout extends StatelessWidget {
   }
 
   Widget buildTwoColumn(context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 60),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 60),
       child: Row(
         children: [
           Expanded(
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: const SingleChildScrollView(
-                child: Column(
-                  children: [
-                    LineChart(),
-                    Articles(),
-                  ],
-                ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  LineChart(),
+                  Articles(),
+                ],
               ),
             ),
           ),
-          const Watchlist(),
+          Watchlist(),
         ],
       ),
     );

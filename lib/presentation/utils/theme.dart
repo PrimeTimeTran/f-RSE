@@ -28,14 +28,14 @@ final darkTheme = ThemeData(
   brightness: Brightness.dark,
   indicatorColor: Colors.white,
   navigationBarTheme: const NavigationBarThemeData(
-    indicatorColor: Colors.white,
+    indicatorColor: Colors.green,
   ),
   colorScheme: ColorScheme.dark(
     primary: Colors.green,
-    primaryContainer: Colors.lightGreenAccent,
     inversePrimary: Colors.white,
-    secondary: Colors.lightGreenAccent,
     background: Colors.grey[900]!,
+    secondary: Colors.lightGreenAccent,
+    primaryContainer: Colors.lightGreenAccent,
   ),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.grey[900]!,
