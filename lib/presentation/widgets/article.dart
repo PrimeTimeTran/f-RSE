@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rse/presentation/utils/all.dart';
 import 'package:rse/data/models/all.dart' as models;
+import 'package:rse/presentation/widgets/all.dart';
 
 const placeholder = "https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
 
@@ -25,35 +26,37 @@ class ArticleState extends State<Article> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: isWeb && isMed(context)
-          ? const EdgeInsets.all(50)
-          : const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      child: isWeb && isMed(context)
-          ? Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _buildArticleContent(context),
+    return HoverDarken(
+      child: Padding(
+        padding: isWeb && isMed(context)
+            ? const EdgeInsets.all(50)
+            : const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: isWeb && isMed(context)
+            ? Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _buildArticleContent(context),
+              ),
             ),
-          ),
-          const SizedBox(width: 50),
-          Flexible(
-            flex: 1,
-            child: _buildArticleImage(context),
-          ),
-        ],
-      )
-          : Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildArticleImage(context),
-          const SizedBox(height: 20),
-          ..._buildArticleContent(context),
-        ],
+            const SizedBox(width: 50),
+            Flexible(
+              flex: 1,
+              child: _buildArticleImage(context),
+            ),
+          ],
+        )
+            : Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildArticleImage(context),
+            const SizedBox(height: 20),
+            ..._buildArticleContent(context),
+          ],
+        ),
       ),
     );
   }

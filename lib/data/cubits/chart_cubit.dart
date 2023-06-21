@@ -8,14 +8,16 @@ abstract class ChartEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class HoveredCandle extends ChartEvent {
-  final double xOffSet;
-  final CandleStick hoveredCandle;
-
-  HoveredCandle(this.hoveredCandle, this.xOffSet);
+class ChartHover extends ChartEvent {
+  final String time;
+  final double value;
+  final double offset;
+  final String type;
+  final CandleStick candle;
+  ChartHover(this.offset, this.time, this.value, this.candle, this.type);
 
   @override
-  List<Object?> get props => [hoveredCandle, xOffSet];
+  List<Object?> get props => [offset, time, value, candle, type];
 }
 
 abstract class ChartState extends Equatable {
@@ -23,26 +25,33 @@ abstract class ChartState extends Equatable {
   List<Object?> get props => [];
 }
 
-class HoveredCandleState extends ChartState {
-  final double xOffSet;
-  final CandleStick hoveredCandle;
-
-  HoveredCandleState(this.hoveredCandle, this.xOffSet);
+class HoveredChart extends ChartState {
+  final String time;
+  final double value;
+  final double offset;
+  final CandleStick candle;
+  final String type;
+  HoveredChart(this.offset, this.time, this.value, this.candle, this.type);
 
   @override
-  List<Object?> get props => [hoveredCandle, xOffSet];
+  List<Object?> get props => [offset, time, value, candle, type];
 }
 
 class ChartInitial extends ChartState {}
 
 class ChartCubit extends Bloc<ChartEvent, ChartState> {
   ChartCubit() : super(ChartInitial()) {
-    on<HoveredCandle>((event, emit) {
-      emit(HoveredCandleState(event.hoveredCandle, event.xOffSet));
+    on<ChartHover>((event, emit) {
+      emit(HoveredChart(event.offset, event.time, event.value, event.candle, event.type));
     });
   }
 
-  void setHoveredCandle(CandleStick candle, double xOffSet) {
-    add(HoveredCandle(candle, xOffSet));
+  void setHoveredPoint(point, double xOffSet) {
+    if (point is CandleStick) {
+      add(ChartHover(xOffSet, point.time, point.value, point, 'candle'));
+    } else {
+      add(ChartHover(xOffSet, point.x, point.y, CandleStick.defaultCandle(), 'portfolio'));
+
+    }
   }
 }

@@ -61,6 +61,7 @@ class ThemeModel with ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   void dispose() {
     window.onPlatformBrightnessChanged = null;
     super.dispose();

@@ -46,34 +46,6 @@ class CandleChartState extends State<CandleChart> {
     );
   }
 
-  BlocBuilder<ChartCubit, ChartState> buildTimeLabel() {
-    return BlocBuilder<ChartCubit, ChartState>(
-      builder: (c, state) {
-        if (state is HoveredCandleState) {
-          final p = c.read<AssetCubit>().period;
-          final value = state.xOffSet;
-          final candle = state.hoveredCandle;
-          return Positioned(
-            top: -10,
-            left: value - 30,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                candle.time != '' ? chooseFormat(p, candle).toString() : '',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          );
-        } else {
-          return const Text('');
-        }
-      }
-    );
-  }
-
   buildChart() {
     return Stack(
       children: [
@@ -94,7 +66,7 @@ class CandleChartState extends State<CandleChart> {
                 }
                 if (hoveredCandle?.time == '') {
                   final candle = series[0];
-                  context.read<ChartCubit>().setHoveredCandle(candle, 0);
+                  context.read<ChartCubit>().setHoveredPoint(candle, 0);
                   hoveredCandle = candle;
                 }
                 return RepaintBoundary(
@@ -115,7 +87,7 @@ class CandleChartState extends State<CandleChart> {
                       final xOffSet = args.chartPointInfo.xPosition;
                       final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
                       final CandleStick candle = series[dataPoint!];
-                      context.read<ChartCubit>().setHoveredCandle(candle, xOffSet!);
+                      context.read<ChartCubit>().setHoveredPoint(candle, xOffSet!);
                     },
                     primaryXAxis: CategoryAxis(
                       isVisible: false,
@@ -131,7 +103,7 @@ class CandleChartState extends State<CandleChart> {
                         highValueMapper: (CandleStick d, _) => d.high,
                         openValueMapper: (CandleStick d, _) => d.open,
                         closeValueMapper: (CandleStick d, _) => d.close,
-                        xValueMapper: (CandleStick d, int index) => chooseFormat(period, d),
+                        xValueMapper: (CandleStick d, int index) => chooseFormat(period, d.time),
                       ),
                     ],
                   ),
@@ -149,7 +121,7 @@ class CandleChartState extends State<CandleChart> {
             },
           ),
         ),
-        buildTimeLabel(),
+        const TimeLabel(),
       ],
     );
   }

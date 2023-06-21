@@ -118,7 +118,7 @@ DateTime roundToNearestHour(DateTime dateTime) {
       .add(Duration(minutes: roundedMinutes));
 }
 
-String chooseFormat(String period, d) {
+String chooseFormat(String period, time) {
   final map = {
     'live': 'h:mma',
     '1d': 'h:mma',
@@ -129,9 +129,9 @@ String chooseFormat(String period, d) {
 
   final dateFormat = map[period] ?? 'yMd';
   if (period == '1w' || period == '1m') {
-    return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
+    return DateFormat(dateFormat).format(DateTime.parse(time)).toString();
   }
-  return DateFormat(dateFormat).format(DateTime.parse(d.time)).toString();
+  return DateFormat(dateFormat).format(DateTime.parse(time)).toString();
 }
 
 int calculateIntervals(period, data){

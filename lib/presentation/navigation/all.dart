@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+// ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
 export 'drawer.dart';
@@ -37,7 +38,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [],
         title: Consumer<ThemeModel> (
           builder: (context, themeModel, _) {
             return GestureDetector(
@@ -105,7 +105,7 @@ final goRouter = GoRouter(
               path: '/investing',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: InvestingSummaryScreen(title: 'osos'),
+                child: const InvestingSummaryScreen(title: 'osos'),
               ),
             ),
           ],
@@ -117,7 +117,7 @@ final goRouter = GoRouter(
               path: '/notifications',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: NotificationsScreen(),
+                child: const NotificationsScreen(),
               ),
             ),
           ],
@@ -129,7 +129,7 @@ final goRouter = GoRouter(
               path: '/spending',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: SpendingScreen(),
+                child: const SpendingScreen(),
               ),
             ),
           ],

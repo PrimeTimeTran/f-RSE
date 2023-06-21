@@ -45,10 +45,11 @@ class PortfolioError extends PortfolioState {
 }
 
 class PortfolioCubit extends Cubit<PortfolioState> {
+  late double open;
   List<DataPoint> dataPoints = [];
-  final PortfolioService portfolioService = PortfolioService();
   CandleStick candle = CandleStick.defaultCandle();
-
+  late Portfolio portfolio = Portfolio.defaultPortfolio();
+  final PortfolioService portfolioService = PortfolioService();
   PortfolioCubit() : super(PortfolioInitial());
 
   Future<void> fetchPortfolio(String id) async {
@@ -56,8 +57,9 @@ class PortfolioCubit extends Cubit<PortfolioState> {
 
     try {
       final p = await portfolioService.fetchPortfolio(id);
+      portfolio = p;
       dataPoints = p.series;
-
+      open = dataPoints.last.y;
       emit(PortfolioLoaded(p));
     } catch (e) {
       emit(PortfolioError('fetching portfolio'));

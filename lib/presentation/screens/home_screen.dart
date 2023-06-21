@@ -35,22 +35,25 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildDesktop(context) {
-    return const Padding(
-      padding: EdgeInsets.all(8),
+    return Padding(
+      padding: const EdgeInsets.all(8),
       child: Row(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TickerCarousel(),
-                  LineChart(),
-                  Articles(),
-                ],
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: const SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TickerCarousel(),
+                    LineChart(),
+                    Articles(),
+                  ],
+                ),
               ),
             ),
           ),
-          Watchlist(),
+          const Watchlist(),
         ],
       ),
     );

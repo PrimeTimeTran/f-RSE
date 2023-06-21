@@ -33,30 +33,53 @@ class LineChartState extends State<LineChart> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .8,
-                  height: MediaQuery.of(context).size.height * .4,
-                  child: SfCartesianChart(
-                    borderWidth: 0,
-                    plotAreaBorderWidth: 0,
-                    borderColor: Colors.transparent,
-                    trackballBehavior: _trackballBehavior,
-                    primaryYAxis: NumericAxis(majorGridLines: const MajorGridLines(width: 0)),
-                    primaryXAxis: DateTimeAxis(
-                      isVisible: true,
-                      labelRotation: 45,
-                      dateFormat: DateFormat.Hm(),
-                      majorGridLines: const MajorGridLines(width: 0)
-                    ),
-                    series: <LineSeries<DataPoint, DateTime>>[
-                      LineSeries<DataPoint, DateTime>(
-                        dataSource: data.take(50).toList(),
-                        yValueMapper: (DataPoint d, _) => d.y,
-                        xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
-                        color: Colors.green,
+                const ChartHeader(),
+                Stack(
+                  children: [
+                    SfCartesianChart(
+                      borderWidth: 0,
+                      plotAreaBorderWidth: 0,
+                      trackballBehavior: _trackballBehavior,
+                      primaryYAxis: NumericAxis(
+                          isVisible: false,
+                          majorGridLines: const MajorGridLines(
+                            width: 2,
+                            dashArray: <double>[4, 3],
+                          ),
+                          plotBands: [
+                            PlotBand(
+                              opacity: 0.5,
+                              borderWidth: 2,
+                              end: data.last.y,
+                              dashArray: const [4, 3],
+                              start: data.last.y,
+                              borderColor: T(context, 'inversePrimary'),
+                            )
+                          ]
                       ),
-                    ],
-                  ),
+                      primaryXAxis: DateTimeAxis(
+                        isVisible: false,
+                        labelRotation: 45,
+                        dateFormat: DateFormat.Hm(),
+                        majorGridLines: const MajorGridLines(width: 0),
+                      ),
+                      onTrackballPositionChanging: (TrackballArgs args) {
+                        final xOffSet = args.chartPointInfo.xPosition;
+                        final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                        final item = data[point!];
+                        context.read<ChartCubit>().setHoveredPoint(item, xOffSet!);
+                      },
+                      series: <LineSeries<DataPoint, DateTime>>[
+                        LineSeries<DataPoint, DateTime>(
+                          color: Colors.green,
+                          dataSource: data.take(50).toList(),
+                          yValueMapper: (DataPoint d, _) => d.y,
+                          xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                        ),
+                      ],
+                    ),
+                    const TimeLabel(),
+                  ],
                 ),
                 const PeriodSelector(),
               ],
@@ -72,28 +95,16 @@ class LineChartState extends State<LineChart> {
   }
 
   _setupTheme(BuildContext context) {
-    final color = T(context, 'primary');
+    final color = T(context, 'inversePrimary');
     _trackballBehavior = TrackballBehavior(
       enable: true,
       lineWidth: 1,
       lineColor: color,
+      lineDashArray: const [5, 5],
       lineType: TrackballLineType.vertical,
       tooltipAlignment: ChartAlignment.near,
       activationMode: ActivationMode.singleTap,
-      tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-      tooltipSettings: const InteractiveTooltip(
-        enable: true,
-        borderWidth: 5,
-        color: Colors.red,
-        canShowMarker: true,
-        borderColor: Colors.green,
-        format: 'point.x : point.y',
-        textStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 13,
-        ),
-      ),
+      tooltipSettings: const InteractiveTooltip(enable: false),
     );
   }
 }
-

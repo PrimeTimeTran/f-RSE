@@ -86,7 +86,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
                         ),
                       );
                     } else {
-                      return Text('');
+                      return const Text('');
                     }
                   },
                   listener: (context, state) {

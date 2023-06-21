@@ -15,10 +15,10 @@ class ChartHeader extends StatelessWidget {
         height: 100,
         child: BlocBuilder<ChartCubit, ChartState>(
           builder: (c, state) {
-            if (state is HoveredCandleState) {
-              final asset = c.read<AssetCubit>().asset;
-              final cursorVal = state.hoveredCandle.value;
-              var gain = calculatePercentageChange(cursorVal, asset.o);
+            if (state is HoveredChart) {
+              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.read<PortfolioCubit>().open;
+              final cursorVal = state.value;
+              var gain = calculatePercentageChange(cursorVal, val);
               return Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
@@ -35,7 +35,7 @@ class ChartHeader extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        '${calculateValueChange(cursorVal, asset.o)} ($gain)',
+                        '${calculateValueChange(cursorVal, val)} ($gain)',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -46,7 +46,7 @@ class ChartHeader extends StatelessWidget {
                 ),
               );
             } else {
-              return const Text('');
+              return const SizedBox();
             }
           },
         ),

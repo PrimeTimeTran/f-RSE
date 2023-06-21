@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/presentation/all.dart';
-
 const mobileWidth = 600;
 
 class ResponsiveLayout extends StatelessWidget {
