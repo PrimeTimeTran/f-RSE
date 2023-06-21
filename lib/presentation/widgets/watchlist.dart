@@ -13,7 +13,7 @@ class Watchlist extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * .77,
+        height: MediaQuery.of(context).size.height * .84,
         width: MediaQuery.of(context).size.width * 0.25,
         child: Container(
           margin: const EdgeInsets.fromLTRB(40, 0, 100, 0),

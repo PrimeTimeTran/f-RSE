@@ -15,43 +15,15 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TickerCarousel(),
-              ResponsiveLayout(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ResponsiveLayout extends StatelessWidget {
-  const ResponsiveLayout({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          if (constraints.maxWidth <= 600) {
-            return buildOneColumn(context);
-          } else {
-            return buildTwoColumn(context);
-          }
-        },
+    return Scaffold(
+      body: ResponsiveLayout(
+        mobile: buildMobile(context),
+        desktop: buildDesktop(context),
       ),
     );
   }
 
-  Widget buildOneColumn(context) {
+  Widget buildMobile(context) {
     return const SingleChildScrollView(
       child: Column(
         children: [
@@ -62,15 +34,16 @@ class ResponsiveLayout extends StatelessWidget {
     );
   }
 
-  Widget buildTwoColumn(context) {
+  Widget buildDesktop(context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 60),
+      padding: EdgeInsets.all(8),
       child: Row(
         children: [
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  TickerCarousel(),
                   LineChart(),
                   Articles(),
                 ],
@@ -83,3 +56,5 @@ class ResponsiveLayout extends StatelessWidget {
     );
   }
 }
+
+

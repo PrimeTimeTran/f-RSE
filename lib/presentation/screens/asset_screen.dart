@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/all.dart';
-import 'package:rse/presentation/widgets/all.dart';
+import 'package:rse/presentation/all.dart';
 
 class AssetScreen extends StatefulWidget {
   final String sym;
@@ -25,14 +25,9 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          if (constraints.maxWidth <= 600) {
-            return buildOneColumn(context);
-          } else {
-            return buildTwoColumn();
-          }
-        },
+      body: ResponsiveLayout(
+        mobile: buildOneColumn(context),
+        desktop: buildTwoColumn(),
       ),
     );
   }
@@ -55,13 +50,12 @@ class _AssetScreeState extends State<AssetScreen> {
   }
 
   Widget buildTwoColumn() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 60),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.sym),
-          const Expanded(
+          Expanded(
             flex: 3,
             child: SingleChildScrollView(
               child: Column(
@@ -72,7 +66,7 @@ class _AssetScreeState extends State<AssetScreen> {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             flex: 1,
             child: SingleChildScrollView(
               child: Text('sksisis'),

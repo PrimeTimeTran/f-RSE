@@ -32,7 +32,7 @@ class CandleChartState extends State<CandleChart> {
   Widget build(BuildContext context) {
     _setupTheme(context);
     return Padding(
-      padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 50) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 10) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -58,7 +58,6 @@ class CandleChartState extends State<CandleChart> {
             left: value - 30,
             child: Container(
               padding: const EdgeInsets.all(8),
-              // color: T(context, 'primary'),
               child: Text(
                 candle.time != '' ? chooseFormat(p, candle).toString() : '',
                 style: const TextStyle(
