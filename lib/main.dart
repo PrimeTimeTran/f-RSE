@@ -1,15 +1,21 @@
 import 'dart:io';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   // await dotenv.load(fileName: "/assets/.env");
   HttpOverrides.global = MyHttpOverrides();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     ChangeNotifierProvider(

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "231022961791",
+    "project_id": "royal-stock-exchange",
+    "storage_bucket": "royal-stock-exchange.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231022961791:android:f34687269c4e7853b58b4a",
+        "android_client_info": {
+          "package_name": "com.example.rse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231022961791-s983k5bu6gkingbnbe2i36u7lg9s81kh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5c5Ns6KWHpf9jM_gM4NDe7nAd2OECSrw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231022961791-s983k5bu6gkingbnbe2i36u7lg9s81kh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
