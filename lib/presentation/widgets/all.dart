@@ -17,5 +17,6 @@ export 'ticker_carousel.dart';
 export 'period_selector.dart';
 export 'investment_group.dart';
 export 'options_chain_table.dart';
+export 'chart_header_details.dart';
 export 'candle_hovered_details.dart';
 export 'placeholder_candlestick_chart.dart';

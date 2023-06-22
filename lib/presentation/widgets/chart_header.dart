@@ -6,7 +6,8 @@ import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
 class ChartHeader extends StatelessWidget {
-  const ChartHeader({super.key});
+  final double value;
+  const ChartHeader({super.key, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -16,53 +17,29 @@ class ChartHeader extends StatelessWidget {
         height: 100,
         child: BlocBuilder<ChartCubit, ChartState>(
           builder: (c, state) {
-            if (state is HoveredChart) {
+            if (state is UpdatedChart) {
               final cursorVal = state.value;
-              final goRouter = GoRouter.of(context);
-              final currentRoute = goRouter.location;
-              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.read<PortfolioCubit>().open;
-
+              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.read<ChartCubit>().value;
               final gain = calculatePercentageChange(cursorVal, val);
 
-              return Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (currentRoute.length > 1) Text(
-                      currentRoute.substring(1),
-                      style: TextStyle(
-                        color: T(context, 'primary'),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        formatMoney(cursorVal),
-                        style: TextStyle(
-                          color: T(context, 'primary'),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${calculateValueChange(cursorVal, val)} ($gain)',
-                        style: TextStyle(
-                          color: T(context, 'inversePrimary'),
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              final route = GoRouter.of(context).location;
+              var title = route == '/' || route == '/spending' ? 'Investing' : route.substring(1);
+
+              return ChartHeaderDetails(
+                val: val,
+                gain: gain,
+                title: title,
+                cursorVal: cursorVal,
               );
             } else {
-              return const SizedBox();
+              return ChartHeaderDetails(
+                val: value,
+                gain: 'sksks',
+                title: 'Investing',
+                cursorVal: value,
+              );
             }
-          },
+          }
         ),
       ),
     );

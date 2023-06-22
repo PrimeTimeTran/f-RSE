@@ -34,7 +34,7 @@ class LineChartState extends State<LineChart> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const ChartHeader(),
+                  ChartHeader(value: state.value),
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -100,6 +100,7 @@ class LineChartState extends State<LineChart> {
       enable: true,
       lineWidth: 1,
       lineColor: color,
+      shouldAlwaysShow: true,
       lineDashArray: const [5, 5],
       lineType: TrackballLineType.vertical,
       tooltipAlignment: ChartAlignment.near,

@@ -20,6 +20,7 @@ class App extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   void _goBranch(int index) {
+
     navigationShell.goBranch(
       index,
       // A common pattern when using bottom navigation bars is to support
@@ -68,8 +69,8 @@ final goRouter = GoRouter(
   // * https://github.com/flutter/flutter/issues/113757#issuecomment-1518421380
   // * However it's still necessary otherwise the navigator pops back to
   // * root on hot reload
-  navigatorKey: _rootNavigatorKey,
   debugLogDiagnostics: true,
+  navigatorKey: _rootNavigatorKey,
   routes: [
     // Stateful navigation based on:
     // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
@@ -84,7 +85,7 @@ final goRouter = GoRouter(
             GoRoute(
                 path: '/',
                 pageBuilder: (context, state) => const NoTransitionPage(
-                  child: HomeScreen(label: 'Home', detailsPath: '/b/details'),
+                  child: HomeScreen(label: 'Home'),
                 ),
                 routes:
                 watched.toList().map((e) => GoRoute(

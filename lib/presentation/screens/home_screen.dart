@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:rse/presentation/all.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({required this.label, required this.detailsPath, Key? key})
+  const HomeScreen({required this.label, Key? key})
       : super(key: key);
 
   final String label;
-  final String detailsPath;
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -14,7 +13,12 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    print('HomeScreen build');
     return Scaffold(
       body: ResponsiveLayout(
         mobile: buildMobile(context),

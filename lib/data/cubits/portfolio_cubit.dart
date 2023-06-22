@@ -17,6 +17,16 @@ class FetchPortfolio extends PortfolioEvent {
   List<Object?> get props => [id];
 }
 
+class LoadedPortfolio extends PortfolioEvent {
+  final double value;
+  final Portfolio portfolio;
+
+  LoadedPortfolio(this.portfolio, this.value);
+
+  @override
+  List<Object?> get props => [portfolio, value];
+}
+
 abstract class PortfolioState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -27,12 +37,13 @@ class PortfolioInitial extends PortfolioState {}
 class PortfolioLoading extends PortfolioState {}
 
 class PortfolioLoaded extends PortfolioState {
+  final double value;
   final Portfolio portfolio;
 
-  PortfolioLoaded(this.portfolio);
+  PortfolioLoaded(this.portfolio, this.value);
 
   @override
-  List<Object?> get props => [portfolio];
+  List<Object?> get props => [portfolio, value];
 }
 
 class PortfolioError extends PortfolioState {
@@ -44,23 +55,23 @@ class PortfolioError extends PortfolioState {
   List<Object?> get props => [errorMessage];
 }
 
-class PortfolioCubit extends Cubit<PortfolioState> {
-  late double open;
+class PortfolioCubit extends Bloc<PortfolioEvent, PortfolioState> {
   List<DataPoint> dataPoints = [];
   CandleStick candle = CandleStick.fact();
-  late Portfolio portfolio = Portfolio.defaultPortfolio();
   final PortfolioService portfolioService = PortfolioService();
-  PortfolioCubit() : super(PortfolioInitial());
+
+  PortfolioCubit() : super(PortfolioInitial()) {
+    on<LoadedPortfolio>((e, emit) async {
+      emit(PortfolioLoaded(e.portfolio, e.value));
+    });
+  }
 
   Future<void> fetchPortfolio(String id) async {
     emit(PortfolioLoading());
-
     try {
       final p = await portfolioService.fetchPortfolio(id);
-      portfolio = p;
       dataPoints = p.series;
-      open = dataPoints.last.y;
-      emit(PortfolioLoaded(p));
+      add(LoadedPortfolio(p, p.current.totalValue));
     } catch (e) {
       emit(PortfolioError('fetching portfolio'));
     }

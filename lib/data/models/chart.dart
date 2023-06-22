@@ -77,4 +77,8 @@ class DataPoint {
   final double y;
 
   DataPoint(this.x, this.y);
+  factory DataPoint.fact() => DataPoint(
+      DateTime.now().toIso8601String(),
+      0,
+    );
 }

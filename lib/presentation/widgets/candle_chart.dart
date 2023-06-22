@@ -36,7 +36,7 @@ class CandleChartState extends State<CandleChart> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const ChartHeader(),
+
             buildChart(context),
             if (isSmall(context)) const Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -79,45 +79,50 @@ class CandleChartState extends State<CandleChart> {
                 }
                 if (hoveredCandle?.time == '') {
                   final candle = series[0];
-                  context.read<ChartCubit>().setHoveredPoint(candle, 0);
+                  context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
                   hoveredCandle = candle;
                 }
-                return RepaintBoundary(
-                  child: SfCartesianChart(
-                    plotAreaBorderWidth: 0,
-                    zoomPanBehavior: _zoomPanBehavior,
-                    trackballBehavior: _trackballBehavior,
-                    crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
-                    onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
-                      setState(() {
-                        showCrosshair = !showCrosshair;
-                      });
-                    },
-                    primaryYAxis: NumericAxis(
-                      isVisible: false,
-                      numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
-                      minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
-                    ),
-                    onTrackballPositionChanging: (TrackballArgs args) {
-                      final xOffSet = args.chartPointInfo.xPosition;
-                      final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                      final CandleStick candle = series[dataPoint!];
-                      context.read<ChartCubit>().setHoveredPoint(candle, xOffSet!);
-                    },
-                    primaryXAxis: CategoryAxis(
-                      isVisible: false,
-                    ),
-                    series: <CandleSeries<CandleStick, String>>[
-                      CandleSeries<CandleStick, String>(
-                        dataSource: series,
-                        lowValueMapper: (CandleStick d, _) => d.low,
-                        highValueMapper: (CandleStick d, _) => d.high,
-                        openValueMapper: (CandleStick d, _) => d.open,
-                        closeValueMapper: (CandleStick d, _) => d.close,
-                        xValueMapper: (CandleStick d, int index) => d.time,
+                return Column(
+                  children: [
+                    ChartHeader(value: series.last.close),
+                    RepaintBoundary(
+                      child: SfCartesianChart(
+                        plotAreaBorderWidth: 0,
+                        zoomPanBehavior: _zoomPanBehavior,
+                        trackballBehavior: _trackballBehavior,
+                        // crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
+                        onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
+                          // setState(() {
+                          //   // showCrosshair = !showCrosshair;
+                          // });
+                        },
+                        primaryYAxis: NumericAxis(
+                          isVisible: false,
+                          numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
+                          minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
+                        ),
+                        onTrackballPositionChanging: (TrackballArgs args) {
+                          final xOffSet = args.chartPointInfo.xPosition;
+                          final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                          final CandleStick candle = series[dataPoint!];
+                          context.read<ChartCubit>().setHoveredPoint(candle, xOffSet!);
+                        },
+                        primaryXAxis: CategoryAxis(
+                          isVisible: false,
+                        ),
+                        series: <CandleSeries<CandleStick, String>>[
+                          CandleSeries<CandleStick, String>(
+                            dataSource: series,
+                            lowValueMapper: (CandleStick d, _) => d.low,
+                            highValueMapper: (CandleStick d, _) => d.high,
+                            openValueMapper: (CandleStick d, _) => d.open,
+                            closeValueMapper: (CandleStick d, _) => d.close,
+                            xValueMapper: (CandleStick d, int index) => d.time,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 );
               } else if (state is AssetError) {
                 return const Text('Error:');
@@ -147,7 +152,8 @@ class CandleChartState extends State<CandleChart> {
     _trackballBehavior = TrackballBehavior(
       enable: true,
       lineWidth: 1,
-      lineColor: Colors.white,
+      shouldAlwaysShow: true,
+      lineColor: color,
       lineType: TrackballLineType.vertical,
       activationMode: ActivationMode.singleTap,
       tooltipSettings: const InteractiveTooltip(
@@ -159,7 +165,7 @@ class CandleChartState extends State<CandleChart> {
       lineWidth: 2,
       hideDelay: 5,
       lineColor: color,
-      shouldAlwaysShow: true,
+      // shouldAlwaysShow: true,
       lineDashArray: <double>[5,5],
       lineType: CrosshairLineType.both,
       activationMode: ActivationMode.singleTap,

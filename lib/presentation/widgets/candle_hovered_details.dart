@@ -11,10 +11,10 @@ class CandleHoveredDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChartCubit, ChartState>(
       builder: (context, state) {
-        if (state is HoveredChart) {
+        if (state is UpdatedChart) {
           final c = state.candle;
           return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: isSmall(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
             children: [
               IndicatorItem(c.open, 'Open: '),
               IndicatorItem(c.low, 'Low: '),

@@ -11,7 +11,7 @@ class TimeLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChartCubit, ChartState>(
         builder: (c, state) {
-          if (state is HoveredChart) {
+          if (state is UpdatedChart) {
             final p = c.read<AssetCubit>().period;
             return buildTimeLabel(context, p, state.offset, state.time);
           } else {

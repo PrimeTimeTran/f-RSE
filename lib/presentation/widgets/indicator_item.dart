@@ -10,6 +10,22 @@ class IndicatorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final small = isSmall(context);
+    if (small) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title),
+            Text(
+              formatMoney(price.toString()),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2.5),
       child: Row(
