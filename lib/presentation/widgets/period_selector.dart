@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/cubits/all.dart';
+import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
 class PeriodSelector extends StatefulWidget {
@@ -48,6 +48,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
                       return GestureDetector(
                         onTap: () {
                           assetCubit.setPeriod(p);
+                          logPeriodSelect(p);
                         },
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,

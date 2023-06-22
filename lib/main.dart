@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -68,6 +69,7 @@ class _MyAppState extends State<MyApp> {
     _newsCubit.fetchArticles();
     _portfolioCubit.fetchPortfolio("1");
     _assetCubit.fetchAsset("1");
+    event();
   }
 
   @override
