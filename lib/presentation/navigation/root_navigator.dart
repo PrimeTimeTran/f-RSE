@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // ignore: depend_on_referenced_packages
@@ -31,6 +33,30 @@ class App extends StatelessWidget {
     );
   }
 
+  void _showModal(BuildContext context) {
+    // get screen width
+    double width = MediaQuery.of(context).size.width;
+    // get screen height
+    double height = MediaQuery.of(context).size.height;
+    // String os = Platform.operatingSystem;
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          children: [
+            // Text('Operating System: $os'),
+            Text('Screen Width: $width'),
+            Text('Screen Height: $height'),
+          ],
+        );
+      },
+    );
+  }
+  void _handleLongPress (LongPressStartDetails details, context) {
+    event();
+    _showModal(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +67,9 @@ class App extends StatelessWidget {
                 onDoubleTap: () {
                   event();
                   themeModel.toggleTheme();
+                },
+                onLongPressStart: (details) {
+                  _handleLongPress(details, context);
                 },
                 child: const Text(
                   'Royal Stock Exchange',
