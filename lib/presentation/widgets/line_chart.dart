@@ -30,60 +30,57 @@ class LineChartState extends State<LineChart> {
           final data = state.portfolio.series;
           final startValue = state.startValue;
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ChartHeader(value: state.value, startValue: startValue),
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      SfCartesianChart(
-                        plotAreaBorderWidth: 0,
-                        trackballBehavior: _trackballBehavior,
-                        primaryYAxis: NumericAxis(
-                            isVisible: false,
-                            majorGridLines: const MajorGridLines(
-                              width: 2,
-                              dashArray: <double>[4, 3],
-                            ),
-                            plotBands: [
-                              PlotBand(
-                                opacity: 0.5,
-                                borderWidth: 1,
-                                end: data.last.y,
-                                start: data.last.y,
-                                dashArray: const [4, 3],
-                                borderColor: T(context, 'inversePrimary'),
-                              )
-                            ]
-                        ),
-                        primaryXAxis: DateTimeAxis(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ChartHeader(value: state.value, startValue: startValue),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SfCartesianChart(
+                      plotAreaBorderWidth: 0,
+                      trackballBehavior: _trackballBehavior,
+                      primaryYAxis: NumericAxis(
                           isVisible: false,
-                          majorGridLines: const MajorGridLines(width: 0),
-                        ),
-                        onTrackballPositionChanging: (TrackballArgs args) {
-                          final offset = args.chartPointInfo.xPosition;
-                          final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                          final item = data[point!];
-                          context.read<ChartCubit>().pickedPoint(item, offset!);
-                        },
-                        series: <LineSeries<DataPoint, DateTime>>[
-                          LineSeries<DataPoint, DateTime>(
-                            color: Colors.green,
-                            dataSource: data.take(50).toList(),
-                            yValueMapper: (DataPoint d, _) => d.y,
-                            xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                          majorGridLines: const MajorGridLines(
+                            width: 2,
+                            dashArray: <double>[4, 3],
                           ),
-                        ],
+                          plotBands: [
+                            PlotBand(
+                              opacity: 0.5,
+                              borderWidth: 1,
+                              end: data.last.y,
+                              start: data.last.y,
+                              dashArray: const [4, 3],
+                              borderColor: T(context, 'inversePrimary'),
+                            )
+                          ]
                       ),
-                      const TimeLabel(),
-                    ],
-                  ),
-                  const PeriodSelector()
-                ],
-              ),
+                      primaryXAxis: DateTimeAxis(
+                        isVisible: false,
+                        majorGridLines: const MajorGridLines(width: 0),
+                      ),
+                      onTrackballPositionChanging: (TrackballArgs args) {
+                        final offset = args.chartPointInfo.xPosition;
+                        final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                        final item = data[point!];
+                        context.read<ChartCubit>().pickedPoint(item, offset!);
+                      },
+                      series: <LineSeries<DataPoint, DateTime>>[
+                        LineSeries<DataPoint, DateTime>(
+                          color: Colors.green,
+                          dataSource: data.take(50).toList(),
+                          yValueMapper: (DataPoint d, _) => d.y,
+                          xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                        ),
+                      ],
+                    ),
+                    const TimeLabel(),
+                  ],
+                ),
+                const PeriodSelector()
+              ],
             ),
           );
         } else if (state is PortfolioError) {

@@ -13,40 +13,37 @@ class ChartHeaderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gained = getChangePercent(cursorVal, val) > 0;
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: T(context, 'inversePrimary'),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            formatMoney(cursorVal),
             style: TextStyle(
               color: T(context, 'inversePrimary'),
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-          Expanded(
-            child: Text(
-              formatMoney(cursorVal),
-              style: TextStyle(
-                color: T(context, 'inversePrimary'),
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+        ),
+        Expanded(
+          child: Text(
+            '${calculateValueChange(cursorVal, val)} ($gain)',
+            style: TextStyle(
+              color: gained ? T(context, 'primary') : Colors.red,
+              fontSize: 14,
             ),
           ),
-          Expanded(
-            child: Text(
-              '${calculateValueChange(cursorVal, val)} ($gain)',
-              style: TextStyle(
-                color: gained ? T(context, 'primary') : Colors.red,
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

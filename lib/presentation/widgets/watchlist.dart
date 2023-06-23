@@ -8,20 +8,29 @@ class Watchlist extends StatelessWidget {
     super.key,
   });
 
-  double getWatchlistWidth(context) {
+  getWidth(context) {
     var width = MediaQuery.of(context).size.width;
-    if (width > 767 && width < 825) {
-      return width * .25;
+    if (isS(context)) {
+      return width * .1;
+    } else if (isM(context)) {
+      return width * .3;
+    } else if (isL(context)) {
+      return width * .3;
+    } else {
+      return width * .2;
     }
-    return 400;
   }
 
   getMargin(context) {
-    var width = MediaQuery.of(context).size.width;
-    if (width > 767 && width < 825) {
-      return EdgeInsets.fromLTRB(10, 0, 10, 0);
+    if (isS(context)) {
+      return const EdgeInsets.all(5);
+    } else if (isM(context)) {
+      return const EdgeInsets.all(5);
+    } else if (isL(context)) {
+      return const EdgeInsets.all(30);
+    } else {
+      return const EdgeInsets.all(40);
     }
-    return EdgeInsets.fromLTRB(40, 0, 100, 0);
   }
 
   @override
@@ -29,8 +38,8 @@ class Watchlist extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * .84,
-        width: getWatchlistWidth(context),
+        height: MediaQuery.of(context).size.height,
+        width: getWidth(context),
         child: Container(
           margin: getMargin(context),
           decoration: BoxDecoration(

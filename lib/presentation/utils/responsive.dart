@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 const bool isWeb = kIsWeb;
 
 bool isS(BuildContext context) {
-  return MediaQuery.of(context).size.width <= 400;
+  return MediaQuery.of(context).size.width <= 412;
 }
 
 bool isM(BuildContext context) {
@@ -12,5 +12,5 @@ bool isM(BuildContext context) {
 }
 
 bool isL(BuildContext context) {
-  return MediaQuery.of(context).size.width >= 992;
+  return MediaQuery.of(context).size.width <= 1366;
 }

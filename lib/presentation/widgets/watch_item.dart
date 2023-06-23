@@ -13,6 +13,30 @@ class WatchItem extends StatefulWidget {
   WatchItemState createState() => WatchItemState();
 }
 
+getPadding(context) {
+  if (isS(context)) {
+    return const EdgeInsets.all(1.0);
+  } else if (isM(context)){
+    return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
+  } else if (isL(context)) {
+    return const EdgeInsets.symmetric(horizontal: 10, vertical: 5);
+  } else {
+    return const EdgeInsets.symmetric(horizontal: 20, vertical: 5);
+  }
+}
+
+getHeight(context) {
+  if (isS(context)) {
+    return 100.0;
+  } else if (isM(context)){
+    return 90.0;
+  } else if (isL(context)) {
+    return 100.0;
+  } else {
+    return 100.0;
+  }
+}
+
 class WatchItemState extends State<WatchItem> {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +47,7 @@ class WatchItemState extends State<WatchItem> {
           context.go("/${item.sym}");
         },
         child: Container(
-          height: 100,
+          height: getHeight(context),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
@@ -33,7 +57,7 @@ class WatchItemState extends State<WatchItem> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: getPadding(context),
             child: Row(
               children: [
                 Expanded(

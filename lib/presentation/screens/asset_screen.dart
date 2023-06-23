@@ -49,50 +49,48 @@ class _AssetScreeState extends State<AssetScreen> {
     );
   }
 
-  getPadding(context) {
-    if (isS(context)) {
-      return const EdgeInsets.symmetric(horizontal: 60);
-    }
-    if (isM(context)) {
-      return const EdgeInsets.symmetric(horizontal: 10);
-    }
-    return const EdgeInsets.symmetric(horizontal: 10);
-  }
-
   Widget buildTwoColumn() {
-    return Padding(
-      padding: getPadding(context),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 3,
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: const SingleChildScrollView(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 5,
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: const SingleChildScrollView(
+              child: Column(
+                children: [
+                  CandleChart(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                  AssetOverview(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black)
+              ),
+              child: Expanded(
                 child: Column(
-                  children: [
-                    CandleChart(),
-                    AssetOverview(),
-                    AssetOverview(),
-                    AssetOverview(),
-                    AssetOverview(),
-                    AssetOverview(),
-                    AssetOverview(),
-                    AssetOverview(),
-                  ],
+                    children: [
+                      Text('soso'),
+                    ]
                 ),
               ),
             ),
           ),
-          const Expanded(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: Text(''),
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

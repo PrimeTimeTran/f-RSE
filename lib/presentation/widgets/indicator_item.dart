@@ -8,6 +8,17 @@ class IndicatorItem extends StatelessWidget {
 
   const IndicatorItem(this.price, this.title, {super.key});
 
+  getTextSize(context) {
+    if (isS(context)) {
+      return 10.0;
+    } else if (isM(context)) {
+      return 10.0;
+    } else if (isL(context)) {
+      return 16.0;
+    }
+    return 16.0;
+  }
+
   @override
   Widget build(BuildContext context) {
     final small = isS(context);
@@ -20,7 +31,7 @@ class IndicatorItem extends StatelessWidget {
             Text(title),
             Text(
               formatMoney(price.toString()),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: getTextSize(context),),
             ),
           ],
         ),
@@ -34,7 +45,7 @@ class IndicatorItem extends StatelessWidget {
           Text(title),
           Text(
             formatMoney(price.toString()),
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: getTextSize(context)),
           ),
         ],
       ),

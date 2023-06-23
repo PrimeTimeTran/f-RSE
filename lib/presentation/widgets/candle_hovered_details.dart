@@ -9,12 +9,13 @@ class CandleHoveredDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var alignment = isS(context) || isM(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center;
     return BlocBuilder<ChartCubit, ChartState>(
       builder: (context, state) {
         if (state is UpdatedChart) {
           final c = state.candle;
           return Row(
-            mainAxisAlignment: isS(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+            mainAxisAlignment: alignment,
             children: [
               IndicatorItem(c.open, 'Open: '),
               IndicatorItem(c.low, 'Low: '),
@@ -25,7 +26,7 @@ class CandleHoveredDetails extends StatelessWidget {
         } else if (state is ChartPeriodChange) {
           final c = state.candle;
           return Row(
-            mainAxisAlignment: isS(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+            mainAxisAlignment: alignment,
             children: [
               IndicatorItem(c.open, 'Open: '),
               IndicatorItem(c.low, 'Low: '),

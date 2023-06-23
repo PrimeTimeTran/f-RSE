@@ -28,36 +28,16 @@ class CandleChartState extends State<CandleChart> {
     super.initState();
   }
 
-  getWidth(context) {
-    var width = MediaQuery.of(context).size.width;
-    if (isS(context)) {
-      return width;
-    } else if (isM(context)) {
-      return MediaQuery.of(context).size.width * .8;
-    } else {
-      return MediaQuery.of(context).size.width * .9;
-    }
-  }
-
   getHeight(context) {
     var height = MediaQuery.of(context).size.height;
     if (isS(context)) {
       return height * .5;
     } else if (isM(context)) {
-      return height * .35;
-    } else {
-      return height * .4;
+      return height * .425;
+    } else if (isL(context)) {
+      return height * .425;
     }
-  }
-
-  getPadding(context) {
-    if (isS(context)) {
-      return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
-    } else if (isM(context)) {
-      return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
-    } else {
-      return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
-    }
+      return height * .425;
   }
 
   @override
@@ -65,19 +45,16 @@ class CandleChartState extends State<CandleChart> {
     _setupTheme(context);
     return Container(
       // color: Colors.blue,
-      child: Padding(
-        padding: getPadding(context),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildChart(context),
-              if (isS(context)) const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: CandleHoveredDetails(),
-              ),
-              const PeriodSelector(),
-            ],
-          ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            buildChart(context),
+            if (isS(context) || isM(context)) const Padding(
+              padding: EdgeInsets.symmetric(vertical: 4.0),
+              child: CandleHoveredDetails(),
+            ),
+            const PeriodSelector(),
+          ],
         ),
       ),
     );
@@ -85,7 +62,7 @@ class CandleChartState extends State<CandleChart> {
 
   buildChart(context) {
     return SizedBox(
-      width: getWidth(context),
+      width: double.infinity,
       height: getHeight(context),
       child: BlocConsumer<AssetCubit, AssetState>(
         builder: (context, state) {
@@ -109,7 +86,7 @@ class CandleChartState extends State<CandleChart> {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    if (!isS(context)) const Positioned(
+                    if (!isS(context) && !isM(context)) const Positioned(
                         top: -40,
                         left: 0,
                         right: 0,

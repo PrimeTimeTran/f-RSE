@@ -25,9 +25,23 @@ class PeriodSelectorState extends State<PeriodSelector> {
     if (isS(c)) {
       return 1;
     } else if (isM(c)) {
-      return .4;
+      return .5;
+    } else if (isL(c)) {
+      return .5;
+    } else {
+      return .3;
     }
-    return .2;
+  }
+
+  getTextSize(context) {
+    if (isS(context)) {
+      return 10.0;
+    } else if (isM(context)) {
+      return 6.0;
+    } else if (isL(context)) {
+      return 10.0;
+    }
+    return 10.0;
   }
 
   @override
@@ -81,7 +95,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
                                 child: HoverText(
                                   p,
                                   textStyle: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: getTextSize(context),
                                     fontWeight: FontWeight.bold,
                                     color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
                                   ),
