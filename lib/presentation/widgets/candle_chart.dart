@@ -49,85 +49,89 @@ class CandleChartState extends State<CandleChart> {
   }
 
   buildChart(context) {
-    return BlocConsumer<AssetCubit, AssetState>(
-      builder: (context, state) {
-        if (state is AssetLoaded) {
-          final asset = context.watch<AssetCubit>();
-          final series = asset.current;
-          if (previousLow == 0) {
-            setState(() {
-              previousLow = getLowestVal(series);
-              previousHigh = getHighestVal(series);
-            });
-          }
-          if (hoveredCandle?.time == '') {
-            final candle = series[0];
-            // context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
-            hoveredCandle = candle;
-          }
-          return Column(
-            children: [
-              ChartHeader(value: series.last.close, startValue: series.first.open),
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  if (!isSmall(context)) const Positioned(
-                      top: -40,
-                      left: 0,
-                      right: 0,
-                      child: CandleHoveredDetails()
-                  ),
-                  SfCartesianChart(
-                    plotAreaBorderWidth: 0,
-                    zoomPanBehavior: _zoomPanBehavior,
-                    trackballBehavior: _trackballBehavior,
-                    // crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
-                    onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
-                      // setState(() {
-                      //   // showCrosshair = !showCrosshair;
-                      // });
-                    },
-                    primaryYAxis: NumericAxis(
-                      isVisible: false,
-                      numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
-                      minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * .5,
+      child: BlocConsumer<AssetCubit, AssetState>(
+        builder: (context, state) {
+          if (state is AssetLoaded) {
+            final asset = context.watch<AssetCubit>();
+            final series = asset.current;
+            if (previousLow == 0) {
+              setState(() {
+                previousLow = getLowestVal(series);
+                previousHigh = getHighestVal(series);
+              });
+            }
+            if (hoveredCandle?.time == '') {
+              final candle = series[0];
+              // context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
+              hoveredCandle = candle;
+            }
+            return Column(
+              children: [
+                ChartHeader(value: series.last.close, startValue: series.first.open),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    if (!isSmall(context)) const Positioned(
+                        top: -40,
+                        left: 0,
+                        right: 0,
+                        child: CandleHoveredDetails()
                     ),
-                    onTrackballPositionChanging: (TrackballArgs args) {
-                      final xOffSet = args.chartPointInfo.xPosition;
-                      final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                      final CandleStick candle = series[dataPoint!];
-                      context.read<ChartCubit>().setHoveredPoint(candle, xOffSet!);
-                    },
-                    primaryXAxis: CategoryAxis(
-                      isVisible: false,
-                    ),
-                    series: <CandleSeries<CandleStick, String>>[
-                      CandleSeries<CandleStick, String>(
-                        dataSource: series,
-                        lowValueMapper: (CandleStick d, _) => d.low,
-                        highValueMapper: (CandleStick d, _) => d.high,
-                        openValueMapper: (CandleStick d, _) => d.open,
-                        closeValueMapper: (CandleStick d, _) => d.close,
-                        xValueMapper: (CandleStick d, int index) => d.time,
+                    SfCartesianChart(
+                      plotAreaBorderWidth: 0,
+                      zoomPanBehavior: _zoomPanBehavior,
+                      trackballBehavior: _trackballBehavior,
+                      // crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
+                      onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
+                        // setState(() {
+                        //   // showCrosshair = !showCrosshair;
+                        // });
+                      },
+                      primaryYAxis: NumericAxis(
+                        isVisible: false,
+                        numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
+                        minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
                       ),
-                    ],
-                  ),
-                  const TimeLabel(),
-                ],
-              )
-            ],
-          );
-        } else if (state is AssetError) {
-          return const Text('Error:');
-        } else {
-          return PlaceholderCandleStickChart(low: previousLow, high: previousHigh);
-        }
-      },
-      listener: (context, state) {
-      },
-      buildWhen: (previous, current) {
-        return true;
-      },
+                      onTrackballPositionChanging: (TrackballArgs args) {
+                        final xOffSet = args.chartPointInfo.xPosition;
+                        final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                        final CandleStick candle = series[dataPoint!];
+                        context.read<ChartCubit>().setHoveredPoint(candle, xOffSet!);
+                      },
+                      primaryXAxis: CategoryAxis(
+                        isVisible: false,
+                      ),
+                      series: <CandleSeries<CandleStick, String>>[
+                        CandleSeries<CandleStick, String>(
+                          dataSource: series,
+                          lowValueMapper: (CandleStick d, _) => d.low,
+                          highValueMapper: (CandleStick d, _) => d.high,
+                          openValueMapper: (CandleStick d, _) => d.open,
+                          closeValueMapper: (CandleStick d, _) => d.close,
+                          xValueMapper: (CandleStick d, int index) => d.time,
+                        ),
+                      ],
+                    ),
+                    const TimeLabel(),
+                  ],
+                )
+              ],
+            );
+          } else if (state is AssetError) {
+            return const Text('Error:');
+          } else {
+            return PlaceholderCandleStickChart(low: previousLow, high: previousHigh);
+          }
+        },
+        listener: (context, state) {
+        },
+        buildWhen: (previous, current) {
+          return true;
+        },
+      ),
     );
   }
 
