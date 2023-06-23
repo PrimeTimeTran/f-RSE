@@ -22,7 +22,7 @@ class ChartHeader extends StatelessWidget {
         child: BlocBuilder<ChartCubit, ChartState>(
           builder: (c, state) {
             if (state is PickedNewPoint) {
-              print("PickedNewPoint: ${value} ${startValue}");
+              // print("PickedNewPoint: ${value} ${startValue}");
               final focusedValue = state.value;
               final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.watch<ChartCubit>().startValue;
               return ChartHeaderDetails(

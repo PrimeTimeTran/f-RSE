@@ -8,7 +8,7 @@ class AssetOverview extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        color: Colors.red,
+        // color: Colors.red,
         child: Column(
           children: [
             SizedBox(
@@ -18,7 +18,7 @@ class AssetOverview extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white)
+                        // border: Border.all(color: Colors.white)
                       ),
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

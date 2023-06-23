@@ -10,7 +10,7 @@ class IndicatorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final small = isSmall(context);
+    final small = isS(context);
     if (small) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),

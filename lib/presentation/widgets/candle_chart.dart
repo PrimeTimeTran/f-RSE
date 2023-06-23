@@ -28,21 +28,56 @@ class CandleChartState extends State<CandleChart> {
     super.initState();
   }
 
+  getWidth(context) {
+    var width = MediaQuery.of(context).size.width;
+    if (isS(context)) {
+      return width;
+    } else if (isM(context)) {
+      return MediaQuery.of(context).size.width * .8;
+    } else {
+      return MediaQuery.of(context).size.width * .9;
+    }
+  }
+
+  getHeight(context) {
+    var height = MediaQuery.of(context).size.height;
+    if (isS(context)) {
+      return height * .5;
+    } else if (isM(context)) {
+      return height * .35;
+    } else {
+      return height * .4;
+    }
+  }
+
+  getPadding(context) {
+    if (isS(context)) {
+      return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
+    } else if (isM(context)) {
+      return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
+    } else {
+      return const EdgeInsets.symmetric(horizontal: 5, vertical: 5);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _setupTheme(context);
-    return Padding(
-      padding: isWeb && isMed(context) ? const EdgeInsets.symmetric(horizontal: 40, vertical: 10) : const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildChart(context),
-            if (isSmall(context)) const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: CandleHoveredDetails(),
-            ),
-            const PeriodSelector(),
-          ],
+    return Container(
+      // color: Colors.blue,
+      child: Padding(
+        padding: getPadding(context),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildChart(context),
+              if (isS(context)) const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: CandleHoveredDetails(),
+              ),
+              const PeriodSelector(),
+            ],
+          ),
         ),
       ),
     );
@@ -50,8 +85,8 @@ class CandleChartState extends State<CandleChart> {
 
   buildChart(context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * .5,
+      width: getWidth(context),
+      height: getHeight(context),
       child: BlocConsumer<AssetCubit, AssetState>(
         builder: (context, state) {
           if (state is AssetLoaded) {
@@ -65,7 +100,7 @@ class CandleChartState extends State<CandleChart> {
             }
             if (hoveredCandle?.time == '') {
               final candle = series[0];
-              // context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
+              context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
               hoveredCandle = candle;
             }
             return Column(
@@ -74,14 +109,14 @@ class CandleChartState extends State<CandleChart> {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    if (!isSmall(context)) const Positioned(
+                    if (!isS(context)) const Positioned(
                         top: -40,
                         left: 0,
                         right: 0,
                         child: CandleHoveredDetails()
                     ),
                     SfCartesianChart(
-                      plotAreaBorderWidth: 0,
+                      plotAreaBorderWidth: 1,
                       zoomPanBehavior: _zoomPanBehavior,
                       trackballBehavior: _trackballBehavior,
                       // crosshairBehavior: showCrosshair ? _crosshairBehavior : null,

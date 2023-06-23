@@ -92,7 +92,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
               TabBar(
                 labelColor: color,
                 indicatorColor: color,
-                isScrollable: isSmall(context),
+                isScrollable: isS(context),
                 unselectedLabelColor: unselectedColor,
                 tabs: const [
                   Tab(text: 'Investing'),

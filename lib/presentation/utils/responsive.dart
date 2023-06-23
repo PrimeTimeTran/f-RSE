@@ -3,10 +3,14 @@ import 'package:flutter/foundation.dart';
 
 const bool isWeb = kIsWeb;
 
-bool isSmall(BuildContext context) {
-  return MediaQuery.of(context).size.width < 768;
+bool isS(BuildContext context) {
+  return MediaQuery.of(context).size.width <= 391;
 }
 
-bool isMed(BuildContext context) {
-  return MediaQuery.of(context).size.width >= 768;
+bool isM(BuildContext context) {
+  return MediaQuery.of(context).size.width <= 820;
+}
+
+bool isL(BuildContext context) {
+  return MediaQuery.of(context).size.width >= 992;
 }

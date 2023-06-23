@@ -49,9 +49,19 @@ class _AssetScreeState extends State<AssetScreen> {
     );
   }
 
+  getPadding(context) {
+    if (isS(context)) {
+      return const EdgeInsets.symmetric(horizontal: 60);
+    }
+    if (isM(context)) {
+      return const EdgeInsets.symmetric(horizontal: 10);
+    }
+    return const EdgeInsets.symmetric(horizontal: 10);
+  }
+
   Widget buildTwoColumn() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
+      padding: getPadding(context),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,14 +70,17 @@ class _AssetScreeState extends State<AssetScreen> {
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: const SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Column(
-                    children: [
-                      CandleChart(),
-                      AssetOverview(),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    CandleChart(),
+                    AssetOverview(),
+                    AssetOverview(),
+                    AssetOverview(),
+                    AssetOverview(),
+                    AssetOverview(),
+                    AssetOverview(),
+                    AssetOverview(),
+                  ],
                 ),
               ),
             ),
@@ -75,7 +88,7 @@ class _AssetScreeState extends State<AssetScreen> {
           const Expanded(
             flex: 1,
             child: SingleChildScrollView(
-              child: Text('sksisis'),
+              child: Text(''),
             ),
           )
         ],

@@ -24,39 +24,46 @@ class ArticleState extends State<Article> {
     imageUrl = widget.article.urlToImage ?? placeholder;
   }
 
+  getPadding(context) {
+    if (isS(context)) {
+      return 20;
+    } else if (isM(context)) {
+      return 20;
+    }
+    return 50;
+  }
+
   @override
   Widget build(BuildContext context) {
     return HoverDarken(
       child: Padding(
-        padding: isWeb && isMed(context)
-            ? const EdgeInsets.all(50)
-            : const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        child: isWeb && isMed(context)
-            ? Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: _buildArticleContent(context),
-              ),
-            ),
-            const SizedBox(width: 50),
-            Flexible(
-              flex: 1,
-              child: _buildArticleImage(context),
-            ),
-          ],
-        )
-            : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildArticleImage(context),
-            const SizedBox(height: 20),
-            ..._buildArticleContent(context),
-          ],
-        ),
+        padding: EdgeInsets.symmetric(vertical: getPadding(context), horizontal: getPadding(context)),
+          child: isS(context) ?
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildArticleImage(context),
+                  const SizedBox(height: 20),
+                  ..._buildArticleContent(context),
+                ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildArticleContent(context),
+                  ),
+                ),
+                const SizedBox(width: 50),
+                Flexible(
+                  flex: 1,
+                  child: _buildArticleImage(context),
+                ),
+              ],
+            )
       ),
     );
   }
@@ -66,7 +73,7 @@ class ArticleState extends State<Article> {
       Text(
         widget.article.title ?? '',
         style: TextStyle(
-          fontSize: isWeb && isMed(context) ? 18 : 15,
+          fontSize: isWeb && isM(context) ? 18 : 15,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -109,7 +116,7 @@ class ArticleState extends State<Article> {
   Widget _buildArticleImage(BuildContext context) {
     double imageWidth = MediaQuery.of(context).size.width / 3;
 
-    if (isSmall(context)) {
+    if (isS(context)) {
       imageWidth = MediaQuery.of(context).size.width;
     }
 

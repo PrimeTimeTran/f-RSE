@@ -10,10 +10,21 @@ class Articles extends StatelessWidget {
     super.key,
   });
 
+  getWidth(context) {
+    var width = MediaQuery.of(context).size.width;
+    if (isS(context)) {
+      return width;
+    } else if (isM(context)) {
+      return width * .9;
+    } else {
+      return width * .6;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * (isWeb && isMed(context) ? 0.60 : .99),
+      width: getWidth(context),
       child: Column(
         children: [
           const Padding(

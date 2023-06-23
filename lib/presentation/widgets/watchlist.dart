@@ -8,15 +8,31 @@ class Watchlist extends StatelessWidget {
     super.key,
   });
 
+  double getWatchlistWidth(context) {
+    var width = MediaQuery.of(context).size.width;
+    if (width > 767 && width < 825) {
+      return width * .25;
+    }
+    return 400;
+  }
+
+  getMargin(context) {
+    var width = MediaQuery.of(context).size.width;
+    if (width > 767 && width < 825) {
+      return EdgeInsets.fromLTRB(10, 0, 10, 0);
+    }
+    return EdgeInsets.fromLTRB(40, 0, 100, 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
       child: SizedBox(
         height: MediaQuery.of(context).size.height * .84,
-        width: 400,
+        width: getWatchlistWidth(context),
         child: Container(
-          margin: const EdgeInsets.fromLTRB(40, 0, 100, 0),
+          margin: getMargin(context),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(

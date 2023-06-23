@@ -21,22 +21,30 @@ class PeriodSelectorState extends State<PeriodSelector> {
     hoveredPeriod = '';
   }
 
+  getWidth(c) {
+    if (isS(c)) {
+      return 1;
+    } else if (isM(c)) {
+      return .4;
+    }
+    return .2;
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = T(context, 'primary');
     final highlightColor = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
 
-    final width = isMed(context) ? MediaQuery.of(context).size.width * 0.2 : double.infinity;
-
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.only(bottom: 30.0),
         child: SizedBox(
-          width: width,
+          // width: getWidth(context),
+          width: MediaQuery.of(context).size.width * getWidth(context),
           child: Row(
-            mainAxisAlignment: isMed(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
+            mainAxisAlignment: isM(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
             children: periods.map((p) {
               return Flexible(
                 fit: FlexFit.tight,

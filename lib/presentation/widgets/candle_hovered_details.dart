@@ -14,7 +14,7 @@ class CandleHoveredDetails extends StatelessWidget {
         if (state is UpdatedChart) {
           final c = state.candle;
           return Row(
-            mainAxisAlignment: isSmall(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+            mainAxisAlignment: isS(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
             children: [
               IndicatorItem(c.open, 'Open: '),
               IndicatorItem(c.low, 'Low: '),
@@ -25,7 +25,7 @@ class CandleHoveredDetails extends StatelessWidget {
         } else if (state is ChartPeriodChange) {
           final c = state.candle;
           return Row(
-            mainAxisAlignment: isSmall(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+            mainAxisAlignment: isS(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
             children: [
               IndicatorItem(c.open, 'Open: '),
               IndicatorItem(c.low, 'Low: '),
