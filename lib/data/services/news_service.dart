@@ -16,7 +16,6 @@ class NewsService {
         final Map<String, dynamic> data = json.decode(response.body);
         _localStorage.saveData('articles', response.body);
         final List<dynamic> articles = data['results'] as List<dynamic>;
-        debugPrint("Articles from API");
         return articles.map((item) => Article.fromJson(item)).toList();
       } else {
         throw Error();

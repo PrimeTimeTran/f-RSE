@@ -12,6 +12,7 @@ class ChartHeaderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gained = getChangePercent(cursorVal, val) > 0;
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Column(
@@ -39,7 +40,7 @@ class ChartHeaderDetails extends StatelessWidget {
             child: Text(
               '${calculateValueChange(cursorVal, val)} ($gain)',
               style: TextStyle(
-                color: T(context, 'primary'),
+                color: gained ? T(context, 'primary') : Colors.red,
                 fontSize: 14,
               ),
             ),

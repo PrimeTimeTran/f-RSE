@@ -84,9 +84,18 @@ String formatPercent(double value) {
 }
 
 String calculatePercentageChange(double newValue, double oldValue) {
-  double percentageChange = ((newValue - oldValue) / oldValue) * 100;
-  String sign = (percentageChange >= 0) ? '+' : '-';
-  double absoluteChange = percentageChange.abs();
+  double gainLoss = getChangePercent(newValue, oldValue);
+  String formatted = formatPercentage(gainLoss);
+  return formatted;
+}
+
+double getChangePercent(double newValue, double oldValue) {
+  return ((newValue - oldValue) / oldValue) * 100;
+}
+
+String formatPercentage(double gainLoss) {
+  String sign = (gainLoss >= 0) ? '+' : '-';
+  double absoluteChange = gainLoss.abs();
   return '$sign ${absoluteChange.toStringAsFixed(2)} %';
 }
 

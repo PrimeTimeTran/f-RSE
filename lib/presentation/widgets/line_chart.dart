@@ -27,14 +27,15 @@ class LineChartState extends State<LineChart> {
         if (state is PortfolioLoading) {
           return const CircularProgressIndicator();
         } else if (state is PortfolioLoaded) {
-          final data = context.read<PortfolioCubit>().dataPoints;
+          final data = state.portfolio.series;
+          final startValue = state.startValue;
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ChartHeader(value: state.value),
+                  ChartHeader(value: state.value, startValue: startValue),
                   Stack(
                     clipBehavior: Clip.none,
                     children: [

@@ -84,7 +84,7 @@ class CandleChartState extends State<CandleChart> {
                 }
                 return Column(
                   children: [
-                    ChartHeader(value: series.last.close),
+                    ChartHeader(value: series.last.close, startValue: series.first.open),
                     RepaintBoundary(
                       child: SfCartesianChart(
                         plotAreaBorderWidth: 0,

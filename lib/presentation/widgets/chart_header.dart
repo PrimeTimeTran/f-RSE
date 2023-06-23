@@ -7,7 +7,8 @@ import 'package:rse/presentation/all.dart';
 
 class ChartHeader extends StatelessWidget {
   final double value;
-  const ChartHeader({super.key, required this.value});
+  final double startValue;
+  const ChartHeader({super.key, required this.value, required this.startValue});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,8 @@ class ChartHeader extends StatelessWidget {
           builder: (c, state) {
             if (state is UpdatedChart) {
               final cursorVal = state.value;
-              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.read<ChartCubit>().value;
+              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.watch<ChartCubit>().startValue;
               final gain = calculatePercentageChange(cursorVal, val);
-
               final route = GoRouter.of(context).location;
               var title = route == '/' || route == '/spending' ? 'Investing' : route.substring(1);
 
@@ -33,10 +33,10 @@ class ChartHeader extends StatelessWidget {
               );
             } else {
               return ChartHeaderDetails(
-                val: value,
-                gain: 'sksks',
-                title: 'Investing',
+                val: startValue,
                 cursorVal: value,
+                title: 'Investing',
+                gain: calculatePercentageChange(value, startValue),
               );
             }
           }

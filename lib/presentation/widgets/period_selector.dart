@@ -47,8 +47,9 @@ class PeriodSelectorState extends State<PeriodSelector> {
                       final period = assetCubit.period;
                       return GestureDetector(
                         onTap: () {
-                          assetCubit.setPeriod(p);
                           logPeriodSelect(p);
+                          if (period == p) return;
+                          assetCubit.setPeriod(p);
                         },
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,

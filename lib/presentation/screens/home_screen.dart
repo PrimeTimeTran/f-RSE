@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +20,8 @@ class HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    print('HomeScreen build');
+    final p = context.read<PortfolioCubit>();
+    context.read<ChartCubit>().initialChartLoad(p.startValue, p.currentValue);
     return Scaffold(
       body: ResponsiveLayout(
         mobile: buildMobile(context),
