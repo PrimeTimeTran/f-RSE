@@ -25,8 +25,8 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
   @override
   Widget build(BuildContext context) {
     return ResponsiveLayout(
-      mobile: buildMobileLayout(),
-      desktop: buildTabletLayout(context),
+      mobile: _buildTabContainer(context),
+      desktop: _buildTabContainer(context),
     );
   }
 
@@ -73,21 +73,22 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
       ),
     );
   }
-
-  Widget buildMobileLayout() {
-    return buildSingleChildScrollView();
-  }
-
-  Widget buildTabletLayout(context) {
-    return _buildTabContainer(context);
-  }
-
   Widget _buildTabContainer(context) {
     final color = T(context, 'primary');
     final unselectedColor = T(context, 'inversePrimary');
 
+    getTextSize() {
+      if (isS(context)) {
+        return 16.0;
+      } else if (isM(context)) {
+        return 8.0;
+      } else {
+        return 20.0;
+      }
+    }
+
     return DefaultTabController(
-      length: 12,
+      length: 4,
       child: Column(
         children: [
           TabBar(
@@ -95,19 +96,23 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
             indicatorColor: color,
             isScrollable: isS(context),
             unselectedLabelColor: unselectedColor,
+            labelStyle: TextStyle(
+              fontSize: getTextSize(),
+              fontWeight: FontWeight.w600,
+            ),
             tabs: const [
               Tab(text: 'Investing'),
               Tab(text: 'Spending'),
               Tab(text: 'Crypto'),
               Tab(text: 'Transfers'),
-              Tab(text: 'Recurring'),
-              Tab(text: 'Stock Lending'),
-              Tab(text: 'Margin Investing'),
-              Tab(text: 'Reports & Statements'),
-              Tab(text: 'Tax Center'),
-              Tab(text: 'History'),
-              Tab(text: 'Settings'),
-              Tab(text: 'Help'),
+              // Tab(text: 'Recurring'),
+              // Tab(text: 'Stock Lending'),
+              // Tab(text: 'Margin Investing'),
+              // Tab(text: 'Reports & Statements'),
+              // Tab(text: 'Tax Center'),
+              // Tab(text: 'History'),
+              // Tab(text: 'Settings'),
+              // Tab(text: 'Help'),
             ],
           ),
           Expanded(
@@ -118,13 +123,13 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
                 const Text('Crypto'),
                 const Text('Transfers'),
                 const Text('Recurring'),
-                const Text('Stock Lending'),
-                const Text('Margin Investing'),
-                const Text('Reports & Statements'),
-                const Text('Tax Center'),
-                const Text('History'),
-                const Text('Settings'),
-                const Text('Help'),
+                // const Text('Stock Lending'),
+                // const Text('Margin Investing'),
+                // const Text('Reports & Statements'),
+                // const Text('Tax Center'),
+                // const Text('History'),
+                // const Text('Settings'),
+                // const Text('Help'),
               ],
             ),
           ),

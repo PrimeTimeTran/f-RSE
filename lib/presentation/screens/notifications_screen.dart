@@ -54,14 +54,13 @@ class NotificationsScreen extends StatelessWidget {
   }
 
   buildMobile(context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Container(
-          // color: Colors.red,
-          child: allNotifications(context)
-        ),
-      ),
+    return Container(
+      // color: Colors.red,
+      child: Column(
+        children: [
+          allNotifications(context),
+        ],
+      )
     );
   }
 
