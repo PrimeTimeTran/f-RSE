@@ -39,6 +39,7 @@ class App extends StatelessWidget {
             builder: (context, themeModel, _) {
               return GestureDetector(
                 onDoubleTap: () {
+                  event();
                   themeModel.toggleTheme();
                 },
                 child: const Text(

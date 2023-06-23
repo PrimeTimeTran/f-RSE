@@ -1,15 +1,13 @@
+import 'dart:io' show Platform;
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 void event() async {
-  final deviceInfoPlugin = DeviceInfoPlugin();
-  final deviceInfo = await deviceInfoPlugin.deviceInfo;
-  final allInfo = deviceInfo.data;
-
+  String os = Platform.operatingSystem;
   await FirebaseAnalytics.instance.logEvent(
     name: "success_app_load",
     parameters: {
-      "all_info": allInfo,
+      "os": os,
     },
   );
 }
