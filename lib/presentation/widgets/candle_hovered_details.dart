@@ -22,6 +22,17 @@ class CandleHoveredDetails extends StatelessWidget {
               IndicatorItem(c.close, 'Close: '),
             ],
           );
+        } else if (state is ChartPeriodChange) {
+          final c = state.candle;
+          return Row(
+            mainAxisAlignment: isSmall(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+            children: [
+              IndicatorItem(c.open, 'Open: '),
+              IndicatorItem(c.low, 'Low: '),
+              IndicatorItem(c.high, 'High: '),
+              IndicatorItem(c.close, 'Close: '),
+            ],
+          );
         } else {
           return const Text('Error');
         }

@@ -12,30 +12,49 @@ class ChartHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final route = GoRouter.of(context).location;
+    var title = route == '/' || route == '/spending' ? 'Investing' : route.substring(1);
+
     return Align(
       alignment: Alignment.centerLeft,
       child: SizedBox(
         height: 100,
         child: BlocBuilder<ChartCubit, ChartState>(
           builder: (c, state) {
-            if (state is UpdatedChart) {
-              final cursorVal = state.value;
+            if (state is PickedNewPoint) {
+              print("PickedNewPoint: ${value} ${startValue}");
+              final focusedValue = state.value;
               final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.watch<ChartCubit>().startValue;
-              final gain = calculatePercentageChange(cursorVal, val);
-              final route = GoRouter.of(context).location;
-              var title = route == '/' || route == '/spending' ? 'Investing' : route.substring(1);
-
               return ChartHeaderDetails(
                 val: val,
-                gain: gain,
                 title: title,
-                cursorVal: cursorVal,
+                cursorVal: focusedValue,
+                gain: calculatePercentageChange(focusedValue, val),
+              );
+            } else if (state is ChartPeriodChange) {
+              final chart =  c.watch<ChartCubit>();
+              final cursorVal = state.value;
+              final val = state.type == 'candle' ? state.startValue : chart.startValue;
+              return ChartHeaderDetails(
+                val: startValue,
+                title: title,
+                cursorVal: value,
+                gain: calculatePercentageChange(cursorVal, val),
+              );
+            } else if (state is UpdatedChart) {
+              final focusedValue = state.value;
+              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.watch<ChartCubit>().startValue;
+              return ChartHeaderDetails(
+                val: val,
+                title: title,
+                cursorVal: focusedValue,
+                gain: calculatePercentageChange(focusedValue, val),
               );
             } else {
               return ChartHeaderDetails(
                 val: startValue,
-                cursorVal: value,
                 title: 'Investing',
+                cursorVal: value,
                 gain: calculatePercentageChange(value, startValue),
               );
             }

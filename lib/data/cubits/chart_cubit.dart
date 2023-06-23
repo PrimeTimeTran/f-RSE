@@ -30,11 +30,38 @@ class ChartUpdate extends ChartEvent {
   List<Object?> get props => [offset, time, value, candle, type, hoveredValue, startValue];
 }
 
+class PeriodSelected extends ChartEvent {
+  final String time;
+  final String type;
+  final double value;
+  final double offset;
+  final double startValue;
+  final CandleStick candle;
+  final double hoveredValue;
+  PeriodSelected(this.offset, this.time, this.value, this.type, this.candle, this.hoveredValue, this.startValue);
+
+  @override
+  List<Object?> get props => [offset, time, value, candle, type, hoveredValue, startValue];
+}
+
+class PointPicked extends ChartEvent {
+  final String time;
+  final String type;
+  final double value;
+  final double offset;
+  final double startValue;
+  final CandleStick candle;
+  final double hoveredValue;
+  PointPicked(this.offset, this.time, this.value, this.type, this.candle, this.hoveredValue, this.startValue);
+
+  @override
+  List<Object?> get props => [offset, time, value, candle, type, hoveredValue, startValue];
+}
+
 abstract class ChartState extends Equatable {
   @override
   List<Object?> get props => [];
 }
-
 
 class ChartInitial extends ChartState {
   final double startValue;
@@ -58,6 +85,34 @@ class UpdatedChart extends ChartState {
   List<Object?> get props => [offset, time, value, candle, type, startValue];
 }
 
+class ChartPeriodChange extends ChartState {
+  final String time;
+  final String type;
+  final double value;
+  final double offset;
+  final double startValue;
+  final CandleStick candle;
+  final double hoveredValue;
+  ChartPeriodChange(this.offset, this.time, this.value, this.candle, this.type, this.hoveredValue, this.startValue);
+
+  @override
+  List<Object?> get props => [offset, time, value, candle, type, startValue];
+}
+
+class PickedNewPoint extends ChartState {
+  final String time;
+  final String type;
+  final double value;
+  final double offset;
+  final double startValue;
+  final CandleStick candle;
+  final double hoveredValue;
+  PickedNewPoint(this.offset, this.time, this.value, this.candle, this.type, this.hoveredValue, this.startValue);
+
+  @override
+  List<Object?> get props => [offset, time, value, candle, type, startValue];
+}
+
 class ChartCubit extends Bloc<ChartEvent, ChartState> {
   late double value = 0;
   late double xOffSet = 0;
@@ -66,13 +121,26 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
   late String type = 'portfolio';
 
   ChartCubit() : super(ChartInitial(0)) {
+    on<PointPicked>((e, emit) {
+      xOffSet = e.offset;
+      emit(PickedNewPoint(e.offset, e.time, e.value, e.candle, e.type, e.hoveredValue, e.startValue));
+    });
     on<ChartUpdate>((e, emit) {
       xOffSet = e.offset;
       emit(UpdatedChart(e.offset, e.time, e.value, e.candle, e.type, e.hoveredValue, e.startValue));
     });
+    on<PeriodSelected>((e, emit) {
+      xOffSet = e.offset;
+      emit(ChartPeriodChange(e.offset, e.time, e.value, e.candle, e.type, e.hoveredValue, e.startValue));
+    });
     on<ChartInitialized>((e, emit) {
       emit(ChartInitial(e.startValue));
     });
+  }
+
+  void initialChartLoad(start, current) {
+    startValue = start;
+    value = current;
   }
 
   void setHoveredPoint(p, double xOffSet) {
@@ -92,8 +160,36 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
     );
   }
 
-  void initialChartLoad(start, current) {
-    value = current;
-    startValue = start;
+  void pickedPoint(p, double xOffSet) {
+    var candle = p is CandleStick;
+    type = candle ? 'candle' : 'portfolio';
+    value = candle ? p.value : p.y;
+
+    add(PointPicked(
+        xOffSet,
+        candle ? p.time : p.x,
+        candle ? p.value : p.y,
+        type,
+        candle ? p : CandleStick.fact(),
+        hoveredValue,
+        startValue
+      )
+    );
+  }
+
+  void periodChange(p, periodStartValue, periodEndValue) {
+    var isCandle = p is CandleStick;
+    type = isCandle ? 'candle' : 'portfolio';
+    value = isCandle ? p.value : p.y;
+
+    add(PeriodSelected(
+      xOffSet,
+      '',
+      periodEndValue,
+      type,
+      isCandle ? p : CandleStick.fact(),
+      hoveredValue,
+      periodStartValue
+    ));
   }
 }

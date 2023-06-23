@@ -39,11 +39,7 @@ class CandleChartState extends State<CandleChart> {
             buildChart(context),
             if (isSmall(context)) const Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Positioned(
-                left: 0,
-                right: 0,
-                child: CandleHoveredDetails()
-              ),
+              child: CandleHoveredDetails(),
             ),
             const PeriodSelector(),
           ],
@@ -56,7 +52,7 @@ class CandleChartState extends State<CandleChart> {
     return BlocConsumer<AssetCubit, AssetState>(
       builder: (context, state) {
         if (state is AssetLoaded) {
-          final asset = context.read<AssetCubit>();
+          final asset = context.watch<AssetCubit>();
           final series = asset.current;
           if (previousLow == 0) {
             setState(() {
@@ -66,21 +62,21 @@ class CandleChartState extends State<CandleChart> {
           }
           if (hoveredCandle?.time == '') {
             final candle = series[0];
-            context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
+            // context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
             hoveredCandle = candle;
           }
           return Column(
             children: [
-              if (!isSmall(context)) const Positioned(
-                  top: -40,
-                  left: 0,
-                  right: 0,
-                  child: CandleHoveredDetails()
-              ),
               ChartHeader(value: series.last.close, startValue: series.first.open),
               Stack(
                 clipBehavior: Clip.none,
                 children: [
+                  if (!isSmall(context)) const Positioned(
+                      top: -40,
+                      left: 0,
+                      right: 0,
+                      child: CandleHoveredDetails()
+                  ),
                   SfCartesianChart(
                     plotAreaBorderWidth: 0,
                     zoomPanBehavior: _zoomPanBehavior,

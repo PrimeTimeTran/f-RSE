@@ -67,7 +67,7 @@ class LineChartState extends State<LineChart> {
                           final offset = args.chartPointInfo.xPosition;
                           final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
                           final item = data[point!];
-                          context.read<ChartCubit>().setHoveredPoint(item, offset!);
+                          context.read<ChartCubit>().pickedPoint(item, offset!);
                         },
                         series: <LineSeries<DataPoint, DateTime>>[
                           LineSeries<DataPoint, DateTime>(
