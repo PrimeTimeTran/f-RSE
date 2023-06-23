@@ -64,13 +64,13 @@ class _SummaryTableState extends State<SummaryTable> {
   @override
   Widget build(BuildContext context) {
     return DataTable(
+      columnSpacing: 0,
       columns: rowHeaders(),
       showCheckboxColumn: false,
       rows: List<DataRow>.generate(
         num, (int idx) => DataRow(
           cells: rowCells(idx),
           onSelectChanged: (bool? value) {
-            // For hover shadow
             setState(() {
             });
           },
@@ -127,17 +127,11 @@ class _SummaryTableState extends State<SummaryTable> {
       if (columnIndex == sortedColumnIndex) {
         sortAscending = !sortAscending;
         items.sort((a, b) => sortAscending ? a.compareTo(b, field) : b.compareTo(a, field));
-        // items.mapIndexed((idx, e) => {
-        //   e.idx = idx
-        // });
         widget.sortSecurities(items, field);
       } else {
         sortAscending = true;
         sortedColumnIndex = columnIndex;
         items.sort((a, b) => a.compareTo(b, field));
-        // items.mapIndexed((idx, e) => {
-        //   e.idx = idx
-        // });
         widget.sortSecurities(items, field);
       }
     });

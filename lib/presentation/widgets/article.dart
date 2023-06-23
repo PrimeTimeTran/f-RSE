@@ -38,7 +38,7 @@ class ArticleState extends State<Article> {
     return HoverDarken(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: getPadding(context), horizontal: getPadding(context)),
-          child: isS(context) ?
+          child: isS(context) || isM(context) ?
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -114,16 +114,16 @@ class ArticleState extends State<Article> {
   }
 
   Widget _buildArticleImage(BuildContext context) {
-    double imageWidth = MediaQuery.of(context).size.width / 3;
+    double width = MediaQuery.of(context).size.width / 3;
 
-    if (isS(context)) {
-      imageWidth = MediaQuery.of(context).size.width;
+    if (isS(context) || isM(context)) {
+      width = MediaQuery.of(context).size.width;
     }
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        width: imageWidth,
+        width: width,
         height: 200,
         decoration: BoxDecoration(
           image: DecorationImage(

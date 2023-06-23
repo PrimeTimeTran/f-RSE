@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -16,60 +15,37 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  getWidth(context) {
-    var width = MediaQuery.of(context).size.width;
-    if (isS(context)) {
-      return width;
-    } else if (isM(context)) {
-      return width * .3;
-    } else {
-      return width * .2;
-    }
-  }
-
-  getHeight(context) {
-    var height = MediaQuery.of(context).size.height;
-    return height;
-  }
-
   allNotifications(context) {
-    return SizedBox(
-      width: getWidth(context),
-      height: getHeight(context),
+    return Expanded(
+      flex: 2,
       child: Column(
         children: [
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Notifications",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           Expanded(
-            child: Column(
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Notifications",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: Colors.black,
                 ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: Colors.black,
-                      ),
-                    ),
-                    child: ListView.builder(
-                      itemCount: 100,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text("Notifications $index"),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              child: ListView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text("Notifications $index"),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -90,21 +66,8 @@ class NotificationsScreen extends StatelessWidget {
   }
 
   securityNotifications(context) {
-    getWidth(context) {
-      var width = MediaQuery.of(context).size.width;
-      if (isS(context)) {
-        return width;
-      } else if (isM(context)) {
-        return width * .6;
-      } else if (isL(context)) {
-        return width * .6;
-      } else {
-        return width *.5;
-      }
-    }
-    return SizedBox(
-      width: getWidth(context),
-      height: getHeight(context),
+    return Expanded(
+      flex: 5,
       child: Column(
         children: [
           const Align(

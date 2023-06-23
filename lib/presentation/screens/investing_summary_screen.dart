@@ -24,112 +24,111 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    return _buildTabContainer(context);
+    return ResponsiveLayout(
+      mobile: buildMobileLayout(),
+      desktop: buildTabletLayout(context),
+    );
   }
 
   SingleChildScrollView buildSingleChildScrollView() {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
-        child: Center(
-          child: Column(
-            children: [
-              BlocConsumer<PortfolioCubit, PortfolioState>(
-                builder: (context, state) {
-                  if (state is PortfolioLoading) {
-                    return const CircularProgressIndicator();
-                  } else if (state is PortfolioLoaded) {
-                    final p = state.portfolio;
-                    return Column(
-                      children: [
-                        InvestmentGroup(
-                          title: 'Stocks',
-                          current: p.current,
-                          num: p.stocks.length,
-                          securities: p.stocks
-                        ),
-                        InvestmentGroup(
-                          title: 'Cryptos',
-                          current: p.current,
-                          num: p.cryptos.length,
-                          securities: p.cryptos
-                        ),
-                      ],
-                    );
-                  } else if (state is PortfolioError) {
-                    return Text('Error: ${state.errorMessage}');
-                  } else {
-                    return const Text('Unknown state');
-                  }
-                },
-                listener: (context, state) {
-                  // Listener logic goes here if needed
-                },
-                buildWhen: (previous, current) {
-                  return true;
-                },
-              ),
-            ],
+      child: Column(
+        children: [
+          BlocConsumer<PortfolioCubit, PortfolioState>(
+            builder: (context, state) {
+              if (state is PortfolioLoading) {
+                return const CircularProgressIndicator();
+              } else if (state is PortfolioLoaded) {
+                final p = state.portfolio;
+                return Column(
+                  children: [
+                    InvestmentGroup(
+                      title: 'Stocks',
+                      current: p.current,
+                      num: p.stocks.length,
+                      securities: p.stocks
+                    ),
+                    InvestmentGroup(
+                      title: 'Cryptos',
+                      current: p.current,
+                      num: p.cryptos.length,
+                      securities: p.cryptos
+                    ),
+                  ],
+                );
+              } else if (state is PortfolioError) {
+                return Text('Error: ${state.errorMessage}');
+              } else {
+                return const Text('Unknown state');
+              }
+            },
+            listener: (context, state) {
+              // Listener logic goes here if needed
+            },
+            buildWhen: (previous, current) {
+              return true;
+            },
           ),
-        ),
+        ],
       ),
     );
+  }
+
+  Widget buildMobileLayout() {
+    return buildSingleChildScrollView();
+  }
+
+  Widget buildTabletLayout(context) {
+    return _buildTabContainer(context);
   }
 
   Widget _buildTabContainer(context) {
     final color = T(context, 'primary');
     final unselectedColor = T(context, 'inversePrimary');
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: DefaultTabController(
-        length: 12,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              TabBar(
-                labelColor: color,
-                indicatorColor: color,
-                isScrollable: isS(context),
-                unselectedLabelColor: unselectedColor,
-                tabs: const [
-                  Tab(text: 'Investing'),
-                  Tab(text: 'Spending'),
-                  Tab(text: 'Crypto'),
-                  Tab(text: 'Transfers'),
-                  Tab(text: 'Recurring'),
-                  Tab(text: 'Stock Lending'),
-                  Tab(text: 'Margin Investing'),
-                  Tab(text: 'Reports & Statements'),
-                  Tab(text: 'Tax Center'),
-                  Tab(text: 'History'),
-                  Tab(text: 'Settings'),
-                  Tab(text: 'Help'),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    buildSingleChildScrollView(),
-                    const Text('Spending'),
-                    const Text('Crypto'),
-                    const Text('Transfers'),
-                    const Text('Recurring'),
-                    const Text('Stock Lending'),
-                    const Text('Margin Investing'),
-                    const Text('Reports & Statements'),
-                    const Text('Tax Center'),
-                    const Text('History'),
-                    const Text('Settings'),
-                    const Text('Help'),
-                  ],
-                ),
-              ),
+    return DefaultTabController(
+      length: 12,
+      child: Column(
+        children: [
+          TabBar(
+            labelColor: color,
+            indicatorColor: color,
+            isScrollable: isS(context),
+            unselectedLabelColor: unselectedColor,
+            tabs: const [
+              Tab(text: 'Investing'),
+              Tab(text: 'Spending'),
+              Tab(text: 'Crypto'),
+              Tab(text: 'Transfers'),
+              Tab(text: 'Recurring'),
+              Tab(text: 'Stock Lending'),
+              Tab(text: 'Margin Investing'),
+              Tab(text: 'Reports & Statements'),
+              Tab(text: 'Tax Center'),
+              Tab(text: 'History'),
+              Tab(text: 'Settings'),
+              Tab(text: 'Help'),
             ],
           ),
-        ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                buildSingleChildScrollView(),
+                const Text('Spending'),
+                const Text('Crypto'),
+                const Text('Transfers'),
+                const Text('Recurring'),
+                const Text('Stock Lending'),
+                const Text('Margin Investing'),
+                const Text('Reports & Statements'),
+                const Text('Tax Center'),
+                const Text('History'),
+                const Text('Settings'),
+                const Text('Help'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

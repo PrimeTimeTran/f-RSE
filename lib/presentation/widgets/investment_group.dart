@@ -69,32 +69,93 @@ class InvestmentGroupState extends State<InvestmentGroup> {
     });
   }
 
+
+  getWidth() {
+    final width = MediaQuery.of(context).size.width;
+    if (isS(context)) {
+      return width *.4;
+    } else if (isM(context)) {
+      return width *.8;
+    } else if (isL(context)) {
+      return width *.7;
+    }
+    return width *.9;
+  }
+
+  getHeight() {
+    final height = MediaQuery.of(context).size.height;
+    if (isS(context)) {
+      return height *.4;
+    } else if (isM(context)) {
+      return height *.8;
+    } else if (isL(context)) {
+      return height *.7;
+    }
+    return height *.9;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isS(context) || isM(context)) {
+      return Column(
+        children: [
+          Doughnut(
+            field: _sortField,
+            data: sortedSecurities,
+            explodeIdx: explodeIdx,
+            shouldExplode: shouldExplode,
+            activationMode: activationMode,
+            hoveredRowIndex: hoveredRowIdx,
+          ),
+          SummaryTable(
+              num: widget.num,
+              title: widget.title,
+              items: sortedSecurities,
+              sortSecurities: sortSecurities,
+              onCategoryHover: (int idx) {
+                setState(() {
+                  hoveredRowIdx = idx;
+                });
+                handleHover(idx);
+              },
+              onCategoryExit: (int idx) {
+                resetExplosion(idx);
+              }
+          ),
+        ],
+      );
+    }
+
     return Row(
       children: [
-        SummaryTable(
-          num: widget.num,
-          title: widget.title,
-          items: sortedSecurities,
-          sortSecurities: sortSecurities,
-          onCategoryHover: (int idx) {
-            setState(() {
-              hoveredRowIdx = idx;
-            });
-            handleHover(idx);
-          },
-          onCategoryExit: (int idx) {
-            resetExplosion(idx);
-          }
+        Expanded(
+          flex: 3,
+          child: SummaryTable(
+            num: widget.num,
+            title: widget.title,
+            items: sortedSecurities,
+            sortSecurities: sortSecurities,
+            onCategoryHover: (int idx) {
+              setState(() {
+                hoveredRowIdx = idx;
+              });
+              handleHover(idx);
+            },
+            onCategoryExit: (int idx) {
+              resetExplosion(idx);
+            }
+          ),
         ),
-        Doughnut(
-          field: _sortField,
-          data: sortedSecurities,
-          explodeIdx: explodeIdx,
-          shouldExplode: shouldExplode,
-          activationMode: activationMode,
-          hoveredRowIndex: hoveredRowIdx,
+        Expanded(
+          flex: 2,
+          child: Doughnut(
+            field: _sortField,
+            data: sortedSecurities,
+            explodeIdx: explodeIdx,
+            shouldExplode: shouldExplode,
+            activationMode: activationMode,
+            hoveredRowIndex: hoveredRowIdx,
+          ),
         ),
       ],
     );

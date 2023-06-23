@@ -14,3 +14,7 @@ bool isM(BuildContext context) {
 bool isL(BuildContext context) {
   return MediaQuery.of(context).size.width <= 1366;
 }
+
+bool isXL(BuildContext context) {
+  return MediaQuery.of(context).size.width > 1366;
+}
