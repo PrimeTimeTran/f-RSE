@@ -25,7 +25,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
     if (isS(c)) {
       return 1;
     } else if (isM(c)) {
-      return .5;
+      return .7;
     } else if (isL(c)) {
       return .5;
     } else {
@@ -37,7 +37,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
     if (isS(context)) {
       return 10.0;
     } else if (isM(context)) {
-      return 6.0;
+      return 10.0;
     } else if (isL(context)) {
       return 10.0;
     }

@@ -10,14 +10,16 @@ final lightTheme = ThemeData(
   navigationBarTheme: const NavigationBarThemeData(
     indicatorColor: Colors.white,
   ),
-  colorScheme: ColorScheme.light(
+  colorScheme: const ColorScheme.light(
     primary: Colors.green,
     primaryContainer: Colors.lightGreenAccent,
-    secondary: Colors.green.shade900,
+    secondary: Color(0xFF227C9D),
+    tertiary: Color(0xFF30BFBF),
+    onError: Color(0xFFC62828),
     inversePrimary: Colors.black,
     onPrimaryContainer: Colors.white,
-    background: Colors.green,
     outline: Colors.black26,
+    // background: Colors.green,
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.green,
@@ -30,12 +32,14 @@ final darkTheme = ThemeData(
   navigationBarTheme: const NavigationBarThemeData(
     indicatorColor: Colors.green,
   ),
-  colorScheme: ColorScheme.dark(
+  colorScheme: const ColorScheme.dark(
     primary: Colors.green,
-    inversePrimary: Colors.white,
-    background: Colors.grey[900]!,
-    secondary: Colors.lightGreenAccent,
     primaryContainer: Colors.lightGreenAccent,
+    secondary: Color(0xFF227C9D),
+    tertiary: Color(0xFF30BFBF),
+    onError: Color(0xFFC62828),
+    inversePrimary: Colors.white,
+    // background: Colors.green,
   ),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.grey[900]!,
@@ -88,18 +92,12 @@ Color T(BuildContext context, String key) {
       return colorScheme.inversePrimary;
     case 'onPrimaryContainer':
       return colorScheme.onPrimaryContainer;
-    case 'background':
-      return colorScheme.background;
     case 'outline':
       return colorScheme.outline;
-    case 'secondary':
-      return colorScheme.secondary;
-    case 'surface':
-      return colorScheme.surface;
-    case 'inversePrimary':
-      return colorScheme.inversePrimary;
-    case 'onPrimaryContainer':
-      return colorScheme.onPrimaryContainer;
+    case 'tertiary':
+    // case 'background':
+    //   return colorScheme.background;
+      return colorScheme.tertiary;
     default:
       throw Exception('Invalid color key: $key');
   }

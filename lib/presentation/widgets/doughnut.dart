@@ -27,14 +27,12 @@ class Doughnut extends StatefulWidget {
 }
 
 class DoughnutState extends State<Doughnut> {
-  final List<Color> colors = [
-    Colors.grey[900]!,
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<Color> colors = [
+      T(context, 'secondary'),
+    ];
     final String field = widget.data[widget.explodeIdx].totalValue.toString();
-
     return Column(
       children: [
         SizedBox(
@@ -70,12 +68,11 @@ class DoughnutState extends State<Doughnut> {
                 yValueMapper: (models.Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),
                 dataLabelSettings: DataLabelSettings(
                   isVisible: true,
-                  color: T(context, 'inversePrimary'),
+                  color: T(context, 'tertiary'),
                 ),
-
                 pointColorMapper: (models.Investment data, _) {
                   if (widget.hoveredRowIndex != -1 && widget.hoveredRowIndex == data.idx) {
-                    return T(context, 'primary');
+                    return T(context, 'tertiary');
                   }
                   return colors[data.idx % colors.length];
                 },

@@ -79,11 +79,11 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
 
     getTextSize() {
       if (isS(context)) {
-        return 16.0;
+        return 14.0;
       } else if (isM(context)) {
-        return 8.0;
+        return 13.0;
       } else {
-        return 20.0;
+        return 12.0;
       }
     }
 
@@ -122,7 +122,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
                 const Text('Spending'),
                 const Text('Crypto'),
                 const Text('Transfers'),
-                const Text('Recurring'),
+                // const Text('Recurring'),
                 // const Text('Stock Lending'),
                 // const Text('Margin Investing'),
                 // const Text('Reports & Statements'),
