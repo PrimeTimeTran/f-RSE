@@ -43,7 +43,7 @@ class WatchItemState extends State<WatchItem> {
     return HoverDarken(
       child: GestureDetector(
         onTap: () {
-          context.go("/${item.sym}");
+          context.go("/securities/${item.sym}");
         },
         child: Container(
           height: getHeight(context),

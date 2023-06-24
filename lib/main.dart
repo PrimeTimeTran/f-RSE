@@ -67,7 +67,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> fetchData() async {
-
     _newsCubit.fetchArticles();
     _portfolioCubit.fetchPortfolio("1");
     _assetCubit.fetchAsset("1");

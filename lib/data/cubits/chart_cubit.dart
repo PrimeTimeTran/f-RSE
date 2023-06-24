@@ -126,17 +126,4 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
     chart = newChart;
     add(HoveredChart(newChart));
   }
-
-  void assetLoaded(AssetCubit cubit) {
-    var newChart = chart.copyWith(
-      sym: cubit.asset.sym,
-      startValue: cubit.asset.o,
-      latestValue: cubit.asset.value,
-      candle: cubit.asset.current.last,
-      candleSeries: cubit.asset.current,
-    );
-    // print(cubit.asset.o);
-    chart = newChart;
-    add(ChartUpdate(newChart));
-  }
 }

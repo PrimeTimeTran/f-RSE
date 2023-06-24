@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
@@ -61,6 +60,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      body: navigationShell,
       drawer: Drawer(
         child: ListView(
           children: [
@@ -98,7 +98,6 @@ class App extends StatelessWidget {
             },
           )
       ),
-      body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: const [
@@ -114,13 +113,31 @@ class App extends StatelessWidget {
 }
 
 final goRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home',
   // * Passing a navigatorKey causes an issue on hot reload:
   // * https://github.com/flutter/flutter/issues/113757#issuecomment-1518421380
   // * However it's still necessary otherwise the navigator pops back to
   // * root on hot reload
   debugLogDiagnostics: true,
   navigatorKey: _rootNavigatorKey,
+  redirect: (context, state) {
+    String location = state.location;
+
+    print('location: $location');
+    if (location == '/') {
+      var previousValue = context.read<PortfolioCubit>().portfolio.current.totalValue;
+      context.read<ChartCubit>().hoveredLineChart(DataPoint(DateTime.now().toString(), previousValue), 100);
+      return '/';
+    }
+
+    if (location.startsWith('/securities/')) {
+      var bloc = context.read<AssetCubit>();
+      var sym = location.substring(12);
+      bloc.fetchAsset(sym);
+    } else {
+      return state.location;
+    }
+  },
   routes: [
     // Stateful navigation based on:
     // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
@@ -133,15 +150,14 @@ final goRouter = GoRouter(
           navigatorKey: _shellNavigatorAKey,
           routes: [
             GoRoute(
-                path: '/',
+                path: '/home',
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: HomeScreen(label: 'Home'),
                 ),
-                routes:
-                watched.toList().map((e) => GoRoute(
-                  path: e.sym,
-                  builder: (context, state) => AssetScreen(sym: e.sym),
-                )).toList()
+            ),
+            GoRoute(
+              path: '/securities/:sym',
+              builder: (context, state) => const AssetScreen(sym: ''),
             ),
           ],
         ),

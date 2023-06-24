@@ -12,13 +12,14 @@ class AssetScreen extends StatefulWidget {
 }
 
 class _AssetScreeState extends State<AssetScreen> {
-  late AssetCubit _assetCubit;
+  // late AssetCubit _assetCubit;
 
   @override
   void initState() {
     super.initState();
-    _assetCubit = context.read<AssetCubit>();
-    _assetCubit.fetchAsset(widget.sym);
+    // AssetCubit _assetCubit;
+    // _assetCubit = context.read<AssetCubit>();
+    // _assetCubit.fetchAsset(widget.sym);
   }
 
   @override
