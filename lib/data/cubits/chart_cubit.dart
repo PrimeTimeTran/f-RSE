@@ -1,61 +1,37 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:rse/data/all.dart';
 
+@immutable
 abstract class ChartEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
 class ChartInitialized extends ChartEvent {
-  final double startValue;
-  ChartInitialized(this.startValue);
+  final Chart chart;
+  ChartInitialized(this.chart);
 
   @override
-  List<Object?> get props => [startValue];
+  List<Object?> get props => [chart];
 }
 
 class ChartUpdate extends ChartEvent {
-  final String time;
-  final String type;
-  final double value;
-  final double offset;
-  final double startValue;
-  final CandleStick candle;
-  final double hoveredValue;
-  ChartUpdate(this.offset, this.time, this.value, this.type, this.candle, this.hoveredValue, this.startValue);
+  final Chart chart;
+  ChartUpdate(this.chart);
 
   @override
-  List<Object?> get props => [offset, time, value, candle, type, hoveredValue, startValue];
+  List<Object?> get props => [chart];
 }
 
-class PeriodSelected extends ChartEvent {
-  final String time;
-  final String type;
-  final double value;
-  final double offset;
-  final double startValue;
-  final CandleStick candle;
-  final double hoveredValue;
-  PeriodSelected(this.offset, this.time, this.value, this.type, this.candle, this.hoveredValue, this.startValue);
+class HoveredChart extends ChartEvent {
+  final Chart chart;
+  HoveredChart(this.chart);
 
   @override
-  List<Object?> get props => [offset, time, value, candle, type, hoveredValue, startValue];
-}
-
-class PointPicked extends ChartEvent {
-  final String time;
-  final String type;
-  final double value;
-  final double offset;
-  final double startValue;
-  final CandleStick candle;
-  final double hoveredValue;
-  PointPicked(this.offset, this.time, this.value, this.type, this.candle, this.hoveredValue, this.startValue);
-
-  @override
-  List<Object?> get props => [offset, time, value, candle, type, hoveredValue, startValue];
+  List<Object?> get props => [chart];
 }
 
 abstract class ChartState extends Equatable {
@@ -64,132 +40,75 @@ abstract class ChartState extends Equatable {
 }
 
 class ChartInitial extends ChartState {
-  final double startValue;
-  ChartInitial(this.startValue);
+  final Chart chart;
+  ChartInitial(this.chart);
 
   @override
-  List<Object?> get props => [startValue];
+  List<Object?> get props => [chart];
 }
 
 class UpdatedChart extends ChartState {
-  final String time;
-  final String type;
-  final double value;
-  final double offset;
-  final double startValue;
-  final CandleStick candle;
-  final double hoveredValue;
-  UpdatedChart(this.offset, this.time, this.value, this.candle, this.type, this.hoveredValue, this.startValue);
+  final Chart chart;
+  UpdatedChart(this.chart);
 
   @override
-  List<Object?> get props => [offset, time, value, candle, type, startValue];
+  List<Object?> get props => [chart];
 }
 
-class ChartPeriodChange extends ChartState {
-  final String time;
-  final String type;
-  final double value;
-  final double offset;
-  final double startValue;
-  final CandleStick candle;
-  final double hoveredValue;
-  ChartPeriodChange(this.offset, this.time, this.value, this.candle, this.type, this.hoveredValue, this.startValue);
+class HoveringChart extends ChartState {
+  final Chart chart;
+  HoveringChart(this.chart);
 
   @override
-  List<Object?> get props => [offset, time, value, candle, type, startValue];
-}
-
-class PickedNewPoint extends ChartState {
-  final String time;
-  final String type;
-  final double value;
-  final double offset;
-  final double startValue;
-  final CandleStick candle;
-  final double hoveredValue;
-  PickedNewPoint(this.offset, this.time, this.value, this.candle, this.type, this.hoveredValue, this.startValue);
-
-  @override
-  List<Object?> get props => [offset, time, value, candle, type, startValue];
+  List<Object?> get props => [chart];
 }
 
 class ChartCubit extends Bloc<ChartEvent, ChartState> {
-  late double value = 0;
-  late double xOffSet = 0;
-  late double hoveredValue = 0;
-  late double startValue = 100;
-  late String type = 'portfolio';
+  late Chart chart;
 
-  ChartCubit() : super(ChartInitial(0)) {
-    on<PointPicked>((e, emit) {
-      xOffSet = e.offset;
-      emit(PickedNewPoint(e.offset, e.time, e.value, e.candle, e.type, e.hoveredValue, e.startValue));
+  ChartCubit({ required this.chart}) : super(ChartInitial(chart)) {
+    on<HoveredChart>((e, emit) {
+      emit(HoveringChart(e.chart));
     });
     on<ChartUpdate>((e, emit) {
-      xOffSet = e.offset;
-      emit(UpdatedChart(e.offset, e.time, e.value, e.candle, e.type, e.hoveredValue, e.startValue));
-    });
-    on<PeriodSelected>((e, emit) {
-      xOffSet = e.offset;
-      emit(ChartPeriodChange(e.offset, e.time, e.value, e.candle, e.type, e.hoveredValue, e.startValue));
-    });
-    on<ChartInitialized>((e, emit) {
-      emit(ChartInitial(e.startValue));
+      emit(UpdatedChart(e.chart));
     });
   }
 
-  void initialChartLoad(start, current) {
-    startValue = start;
-    value = current;
-  }
-
-  void setHoveredPoint(p, double xOffSet) {
-    var candle = p is CandleStick;
-    type = candle ? 'candle' : 'portfolio';
-    value = candle ? p.value : p.y;
-
-    add(ChartUpdate(
-        xOffSet,
-        candle ? p.time : p.x,
-        candle ? p.value : p.y,
-        type,
-        candle ? p : CandleStick.fact(),
-        hoveredValue,
-        startValue
-      )
+  void chartPortfolio(PortfolioCubit cubit) {
+    final newChart = chart.copyWith(
+      data: cubit.series,
+      startValue: cubit.startValue,
+      latestValue: cubit.currentValue,
     );
+    chart = newChart;
+    add(ChartUpdate(newChart));
   }
 
-  void pickedPoint(p, double xOffSet) {
-    var candle = p is CandleStick;
-    type = candle ? 'candle' : 'portfolio';
-    value = candle ? p.value : p.y;
-
-    add(PointPicked(
-        xOffSet,
-        candle ? p.time : p.x,
-        candle ? p.value : p.y,
-        type,
-        candle ? p : CandleStick.fact(),
-        hoveredValue,
-        startValue
-      )
+  void hoveredChart(DataPoint? p, CandleStick? c, double xOffSet) {
+    var isPoint = p != null;
+    var isCandle = c != null;
+    final newChart = chart.copyWith(
+      xOffSet: xOffSet,
+      time: isPoint ? p.x : c!.time,
     );
+
+    newChart.candle = isCandle ? c : newChart.candle;
+    newChart.focusedPoint = isPoint ? p : DataPoint(c!.time, c!.value);
+
+    chart = newChart;
+    add(HoveredChart(newChart));
   }
 
-  void periodChange(p, periodStartValue, periodEndValue) {
-    var isCandle = p is CandleStick;
-    type = isCandle ? 'candle' : 'portfolio';
-    value = isCandle ? p.value : p.y;
-
-    add(PeriodSelected(
-      xOffSet,
-      '',
-      periodEndValue,
-      type,
-      isCandle ? p : CandleStick.fact(),
-      hoveredValue,
-      periodStartValue
-    ));
+  void assetLoaded(AssetCubit cubit) {
+    var newChart = chart.copyWith(
+      sym: cubit.asset.sym,
+      startValue: cubit.asset.o,
+      latestValue: cubit.asset.value,
+      candle: cubit.asset.current.last,
+      candleSeries: cubit.asset.current,
+    );
+    chart = newChart;
+    add(ChartUpdate(newChart));
   }
 }

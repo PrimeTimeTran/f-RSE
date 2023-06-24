@@ -65,15 +65,9 @@ class PeriodSelectorState extends State<PeriodSelector> {
                   builder: (c, state) {
                     if (state is AssetLoaded) {
                       final assetCubit = BlocProvider.of<AssetCubit>(context);
-                      final current = assetCubit.current;
                       final period = assetCubit.period;
                       return GestureDetector(
                         onTap: () {
-                          context.read<ChartCubit>().periodChange(
-                              current.first,
-                              current.first.open,
-                              current.last.close,
-                          );
                           logPeriodSelect(p);
                           if (period == p) return;
                           assetCubit.setPeriod(p);

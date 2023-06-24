@@ -14,7 +14,7 @@ class CandleChart extends StatefulWidget {
 
 class CandleChartState extends State<CandleChart> {
   bool showCrosshair = true;
-  late double previousLow = 10;
+  late double previousLow = 0;
   late double previousHigh = 0;
   late CandleStick? hoveredCandle;
   late ZoomPanBehavior _zoomPanBehavior;
@@ -42,19 +42,16 @@ class CandleChartState extends State<CandleChart> {
   @override
   Widget build(BuildContext context) {
     _setupTheme(context);
-    return Container(
-      // color: Colors.blue,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildChart(context),
-            if (isS(context) || isM(context)) const Padding(
-              padding: EdgeInsets.symmetric(vertical: 4.0),
-              child: CandleHoveredDetails(),
-            ),
-            const PeriodSelector(),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          buildChart(context),
+          if (isS(context) || isM(context)) const Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: CandleHoveredDetails(),
+          ),
+          const PeriodSelector(),
+        ],
       ),
     );
   }
@@ -63,86 +60,84 @@ class CandleChartState extends State<CandleChart> {
     return SizedBox(
       width: double.infinity,
       height: getHeight(context),
-      child: BlocConsumer<AssetCubit, AssetState>(
+      child: BlocBuilder<AssetCubit, AssetState>(
         builder: (context, state) {
           if (state is AssetLoaded) {
             final asset = context.watch<AssetCubit>();
-            final series = asset.current;
-            if (previousLow == 0) {
-              setState(() {
-                previousLow = getLowestVal(series);
-                previousHigh = getHighestVal(series);
-              });
-            }
-            if (hoveredCandle?.time == '') {
-              final candle = series[0];
-              context.read<ChartCubit>().setHoveredPoint(candle, double.infinity);
-              hoveredCandle = candle;
-            }
-            return Column(
-              children: [
-                ChartHeader(value: series.last.close, startValue: series.first.open),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    if (!isS(context) && !isM(context)) const Positioned(
-                        top: -40,
-                        left: 0,
-                        right: 0,
-                        child: CandleHoveredDetails()
-                    ),
-                    SfCartesianChart(
-                      plotAreaBorderWidth: 1,
-                      zoomPanBehavior: _zoomPanBehavior,
-                      trackballBehavior: _trackballBehavior,
-                      // crosshairBehavior: showCrosshair ? _crosshairBehavior : null,
-                      onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
-                        // setState(() {
-                        //   // showCrosshair = !showCrosshair;
-                        // });
-                      },
-                      primaryYAxis: NumericAxis(
-                        isVisible: false,
-                        numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
-                        minimum: (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble(),
-                      ),
-                      onTrackballPositionChanging: (TrackballArgs args) {
-                        final xOffSet = args.chartPointInfo.xPosition;
-                        final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                        final CandleStick candle = series[dataPoint!];
-                        context.read<ChartCubit>().setHoveredPoint(candle, xOffSet!);
-                      },
-                      primaryXAxis: CategoryAxis(
-                        isVisible: false,
-                      ),
-                      series: <CandleSeries<CandleStick, String>>[
-                        CandleSeries<CandleStick, String>(
-                          dataSource: series,
-                          lowValueMapper: (CandleStick d, _) => d.low,
-                          highValueMapper: (CandleStick d, _) => d.high,
-                          openValueMapper: (CandleStick d, _) => d.open,
-                          closeValueMapper: (CandleStick d, _) => d.close,
-                          xValueMapper: (CandleStick d, int index) => d.time,
-                        ),
-                      ],
-                    ),
-                    const TimeLabel(),
-                  ],
-                )
-              ],
-            );
-          } else if (state is AssetError) {
-            return const Text('Error:');
+            context.read<ChartCubit>().assetLoaded(asset);
+            return chart();
           } else {
             return PlaceholderCandleStickChart(low: previousLow, high: previousHigh);
           }
-        },
-        listener: (context, state) {
-        },
-        buildWhen: (previous, current) {
-          return true;
-        },
+        }
       ),
+    );
+  }
+
+  chart() {
+    return BlocBuilder<ChartCubit, ChartState>(
+        builder: (context, state) {
+          if (state is UpdatedChart) {
+            final series = state.chart.candleSeries;
+            return loadedChart(series);
+          } else if (state is HoveringChart) {
+            final series = state.chart.candleSeries;
+            return loadedChart(series);
+          } else {
+            return Text('Chart State: $state');
+          }
+        }
+    );
+  }
+
+  loadedChart(List<CandleStick> series) {
+    return Column(
+      children: [
+        const ChartHeader(),
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            if (!isS(context) && !isM(context)) const Positioned(
+                top: -40,
+                left: 0,
+                right: 0,
+                child: CandleHoveredDetails()
+            ),
+            SfCartesianChart(
+              plotAreaBorderWidth: 1,
+              zoomPanBehavior: _zoomPanBehavior,
+              trackballBehavior: _trackballBehavior,
+              onChartTouchInteractionDown: (ChartTouchInteractionArgs args) {
+              },
+              primaryYAxis: NumericAxis(
+                isVisible: false,
+                numberFormat: NumberFormat.simpleCurrency(locale: 'en_US', decimalDigits: 0),
+                minimum: series.length > 0 ? (series.reduce((value, element) => value.low < element.low ? value : element).low - 1).roundToDouble() : 0,
+              ),
+              onTrackballPositionChanging: (TrackballArgs args) {
+                final xOffSet = args.chartPointInfo.xPosition;
+                final dataPoint = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                final CandleStick candle = series[dataPoint!];
+                context.read<ChartCubit>().hoveredChart(null, candle, xOffSet!);
+              },
+              primaryXAxis: CategoryAxis(
+                isVisible: false,
+              ),
+              series: <CandleSeries<CandleStick, String>>[
+                CandleSeries<CandleStick, String>(
+                  dataSource: series,
+                  lowValueMapper: (CandleStick d, _) => d.low,
+                  highValueMapper: (CandleStick d, _) => d.high,
+                  openValueMapper: (CandleStick d, _) => d.open,
+                  closeValueMapper: (CandleStick d, _) => d.close,
+                  xValueMapper: (CandleStick d, int index) => d.time,
+                ),
+              ],
+            ),
+            const TimeLabel(),
+          ],
+        )
+      ],
     );
   }
 
@@ -156,8 +151,8 @@ class CandleChartState extends State<CandleChart> {
     _trackballBehavior = TrackballBehavior(
       enable: true,
       lineWidth: 1,
-      shouldAlwaysShow: true,
       lineColor: color,
+      shouldAlwaysShow: true,
       lineType: TrackballLineType.vertical,
       activationMode: ActivationMode.singleTap,
       tooltipSettings: const InteractiveTooltip(

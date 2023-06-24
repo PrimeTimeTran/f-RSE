@@ -29,5 +29,4 @@ List<Watch> watched = [
   Watch(sym: 'NFLX', shares: 450, price: 440.70, change: 0.00, changePercent: 0.00),
   Watch(sym: 'ADBE', shares: 350, price: 140.62, change: 0.00, changePercent: 0.00),
   Watch(sym: 'ORCL', shares: 2000, price: 440.93, change: 0.00, changePercent: 0.00),
-
 ];

@@ -59,13 +59,13 @@ class PortfolioError extends PortfolioState {
 }
 
 class PortfolioCubit extends Bloc<PortfolioEvent, PortfolioState> {
+  late Portfolio portfolio;
+  List<DataPoint> series = [];
   late double startValue = 100;
   late double currentValue = 300;
-  List<DataPoint> dataPoints = [];
-  CandleStick candle = CandleStick.fact();
   final PortfolioService portfolioService = PortfolioService();
 
-  PortfolioCubit() : super(PortfolioInitial()) {
+  PortfolioCubit({ required this.portfolio }) : super(PortfolioInitial()) {
     on<LoadedPortfolio>((e, emit) async {
       emit(PortfolioLoaded(e.portfolio, e.value, e.startValue));
     });
@@ -74,11 +74,11 @@ class PortfolioCubit extends Bloc<PortfolioEvent, PortfolioState> {
   Future<void> fetchPortfolio(String id) async {
     emit(PortfolioLoading());
     try {
-      final p = await portfolioService.fetchPortfolio(id);
-      dataPoints = p.series;
-      startValue = dataPoints.last.y;
-      currentValue = dataPoints.first.y;
-      p?.log();
+      final Portfolio p = await portfolioService.fetchPortfolio(id);
+      portfolio = p;
+      series = p.series;
+      startValue = series.last.y;
+      currentValue = series.first.y;
       add(LoadedPortfolio(p, p.current.totalValue, startValue));
     } catch (e) {
       emit(PortfolioError('fetching portfolio'));
@@ -87,7 +87,7 @@ class PortfolioCubit extends Bloc<PortfolioEvent, PortfolioState> {
 
   List<DataPoint> getDataPoints(List<CandleStick> list) {
     return list
-        .map((time) => DataPoint(time.time, 0))
-        .toList();
+      .map((time) => DataPoint(time.time, 0))
+      .toList();
   }
 }

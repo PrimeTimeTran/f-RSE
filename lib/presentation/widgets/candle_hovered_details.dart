@@ -8,35 +8,30 @@ class CandleHoveredDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var alignment = isS(context) || isM(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center;
+
     return BlocBuilder<ChartCubit, ChartState>(
       builder: (context, state) {
         if (state is UpdatedChart) {
-          final c = state.candle;
-          return Row(
-            mainAxisAlignment: alignment,
-            children: [
-              IndicatorItem(c.open, 'Open: '),
-              IndicatorItem(c.low, 'Low: '),
-              IndicatorItem(c.high, 'High: '),
-              IndicatorItem(c.close, 'Close: '),
-            ],
-          );
-        } else if (state is ChartPeriodChange) {
-          final c = state.candle;
-          return Row(
-            mainAxisAlignment: alignment,
-            children: [
-              IndicatorItem(c.open, 'Open: '),
-              IndicatorItem(c.low, 'Low: '),
-              IndicatorItem(c.high, 'High: '),
-              IndicatorItem(c.close, 'Close: '),
-            ],
-          );
+          return buildCandleItem(context, state.chart.candle);
+        } else if (state is HoveringChart) {
+          return buildCandleItem(context, state.chart.candle);
         } else {
           return const Text('Error');
         }
       }
+    );
+  }
+
+  buildCandleItem(context, c) {
+    final alignment = isS(context) || isM(context) ? MainAxisAlignment.spaceAround : MainAxisAlignment.center;
+    return Row(
+      mainAxisAlignment: alignment,
+      children: [
+        IndicatorItem(c.open, 'Open: '),
+        IndicatorItem(c.low, 'Low: '),
+        IndicatorItem(c.high, 'High: '),
+        IndicatorItem(c.close, 'Close: '),
+      ],
     );
   }
 }

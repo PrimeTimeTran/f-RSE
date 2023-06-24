@@ -14,7 +14,6 @@ class LineChart extends StatefulWidget {
 class LineChartState extends State<LineChart> {
   double? tappedXPosition;
   double? draggedXPosition;
-  late List<DataPoint> data;
   late TrackballBehavior _trackballBehavior;
 
   @override
@@ -26,68 +25,83 @@ class LineChartState extends State<LineChart> {
         if (state is PortfolioLoading) {
           return const CircularProgressIndicator();
         } else if (state is PortfolioLoaded) {
-          final data = state.portfolio.series;
-          final startValue = state.startValue;
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ChartHeader(value: state.value, startValue: startValue),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    SfCartesianChart(
-                      plotAreaBorderWidth: 0,
-                      trackballBehavior: _trackballBehavior,
-                      primaryYAxis: NumericAxis(
-                          isVisible: false,
-                          majorGridLines: const MajorGridLines(
-                            width: 2,
-                            dashArray: <double>[4, 3],
-                          ),
-                          plotBands: [
-                            PlotBand(
-                              opacity: 0.5,
-                              borderWidth: 1,
-                              end: data.last.y,
-                              start: data.last.y,
-                              dashArray: const [4, 3],
-                              borderColor: T(context, 'inversePrimary'),
-                            )
-                          ]
-                      ),
-                      primaryXAxis: DateTimeAxis(
-                        isVisible: false,
-                        majorGridLines: const MajorGridLines(width: 0),
-                      ),
-                      onTrackballPositionChanging: (TrackballArgs args) {
-                        final offset = args.chartPointInfo.xPosition;
-                        final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                        final item = data[point!];
-                        context.read<ChartCubit>().pickedPoint(item, offset!);
-                      },
-                      series: <LineSeries<DataPoint, DateTime>>[
-                        LineSeries<DataPoint, DateTime>(
-                          color: Colors.green,
-                          dataSource: data.take(50).toList(),
-                          yValueMapper: (DataPoint d, _) => d.y,
-                          xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
-                        ),
-                      ],
-                    ),
-                    const TimeLabel(),
-                  ],
-                ),
-                const PeriodSelector()
-              ],
-            ),
-          );
-        } else if (state is PortfolioError) {
-          return Text('Error: ${state.errorMessage}');
+          final bloc = context.read<PortfolioCubit>();
+          context.read<ChartCubit>().chartPortfolio(bloc);
+          return loadedChart();
         } else {
-          return const Text('Unknown state');
+          return const SizedBox();
         }
       },
+    );
+  }
+
+  loadedChart() {
+    return BlocBuilder<ChartCubit, ChartState>(
+      builder: (context, state) {
+        if (state is UpdatedChart) {
+          return chart(state.chart.data);
+        } else if (state is HoveringChart) {
+          return chart(state.chart.data);
+        }
+        return const SizedBox();
+      }
+    );
+  }
+
+  chart(data) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const ChartHeader(),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              SfCartesianChart(
+                plotAreaBorderWidth: 0,
+                trackballBehavior: _trackballBehavior,
+                primaryYAxis: NumericAxis(
+                    isVisible: false,
+                    majorGridLines: const MajorGridLines(
+                      width: 2,
+                      dashArray: <double>[4, 3],
+                    ),
+                    plotBands: [
+                      PlotBand(
+                        opacity: 0.5,
+                        borderWidth: 1,
+                        end: data.last.y,
+                        start: data.last.y,
+                        dashArray: const [4, 3],
+                        borderColor: T(context, 'inversePrimary'),
+                      )
+                    ]
+                ),
+                primaryXAxis: DateTimeAxis(
+                  isVisible: false,
+                  majorGridLines: const MajorGridLines(width: 0),
+                ),
+                onTrackballPositionChanging: (TrackballArgs args) {
+                  final offset = args.chartPointInfo.xPosition;
+                  final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                  final item = data[point!];
+                  context.read<ChartCubit>().hoveredChart(item, null, offset!);
+                },
+                series: <LineSeries<DataPoint, DateTime>>[
+                  LineSeries<DataPoint, DateTime>(
+                    color: Colors.green,
+                    dataSource: data.take(50).toList(),
+                    yValueMapper: (DataPoint d, _) => d.y,
+                    xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                  ),
+                ],
+              ),
+              const TimeLabel(),
+            ],
+          ),
+          const PeriodSelector()
+        ],
+      ),
     );
   }
 
@@ -102,7 +116,6 @@ class LineChartState extends State<LineChart> {
       lineType: TrackballLineType.vertical,
       tooltipAlignment: ChartAlignment.near,
       activationMode: ActivationMode.singleTap,
-      tooltipSettings: const InteractiveTooltip(enable: false),
     );
   }
 }

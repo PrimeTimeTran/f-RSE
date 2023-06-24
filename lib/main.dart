@@ -17,22 +17,24 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final chart = Chart();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeModel(),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<PortfolioCubit>(
+            create: (_) => PortfolioCubit(portfolio: Portfolio.defaultPortfolio()),
+          ),
           BlocProvider<NewsCubit>(
             create: (_) => NewsCubit(),
-          ),
-          BlocProvider<PortfolioCubit>(
-            create: (_) => PortfolioCubit(),
           ),
           BlocProvider<AssetCubit>(
             create: (_) => AssetCubit(),
           ),
           BlocProvider<ChartCubit>(
-            create: (_) => ChartCubit(),
+            create: (_) => ChartCubit(chart: chart),
           ),
         ],
         child: const MyApp(),
@@ -65,6 +67,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> fetchData() async {
+
     _newsCubit.fetchArticles();
     _portfolioCubit.fetchPortfolio("1");
     _assetCubit.fetchAsset("1");

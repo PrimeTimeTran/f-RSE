@@ -67,7 +67,7 @@ class _AssetScreeState extends State<AssetScreen> {
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black)
               ),
-              child: Column(
+              child: const Column(
                   children: [
                     Text('soso'),
                   ]

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/all.dart';
 
@@ -17,11 +16,11 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
   }
   @override
   Widget build(BuildContext context) {
-    final p = context.read<PortfolioCubit>();
-    context.read<ChartCubit>().initialChartLoad(p.startValue, p.currentValue);
+
     return Scaffold(
       body: ResponsiveLayout(
         mobile: buildMobile(context),

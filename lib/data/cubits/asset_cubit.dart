@@ -8,15 +8,6 @@ abstract class AssetEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class FetchAsset extends AssetEvent {
-  final String id;
-
-  FetchAsset(this.id);
-
-  @override
-  List<Object?> get props => [id];
-}
-
 abstract class AssetState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -45,9 +36,9 @@ class AssetError extends AssetState {
 }
 
 class AssetCubit extends Cubit<AssetState> {
+  String sym = 'GOOGL';
   String period = 'live';
-  List<CandleStick> current = [];
-  Asset asset = Asset.defaultAsset();
+  late Asset asset = Asset.defaultAsset();
   final AssetService assetService = AssetService();
 
   AssetCubit() : super(AssetInitial());
@@ -55,7 +46,6 @@ class AssetCubit extends Cubit<AssetState> {
   Future<void> fetchAsset(String id) async {
     try {
       asset = await assetService.fetchAsset(id, period);
-      current = asset.current;
       emit(AssetLoaded(asset));
     } catch (e) {
       emit(AssetError('Error fetching asset'));
@@ -64,6 +54,6 @@ class AssetCubit extends Cubit<AssetState> {
 
   void setPeriod(String p) async {
     period = p;
-    await fetchAsset(asset.sym);
+    await fetchAsset(sym);
   }
 }

@@ -5,9 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rse/all.dart';
 
 class ChartHeader extends StatelessWidget {
-  final double value;
-  final double startValue;
-  const ChartHeader({super.key, required this.value, required this.startValue});
+  const ChartHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -18,48 +16,34 @@ class ChartHeader extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: SizedBox(
         height: 100,
-        child: BlocBuilder<ChartCubit, ChartState>(
-          builder: (c, state) {
-            if (state is PickedNewPoint) {
-              // print("PickedNewPoint: ${value} ${startValue}");
-              final focusedValue = state.value;
-              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.watch<ChartCubit>().startValue;
+        child: BlocConsumer<ChartCubit, ChartState>(
+          builder: (context, state) {
+            if (state is HoveringChart) {
+              final focusedValue = state.chart.focusedPoint.y;
+              final val = state.chart.startValue;
               return ChartHeaderDetails(
                 val: val,
-                title: title,
+                title: 'Investing',
                 cursorVal: focusedValue,
                 gain: calculatePercentageChange(focusedValue, val),
-              );
-            } else if (state is ChartPeriodChange) {
-              final chart =  c.watch<ChartCubit>();
-              final cursorVal = state.value;
-              final val = state.type == 'candle' ? state.startValue : chart.startValue;
-              return ChartHeaderDetails(
-                val: startValue,
-                title: title,
-                cursorVal: value,
-                gain: calculatePercentageChange(cursorVal, val),
               );
             } else if (state is UpdatedChart) {
-              final focusedValue = state.value;
-              final val = state.type == 'candle' ? c.read<AssetCubit>().asset.o : c.watch<ChartCubit>().startValue;
+              final hoveredValue = state.chart.latestValue;
+              final val = state.chart.startValue;
               return ChartHeaderDetails(
                 val: val,
-                title: title,
-                cursorVal: focusedValue,
-                gain: calculatePercentageChange(focusedValue, val),
+                title: state.chart.sym,
+                cursorVal: hoveredValue,
+                gain: calculatePercentageChange(hoveredValue, val),
               );
             } else {
-              return ChartHeaderDetails(
-                val: startValue,
-                title: 'Investing',
-                cursorVal: value,
-                gain: calculatePercentageChange(value, startValue),
-              );
+              return const SizedBox();
             }
-          }
+          },
+          listener: (context, state) {},
         ),
       ),
     );
   }
 }
+
