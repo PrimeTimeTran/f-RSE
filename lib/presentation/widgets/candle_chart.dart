@@ -29,8 +29,7 @@ class CandleChartState extends State<CandleChart> {
     return BlocBuilder<AssetCubit, AssetState>(
       builder: (context, state) {
         if (state is AssetLoaded) {
-          final data = state.asset.current;
-          return buildChartBody(data);
+          return buildChartBody(state.asset.current);
         } else {
           return const Text('Error:');
         }
@@ -38,9 +37,6 @@ class CandleChartState extends State<CandleChart> {
     );
   }
 
-  // Could have been written more beautifully but for some
-  // reason when we wrap a bloc inside of a bloc the vertical line breaks and doesn't show up anymore.
-  // https://github.com/PrimeTimeTran/f-RSE/blob/49020c6f87373d7e36bb382864843473766e271c/lib/presentation/widgets/candle_chart.dart#L59-L142
   buildChartBody(List<CandleStick> data) {
     return Column(
       children: [
@@ -121,16 +117,5 @@ class CandleChartState extends State<CandleChart> {
       activationMode: ActivationMode.singleTap,
       tooltipSettings: const InteractiveTooltip(enable: false),
     );
-  }
-  getHeight(context) {
-    var height = MediaQuery.of(context).size.height;
-    if (isS(context)) {
-      return height * .5;
-    } else if (isM(context)) {
-      return height * .425;
-    } else if (isL(context)) {
-      return height * .425;
-    }
-    return height * .425;
   }
 }

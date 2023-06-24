@@ -134,6 +134,7 @@ final goRouter = GoRouter(
       var bloc = context.read<AssetCubit>();
       var sym = location.substring(12);
       bloc.fetchAsset(sym);
+      context.read<ChartCubit>().hoveredChart(bloc.asset.current.first, 100);
     } else {
       return state.location;
     }
