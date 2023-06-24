@@ -95,8 +95,8 @@ Color T(BuildContext context, String key) {
     case 'outline':
       return colorScheme.outline;
     case 'tertiary':
-    // case 'background':
-    //   return colorScheme.background;
+    case 'background':
+      return colorScheme.background;
       return colorScheme.tertiary;
     default:
       throw Exception('Invalid color key: $key');

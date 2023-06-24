@@ -14,6 +14,8 @@ final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class App extends StatelessWidget {
   const App({
     Key? key,
@@ -34,11 +36,8 @@ class App extends StatelessWidget {
   }
 
   void _showModal(BuildContext context) {
-    // get screen width
     double width = MediaQuery.of(context).size.width;
-    // get screen height
     double height = MediaQuery.of(context).size.height;
-    // String os = Platform.operatingSystem;
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -52,6 +51,7 @@ class App extends StatelessWidget {
       },
     );
   }
+
   void _handleLongPress (LongPressStartDetails details, context) {
     event();
     _showModal(context);
@@ -60,6 +60,26 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('Drawer Item 1'),
+              onTap: () {
+                // Handle drawer item 1 tap
+              },
+            ),
+            ListTile(
+              title: Text('Drawer Item 2'),
+              onTap: () {
+                // Handle drawer item 2 tap
+              },
+            ),
+            // Add more drawer items as needed
+          ],
+        ),
+      ),
       appBar: AppBar(
           title: Consumer<ThemeModel> (
             builder: (context, themeModel, _) {
@@ -94,7 +114,7 @@ class App extends StatelessWidget {
 }
 
 final goRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/spending',
   // * Passing a navigatorKey causes an issue on hot reload:
   // * https://github.com/flutter/flutter/issues/113757#issuecomment-1518421380
   // * However it's still necessary otherwise the navigator pops back to

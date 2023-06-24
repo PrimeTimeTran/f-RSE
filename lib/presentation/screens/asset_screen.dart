@@ -38,12 +38,6 @@ class _AssetScreeState extends State<AssetScreen> {
         children: [
           CandleChart(),
           AssetOverview(),
-          AssetOverview(),
-          AssetOverview(),
-          AssetOverview(),
-          AssetOverview(),
-          AssetOverview(),
-          AssetOverview(),
         ],
       ),
     );
@@ -62,12 +56,6 @@ class _AssetScreeState extends State<AssetScreen> {
                 children: [
                   CandleChart(),
                   AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
-                  AssetOverview(),
                 ],
               ),
             ),
@@ -80,12 +68,10 @@ class _AssetScreeState extends State<AssetScreen> {
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black)
               ),
-              child: Expanded(
-                child: Column(
-                    children: [
-                      Text('soso'),
-                    ]
-                ),
+              child: Column(
+                  children: [
+                    Text('soso'),
+                  ]
               ),
             ),
           ),
