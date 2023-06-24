@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:rse/all.dart';
 
 class ChartHeaderDetails extends StatelessWidget {
-  final double val;
+  final double startValue;
   final String gain;
   final String title;
   final double cursorVal;
 
-  const ChartHeaderDetails({super.key, required this.val, required this.gain, required this.title, required this.cursorVal});
+  const ChartHeaderDetails({
+    super.key,
+    required this.gain,
+    required this.title,
+    required this.cursorVal,
+    required this.startValue,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final gained = getChangePercent(cursorVal, val) > 0;
+    final gained = getChangePercent(cursorVal, startValue) > 0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,7 +42,7 @@ class ChartHeaderDetails extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            '${calculateValueChange(cursorVal, val)} ($gain)',
+            '${calculateValueChange(cursorVal, startValue)} ($gain)',
             style: TextStyle(
               color: gained ? T(context, 'primary') : Colors.red,
               fontSize: 14,

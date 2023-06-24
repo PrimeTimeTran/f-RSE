@@ -12,8 +12,7 @@ class LineChart extends StatefulWidget {
 }
 
 class LineChartState extends State<LineChart> {
-  double? tappedXPosition;
-  double? draggedXPosition;
+  late List<DataPoint> data;
   late TrackballBehavior _trackballBehavior;
 
   @override
@@ -25,30 +24,20 @@ class LineChartState extends State<LineChart> {
         if (state is PortfolioLoading) {
           return const CircularProgressIndicator();
         } else if (state is PortfolioLoaded) {
-          final bloc = context.read<PortfolioCubit>();
-          context.read<ChartCubit>().chartPortfolio(bloc);
-          return loadedChart();
+          context.read<ChartCubit>().chartPortfolio(state.portfolio);
+          final data = state.portfolio.series;
+          return makeChart(data);
+        } else if (state is PortfolioError) {
+          return Text('Error: ${state.errorMessage}');
         } else {
-          return const SizedBox();
+          return const Text('Unknown state');
         }
       },
     );
   }
 
-  loadedChart() {
-    return BlocBuilder<ChartCubit, ChartState>(
-      builder: (context, state) {
-        if (state is UpdatedChart) {
-          return chart(state.chart.data);
-        } else if (state is HoveringChart) {
-          return chart(state.chart.data);
-        }
-        return const SizedBox();
-      }
-    );
-  }
 
-  chart(data) {
+  makeChart(data) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,8 +73,10 @@ class LineChartState extends State<LineChart> {
                 onTrackballPositionChanging: (TrackballArgs args) {
                   final offset = args.chartPointInfo.xPosition;
                   final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                  final item = data[point!];
-                  context.read<ChartCubit>().hoveredChart(item, null, offset!);
+                  if (offset != null && point != null && data[point] != null) {
+                    final item = data[point!];
+                    context.read<ChartCubit>().hoveredLineChart(item, offset!);
+                  }
                 },
                 series: <LineSeries<DataPoint, DateTime>>[
                   LineSeries<DataPoint, DateTime>(
@@ -116,6 +107,7 @@ class LineChartState extends State<LineChart> {
       lineType: TrackballLineType.vertical,
       tooltipAlignment: ChartAlignment.near,
       activationMode: ActivationMode.singleTap,
+      tooltipSettings: const InteractiveTooltip(enable: false),
     );
   }
 }

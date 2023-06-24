@@ -34,6 +34,14 @@ class HoveredChart extends ChartEvent {
   List<Object?> get props => [chart];
 }
 
+class HoveredLineChart extends ChartEvent {
+  final Chart chart;
+  HoveredLineChart(this.chart);
+
+  @override
+  List<Object?> get props => [chart];
+}
+
 abstract class ChartState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -63,6 +71,14 @@ class HoveringChart extends ChartState {
   List<Object?> get props => [chart];
 }
 
+class HoveringLineChart extends ChartState {
+  final Chart chart;
+  HoveringLineChart(this.chart);
+
+  @override
+  List<Object?> get props => [chart];
+}
+
 class ChartCubit extends Bloc<ChartEvent, ChartState> {
   late Chart chart;
 
@@ -70,24 +86,39 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
     on<HoveredChart>((e, emit) {
       emit(HoveringChart(e.chart));
     });
+    on<HoveredLineChart>((e, emit) {
+      emit(HoveringLineChart(e.chart));
+    });
     on<ChartUpdate>((e, emit) {
       emit(UpdatedChart(e.chart));
     });
   }
 
-  void chartPortfolio(PortfolioCubit cubit) {
+  void chartPortfolio(Portfolio portfolio) {
     final newChart = chart.copyWith(
-      data: cubit.series,
-      startValue: cubit.startValue,
-      latestValue: cubit.currentValue,
+      data: portfolio.series,
+      startValue: portfolio.series.last.y,
+      latestValue: portfolio.series.first.y,
+      portfolioStartValue: portfolio.series.last.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
   }
 
+  hoveredLineChart(DataPoint p, double xOffSet) {
+    final newChart = chart.copyWith(
+      time: p.x,
+      xOffSet: xOffSet,
+      focusedPoint: p,
+    );
+    chart = newChart;
+    add(HoveredLineChart(newChart));
+  }
+
   void hoveredChart(DataPoint? p, CandleStick? c, double xOffSet) {
     var isPoint = p != null;
     var isCandle = c != null;
+
     final newChart = chart.copyWith(
       xOffSet: xOffSet,
       time: isPoint ? p.x : c!.time,
@@ -108,6 +139,7 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
       candle: cubit.asset.current.last,
       candleSeries: cubit.asset.current,
     );
+    // print(cubit.asset.o);
     chart = newChart;
     add(ChartUpdate(newChart));
   }

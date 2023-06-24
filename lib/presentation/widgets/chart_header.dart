@@ -18,20 +18,29 @@ class ChartHeader extends StatelessWidget {
         height: 100,
         child: BlocConsumer<ChartCubit, ChartState>(
           builder: (context, state) {
-            if (state is HoveringChart) {
+            if (state is HoveringLineChart) {
               final focusedValue = state.chart.focusedPoint.y;
-              final val = state.chart.startValue;
+              final startValue = state.chart.portfolioStartValue;
               return ChartHeaderDetails(
-                val: val,
                 title: 'Investing',
+                startValue: startValue,
                 cursorVal: focusedValue,
-                gain: calculatePercentageChange(focusedValue, val),
+                gain: calculatePercentageChange(focusedValue, startValue),
+              );
+            } else if (state is HoveringChart) {
+              final focusedValue = state.chart.focusedPoint.y;
+              final startValue = state.chart.startValue;
+              return ChartHeaderDetails(
+                title: 'HoveringChart',
+                startValue: startValue,
+                cursorVal: focusedValue,
+                gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is UpdatedChart) {
               final hoveredValue = state.chart.latestValue;
               final val = state.chart.startValue;
               return ChartHeaderDetails(
-                val: val,
+                startValue: val,
                 title: state.chart.sym,
                 cursorVal: hoveredValue,
                 gain: calculatePercentageChange(hoveredValue, val),

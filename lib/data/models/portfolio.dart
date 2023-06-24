@@ -30,6 +30,7 @@ class Portfolio {
       ],
     );
   }
+
   factory Portfolio.defaultPortfolio() => Portfolio(
     stocks: [],
     series: [],
@@ -46,6 +47,20 @@ class Portfolio {
       ),
     ),
   );
+
+  Portfolio copyWith({
+    Current? current,
+    List<Stock>? stocks,
+    List<Crypto>? cryptos,
+    List<DataPoint>? series,
+  }) {
+    return Portfolio(
+      current: current ?? this.current,
+      stocks: stocks ?? this.stocks,
+      cryptos: cryptos ?? this.cryptos,
+      series: series ?? this.series,
+    );
+  }
 }
 
 class Current {
