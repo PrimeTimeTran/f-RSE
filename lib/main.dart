@@ -7,19 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:rse/data/all.dart';
-import 'package:rse/presentation/all.dart';
-
-
-import 'dart:developer' as devtools show log;
-extension Log on Object {
-  void log([String tag = '']) {
-    devtools.log(this.toString(), name: tag);
-  }
-  // void log([String tag = '']) {
-  //   devtools.log(toString());
-  // }
-}
+import 'package:rse/all.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

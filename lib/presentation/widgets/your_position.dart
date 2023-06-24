@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class YourPosition extends StatelessWidget {
   const YourPosition({super.key});

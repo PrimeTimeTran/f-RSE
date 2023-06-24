@@ -7,7 +7,7 @@ import 'package:rse/presentation/widgets/all.dart';
 const placeholder = "https://awlights.com/wp-content/uploads/sites/31/2017/05/placeholder-news.jpg";
 
 class Article extends StatefulWidget {
-  final models.Article article;
+  final models.NewsArticle article;
 
   const Article({Key? key, required this.article}) : super(key: key);
 

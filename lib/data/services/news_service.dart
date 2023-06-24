@@ -8,7 +8,7 @@ import 'package:rse/presentation/utils/all.dart';
 class NewsService {
   final LocalStorageService _localStorage = LocalStorageService();
 
-  Future<List<Article>> fetchArticles() async {
+  Future<List<NewsArticle>> fetchArticles() async {
     try {
       if (kDebugMode) throw Error();
       final response = await http.get(Uri.parse(newsApi));
@@ -16,7 +16,7 @@ class NewsService {
         final Map<String, dynamic> data = json.decode(response.body);
         _localStorage.saveData('articles', response.body);
         final List<dynamic> articles = data['results'] as List<dynamic>;
-        return articles.map((item) => Article.fromJson(item)).toList();
+        return articles.map((item) => NewsArticle.fromJson(item)).toList();
       } else {
         throw Error();
       }

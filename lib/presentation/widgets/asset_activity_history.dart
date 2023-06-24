@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class AssetActivityHistory extends StatelessWidget {
   const AssetActivityHistory({super.key});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/data/all.dart';
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class Watchlist extends StatelessWidget {
   const Watchlist({

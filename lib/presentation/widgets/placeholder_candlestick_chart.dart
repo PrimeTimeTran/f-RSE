@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/data/models/all.dart';
+import 'package:rse/all.dart';
 
 class PlaceholderCandleStickChart extends StatelessWidget {
   final double low;

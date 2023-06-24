@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class HoverDarken extends StatefulWidget {
   final Widget child;
-  final bool addPadding;
-  const HoverDarken({super.key, required this.child, this.addPadding = false});
+  final bool padding;
+  const HoverDarken({super.key, required this.child, this.padding = false});
 
   @override
   State<HoverDarken> createState() => _HoverDarkenState();
@@ -27,16 +27,15 @@ class _HoverDarkenState extends State<HoverDarken> {
       },
       child: GestureDetector(
         onTap: () {
-          // context.go("/${item.sym}");
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0), // Set the border radius here
+            borderRadius: BorderRadius.circular(10.0),
             color: isHovered ? Colors.black12 : Colors.transparent,
           ),
           child: Padding(
-            padding: widget.addPadding ? const EdgeInsets.all(10.0) : const EdgeInsets.all(0),
+            padding: widget.padding ? const EdgeInsets.all(10.0) : const EdgeInsets.all(0),
             child: child
           ),
         ),

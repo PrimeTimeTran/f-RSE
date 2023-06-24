@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class IndicatorItem extends StatelessWidget {
   final String title;

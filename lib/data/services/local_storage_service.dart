@@ -19,7 +19,7 @@ class LocalStorageService {
     return prefs.getString(key);
   }
 
-  Future<List<Article>> getCachedArticles() async {
+  Future<List<NewsArticle>> getCachedArticles() async {
     var data = await loadData('articles');
 
     if (data != null && data.isNotEmpty) {
@@ -34,9 +34,9 @@ class LocalStorageService {
     return [];
   }
 
-  List<Article> _mapArticlesFromData(dynamic data) {
+  List<NewsArticle> _mapArticlesFromData(dynamic data) {
     return (data as List<dynamic>)
-      .map((item) => Article.fromJson(item as Map<String, dynamic>))
+      .map((item) => NewsArticle.fromJson(item as Map<String, dynamic>))
       .toList();
   }
 

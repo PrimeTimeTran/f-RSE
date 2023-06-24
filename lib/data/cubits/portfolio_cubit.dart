@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:rse/utils/all.dart';
 import 'package:rse/data/all.dart';
 
 abstract class PortfolioEvent extends Equatable {
@@ -77,6 +78,7 @@ class PortfolioCubit extends Bloc<PortfolioEvent, PortfolioState> {
       dataPoints = p.series;
       startValue = dataPoints.last.y;
       currentValue = dataPoints.first.y;
+      p?.log();
       add(LoadedPortfolio(p, p.current.totalValue, startValue));
     } catch (e) {
       emit(PortfolioError('fetching portfolio'));

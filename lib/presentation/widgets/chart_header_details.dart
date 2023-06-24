@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class ChartHeaderDetails extends StatelessWidget {
   final double val;

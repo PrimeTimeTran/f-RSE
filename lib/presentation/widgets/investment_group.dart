@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/data/all.dart' as models;
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class InvestmentGroup extends StatefulWidget {
   final int num;
   final String title;
-  final models.Current current;
+  final Current current;
   final List<dynamic> securities;
 
   const InvestmentGroup({
@@ -28,14 +27,14 @@ class InvestmentGroupState extends State<InvestmentGroup> {
   int hoveredRowIdx = 0;
   bool shouldExplode = false;
   String _sortField = 'totalValue';
-  List<models.Investment> sortedSecurities = [];
+  List<Investment> sortedSecurities = [];
   late ActivationMode activationMode = ActivationMode.none;
 
   @override
   void initState() {
     super.initState();
     sortedSecurities = widget.securities.mapIndexed((idx, s) =>
-        models.Investment(
+        Investment(
           idx: idx,
           name: s.symbol,
           value: s.price,
@@ -46,7 +45,7 @@ class InvestmentGroupState extends State<InvestmentGroup> {
     ).toList();
   }
 
-  sortSecurities(List<models.Investment> newOrder, String field) {
+  sortSecurities(List<Investment> newOrder, String field) {
     setState(() {
       _sortField = field;
       sortedSecurities = newOrder;

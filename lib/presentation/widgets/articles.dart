@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/cubits/all.dart';
-import 'package:rse/presentation/all.dart';
-import 'package:rse/data/models/all.dart' as models;
+import 'package:rse/all.dart';
 
 class Articles extends StatelessWidget {
   const Articles({
@@ -40,7 +38,7 @@ class Articles extends StatelessWidget {
               ),
             ),
           ),
-          BlocBuilder<NewsCubit, List<models.Article>>(
+          BlocBuilder<NewsCubit, List<NewsArticle>>(
             builder: (context, articles) {
               if (articles.isEmpty) {
                 return const CircularProgressIndicator();

@@ -8,15 +8,15 @@ class AssetOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Column(
         children: [
-          HoverDarken(child: YourPosition(), addPadding: true),
+          HoverDarken(child: YourPosition(), padding: true),
           UpcomingActivity(),
-          HoverDarken(child: About(), addPadding: true),
-          HoverDarken(child: KeyStatistics(), addPadding: true),
-          HoverDarken(child: AssetActivityHistory(), addPadding: true),
+          HoverDarken(child: About(), padding: true),
+          HoverDarken(child: KeyStatistics(), padding: true),
+          HoverDarken(child: AssetActivityHistory(), padding: true),
         ]
       ),
     );

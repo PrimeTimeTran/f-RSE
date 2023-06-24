@@ -1,4 +1,4 @@
-class Article {
+class NewsArticle {
   String? url;
   String? title;
   String? author;
@@ -8,7 +8,7 @@ class Article {
   String? description;
   DateTime? publishedAt;
 
-  Article({
+  NewsArticle({
     this.url,
     this.title,
     this.author,
@@ -19,7 +19,7 @@ class Article {
     required this.source,
   });
 
-  Article.fromJson(Map<String, dynamic> j) {
+  NewsArticle.fromJson(Map<String, dynamic> j) {
     url = j['link'];
     title = j['title'];
     content = j['content'];
@@ -30,7 +30,7 @@ class Article {
     source = Source(id: j['source_id'], name: '');
   }
 
-  factory Article.defaultArticle() => Article(
+  factory NewsArticle.defaultNewsArticle() => NewsArticle(
     url: '',
     title: '',
     author: '',

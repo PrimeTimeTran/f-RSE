@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:rse/data/all.dart';
 
-class NewsCubit extends Cubit<List<Article>> {
+class NewsCubit extends Cubit<List<NewsArticle>> {
   final NewsService _newsService = NewsService();
 
   NewsCubit() : super([]);

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/all.dart';
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class PeriodSelector extends StatefulWidget {
   const PeriodSelector({super.key});

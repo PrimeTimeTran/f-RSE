@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/all.dart';
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class ChartHeader extends StatelessWidget {
   final double value;

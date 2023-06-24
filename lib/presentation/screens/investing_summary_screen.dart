@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/cubits/portfolio_cubit.dart';
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class InvestingSummaryScreen extends StatefulWidget {
   final String title;

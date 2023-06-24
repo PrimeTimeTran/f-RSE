@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:rse/data/models/all.dart' as models;
-import 'package:rse/presentation/utils/all.dart';
+import 'package:rse/all.dart';
 
 class SummaryTable extends StatefulWidget {
   final int num;
   final String title;
-  final List<models.Investment> items;
+  final List<Investment> items;
   final Function(int idx) onCategoryHover;
   final Function(int idx) onCategoryExit;
-  final Function(List<models.Investment> newOrder, String field) sortSecurities;
+  final Function(List<Investment> newOrder, String field) sortSecurities;
 
   const SummaryTable({
     Key? key,
@@ -43,7 +42,7 @@ extension DataRowExtensions on DataRow {
 class _SummaryTableState extends State<SummaryTable> {
   late final int num;
   late final String title;
-  late final List<models.Investment> items;
+  late final List<Investment> items;
 
   int sortedColumnIndex = 0;
   bool sortAscending = true;
@@ -159,7 +158,7 @@ class _SummaryTableState extends State<SummaryTable> {
     ];
   }
 
-  MouseRegion wrapHover(models.Investment item, String val) {
+  MouseRegion wrapHover(Investment item, String val) {
     return MouseRegion(
         onEnter: (_) {
           widget.onCategoryHover(item.idx);

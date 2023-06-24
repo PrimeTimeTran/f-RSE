@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:rse/presentation/all.dart';
-import 'package:rse/data/models/all.dart' as models;
+import 'package:rse/all.dart';
 
 class Doughnut extends StatefulWidget {
   final String field;
   final int explodeIdx;
   final bool shouldExplode;
   final int hoveredRowIndex;
-  final List<models.Investment> data;
+  final List<Investment> data;
   final ActivationMode activationMode;
 
   const Doughnut({
@@ -58,19 +57,19 @@ class DoughnutState extends State<Doughnut> {
               )
             ],
             series: <CircularSeries>[
-              DoughnutSeries<models.Investment, String>(
+              DoughnutSeries<Investment, String>(
                 strokeWidth: 1,
                 enableTooltip: true,
                 dataSource: widget.data,
                 strokeColor: Colors.white,
-                xValueMapper: (models.Investment data, _) => data.name,
-                dataLabelMapper: (models.Investment data, _) => formatField(data, widget.field),
-                yValueMapper: (models.Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),
+                xValueMapper: (Investment data, _) => data.name,
+                dataLabelMapper: (Investment data, _) => formatField(data, widget.field),
+                yValueMapper: (Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),
                 dataLabelSettings: DataLabelSettings(
                   isVisible: true,
                   color: T(context, 'tertiary'),
                 ),
-                pointColorMapper: (models.Investment data, _) {
+                pointColorMapper: (Investment data, _) {
                   if (widget.hoveredRowIndex != -1 && widget.hoveredRowIndex == data.idx) {
                     return T(context, 'tertiary');
                   }
