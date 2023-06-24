@@ -13,11 +13,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  late bool lock = true;
   @override
   void initState() {
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,27 +31,49 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildMobile(context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          LineChart(),
+          LineChart(
+            lock: lock,
+            lockFlag: lockFlag,
+            unLockFlag: unLockFlag,
+          ),
           Articles(),
         ],
       ),
     );
   }
-
+  unLockFlag(some) {
+    setState(() {
+      lock = true;
+    });
+  }
+  lockFlag(other) {
+    print('lockFlag');
+    setState(() {
+      lock = true;
+    });
+  }
   Widget buildDesktop(context) {
     return Row(
       children: [
         Expanded(
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: const SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   TickerCarousel(),
-                  LineChart(),
+                  MouseRegion(
+                    onEnter: (event) => unLockFlag(false),
+                    onExit: (event) => lockFlag(true),
+                    child: LineChart(
+                      lock: lock,
+                      lockFlag: lockFlag,
+                      unLockFlag: unLockFlag,
+                    )
+                  ),
                   Articles(),
                 ],
               ),

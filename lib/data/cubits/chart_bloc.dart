@@ -79,10 +79,10 @@ class HoveringLineChart extends ChartState {
   List<Object?> get props => [chart];
 }
 
-class ChartCubit extends Bloc<ChartEvent, ChartState> {
+class ChartBloc extends Bloc<ChartEvent, ChartState> {
   late Chart chart;
 
-  ChartCubit({ required this.chart}) : super(ChartInitial(chart)) {
+  ChartBloc({ required this.chart}) : super(ChartInitial(chart)) {
     on<HoveredChart>((e, emit) {
       emit(HoveringChart(e.chart));
     });
@@ -96,6 +96,7 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
 
   void chartPortfolio(Portfolio portfolio) {
     final newChart = chart.copyWith(
+      sym: 'Investing',
       data: portfolio.series,
       startValue: portfolio.series.last.y,
       latestValue: portfolio.series.first.y,
@@ -117,13 +118,44 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
 
   void hoveredChart(CandleStick c, double xOffSet) {
     final newChart = chart.copyWith(
-      xOffSet: xOffSet,
+      candle: c,
       time: c.time,
+      xOffSet: xOffSet,
       focusedPoint: DataPoint(c!.time, c!.value),
-      candle: c
     );
 
     chart = newChart;
     add(HoveredChart(newChart));
+  }
+
+  void updateChart(Asset asset) {
+    print('updateChart');
+    final newChart = chart.copyWith(
+      sym: asset.sym,
+      startValue: asset.o,
+      assetStartValue: asset.o,
+      candle: asset.current.last,
+      candleSeries: asset.current,
+      latestValue: asset.current.first.y,
+      portfolioStartValue: asset.current.last.y,
+    );
+    chart = newChart;
+    add(HoveredChart(newChart));
+    add(ChartUpdate(newChart));
+  }
+  void updateAssetDetails (Asset asset) {
+    print('updateAssetDetails ${asset.o}');
+    print('updateAssetDetails ${asset.sym}');
+    final newChart = chart.copyWith(
+      sym: asset.sym,
+      startValue: asset.o,
+      assetStartValue: asset.o,
+      candle: asset.current.last,
+      candleSeries: asset.current,
+      latestValue: asset.current.first.y,
+      portfolioStartValue: asset.current.last.y,
+    );
+    chart = newChart;
+    add(ChartUpdate(newChart));
   }
 }

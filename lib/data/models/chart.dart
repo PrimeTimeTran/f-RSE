@@ -27,27 +27,30 @@ class Chart {
     String? period,
     double? xOffSet,
     String sym = '',
-    double? startValue,
+    double startValue = 0.0,
     CandleStick? candle,
     double? latestValue,
     List<DataPoint>? data,
     DataPoint? focusedPoint,
-    double? assetStartValue,
+    double assetStartValue = 0.0,
     double? portfolioStartValue,
     List<CandleStick>? candleSeries,
   }) {
+    var temp = sym == '' ? this.sym : sym;
+    double go = startValue == 0.0 ? this.startValue : startValue;
+    double go2 = startValue == 0.0 ? this.assetStartValue : assetStartValue;
     return Chart()
-      ..sym = sym ?? this.sym
+      ..sym = temp
       ..type = type ?? this.type
       ..time = time ?? this.time
       ..candle = candle ?? this.candle
       ..period = period ?? this.period
       ..xOffSet = xOffSet ?? this.xOffSet
       ..data = List.from(data ?? this.data)
-      ..startValue = startValue ?? this.startValue
+      ..startValue = go
       ..latestValue = latestValue ?? this.latestValue
       ..focusedPoint = focusedPoint ?? this.focusedPoint
-      ..assetStartValue = assetStartValue ?? this.assetStartValue
+      ..assetStartValue = go2
       ..candleSeries = List.from(candleSeries ?? this.candleSeries)
       ..portfolioStartValue = portfolioStartValue ?? this.portfolioStartValue;
   }

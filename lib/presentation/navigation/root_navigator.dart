@@ -125,16 +125,16 @@ final goRouter = GoRouter(
 
     print('location: $location');
     if (location == '/') {
-      var previousValue = context.read<PortfolioCubit>().portfolio.current.totalValue;
-      context.read<ChartCubit>().hoveredLineChart(DataPoint(DateTime.now().toString(), previousValue), 100);
+      var previousValue = context.read<PortfolioBloc>().portfolio.current.totalValue;
+      context.read<ChartBloc>().hoveredLineChart(DataPoint(DateTime.now().toString(), previousValue), 100);
       return '/';
     }
 
     if (location.startsWith('/securities/')) {
-      var bloc = context.read<AssetCubit>();
+      var bloc = context.read<AssetBloc>();
       var sym = location.substring(12);
       bloc.fetchAsset(sym);
-      context.read<ChartCubit>().hoveredChart(bloc.asset.current.first, 100);
+      context.read<ChartBloc>().updateChart(bloc.asset);
     } else {
       return state.location;
     }

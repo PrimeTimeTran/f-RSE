@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 
 import 'package:rse/data/all.dart';
 
-class NewsCubit extends Cubit<List<NewsArticle>> {
+class NewsBloc extends Cubit<List<NewsArticle>> {
   final NewsService _newsService = NewsService();
 
-  NewsCubit() : super([]);
+  NewsBloc() : super([]);
 
   Future<void> fetchArticles() async {
     try {

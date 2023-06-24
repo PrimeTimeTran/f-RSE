@@ -42,13 +42,13 @@ class AssetError extends AssetState {
   List<Object?> get props => [errorMessage];
 }
 
-class AssetCubit extends Cubit<AssetState> {
+class AssetBloc extends Bloc<AssetEvent, AssetState> {
   late Asset asset;
   String sym = 'GOOGL';
   String period = 'live';
   final AssetService assetService = AssetService();
 
-  AssetCubit({ required this.asset }) : super(AssetInitial(asset));
+  AssetBloc({ required this.asset }) : super(AssetInitial(asset));
 
   Future<void> fetchAsset(String id) async {
     try {

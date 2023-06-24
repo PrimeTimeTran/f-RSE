@@ -26,9 +26,10 @@ class CandleChartState extends State<CandleChart> {
   Widget build(BuildContext context) {
     _setupTheme(context);
 
-    return BlocBuilder<AssetCubit, AssetState>(
+    return BlocBuilder<AssetBloc, AssetState>(
       builder: (context, state) {
         if (state is AssetLoaded) {
+          context.read<ChartBloc>().updateAssetDetails(state.asset);
           return buildChartBody(state.asset.current);
         } else {
           return const Text('Error:');
@@ -53,7 +54,7 @@ class CandleChartState extends State<CandleChart> {
                     right: 0,
                     child: CandleHoveredDetails()),
                 SfCartesianChart(
-                  plotAreaBorderWidth: 1,
+                  plotAreaBorderWidth: 0,
                   zoomPanBehavior: _zoomPanBehavior,
                   trackballBehavior: _trackballBehavior,
                   primaryYAxis: NumericAxis(
@@ -70,7 +71,7 @@ class CandleChartState extends State<CandleChart> {
                     final dataPoint = args
                         .chartPointInfo.chartDataPoint!.overallDataPointIndex;
                     final CandleStick candle = data[dataPoint!];
-                    context.read<ChartCubit>().hoveredChart(candle, xOffSet!);
+                    context.read<ChartBloc>().hoveredChart(candle, xOffSet!);
                   },
                   primaryXAxis: CategoryAxis(
                     isVisible: false,

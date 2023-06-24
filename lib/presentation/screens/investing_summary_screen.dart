@@ -33,7 +33,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
     return SingleChildScrollView(
       child: Column(
         children: [
-          BlocConsumer<PortfolioCubit, PortfolioState>(
+          BlocConsumer<PortfolioBloc, PortfolioState>(
             builder: (context, state) {
               if (state is PortfolioLoading) {
                 return const CircularProgressIndicator();

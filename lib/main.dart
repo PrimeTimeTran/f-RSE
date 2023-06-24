@@ -24,17 +24,17 @@ Future<void> main() async {
       create: (_) => ThemeModel(),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<PortfolioCubit>(
-            create: (_) => PortfolioCubit(portfolio: Portfolio.defaultPortfolio()),
+          BlocProvider<PortfolioBloc>(
+            create: (_) => PortfolioBloc(portfolio: Portfolio.defaultPortfolio()),
           ),
-          BlocProvider<NewsCubit>(
-            create: (_) => NewsCubit(),
+          BlocProvider<NewsBloc>(
+            create: (_) => NewsBloc(),
           ),
-          BlocProvider<AssetCubit>(
-            create: (_) => AssetCubit(asset: Asset.defaultAsset()),
+          BlocProvider<AssetBloc>(
+            create: (_) => AssetBloc(asset: Asset.defaultAsset()),
           ),
-          BlocProvider<ChartCubit>(
-            create: (_) => ChartCubit(chart: chart),
+          BlocProvider<ChartBloc>(
+            create: (_) => ChartBloc(chart: chart),
           ),
         ],
         child: const MyApp(),
@@ -53,23 +53,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late NewsCubit _newsCubit;
-  late AssetCubit _assetCubit;
-  late PortfolioCubit _portfolioCubit;
+  late NewsBloc _newsBloc;
+  late AssetBloc _assetBloc;
+  late PortfolioBloc _portfolioBloc;
 
   @override
   void initState() {
     super.initState();
-    _newsCubit = context.read<NewsCubit>();
-    _portfolioCubit = context.read<PortfolioCubit>();
-    _assetCubit = context.read<AssetCubit>();
+    _newsBloc = context.read<NewsBloc>();
+    _portfolioBloc = context.read<PortfolioBloc>();
+    _assetBloc = context.read<AssetBloc>();
     fetchData();
   }
 
   Future<void> fetchData() async {
-    _newsCubit.fetchArticles();
-    _portfolioCubit.fetchPortfolio("1");
-    _assetCubit.fetchAsset("1");
+    _newsBloc.fetchArticles();
+    _portfolioBloc.fetchPortfolio("1");
+    _assetBloc.fetchAsset("1");
     event();
   }
 

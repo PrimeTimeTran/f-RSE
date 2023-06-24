@@ -1,4 +1,4 @@
-export 'news_cubit.dart';
-export 'asset_cubit.dart';
-export 'chart_cubit.dart';
+export 'news_bloc.dart';
+export 'asset_bloc.dart';
+export 'chart_bloc.dart';
 export 'portfolio_cubit.dart';

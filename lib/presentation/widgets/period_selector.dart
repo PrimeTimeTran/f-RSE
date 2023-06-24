@@ -61,16 +61,16 @@ class PeriodSelectorState extends State<PeriodSelector> {
             children: periods.map((p) {
               return Flexible(
                 fit: FlexFit.tight,
-                child: BlocConsumer<AssetCubit, AssetState>(
+                child: BlocConsumer<AssetBloc, AssetState>(
                   builder: (c, state) {
                     if (state is AssetLoaded) {
-                      final assetCubit = BlocProvider.of<AssetCubit>(context);
-                      final period = assetCubit.period;
+                      final assetBloc = BlocProvider.of<AssetBloc>(context);
+                      final period = assetBloc.period;
                       return GestureDetector(
                         onTap: () {
                           logPeriodSelect(p);
                           if (period == p) return;
-                          assetCubit.setPeriod(p);
+                          assetBloc.setPeriod(p);
                         },
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,

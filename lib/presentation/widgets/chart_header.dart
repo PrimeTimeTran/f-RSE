@@ -16,9 +16,10 @@ class ChartHeader extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: SizedBox(
         height: 100,
-        child: BlocConsumer<ChartCubit, ChartState>(
+        child: BlocConsumer<ChartBloc, ChartState>(
           builder: (context, state) {
             if (state is HoveringLineChart) {
+              // print('Hover Line Chart');
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.portfolioStartValue;
               return ChartHeaderDetails(
@@ -28,10 +29,14 @@ class ChartHeader extends StatelessWidget {
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is HoveringChart) {
+
               final focusedValue = state.chart.focusedPoint.y;
-              final startValue = state.chart.startValue;
+              final startValue = state.chart.assetStartValue;
+              // print('Hover Candle Chart ${ focusedValue }}');
+              // print('Hover Candle Chart ${ startValue }}');
+              // print('Hover Candle Chart ${ state.chart.sym }}');
               return ChartHeaderDetails(
-                title: 'HoveringChart',
+                title: state.chart.sym,
                 startValue: startValue,
                 focusValue: focusedValue,
                 gain: calculatePercentageChange(focusedValue, startValue),

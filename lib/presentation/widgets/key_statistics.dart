@@ -16,316 +16,313 @@ class KeyStatistics extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Key Statistics'),
-          Container(
-            color: Colors.red,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topStart,
-                                child: Text(
-                                  'Market Cap',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topStart,
+                              child: Text(
+                                'Market Cap',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      '\$100,000',
-                                    ),
-                                  )
-                              )
-                            ]
-                        ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Align(
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: Text(
+                                    '\$100,000',
+                                  ),
+                                )
+                            )
+                          ]
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

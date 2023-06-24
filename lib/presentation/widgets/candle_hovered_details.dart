@@ -9,7 +9,7 @@ class CandleHoveredDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocBuilder<ChartCubit, ChartState>(
+    return BlocBuilder<ChartBloc, ChartState>(
       builder: (context, state) {
         if (state is UpdatedChart) {
           return buildCandleItem(context, state.chart.candle);

@@ -51,11 +51,11 @@ class PortfolioError extends PortfolioState {
   List<Object?> get props => [errorMessage];
 }
 
-class PortfolioCubit extends Bloc<PortfolioEvent, PortfolioState> {
+class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
   late Portfolio portfolio;
   final PortfolioService portfolioService = PortfolioService();
 
-  PortfolioCubit({ required this.portfolio }) : super(PortfolioInitial(portfolio)) {
+  PortfolioBloc({ required this.portfolio }) : super(PortfolioInitial(portfolio)) {
     on<LoadedPortfolio>((e, emit) async {
       emit(PortfolioLoaded(e.portfolio));
     });

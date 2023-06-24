@@ -38,7 +38,7 @@ class Articles extends StatelessWidget {
               ),
             ),
           ),
-          BlocBuilder<NewsCubit, List<NewsArticle>>(
+          BlocBuilder<NewsBloc, List<NewsArticle>>(
             builder: (context, articles) {
               if (articles.isEmpty) {
                 return const CircularProgressIndicator();
