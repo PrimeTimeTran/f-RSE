@@ -16,7 +16,7 @@ class CandleHoveredDetails extends StatelessWidget {
         } else if (state is HoveringChart) {
           return buildCandleItem(context, state.chart.candle);
         } else {
-          return const Text('Error');
+          return const SizedBox();
         }
       }
     );

@@ -32,7 +32,7 @@ class Asset {
       sym: j['sym'],
       name: j['name'],
       current: series,
-      value: series[series.length - 1].close,
+      value: series.first.close,
     );
   }
   factory Asset.defaultAsset() => Asset(
@@ -40,6 +40,22 @@ class Asset {
     sym: '',
     name: '',
     value: 0,
-    current: [],
+    current: [CandleStick.fact()],
   );
+
+  Asset copyWith({
+    double? o,
+    String? sym,
+    String? name,
+    double? value,
+    List<CandleStick>? current,
+  }) {
+    return Asset(
+      o: o ?? this.o,
+      sym: sym ?? this.sym,
+      name: name ?? this.name,
+      value: value ?? this.value,
+      current: current ?? this.current,
+    );
+  }
 }

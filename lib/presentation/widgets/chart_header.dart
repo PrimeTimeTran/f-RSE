@@ -24,7 +24,7 @@ class ChartHeader extends StatelessWidget {
               return ChartHeaderDetails(
                 title: 'Investing',
                 startValue: startValue,
-                cursorVal: focusedValue,
+                focusValue: focusedValue,
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is HoveringChart) {
@@ -33,17 +33,17 @@ class ChartHeader extends StatelessWidget {
               return ChartHeaderDetails(
                 title: 'HoveringChart',
                 startValue: startValue,
-                cursorVal: focusedValue,
+                focusValue: focusedValue,
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is UpdatedChart) {
-              final hoveredValue = state.chart.latestValue;
-              final val = state.chart.startValue;
+              final focusedValue = state.chart.latestValue;
+              final startValue = state.chart.startValue;
               return ChartHeaderDetails(
-                startValue: val,
+                startValue: startValue,
                 title: state.chart.sym,
-                cursorVal: hoveredValue,
-                gain: calculatePercentageChange(hoveredValue, val),
+                focusValue: focusedValue,
+                gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else {
               return const SizedBox();

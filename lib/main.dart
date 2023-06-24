@@ -31,7 +31,7 @@ Future<void> main() async {
             create: (_) => NewsCubit(),
           ),
           BlocProvider<AssetCubit>(
-            create: (_) => AssetCubit(),
+            create: (_) => AssetCubit(asset: Asset.defaultAsset()),
           ),
           BlocProvider<ChartCubit>(
             create: (_) => ChartCubit(chart: chart),

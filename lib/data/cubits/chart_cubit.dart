@@ -115,17 +115,13 @@ class ChartCubit extends Bloc<ChartEvent, ChartState> {
     add(HoveredLineChart(newChart));
   }
 
-  void hoveredChart(DataPoint? p, CandleStick? c, double xOffSet) {
-    var isPoint = p != null;
-    var isCandle = c != null;
-
+  void hoveredChart(CandleStick c, double xOffSet) {
     final newChart = chart.copyWith(
       xOffSet: xOffSet,
-      time: isPoint ? p.x : c!.time,
+      time: c.time,
+      focusedPoint: DataPoint(c!.time, c!.value),
+      candle: c
     );
-
-    newChart.candle = isCandle ? c : newChart.candle;
-    newChart.focusedPoint = isPoint ? p : DataPoint(c!.time, c!.value);
 
     chart = newChart;
     add(HoveredChart(newChart));

@@ -26,18 +26,15 @@ class LineChartState extends State<LineChart> {
         } else if (state is PortfolioLoaded) {
           context.read<ChartCubit>().chartPortfolio(state.portfolio);
           final data = state.portfolio.series;
-          return makeChart(data);
-        } else if (state is PortfolioError) {
-          return Text('Error: ${state.errorMessage}');
+          return buildChart(data);
         } else {
-          return const Text('Unknown state');
+          return const Text('Error:');
         }
       },
     );
   }
 
-
-  makeChart(data) {
+  buildChart(data) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

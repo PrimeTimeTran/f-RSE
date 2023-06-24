@@ -13,7 +13,14 @@ abstract class AssetState extends Equatable {
   List<Object?> get props => [];
 }
 
-class AssetInitial extends AssetState {}
+class AssetInitial extends AssetState {
+  final Asset asset;
+
+  AssetInitial(this.asset);
+
+  @override
+  List<Object?> get props => [asset];
+}
 
 class AssetLoading extends AssetState {}
 
@@ -36,17 +43,18 @@ class AssetError extends AssetState {
 }
 
 class AssetCubit extends Cubit<AssetState> {
+  late Asset asset;
   String sym = 'GOOGL';
   String period = 'live';
-  late Asset asset = Asset.defaultAsset();
   final AssetService assetService = AssetService();
 
-  AssetCubit() : super(AssetInitial());
+  AssetCubit({ required this.asset }) : super(AssetInitial(asset));
 
   Future<void> fetchAsset(String id) async {
     try {
-      asset = await assetService.fetchAsset(id, period);
-      emit(AssetLoaded(asset));
+      final newAsset = await assetService.fetchAsset(id, period);
+      asset = newAsset;
+      emit(AssetLoaded(newAsset));
     } catch (e) {
       emit(AssetError('Error fetching asset'));
     }
