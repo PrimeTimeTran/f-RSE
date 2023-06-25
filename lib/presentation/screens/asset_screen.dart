@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:rse/all.dart';
 
 class AssetScreen extends StatefulWidget {
@@ -12,14 +10,9 @@ class AssetScreen extends StatefulWidget {
 }
 
 class _AssetScreeState extends State<AssetScreen> {
-  // late AssetCubit _assetCubit;
-
   @override
   void initState() {
     super.initState();
-    // AssetCubit _assetCubit;
-    // _assetCubit = context.read<AssetCubit>();
-    // _assetCubit.fetchAsset(widget.sym);
   }
 
   @override

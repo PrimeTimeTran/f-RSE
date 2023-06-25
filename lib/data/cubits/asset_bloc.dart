@@ -8,6 +8,15 @@ abstract class AssetEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class AssetInitialized extends AssetEvent {
+  final Asset asset;
+
+  AssetInitialized(this.asset);
+
+  @override
+  List<Object?> get props => [asset];
+}
+
 abstract class AssetState extends Equatable {
   @override
   List<Object?> get props => [];

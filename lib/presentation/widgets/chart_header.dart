@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/all.dart';
@@ -9,9 +8,6 @@ class ChartHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final route = GoRouter.of(context).location;
-    var title = route == '/' || route == '/spending' ? 'Investing' : route.substring(1);
-
     return Align(
       alignment: Alignment.centerLeft,
       child: SizedBox(
@@ -19,9 +15,9 @@ class ChartHeader extends StatelessWidget {
         child: BlocConsumer<ChartBloc, ChartState>(
           builder: (context, state) {
             if (state is HoveringLineChart) {
-              // print('Hover Line Chart');
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.portfolioStartValue;
+              print('Hover Line Chart ${startValue}');
               return ChartHeaderDetails(
                 title: 'Investing',
                 startValue: startValue,
@@ -29,12 +25,9 @@ class ChartHeader extends StatelessWidget {
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is HoveringChart) {
-
+              print('Hover Candle Chart');
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.assetStartValue;
-              // print('Hover Candle Chart ${ focusedValue }}');
-              // print('Hover Candle Chart ${ startValue }}');
-              // print('Hover Candle Chart ${ state.chart.sym }}');
               return ChartHeaderDetails(
                 title: state.chart.sym,
                 startValue: startValue,
@@ -42,8 +35,10 @@ class ChartHeader extends StatelessWidget {
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is UpdatedChart) {
+              var startValue = state.chart.sym == 'Investing' ? state.chart.startValue : state.chart.assetStartValue;
               final focusedValue = state.chart.latestValue;
-              final startValue = state.chart.startValue;
+              print('state.chart.sym ${state.chart.sym}  ${state.chart.latestValue}');
+
               return ChartHeaderDetails(
                 startValue: startValue,
                 title: state.chart.sym,

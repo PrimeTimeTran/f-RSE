@@ -17,6 +17,15 @@ class LoadedPortfolio extends PortfolioEvent {
   List<Object?> get props => [portfolio];
 }
 
+class LoadError extends PortfolioEvent {
+  final String errorMessage;
+
+  LoadError(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
+}
+
 abstract class PortfolioState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -65,11 +74,10 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     emit(PortfolioLoading());
     try {
       final Portfolio p = await portfolioService.fetchPortfolio(id);
-
       portfolio = p;
       add(LoadedPortfolio(p));
     } catch (e) {
-      emit(PortfolioError('fetching portfolio $e'));
+      add(LoadError('fetching portfolio $e'));
     }
   }
 

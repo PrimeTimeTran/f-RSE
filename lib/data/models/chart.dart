@@ -5,19 +5,19 @@ abstract class Point {
 }
 
 class Chart {
-  late String sym = '';
+  late String sym = 'BAC';
   late String time = '';
   late double xOffSet = 0;
   late String type = 'line';
-  late double startValue = 0;
-  late double latestValue = 0;
+  late double startValue = 1;
+  late double latestValue = 1;
   late String period = 'live';
-  late double assetStartValue = 0.0;
-  late double portfolioStartValue = 0;
+  late double assetStartValue = 1;
+  late double portfolioStartValue = 1;
   late List<CandleStick> candleSeries = [];
   late CandleStick candle = CandleStick.fact();
-  late DataPoint focusedPoint = DataPoint('', 0);
-  late List<DataPoint> data = [DataPoint(DateTime.now().toString(), 0)];
+  late DataPoint focusedPoint = DataPoint('', 1);
+  late List<DataPoint> data = [DataPoint(DateTime.now().toString(), 1)];
 
   Chart();
 
@@ -25,20 +25,18 @@ class Chart {
     String? type,
     String? time,
     String? period,
-    double? xOffSet,
     String sym = '',
-    double startValue = 0.0,
-    CandleStick? candle,
+    double? xOffSet,
+    double? startValue,
     double? latestValue,
+    CandleStick? candle,
     List<DataPoint>? data,
     DataPoint? focusedPoint,
-    double assetStartValue = 0.0,
+    double? assetStartValue,
     double? portfolioStartValue,
     List<CandleStick>? candleSeries,
   }) {
     var temp = sym == '' ? this.sym : sym;
-    double go = startValue == 0.0 ? this.startValue : startValue;
-    double go2 = startValue == 0.0 ? this.assetStartValue : assetStartValue;
     return Chart()
       ..sym = temp
       ..type = type ?? this.type
@@ -47,10 +45,10 @@ class Chart {
       ..period = period ?? this.period
       ..xOffSet = xOffSet ?? this.xOffSet
       ..data = List.from(data ?? this.data)
-      ..startValue = go
+      ..startValue = startValue ?? this.startValue
       ..latestValue = latestValue ?? this.latestValue
       ..focusedPoint = focusedPoint ?? this.focusedPoint
-      ..assetStartValue = go2
+      ..assetStartValue = assetStartValue ?? this.assetStartValue
       ..candleSeries = List.from(candleSeries ?? this.candleSeries)
       ..portfolioStartValue = portfolioStartValue ?? this.portfolioStartValue;
   }

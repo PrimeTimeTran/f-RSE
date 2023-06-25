@@ -36,11 +36,9 @@ class LineChartState extends State<LineChart> {
   void didUpdateWidget(covariant LineChart oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.lock && widget.lock == oldWidget.lock) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         var data = context.read<ChartBloc>().chart.data;
         var idx = data.length;
-        print(idx);
-        print(_trackballBehavior);
         _trackballBehavior?.showByIndex(idx);
       });
     }
@@ -100,15 +98,13 @@ class LineChartState extends State<LineChart> {
                   final offset = args.chartPointInfo.xPosition;
                   final point =
                       args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-
-                  print(point);
                   if (offset != null &&
                       point != null &&
                       data[point] != null) {
-                    final item = data[point!];
+                    final item = data[point];
                     context
                         .read<ChartBloc>()
-                        .hoveredLineChart(item, offset!);
+                        .hoveredLineChart(item, offset);
                   }
                 },
                 series: <LineSeries<DataPoint, DateTime>>[

@@ -21,7 +21,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: ResponsiveLayout(
         mobile: buildMobile(context),
@@ -64,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  TickerCarousel(),
+                  const TickerCarousel(),
                   MouseRegion(
                     onEnter: (event) => unLockFlag(false),
                     onExit: (event) => lockFlag(true),

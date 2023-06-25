@@ -122,22 +122,20 @@ final goRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   redirect: (context, state) {
     String location = state.location;
-
-    print('location: $location');
-    if (location == '/') {
-      var previousValue = context.read<PortfolioBloc>().portfolio.current.totalValue;
-      context.read<ChartBloc>().hoveredLineChart(DataPoint(DateTime.now().toString(), previousValue), 100);
-      return '/';
+    if (location == '/home') {
+      final bloc = context.read<PortfolioBloc>();
+      bloc.fetchPortfolio('1');
+      if (bloc.portfolio.current.totalValue != 0) {
+        context.read<ChartBloc>().updateChartPortfolioValues(bloc.portfolio);
+      }
     }
-
     if (location.startsWith('/securities/')) {
-      var bloc = context.read<AssetBloc>();
-      var sym = location.substring(12);
+      final bloc = context.read<AssetBloc>();
+      final sym = location.substring(12);
       bloc.fetchAsset(sym);
-      context.read<ChartBloc>().updateChart(bloc.asset);
-    } else {
-      return state.location;
+      context.read<ChartBloc>().updateChart(bloc.asset, sym);
     }
+    return state.location;
   },
   routes: [
     // Stateful navigation based on:

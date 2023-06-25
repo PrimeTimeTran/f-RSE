@@ -50,6 +50,7 @@ class Asset {
     double? value,
     List<CandleStick>? current,
   }) {
+    print('copyWith ${o} ${this.o}');
     return Asset(
       o: o ?? this.o,
       sym: sym ?? this.sym,

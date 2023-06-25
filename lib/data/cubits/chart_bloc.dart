@@ -106,7 +106,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
     add(ChartUpdate(newChart));
   }
 
-  hoveredLineChart(DataPoint p, double xOffSet) {
+  void hoveredLineChart(DataPoint p, double xOffSet) {
     final newChart = chart.copyWith(
       time: p.x,
       xOffSet: xOffSet,
@@ -115,23 +115,21 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
     chart = newChart;
     add(HoveredLineChart(newChart));
   }
-
   void hoveredChart(CandleStick c, double xOffSet) {
     final newChart = chart.copyWith(
       candle: c,
       time: c.time,
       xOffSet: xOffSet,
-      focusedPoint: DataPoint(c!.time, c!.value),
+      focusedPoint: DataPoint(c.time, c.value),
     );
 
     chart = newChart;
     add(HoveredChart(newChart));
   }
 
-  void updateChart(Asset asset) {
-    print('updateChart');
+  void updateChart(Asset asset, String sym) {
     final newChart = chart.copyWith(
-      sym: asset.sym,
+      sym: sym,
       startValue: asset.o,
       assetStartValue: asset.o,
       candle: asset.current.last,
@@ -140,20 +138,17 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       portfolioStartValue: asset.current.last.y,
     );
     chart = newChart;
-    add(HoveredChart(newChart));
+    print('updateChart: ${asset.o}');
     add(ChartUpdate(newChart));
   }
-  void updateAssetDetails (Asset asset) {
-    print('updateAssetDetails ${asset.o}');
-    print('updateAssetDetails ${asset.sym}');
+
+  void updateChartPortfolioValues(Portfolio portfolio) {
     final newChart = chart.copyWith(
-      sym: asset.sym,
-      startValue: asset.o,
-      assetStartValue: asset.o,
-      candle: asset.current.last,
-      candleSeries: asset.current,
-      latestValue: asset.current.first.y,
-      portfolioStartValue: asset.current.last.y,
+      sym: 'Investing',
+      data: portfolio.series,
+      startValue: portfolio.series.last.y,
+      latestValue: portfolio.current.totalValue,
+      portfolioStartValue: portfolio.series.last.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));

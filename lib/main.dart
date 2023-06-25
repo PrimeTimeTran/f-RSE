@@ -17,8 +17,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final chart = Chart();
-
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeModel(),
@@ -34,7 +32,7 @@ Future<void> main() async {
             create: (_) => AssetBloc(asset: Asset.defaultAsset()),
           ),
           BlocProvider<ChartBloc>(
-            create: (_) => ChartBloc(chart: chart),
+            create: (_) => ChartBloc(chart: Chart()),
           ),
         ],
         child: const MyApp(),
@@ -54,7 +52,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late NewsBloc _newsBloc;
-  late AssetBloc _assetBloc;
   late PortfolioBloc _portfolioBloc;
 
   @override
@@ -62,14 +59,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _newsBloc = context.read<NewsBloc>();
     _portfolioBloc = context.read<PortfolioBloc>();
-    _assetBloc = context.read<AssetBloc>();
     fetchData();
   }
 
   Future<void> fetchData() async {
     _newsBloc.fetchArticles();
     _portfolioBloc.fetchPortfolio("1");
-    _assetBloc.fetchAsset("1");
     event();
   }
 
