@@ -38,7 +38,7 @@ class HomeScreenState extends State<HomeScreen> {
             lockFlag: lockFlag,
             unLockFlag: unLockFlag,
           ),
-          Articles(),
+          const Articles(),
         ],
       ),
     );
@@ -49,7 +49,6 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
   lockFlag(other) {
-    print('lockFlag');
     setState(() {
       lock = true;
     });
@@ -73,7 +72,7 @@ class HomeScreenState extends State<HomeScreen> {
                       unLockFlag: unLockFlag,
                     )
                   ),
-                  Articles(),
+                  const Articles(),
                 ],
               ),
             ),

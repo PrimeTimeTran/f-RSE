@@ -45,78 +45,77 @@ class PeriodSelectorState extends State<PeriodSelector> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<ChartBloc, ChartState>(
+      builder: (context, state) {
+        return buildSelector(context);
+      },
+      listener: (context, state) {
+      },
+      buildWhen: (previous, current) {
+        return true;
+      },
+    );
+  }
+
+  buildSelector(context) {
     final color = T(context, 'primary');
     final highlightColor = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
+    final assetBloc = BlocProvider.of<AssetBloc>(context);
+    final period = assetBloc.period;
 
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.only(bottom: 30.0),
         child: SizedBox(
-          // width: getWidth(context),
           width: MediaQuery.of(context).size.width * getWidth(context),
           child: Row(
             mainAxisAlignment: isM(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
             children: periods.map((p) {
               return Flexible(
                 fit: FlexFit.tight,
-                child: BlocConsumer<AssetBloc, AssetState>(
-                  builder: (c, state) {
-                    if (state is AssetLoaded) {
-                      final assetBloc = BlocProvider.of<AssetBloc>(context);
-                      final period = assetBloc.period;
-                      return GestureDetector(
-                        onTap: () {
-                          logPeriodSelect(p);
-                          if (period == p) return;
-                          assetBloc.setPeriod(p);
-                        },
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 5.0),
-                            decoration: BoxDecoration(
-                              border: Border(
-                              bottom: BorderSide(width: 1.5, color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor),
-                              ),
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: HoverText(
-                                  p,
-                                  textStyle: TextStyle(
-                                    fontSize: getTextSize(context),
-                                    fontWeight: FontWeight.bold,
-                                    color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
-                                  ),
-                                ),
-                              ),
+                child: GestureDetector(
+                  onTap: () {
+                    logPeriodSelect(p);
+                    if (period == p) return;
+                    assetBloc.setPeriod(p);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5.0),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.5, color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: HoverText(
+                            p,
+                            textStyle: TextStyle(
+                                fontSize: getTextSize(context),
+                                fontWeight: FontWeight.bold,
+                                color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
                             ),
                           ),
-                          onHover: (_) {
-                            setState(() {
-                              hoveredPeriod = p;
-                            });
-                          },
-                          onExit: (_) {
-                            setState(() {
-                              hoveredPeriod = '';
-                            });
-                          },
                         ),
-                      );
-                    } else {
-                      return const Text('');
-                    }
-                  },
-                  listener: (context, state) {
-                  },
-                  buildWhen: (previous, current) {
-                    return true;
-                  },
+                      ),
+                    ),
+                    onHover: (_) {
+                      setState(() {
+                        hoveredPeriod = p;
+                      });
+                    },
+                    onExit: (_) {
+                      setState(() {
+                        hoveredPeriod = '';
+                      });
+                    },
+                  ),
                 ),
               );
             }).toList(),

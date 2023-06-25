@@ -35,10 +35,8 @@ class ChartHeader extends StatelessWidget {
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is UpdatedChart) {
-              var startValue = state.chart.sym == 'Investing' ? state.chart.startValue : state.chart.assetStartValue;
               final focusedValue = state.chart.latestValue;
-              print('state.chart.sym ${state.chart.sym}  ${state.chart.latestValue}');
-
+              final startValue = state.chart.sym == 'Investing' ? state.chart.startValue : state.chart.assetStartValue;
               return ChartHeaderDetails(
                 startValue: startValue,
                 title: state.chart.sym,

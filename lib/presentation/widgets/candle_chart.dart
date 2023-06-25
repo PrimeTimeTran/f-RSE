@@ -29,7 +29,7 @@ class CandleChartState extends State<CandleChart> {
     return BlocBuilder<AssetBloc, AssetState>(
       builder: (context, state) {
         if (state is AssetLoaded) {
-          context.read<ChartBloc>().hoveredChart(state.asset.current.first, 0);
+          context.read<ChartBloc>().hoveredChart(state.asset.current.first, 10);
           return buildChartBody(state.asset.current);
         } else {
           return const Text('Error:');

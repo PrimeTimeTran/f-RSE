@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 
 import 'package:rse/presentation/all.dart';
 
@@ -12,11 +11,11 @@ class AssetOverview extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: Column(
         children: [
-          HoverDarken(child: YourPosition(), padding: true),
+          HoverDarken(child: YourPosition()),
           UpcomingActivity(),
-          HoverDarken(child: About(), padding: true),
-          HoverDarken(child: KeyStatistics(), padding: true),
-          HoverDarken(child: AssetActivityHistory(), padding: true),
+          HoverDarken(child: About()),
+          HoverDarken(child: KeyStatistics()),
+          HoverDarken(child: AssetActivityHistory()),
         ]
       ),
     );

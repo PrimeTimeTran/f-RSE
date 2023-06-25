@@ -36,6 +36,7 @@ class ArticleState extends State<Article> {
   @override
   Widget build(BuildContext context) {
     return HoverDarken(
+      radius: true,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: getPadding(context), horizontal: getPadding(context)),
           child: isS(context) || isM(context) ?

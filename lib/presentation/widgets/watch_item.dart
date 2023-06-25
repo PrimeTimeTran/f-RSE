@@ -41,6 +41,8 @@ class WatchItemState extends State<WatchItem> {
   Widget build(BuildContext context) {
     final item = widget.item;
     return HoverDarken(
+      radius: false,
+      padding: false,
       child: GestureDetector(
         onTap: () {
           context.go("/securities/${item.sym}");
