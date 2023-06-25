@@ -32,7 +32,7 @@ class CandleChartState extends State<CandleChart> {
           context.read<ChartBloc>().hoveredChart(state.asset.current.first, 10);
           return buildChartBody(state.asset.current);
         } else {
-          return const Text('Error:');
+          return Text('Error: $state');
         }
       },
     );

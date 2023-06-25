@@ -17,6 +17,8 @@ class AssetInitialized extends AssetEvent {
   List<Object?> get props => [asset];
 }
 
+class AssetErrored extends AssetEvent {}
+
 abstract class AssetState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -57,15 +59,22 @@ class AssetBloc extends Bloc<AssetEvent, AssetState> {
   String period = 'live';
   final AssetService assetService = AssetService();
 
-  AssetBloc({ required this.asset }) : super(AssetInitial(asset));
+  AssetBloc({ required this.asset }) : super(AssetInitial(asset)) {
+    on<AssetInitialized>((event, emit) async {
+      emit(AssetLoaded(event.asset));
+    });
+    on<AssetErrored>((error, emit) async {
+      emit(AssetError('Error'));
+    });
+  }
 
   Future<void> fetchAsset(String id) async {
     try {
       final newAsset = await assetService.fetchAsset(id, period);
       asset = newAsset;
-      emit(AssetLoaded(newAsset));
+      add(AssetInitialized(newAsset));
     } catch (e) {
-      emit(AssetError('Error fetching asset'));
+      add(AssetErrored());
     }
   }
 

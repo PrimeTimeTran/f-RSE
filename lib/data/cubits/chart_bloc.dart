@@ -115,6 +115,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
     chart = newChart;
     add(HoveredLineChart(newChart));
   }
+
   void hoveredChart(CandleStick c, double xOffSet) {
     final newChart = chart.copyWith(
       candle: c,
@@ -138,7 +139,6 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       portfolioStartValue: asset.current.last.y,
     );
     chart = newChart;
-    print('updateChart: ${asset.o}');
     add(ChartUpdate(newChart));
   }
 

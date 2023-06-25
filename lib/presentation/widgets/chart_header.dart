@@ -17,7 +17,6 @@ class ChartHeader extends StatelessWidget {
             if (state is HoveringLineChart) {
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.portfolioStartValue;
-              print('Hover Line Chart ${startValue}');
               return ChartHeaderDetails(
                 title: 'Investing',
                 startValue: startValue,
@@ -25,7 +24,6 @@ class ChartHeader extends StatelessWidget {
                 gain: calculatePercentageChange(focusedValue, startValue),
               );
             } else if (state is HoveringChart) {
-              print('Hover Candle Chart');
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.assetStartValue;
               return ChartHeaderDetails(
