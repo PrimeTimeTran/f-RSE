@@ -34,6 +34,7 @@ final darkTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.dark(
     primary: Colors.green,
+
     primaryContainer: Colors.lightGreenAccent,
     secondary: Color(0xFF227C9D),
     tertiary: Color(0xFF30BFBF),

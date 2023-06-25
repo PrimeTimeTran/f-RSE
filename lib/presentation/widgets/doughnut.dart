@@ -28,32 +28,32 @@ class Doughnut extends StatefulWidget {
 class DoughnutState extends State<Doughnut> {
   @override
   Widget build(BuildContext context) {
-    final List<Color> colors = [
-      T(context, 'secondary'),
-    ];
     final String field = widget.data[widget.explodeIdx].totalValue.toString();
+    //get theme
+    final bool dark = isDarkMode(context);
+
     return Column(
       children: [
         SizedBox(
           height: MediaQuery.of(context).size.height * .7,
           child: SfCircularChart(
             legend: Legend(
-                isVisible: true,
-                offset: const Offset(0, 40),
-                position: LegendPosition.top,
-                alignment: ChartAlignment.center,
-                overflowMode: LegendItemOverflowMode.wrap,
+              isVisible: true,
+              offset: const Offset(0, 40),
+              position: LegendPosition.top,
+              alignment: ChartAlignment.center,
+              overflowMode: LegendItemOverflowMode.wrap,
             ),
             annotations: <CircularChartAnnotation>[
               CircularChartAnnotation(
                 widget: Text(
-                    field,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(216, 225, 227, 1),
-                    )
-                  ),
+                  field,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(216, 225, 227, 1),
+                  )
+                ),
               )
             ],
             series: <CircularSeries>[
@@ -67,13 +67,13 @@ class DoughnutState extends State<Doughnut> {
                 yValueMapper: (Investment data, _) => widget.field == 'name' ? data.percentage : data.getValue(widget.field),
                 dataLabelSettings: DataLabelSettings(
                   isVisible: true,
-                  color: T(context, 'tertiary'),
+                  color: dark ? Colors.black12 : Colors.white70,
                 ),
                 pointColorMapper: (Investment data, _) {
                   if (widget.hoveredRowIndex != -1 && widget.hoveredRowIndex == data.idx) {
-                    return T(context, 'tertiary');
+                    return T(context, 'primary');
                   }
-                  return colors[data.idx % colors.length];
+                  return Colors.green[200];
                 },
               ),
             ],
