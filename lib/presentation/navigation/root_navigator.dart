@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,6 @@ class App extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   void _goBranch(int index) {
-
     navigationShell.goBranch(
       index,
       // A common pattern when using bottom navigation bars is to support
@@ -51,7 +51,7 @@ class App extends StatelessWidget {
     );
   }
 
-  void _handleLongPress (LongPressStartDetails details, context) {
+  void _handleLongPress(LongPressStartDetails details, context) {
     event();
     _showModal(context);
   }
@@ -80,30 +80,39 @@ class App extends StatelessWidget {
           ],
         ),
       ),
-      appBar: AppBar(
-          title: Consumer<ThemeModel> (
-            builder: (context, themeModel, _) {
-              return GestureDetector(
-                onDoubleTap: () {
-                  event();
-                  themeModel.toggleTheme();
-                },
-                onLongPressStart: (details) {
-                  _handleLongPress(details, context);
-                },
-                child: const Text(
-                  'Royal Stock Exchange',
-                ),
-              );
+      appBar: AppBar(leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
             },
-          )
-      ),
+          );
+        },
+      ), title: Consumer<ThemeModel>(
+        builder: (context, themeModel, _) {
+          return GestureDetector(
+            onDoubleTap: () {
+              event();
+              themeModel.toggleTheme();
+            },
+            onLongPressStart: (details) {
+              _handleLongPress(details, context);
+            },
+            child: const Text(
+              'Royal Stock Exchange',
+            ),
+          );
+        },
+      )),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: const [
           NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
-          NavigationDestination(label: 'Investing', icon: Icon(Icons.candlestick_chart)),
-          NavigationDestination(label: 'Notifications', icon: Icon(Icons.notifications)),
+          NavigationDestination(
+              label: 'Investing', icon: Icon(Icons.candlestick_chart)),
+          NavigationDestination(
+              label: 'Notifications', icon: Icon(Icons.notifications)),
           NavigationDestination(label: 'Profile', icon: Icon(Icons.person)),
         ],
         onDestinationSelected: _goBranch,
@@ -149,10 +158,10 @@ final goRouter = GoRouter(
           navigatorKey: _shellNavigatorAKey,
           routes: [
             GoRoute(
-                path: '/home',
-                pageBuilder: (context, state) => const NoTransitionPage(
-                  child: HomeScreen(label: 'Home'),
-                ),
+              path: '/home',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: HomeScreen(label: 'Home'),
+              ),
             ),
             GoRoute(
               path: '/securities/:sym',

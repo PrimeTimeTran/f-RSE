@@ -1,28 +1,24 @@
-import 'dart:convert';
-
-import 'package:rse/data/models/all.dart';
-
 class Company {
   int id;
   int ec;
-  DateTime f;
   String hq;
-  String ceo;
   String eh;
   String sym;
+  DateTime f;
+  String ceo;
   String name;
   String industry;
   String description;
 
   Company({
-    required this.ec,
     required this.f,
+    required this.eh,
+    required this.id,
+    required this.ec,
     required this.hq,
     required this.ceo,
-    required this.eh,
     required this.sym,
     required this.name,
-    required this.id,
     required this.industry,
     required this.description,
   });
@@ -30,14 +26,14 @@ class Company {
   factory Company.fromJSON(Map<String, dynamic> json) {
     return Company(
       ec: json['ec'],
-      f: DateTime.parse(json['f']),
       hq: json['hq'],
-      ceo: json['ceo'],
+      id: json['id'],
       eh: json['eh'],
+      ceo: json['ceo'],
       sym: json['sym'],
       name: json['name'],
-      id: json['id'],
       industry: json['industry'],
+      f: DateTime.parse(json['f']),
       description: json['description'],
     );
   }
@@ -45,15 +41,15 @@ class Company {
   factory Company.defaultCompany() {
     return Company(
       ec: 0,
-      f: DateTime(1900, 1, 1),
+      id: 0,
       hq: '',
-      ceo: '',
       eh: '',
       sym: '',
+      ceo: '',
       name: '',
-      id: 0,
       industry: '',
       description: '',
+      f: DateTime(1900, 1, 1),
     );
   }
 }
