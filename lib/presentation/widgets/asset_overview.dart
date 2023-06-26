@@ -18,9 +18,9 @@ class AssetOverview extends StatelessWidget {
                 children: [
                   HoverDarken(child: YourPosition()),
                   UpcomingActivity(),
-                  HoverDarken(child: About(asset: state.asset)),
-                  HoverDarken(child: KeyStatistics(asset: state.asset)),
-                  HoverDarken(child: AssetActivityHistory(asset: state.asset)),
+                  HoverDarken(child: About(asset: asset)),
+                  HoverDarken(child: KeyStatistics(asset: asset)),
+                  HoverDarken(child: AssetActivityHistory(asset: asset)),
                 ]
             ),
           );

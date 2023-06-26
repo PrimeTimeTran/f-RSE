@@ -27,7 +27,7 @@ Future<void> main() async {
       return true;
     };
   } catch (e) {
-    print('Error Firebase $e');
+    debugPrint('Error Firebase $e');
   }
 
   // await dotenv.load(fileName: "/assets/.env");

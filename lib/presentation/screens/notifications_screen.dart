@@ -54,13 +54,10 @@ class NotificationsScreen extends StatelessWidget {
   }
 
   buildMobile(context) {
-    return Container(
-      // color: Colors.red,
-      child: Column(
-        children: [
-          allNotifications(context),
-        ],
-      )
+    return Column(
+      children: [
+        allNotifications(context),
+      ],
     );
   }
 

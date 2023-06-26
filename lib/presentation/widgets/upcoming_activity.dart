@@ -1,8 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
-
-import 'package:rse/presentation/all.dart';
 
 class UpcomingActivity extends StatefulWidget {
   const UpcomingActivity({super.key});

@@ -18,7 +18,6 @@ export 'indicator_item.dart';
 export 'asset_overview.dart';
 export 'key_statistics.dart';
 export 'asset_earnings.dart';
-export 'asset_earnings.dart';
 export 'ticker_carousel.dart';
 export 'period_selector.dart';
 export 'investment_group.dart';

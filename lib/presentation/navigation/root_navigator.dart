@@ -69,13 +69,13 @@ class App extends StatelessWidget {
         child: ListView(
           children: [
             ListTile(
-              title: Text('Drawer Item 1'),
+              title: const Text('Drawer Item 1'),
               onTap: () {
                 // Handle drawer item 1 tap
               },
             ),
             ListTile(
-              title: Text('Drawer Item 2'),
+              title: const Text('Drawer Item 2'),
               onTap: () {
                 // Handle drawer item 2 tap
               },
