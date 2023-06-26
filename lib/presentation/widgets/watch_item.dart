@@ -23,10 +23,19 @@ class WatchItemState extends State<WatchItem> {
       context.go("/securities/${widget.item.sym}");
     }
 
-    final item = widget.item;
     if (isS(context)) {
       return buildSmall(context, navigate);
     }
+    final List<ChartData> data = [
+      ChartData(2010, randomInt(20, 40)),
+      ChartData(2011, randomInt(20, 40)),
+      ChartData(2012, randomInt(20, 40)),
+      ChartData(2013, randomInt(20, 40)),
+      ChartData(2014, randomInt(20, 40))
+    ];
+
+    final item = widget.item;
+    final color = data.first.y < data.last.y ? Colors.green : Colors.red;
     return HoverDarken(
       radius: false,
       padding: false,
@@ -49,6 +58,7 @@ class WatchItemState extends State<WatchItem> {
             child: Row(
               children: [
                 Expanded(
+                  flex: 1,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -70,30 +80,28 @@ class WatchItemState extends State<WatchItem> {
                     ],
                   ),
                 ),
-                const Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text('CHART'),
-                    ],
-                  ),
+                Expanded(
+                  flex: 2,
+                  child: buildSmallChart(context, color, data, true)
                 ),
                 Expanded(
+                  flex: 1,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        item.price.toString(),
+                        formatMoney(item.price.toString()),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        item.change.toString(),
-                        style: const TextStyle(
+                        formatMoney(item.change),
+                        style: TextStyle(
                           fontSize: 10,
+                          color: color,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -108,9 +116,10 @@ class WatchItemState extends State<WatchItem> {
     );
   }
 
-  Widget buildSmallChart(BuildContext context, color, data) {
+  Widget buildSmallChart(BuildContext context, color, data, large) {
     return SizedBox(
-      height: 70,
+      height: large ? 100 : 70,
+      width: large ? 250 : 100,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
@@ -201,7 +210,7 @@ class WatchItemState extends State<WatchItem> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildSmallChart(context, color, data),
+                  buildSmallChart(context, color, data, false),
                 ],
               ),
             ),
@@ -227,7 +236,7 @@ class WatchItemState extends State<WatchItem> {
                         ),
                       ),
                     ),
-                    child: Text(item.price.toString()),
+                    child: Text(formatMoney(item.price.toString())),
                   ),
                 ],
               ),
