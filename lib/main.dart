@@ -11,6 +11,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:rse/all.dart';
 
 Future<void> main() async {
+  HttpOverrides.global = MyHttpOverrides();
+
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
@@ -29,8 +31,6 @@ Future<void> main() async {
   }
 
   // await dotenv.load(fileName: "/assets/.env");
-
-  HttpOverrides.global = MyHttpOverrides();
 
   runApp(
     ChangeNotifierProvider(

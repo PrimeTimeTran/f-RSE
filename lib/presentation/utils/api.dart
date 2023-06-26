@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const api = "http://localhost:7254";
+const api = "http://10.0.2.2:7254";
 
 String? apiKey = dotenv.env['API_KEY'];
 late String newsApi;
