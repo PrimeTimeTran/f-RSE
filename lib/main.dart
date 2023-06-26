@@ -1,34 +1,17 @@
 import 'dart:io';
-import 'dart:ui';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:rse/all.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
-  } catch (e) {
-    debugPrint('Error Firebase $e');
-  }
+  setupAPI();
+  setupFirebase();
 
   // await dotenv.load(fileName: "/assets/.env");
 
@@ -83,7 +66,6 @@ class _MyAppState extends State<MyApp> {
     _newsBloc.fetchArticles();
     _portfolioBloc.fetchPortfolio("1");
     _assetBloc.fetchAsset("GOOGL");
-    event();
   }
 
   @override

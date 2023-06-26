@@ -1,7 +1,16 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final api = Platform.isAndroid ? "http://10.0.2.2:7254" : "http://localhost:7254";
+var api = '';
+
+void setupAPI() {
+  if (kIsWeb) {
+    api = "http://localhost:7254";
+  } else {
+    api = Platform.isAndroid ? "http://10.0.2.2:7254" : "http://localhost:7254";
+  }
+}
 
 String? apiKey = dotenv.env['API_KEY'];
 late String newsApi;

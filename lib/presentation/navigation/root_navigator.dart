@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/data/all.dart';
 import 'package:rse/presentation/all.dart';
@@ -56,7 +55,6 @@ class App extends StatelessWidget {
   }
 
   void _handleLongPress(LongPressStartDetails details, context) {
-    event();
     _showModal(context);
   }
 
@@ -97,7 +95,6 @@ class App extends StatelessWidget {
         builder: (context, themeModel, _) {
           return GestureDetector(
             onDoubleTap: () {
-              event();
               themeModel.toggleTheme();
             },
             onLongPressStart: (details) {

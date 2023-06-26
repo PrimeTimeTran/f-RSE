@@ -11,7 +11,8 @@ class AssetService {
   Future<Asset> fetchAsset(String sym, String period) async {
     try {
       // if (kDebugMode) throw Error();
-      final response = await http.get(Uri.parse("$api/assets/$sym?period=$period"));
+      final String path = "$api/assets/$sym?period=$period";
+      final response = await http.get(Uri.parse(path));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final d = Asset.fromJson(data, period);
