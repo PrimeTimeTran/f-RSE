@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
+import 'package:intl/intl.dart';
 
 import 'package:rse/all.dart';
 
@@ -40,7 +41,7 @@ class About extends StatelessWidget {
                                 Text('CEO',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
-                                Text(faker.person.firstName()),
+                                Text(asset.company.ceo),
                               ],
                             ),
                           ),
@@ -51,7 +52,7 @@ class About extends StatelessWidget {
                                 Text('Employees',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
-                                Text('13233'),
+                                Text(asset.company.ec.toString()),
                               ],
                             ),
                           ),
@@ -62,7 +63,7 @@ class About extends StatelessWidget {
                                 Text('Headquarters',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
-                                Text(faker.address.city()),
+                                Text(asset.company.hq),
                               ],
                             ),
                           ),
@@ -73,8 +74,9 @@ class About extends StatelessWidget {
                                 Text('Founded',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
-                                Text(faker.date.year().toString()),
+                                    Text(DateFormat('yyyy').format(asset.company.f))
                               ],
+
                             ),
                           ),
                         ],

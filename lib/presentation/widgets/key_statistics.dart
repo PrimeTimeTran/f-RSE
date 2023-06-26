@@ -42,7 +42,7 @@ class KeyStatistics extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    buildDataPoint('Dividend Yield', formatMoney(asset.mc)),
+                    buildDataPoint('Dividend Yield', formatPercent(asset.dy)),
                     buildDataPoint('Open Price', formatMoney(asset.o)),
                   ],
                 ),

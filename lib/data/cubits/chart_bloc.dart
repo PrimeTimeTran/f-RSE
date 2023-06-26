@@ -94,13 +94,13 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
     });
   }
 
-  void chartPortfolio(Portfolio portfolio) {
+  void chartPortfolio(Portfolio p) {
     final newChart = chart.copyWith(
       sym: 'Investing',
-      data: portfolio.series,
-      startValue: portfolio.series.last.y,
-      latestValue: portfolio.series.first.y,
-      portfolioStartValue: portfolio.series.last.y,
+      data: p.series,
+      startValue: p.series.last.y,
+      latestValue: p.series.first.y,
+      portfolioStartValue: p.series.last.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
@@ -128,27 +128,27 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
     add(HoveredChart(newChart));
   }
 
-  void updateChart(Asset asset, String sym) {
+  void updateChart(Asset a, String sym) {
     final newChart = chart.copyWith(
       sym: sym,
-      startValue: asset.o,
-      assetStartValue: asset.o,
-      candle: asset.current.last,
-      candleSeries: asset.current,
-      latestValue: asset.current.first.y,
-      portfolioStartValue: asset.current.last.y,
+      startValue: a.o,
+      assetStartValue: a.o,
+      candle: a.current.last,
+      candleSeries: a.current,
+      latestValue: a.current.first.y,
+      portfolioStartValue: a.current.last.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
   }
 
-  void updateChartPortfolioValues(Portfolio portfolio) {
+  void updateChartPortfolioValues(Portfolio p) {
     final newChart = chart.copyWith(
       sym: 'Investing',
-      data: portfolio.series,
-      startValue: portfolio.series.last.y,
-      latestValue: portfolio.current.totalValue,
-      portfolioStartValue: portfolio.series.last.y,
+      data: p.series,
+      startValue: p.series.last.y,
+      latestValue: p.current.totalValue,
+      portfolioStartValue: p.series.last.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));

@@ -15,7 +15,9 @@ class Asset {
   final double loDay;
   final double hiYear;
   final double loYear;
+  final double dy;
   final List<CandleStick> current;
+  final Company company;
   Asset({
     required this.o,
     required this.v,
@@ -30,6 +32,8 @@ class Asset {
     required this.hiYear,
     required this.loYear,
     required this.current,
+    required this.company,
+    required this.dy,
   });
   factory Asset.fromJson(Map<String, dynamic> j , String period) {
     Map<String, dynamic> mapping = {
@@ -53,10 +57,12 @@ class Asset {
       current: series,
       av: j['av'] ?? 0,
       hiDay: j['hiDay'],
+      dy: j['dy'] ?? 0,
       loDay: j['loDay'],
       hiYear: j['hiYear'],
       loYear: j['loYear'],
       value: series.first.close,
+      company: Company.fromJSON(j['company']),
     );
   }
   factory Asset.defaultAsset() => Asset(
@@ -65,6 +71,7 @@ class Asset {
     av: 0,
     pe: 0,
     mc: 0,
+    dy: 0,
     sym: '',
     name: '',
     value: 0,
@@ -73,6 +80,7 @@ class Asset {
     loDay: 0,
     loYear: 0,
     current: [CandleStick.fact()],
+    company: Company.defaultCompany(),
   );
 
   Asset copyWith({
@@ -80,6 +88,7 @@ class Asset {
     double? v,
     double? av,
     double? pe,
+    double? dy,
     double? mc,
     String? sym,
     String? name,
@@ -89,10 +98,12 @@ class Asset {
     double? loYear,
     double? hiYear,
     List<CandleStick>? current,
+    Company? company,
   }) {
     return Asset(
       o: o ?? this.o,
       v: v ?? this.v,
+      dy: dy ?? this.dy,
       pe: pe ?? this.pe,
       av: av ?? this.av,
       mc: mc ?? this.mc,
@@ -104,6 +115,7 @@ class Asset {
       hiYear: hiYear ?? this.hiYear,
       loYear: loYear ?? this.loYear,
       current: current ?? this.current,
+      company: company ?? this.company,
     );
   }
 }
