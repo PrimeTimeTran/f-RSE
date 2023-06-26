@@ -8,7 +8,6 @@ class CandleHoveredDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<ChartBloc, ChartState>(
       builder: (context, state) {
         if (state is UpdatedChart) {

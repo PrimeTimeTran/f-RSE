@@ -68,9 +68,9 @@ class AssetBloc extends Bloc<AssetEvent, AssetState> {
     });
   }
 
-  Future<void> fetchAsset(String id) async {
+  Future<Asset?> fetchAsset(String sym) async {
     try {
-      final newAsset = await assetService.fetchAsset(id, period);
+      final Asset newAsset = await assetService.fetchAsset(sym, period);
       asset = newAsset;
       add(AssetInitialized(newAsset));
     } catch (e) {

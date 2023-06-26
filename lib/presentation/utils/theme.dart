@@ -19,7 +19,6 @@ final lightTheme = ThemeData(
     inversePrimary: Colors.black,
     onPrimaryContainer: Colors.white,
     outline: Colors.black26,
-    // background: Colors.green,
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.green,
@@ -34,7 +33,6 @@ final darkTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.dark(
     primary: Colors.green,
-
     primaryContainer: Colors.lightGreenAccent,
     secondary: Color(0xFF227C9D),
     tertiary: Color(0xFF30BFBF),

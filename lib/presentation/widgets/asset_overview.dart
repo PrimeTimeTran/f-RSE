@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 class AssetOverview extends StatelessWidget {
   const AssetOverview({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          HoverDarken(child: YourPosition()),
-          UpcomingActivity(),
-          HoverDarken(child: About()),
-          HoverDarken(child: KeyStatistics()),
-          HoverDarken(child: AssetActivityHistory()),
-        ]
-      ),
+    return BlocBuilder<AssetBloc, AssetState>(
+      builder: (context, state) {
+        if (state is AssetLoaded) {
+          final asset = state.asset;
+          return Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+                children: [
+                  HoverDarken(child: YourPosition()),
+                  UpcomingActivity(),
+                  HoverDarken(child: About(asset: state.asset)),
+                  HoverDarken(child: KeyStatistics(asset: state.asset)),
+                  HoverDarken(child: AssetActivityHistory(asset: state.asset)),
+                ]
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      }
     );
   }
 }

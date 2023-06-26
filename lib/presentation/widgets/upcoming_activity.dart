@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
 
@@ -18,7 +19,8 @@ class _UpcomingActivityState extends State<UpcomingActivity> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Upcoming Activity'),
+          const Text('Upcoming Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const Divider(),
           Container(
             height: 100,
             child: ListView.builder(

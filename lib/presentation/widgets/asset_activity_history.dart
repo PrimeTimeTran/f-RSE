@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rse/all.dart';
 
 class AssetActivityHistory extends StatelessWidget {
-  const AssetActivityHistory({super.key});
+  final Asset asset;
+  const AssetActivityHistory({super.key, required this.asset});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,8 @@ class AssetActivityHistory extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('History'),
+          const Text('History', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const Divider(),
           Container(
             height: 100,
             child: ListView.builder(
