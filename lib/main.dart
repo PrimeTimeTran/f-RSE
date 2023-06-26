@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> fetchData() async {
     _newsBloc.fetchArticles();
     _portfolioBloc.fetchPortfolio("1");
-    _assetBloc.fetchAsset("BAC");
+    _assetBloc.fetchAsset("GOOGL");
     event();
   }
 

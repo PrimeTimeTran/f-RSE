@@ -75,6 +75,7 @@ class AssetBloc extends Bloc<AssetEvent, AssetState> {
       asset = newAsset;
       add(AssetInitialized(newAsset));
     } catch (e) {
+      print('Error: $e');
       add(AssetErrored());
     }
   }
