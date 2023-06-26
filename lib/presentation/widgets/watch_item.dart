@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -107,14 +108,7 @@ class WatchItemState extends State<WatchItem> {
     );
   }
 
-  Widget buildSmallChart(BuildContext context) {
-    final List<ChartData> chartData = [
-      ChartData(2010, 35),
-      ChartData(2011, 28),
-      ChartData(2012, 34),
-      ChartData(2013, 32),
-      ChartData(2014, 40)
-    ];
+  Widget buildSmallChart(BuildContext context, color, data) {
     return SizedBox(
       height: 70,
       child: Container(
@@ -125,19 +119,34 @@ class WatchItemState extends State<WatchItem> {
           ),
         ),
         child: SfCartesianChart(
-          primaryYAxis: NumericAxis(
-            isVisible: false,
-          ),
+          plotAreaBorderWidth: 0,
+          borderColor: Colors.transparent,
           primaryXAxis: NumericAxis(
             isVisible: false,
           ),
-          plotAreaBorderWidth: 0,
-          borderColor: Colors.transparent,
+          primaryYAxis: NumericAxis(
+            isVisible: false,
+            majorGridLines: const MajorGridLines(
+              width: 2,
+              dashArray: <double>[4, 3],
+            ),
+            plotBands: [
+              PlotBand(
+                opacity: 0.5,
+                borderWidth: 1,
+                end: data.last.y,
+                start: data.last.y,
+                dashArray: const [4, 3],
+                borderColor: T(context, 'inversePrimary'),
+              ),
+            ],
+          ),
           series: <ChartSeries>[
             LineSeries<ChartData, int>(
-              dataSource: chartData,
+              dataSource: data,
               xValueMapper: (ChartData data, _) => data.x,
               yValueMapper: (ChartData data, _) => data.y,
+              color: color
             ),
           ],
         ),
@@ -146,7 +155,16 @@ class WatchItemState extends State<WatchItem> {
   }
 
   Widget buildSmall(context, navigate) {
+    final List<ChartData> data = [
+      ChartData(2010, randomInt(20, 40)),
+      ChartData(2011, randomInt(20, 40)),
+      ChartData(2012, randomInt(20, 40)),
+      ChartData(2013, randomInt(20, 40)),
+      ChartData(2014, randomInt(20, 40))
+    ];
+
     final item = widget.item;
+    final color = data.first.y < data.last.y ? Colors.green : Colors.red;
     return SizedBox(
       height: 100,
       child: Padding(
@@ -183,7 +201,7 @@ class WatchItemState extends State<WatchItem> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildSmallChart(context),
+                  buildSmallChart(context, color, data),
                 ],
               ),
             ),
@@ -201,11 +219,11 @@ class WatchItemState extends State<WatchItem> {
                         const Size(100, 35),
                       ),
                       foregroundColor: MaterialStateProperty.all<Color>(
-                        getColor(item),
+                        color,
                       ),
                       side: MaterialStateProperty.all<BorderSide>(
                         BorderSide(
-                          color: getColor(item),
+                          color: color,
                         ),
                       ),
                     ),
@@ -251,7 +269,6 @@ getHeight(context) {
     return 100.0;
   }
 }
-
 
 MaterialColor getColor(Watch item) {
   return item.changePercent > 0 ? Colors.green : Colors.red;
