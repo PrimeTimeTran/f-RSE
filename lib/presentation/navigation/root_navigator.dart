@@ -45,6 +45,10 @@ class App extends StatelessWidget {
             // Text('Operating System: $os'),
             Text('Screen Width: $width'),
             Text('Screen Height: $height'),
+            TextButton(
+              onPressed: () => throw Exception(),
+              child: const Text("Throw Test Exception"),
+            ),
           ],
         );
       },

@@ -53,6 +53,7 @@ class HomeScreenState extends State<HomeScreen> {
             unLockFlag: unLockFlag,
           ),
           mobileWatchList(context),
+          const Articles(),
         ],
       ),
     );

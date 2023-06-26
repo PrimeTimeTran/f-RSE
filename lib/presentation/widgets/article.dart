@@ -26,7 +26,7 @@ class ArticleState extends State<Article> {
 
   getPadding(context) {
     if (isS(context)) {
-      return 20.0;
+      return 0.0;
     } else if (isM(context)) {
       return 20.0;
     }
