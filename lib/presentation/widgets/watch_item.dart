@@ -36,80 +36,77 @@ class WatchItemState extends State<WatchItem> {
 
     final item = widget.item;
     final color = data.first.y < data.last.y ? Colors.green : Colors.red;
-    return HoverDarken(
-      radius: false,
-      padding: false,
-      child: GestureDetector(
-        onTap: () {
-          navigate();
-        },
-        child: Container(
-          height: getHeight(context),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 2,
-                color: T(context, 'outline'),
-              ),
+    return GestureDetector(
+      onTap: () {
+        print('pressed');
+        navigate();
+      },
+      child: Container(
+        height: getHeight(context),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: 2,
+              color: T(context, 'outline'),
             ),
           ),
-          child: Padding(
-            padding: getPadding(context),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        item.sym,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
+        ),
+        child: Padding(
+          padding: getPadding(context),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      item.sym,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        item.shares.toString(),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    Text(
+                      item.shares.toString(),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  flex: 2,
-                  child: buildSmallChart(context, color, data, true)
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        formatMoney(item.price.toString()),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
+              ),
+              Expanded(
+                flex: 2,
+                child: buildSmallChart(context, color, data, true)
+              ),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      formatMoney(item.price.toString()),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        formatMoney(item.change),
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: color,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    Text(
+                      formatMoney(item.change),
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: color,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

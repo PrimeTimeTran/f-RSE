@@ -10,7 +10,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  setupAPI();
   setupFirebase();
 
   // await dotenv.load(fileName: "/assets/.env");
@@ -37,6 +36,8 @@ Future<void> main() async {
       ),
     ),
   );
+
+  setupAPI();
 }
 
 class MyApp extends StatefulWidget {

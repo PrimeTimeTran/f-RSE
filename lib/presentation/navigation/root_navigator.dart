@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:flutter/rendering.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
@@ -41,12 +41,18 @@ class App extends StatelessWidget {
       builder: (BuildContext context) {
         return Column(
           children: [
-            // Text('Operating System: $os'),
             Text('Screen Width: $width'),
             Text('Screen Height: $height'),
             TextButton(
               onPressed: () => throw Exception(),
               child: const Text("Throw Test Exception"),
+            ),
+            TextButton(
+              onPressed: () {
+                final bool value = debugPaintSizeEnabled;
+                debugPaintSizeEnabled = !value;
+              },
+              child: const Text("Enable Debug Paint Size"),
             ),
           ],
         );
@@ -85,7 +91,7 @@ class App extends StatelessWidget {
       appBar: AppBar(leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
