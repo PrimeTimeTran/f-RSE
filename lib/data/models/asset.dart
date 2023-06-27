@@ -5,6 +5,7 @@ import 'package:rse/data/models/all.dart';
 class Asset {
   final double o;
   final double v;
+  final double dy;
   final double pe;
   final double av;
   final double mc;
@@ -15,12 +16,12 @@ class Asset {
   final double loDay;
   final double hiYear;
   final double loYear;
-  final double dy;
-  final List<CandleStick> current;
   final Company company;
+  final List<CandleStick> current;
   Asset({
     required this.o,
     required this.v,
+    required this.dy,
     required this.av,
     required this.mc,
     required this.pe,
@@ -33,7 +34,6 @@ class Asset {
     required this.loYear,
     required this.current,
     required this.company,
-    required this.dy,
   });
   factory Asset.fromJson(Map<String, dynamic> j , String period) {
     Map<String, dynamic> mapping = {
@@ -76,8 +76,8 @@ class Asset {
     name: '',
     value: 0,
     hiDay: 0,
-    hiYear: 0,
     loDay: 0,
+    hiYear: 0,
     loYear: 0,
     current: [CandleStick.fact()],
     company: Company.defaultCompany(),
@@ -97,8 +97,8 @@ class Asset {
     double? hiDay,
     double? loYear,
     double? hiYear,
-    List<CandleStick>? current,
     Company? company,
+    List<CandleStick>? current,
   }) {
     return Asset(
       o: o ?? this.o,

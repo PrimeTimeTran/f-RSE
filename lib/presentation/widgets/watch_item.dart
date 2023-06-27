@@ -36,77 +36,80 @@ class WatchItemState extends State<WatchItem> {
 
     final item = widget.item;
     final color = data.first.y < data.last.y ? Colors.green : Colors.red;
-    return GestureDetector(
-      onTap: () {
-        print('pressed');
-        navigate();
-      },
-      child: Container(
-        height: getHeight(context),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 2,
-              color: T(context, 'outline'),
+    return HoverDarken(
+      radius: false,
+      padding: false,
+      child: GestureDetector(
+        onTap: () {
+          navigate();
+        },
+        child: Container(
+          height: getHeight(context),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 2,
+                color: T(context, 'outline'),
+              ),
             ),
           ),
-        ),
-        child: Padding(
-          padding: getPadding(context),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      item.sym,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: getPadding(context),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        item.sym,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      item.shares.toString(),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        item.shares.toString(),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: buildSmallChart(context, color, data, true)
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      formatMoney(item.price.toString()),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      formatMoney(item.change),
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                Expanded(
+                  flex: 2,
+                  child: buildSmallChart(context, color, data, true)
                 ),
-              ),
-            ],
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        formatMoney(item.price.toString()),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        formatMoney(item.change),
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: color,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -114,47 +117,49 @@ class WatchItemState extends State<WatchItem> {
   }
 
   Widget buildSmallChart(BuildContext context, color, data, large) {
-    return SizedBox(
-      height: large ? 100 : 70,
-      width: large ? 250 : 100,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 0,
-            color: Colors.transparent,
-          ),
-        ),
-        child: SfCartesianChart(
-          plotAreaBorderWidth: 0,
-          borderColor: Colors.transparent,
-          primaryXAxis: NumericAxis(
-            isVisible: false,
-          ),
-          primaryYAxis: NumericAxis(
-            isVisible: false,
-            majorGridLines: const MajorGridLines(
-              width: 2,
-              dashArray: <double>[4, 3],
+    return IgnorePointer(
+      child: SizedBox(
+        height: large ? 100 : 70,
+        width: large ? 250 : 100,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 0,
+              color: Colors.transparent,
             ),
-            plotBands: [
-              PlotBand(
-                opacity: 0.5,
-                borderWidth: 1,
-                end: data.last.y,
-                start: data.last.y,
-                dashArray: const [4, 3],
-                borderColor: T(context, 'inversePrimary'),
+          ),
+          child: SfCartesianChart(
+            plotAreaBorderWidth: 0,
+            borderColor: Colors.transparent,
+            primaryXAxis: NumericAxis(
+              isVisible: false,
+            ),
+            primaryYAxis: NumericAxis(
+              isVisible: false,
+              majorGridLines: const MajorGridLines(
+                width: 2,
+                dashArray: <double>[4, 3],
+              ),
+              plotBands: [
+                PlotBand(
+                  opacity: 0.5,
+                  borderWidth: 1,
+                  end: data.last.y,
+                  start: data.last.y,
+                  dashArray: const [4, 3],
+                  borderColor: T(context, 'inversePrimary'),
+                ),
+              ],
+            ),
+            series: <ChartSeries>[
+              LineSeries<ChartData, int>(
+                dataSource: data,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.y,
+                color: color
               ),
             ],
           ),
-          series: <ChartSeries>[
-            LineSeries<ChartData, int>(
-              dataSource: data,
-              xValueMapper: (ChartData data, _) => data.x,
-              yValueMapper: (ChartData data, _) => data.y,
-              color: color
-            ),
-          ],
         ),
       ),
     );
