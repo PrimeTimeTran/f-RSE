@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/all.dart';
+import 'all.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  setupFirebase();
-
-  // await dotenv.load(fileName: "/assets/.env");
+  setupAPP();
 
   runApp(
     ChangeNotifierProvider(
@@ -36,8 +34,6 @@ Future<void> main() async {
       ),
     ),
   );
-
-  setupAPI();
 }
 
 class MyApp extends StatefulWidget {
