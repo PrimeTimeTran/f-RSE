@@ -99,8 +99,8 @@ class CandleStick extends Point{
     open: 0,
     high: 0,
     close: 0,
-    time: DateTime.now().toIso8601String(),
     value: 0,
+    time: DateTime.now().toIso8601String(),
   );
 
   CandleStick copyWith({

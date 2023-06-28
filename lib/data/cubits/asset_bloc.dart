@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rse/data/all.dart';
+import 'package:rse/all.dart';
 
 abstract class AssetEvent extends Equatable {
   @override
@@ -70,7 +70,6 @@ class AssetBloc extends Bloc<AssetEvent, AssetState> {
 
   Future<Asset?> fetchAsset(String sym) async {
     try {
-
       final Asset newAsset = await assetService.fetchAsset(sym, period);
       asset = newAsset;
       add(AssetInitialized(newAsset));
@@ -81,6 +80,6 @@ class AssetBloc extends Bloc<AssetEvent, AssetState> {
 
   void setPeriod(String p) async {
     period = p;
-    await fetchAsset(sym);
+    await fetchAsset(asset.sym);
   }
 }

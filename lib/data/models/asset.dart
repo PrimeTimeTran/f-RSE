@@ -1,37 +1,19 @@
 import 'dart:convert';
 
-import 'package:rse/data/models/all.dart';
+import 'package:rse/all.dart';
 
 class Asset {
   final double o;
-  final double v;
-  final double dy;
-  final double pe;
-  final double av;
-  final double mc;
+  final Meta meta;
   final String sym;
-  final double hiDay;
   final String? name;
-  final double value;
-  final double loDay;
-  final double hiYear;
-  final double loYear;
   final Company company;
   final List<CandleStick> current;
   Asset({
     required this.o,
-    required this.v,
-    required this.dy,
-    required this.av,
-    required this.mc,
-    required this.pe,
     required this.sym,
     required this.name,
-    required this.value,
-    required this.hiDay,
-    required this.loDay,
-    required this.hiYear,
-    required this.loYear,
+    required this.meta,
     required this.current,
     required this.company,
   });
@@ -46,76 +28,115 @@ class Asset {
       "1y": "oneYear",
       "all": "allData",
     };
-    var series = [for (var cs in jsonDecode(j[mapping[period]])['series']) CandleStick.fromJson(cs)];
+    final series = [for (var cs in jsonDecode(j[mapping[period]])['series']) CandleStick.fromJson(cs)];
+    final Meta meta = Meta.fromJSON(jsonDecode(j['meta']));
+    meta.o = series.last.open;
     return Asset(
-      o: j['o'],
-      mc: j['mc'],
-      pe: j['pe'],
+      o: meta.o,
+      meta: meta,
       sym: j['sym'],
-      v: j['v'] ?? 0,
       name: j['name'],
       current: series,
-      av: j['av'] ?? 0,
-      hiDay: j['hiDay'],
-      dy: j['dy'] ?? 0,
-      loDay: j['loDay'],
-      hiYear: j['hiYear'],
-      loYear: j['loYear'],
-      value: series.first.close,
       company: Company.fromJSON(j['company']),
     );
   }
   factory Asset.defaultAsset() => Asset(
     o: 0,
-    v: 0,
-    av: 0,
-    pe: 0,
-    mc: 0,
-    dy: 0,
     sym: '',
     name: '',
-    value: 0,
-    hiDay: 0,
-    loDay: 0,
-    hiYear: 0,
-    loYear: 0,
+    meta: Meta.defaultMeta(),
     current: [CandleStick.fact()],
     company: Company.defaultCompany(),
   );
 
   Asset copyWith({
     double? o,
-    double? v,
-    double? av,
-    double? pe,
-    double? dy,
-    double? mc,
+    Meta? meta,
     String? sym,
     String? name,
-    double? loDay,
-    double? value,
-    double? hiDay,
-    double? loYear,
-    double? hiYear,
     Company? company,
     List<CandleStick>? current,
   }) {
     return Asset(
       o: o ?? this.o,
-      v: v ?? this.v,
-      dy: dy ?? this.dy,
-      pe: pe ?? this.pe,
-      av: av ?? this.av,
-      mc: mc ?? this.mc,
       sym: sym ?? this.sym,
       name: name ?? this.name,
-      hiDay: hiDay ?? this.hiDay,
-      value: value ?? this.value,
-      loDay: loDay ?? this.loDay,
-      hiYear: hiYear ?? this.hiYear,
-      loYear: loYear ?? this.loYear,
+      meta: meta ?? this.meta,
       current: current ?? this.current,
       company: company ?? this.company,
+    );
+  }
+}
+
+
+class Meta {
+  double o;
+  final double h;
+  final double l;
+  final double c;
+  final double v;
+  final double awv;
+  final double mc;
+  final double dy;
+  final double pe;
+  final double av;
+  final double hiDay;
+  final double loDay;
+  final double hiYear;
+  final double loYear;
+
+  Meta({
+    required this.o,
+    required this.h,
+    required this.l,
+    required this.c,
+    required this.v,
+    required this.mc,
+    required this.dy,
+    required this.pe,
+    required this.av,
+    required this.awv,
+    required this.hiDay,
+    required this.loDay,
+    required this.hiYear,
+    required this.loYear,
+  });
+
+  factory Meta.defaultMeta() => Meta(
+    // add all fields needed
+    o: 0,
+    h: 0,
+    l: 0,
+    c: 0,
+    v: 0,
+    mc: 0,
+    dy: 0,
+    pe: 0,
+    av: 0,
+    awv: 0,
+    hiDay: 0,
+    loDay: 0,
+    hiYear: 0,
+    loYear: 0,
+
+  );
+
+  factory Meta.fromJSON(Map<String, dynamic> json) {
+    return Meta(
+      o: json['o'] ?? 0,
+      h: json['h'] ?? 0,
+      l: json['l'] ?? 0,
+      c: json['c'] ?? 0,
+      v: json['v'] ?? 0,
+      mc: json['mc'] ?? 0,
+      av: json['av'] ?? 0,
+      dy: json['dy'] ?? 0,
+      pe: json['pe'] ?? 0,
+      awv: json['awv'] ?? 0,
+      hiDay: json['hiDay'] ?? 0,
+      loDay: json['loDay'] ?? 0,
+      hiYear: json['hiYear'] ?? 0,
+      loYear: json['loYear'] ?? 0,
     );
   }
 }

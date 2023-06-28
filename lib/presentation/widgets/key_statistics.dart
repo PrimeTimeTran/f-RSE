@@ -40,22 +40,22 @@ class KeyStatistics extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              buildDataPoint('Open', formatMoney(asset.o)),
-              buildDataPoint('Today\'s high', formatMoney(asset.hiDay)),
-              buildDataPoint('Today\'s low', formatMoney(asset.loDay)),
-              buildDataPoint('52 Wk high', formatMoney(asset.hiYear)),
-              buildDataPoint('52 Wk low', formatMoney(asset.loYear)),
+              buildDataPoint('Open', formatMoney(asset.meta.o)),
+              buildDataPoint('Today\'s high', formatMoney(asset.meta.hiDay)),
+              buildDataPoint('Today\'s low', formatMoney(asset.meta.loDay)),
+              buildDataPoint('52 Wk high', formatMoney(asset.meta.hiYear)),
+              buildDataPoint('52 Wk low', formatMoney(asset.meta.loYear)),
             ],
           ),
         ),
         Expanded(
           child: Column(
             children: [
-              buildDataPoint('Volume', asset.pe.toString()),
-              buildDataPoint('Average Volume', '${asset.av} M'),
-              buildDataPoint('Market Cap', '${formatMoney(asset.mc)} M'),
-              buildDataPoint('P/E Ratio', asset.pe.toString()),
-              buildDataPoint('Div/yield', formatPercent(asset.dy)),
+              buildDataPoint('Volume', asset.meta.pe.toString()),
+              buildDataPoint('Average Volume', '${asset.meta.av} M'),
+              buildDataPoint('Market Cap', '${formatMoney(asset.meta.mc)} M'),
+              buildDataPoint('P/E Ratio', asset.meta.pe.toString()),
+              buildDataPoint('Div/yield', formatPercent(asset.meta.dy)),
             ],
           ),
         ),
@@ -65,34 +65,34 @@ class KeyStatistics extends StatelessWidget {
       Expanded(
         child: Column(
           children: [
-            buildDataPoint('Market Cap', '${formatMoney(asset.mc)} M'),
-            buildDataPoint('High Today', formatMoney(asset.hiDay)),
-            buildDataPoint('52 Week High', formatMoney(asset.hiYear)),
+            buildDataPoint('Market Cap', '${formatMoney(asset.meta.mc)} M'),
+            buildDataPoint('High Today', formatMoney(asset.meta.hiDay)),
+            buildDataPoint('52 Week High', formatMoney(asset.meta.hiYear)),
           ],
         ),
       ),
       Expanded(
         child: Column(
           children: [
-            buildDataPoint('Price-Earning Ratio', asset.pe.toString()),
-            buildDataPoint('Low Today', formatMoney(asset.loDay)),
-            buildDataPoint('52 Week Low', formatMoney(asset.loYear)),
+            buildDataPoint('Price-Earning Ratio', asset.meta.pe.toString()),
+            buildDataPoint('Low Today', formatMoney(asset.meta.loDay)),
+            buildDataPoint('52 Week Low', formatMoney(asset.meta.loYear)),
           ],
         ),
       ),
       Expanded(
         child: Column(
           children: [
-            buildDataPoint('Dividend Yield', formatPercent(asset.dy)),
-            buildDataPoint('Open Price', formatMoney(asset.o)),
+            buildDataPoint('Dividend Yield', formatPercent(asset.meta.dy)),
+            buildDataPoint('Open Price', formatMoney(asset.meta.o)),
           ],
         ),
       ),
       Expanded(
         child: Column(
           children: [
-            buildDataPoint('Average Volume', '${asset.av} M'),
-            buildDataPoint('Volume', '${asset.v} M'),
+            buildDataPoint('Average Volume', '${asset.meta.av} M'),
+            buildDataPoint('Volume', '${asset.meta.v} M'),
           ],
         ),
       ),

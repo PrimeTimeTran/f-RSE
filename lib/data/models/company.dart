@@ -8,7 +8,7 @@ class Company {
   String ceo;
   String name;
   String industry;
-  String description;
+  String desc;
 
   Company({
     required this.f,
@@ -20,7 +20,7 @@ class Company {
     required this.sym,
     required this.name,
     required this.industry,
-    required this.description,
+    required this.desc,
   });
 
   factory Company.fromJSON(Map<String, dynamic> json) {
@@ -32,9 +32,9 @@ class Company {
       ceo: json['ceo'],
       sym: json['sym'],
       name: json['name'],
+      desc: json['desc'],
       industry: json['industry'],
       f: DateTime.parse(json['f']),
-      description: json['description'],
     );
   }
 
@@ -47,8 +47,8 @@ class Company {
       sym: '',
       ceo: '',
       name: '',
+      desc: '',
       industry: '',
-      description: '',
       f: DateTime(1900, 1, 1),
     );
   }
