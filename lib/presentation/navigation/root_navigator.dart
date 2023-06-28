@@ -149,7 +149,6 @@ final goRouter = GoRouter(
       final bloc = context.read<AssetBloc>();
       final sym = location.substring(12);
       bloc.fetchAsset(sym);
-      context.read<ChartBloc>().updateChart(bloc.asset, sym);
     }
     return state.location;
   },

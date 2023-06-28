@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rse/all.dart';
 
 import 'package:rse/data/all.dart';
 
@@ -81,8 +83,14 @@ class HoveringLineChart extends ChartState {
 
 class ChartBloc extends Bloc<ChartEvent, ChartState> {
   late Chart chart;
+  final AssetBloc assetBloc;
 
-  ChartBloc({ required this.chart}) : super(ChartInitial(chart)) {
+  ChartBloc({ required this.chart, required this.assetBloc}) :super(ChartInitial(chart)) {
+    assetBloc.stream.listen((state) {
+      if (state is AssetLoaded) {
+        updateChart(state.asset, state.asset.sym);
+      }
+    });
     on<HoveredChart>((e, emit) {
       emit(HoveringChart(e.chart));
     });
@@ -129,13 +137,14 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
   }
 
   void updateChart(Asset a, String sym) {
+    final point = DataPoint(a.current.last.time, a.current.last.close);
     final newChart = chart.copyWith(
       sym: sym,
       startValue: a.o,
-      assetStartValue: a.o,
+      latestValue: point.y,
       candle: a.current.last,
       candleSeries: a.current,
-      latestValue: a.current.first.y,
+      assetStartValue: a.current.first.open,
       portfolioStartValue: a.current.last.y,
     );
     chart = newChart;

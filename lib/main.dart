@@ -27,7 +27,10 @@ Future<void> main() async {
             create: (_) => AssetBloc(asset: Asset.defaultAsset()),
           ),
           BlocProvider<ChartBloc>(
-            create: (_) => ChartBloc(chart: Chart()),
+            create: (context) {
+              final assetBloc = BlocProvider.of<AssetBloc>(context);
+              return ChartBloc(chart: Chart(), assetBloc: assetBloc);
+            },
           ),
         ],
         child: const MyApp(),
