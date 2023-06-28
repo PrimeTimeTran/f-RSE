@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:rse/all.dart';
@@ -19,7 +18,7 @@ class PortfolioService {
         throw Error();
       }
     } catch (e) {
-      debugPrint("Error: Fetching portfolio. Loading from cache.");
+      p("Error: Fetching portfolio. Loading from cache.");
       return await _localStorage.getCachedPortfolio();
     }
   }

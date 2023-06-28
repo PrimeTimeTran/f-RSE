@@ -20,7 +20,7 @@ class NewsService {
         throw Error();
       }
     } catch (e) {
-      debugPrint("Error: Fetching articles. Loading from cache.");
+      p("Error: Fetching articles. Loading from cache.");
       return await _localStorage.getCachedArticles();
     }
   }
