@@ -14,7 +14,7 @@ class TimeLabel extends StatelessWidget {
             final p = c.read<AssetBloc>().period;
             return buildTimeLabel(context, p, state.chart.xOffSet, state.chart.time);
           } else if  (state is HoveringLineChart) {
-            final p = c.read<AssetBloc>().period;
+            final p = c.read<PortfolioBloc>().period;
             return buildTimeLabel(context, p, state.chart.xOffSet, state.chart.time);
           } else {
             return const SizedBox.shrink();

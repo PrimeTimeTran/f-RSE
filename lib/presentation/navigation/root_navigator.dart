@@ -140,7 +140,7 @@ final goRouter = GoRouter(
     String location = state.location;
     if (location == '/home') {
       final bloc = context.read<PortfolioBloc>();
-      bloc.fetchPortfolio('1');
+      bloc.fetchPortfolio(1);
       if (bloc.portfolio.current.totalValue != 0) {
         context.read<ChartBloc>().updateChartPortfolioValues(bloc.portfolio);
       }

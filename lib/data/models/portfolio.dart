@@ -3,21 +3,35 @@ import 'dart:convert';
 import 'package:rse/data/all.dart';
 
 class Portfolio {
+  final int id;
   final Current current;
   final List<Stock> stocks;
   final List<Crypto> cryptos;
-  final List<DataPoint> series;
+  late List<DataPoint> series;
 
   Portfolio({
+    required this.id,
     required this.stocks,
     required this.series,
     required this.current,
     required this.cryptos,
   });
 
-  factory Portfolio.fromJson(Map<String, dynamic> json) {
+  factory Portfolio.fromJson(Map<String, dynamic> json, {String period = 'live' }) {
+    Map<String, dynamic> mapping = {
+      "live": "live",
+      "1d": "oneDay",
+      "1w": "oneWeek",
+      "1m": "oneMonth",
+      "3m": "threeMonths",
+      "ytd": "ytd",
+      "1y": "oneYear",
+      "all": "allData",
+    };
+
     final v = jsonDecode(json['valuation']);
     return Portfolio(
+      id: 1,
       current: Current.fromJson(v['current']),
       stocks: [
         for (var s in v['stocks']['items']) Stock.fromJson(s)
@@ -26,12 +40,13 @@ class Portfolio {
         for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)
       ],
       series: [
-        for (var cs in v['series']) DataPoint(cs['time'], cs['value'])
+        for (var cs in period == 'live' ? v['series'] : jsonDecode(json[mapping[period]]) ) DataPoint(cs['time'], cs['value'])
       ],
     );
   }
 
   factory Portfolio.defaultPortfolio() => Portfolio(
+    id: 1,
     stocks: [],
     series: [],
     cryptos: [],
@@ -49,17 +64,23 @@ class Portfolio {
   );
 
   Portfolio copyWith({
+    int? id,
     Current? current,
     List<Stock>? stocks,
     List<Crypto>? cryptos,
     List<DataPoint>? series,
   }) {
     return Portfolio(
+      id: id ?? this.id,
       current: current ?? this.current,
       stocks: stocks ?? this.stocks,
       cryptos: cryptos ?? this.cryptos,
       series: series ?? this.series,
     );
+  }
+
+  setCurrent(v) {
+    series = [for (var cs in v['series']) DataPoint(cs['time'], cs['value'])];
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rse/all.dart';
 
@@ -12,7 +13,7 @@ class PeriodSelector extends StatefulWidget {
 
 class PeriodSelectorState extends State<PeriodSelector> {
   late String hoveredPeriod;
-  final List<String> periods = ['live', '1d', '1w', '1m', '3m', 'ytd', '1y'];
+  final List<String> periods = ['live', '1d', '1w', '1m', '3m', 'ytd', '1y', 'all'];
 
   @override
   void initState() {
@@ -58,11 +59,13 @@ class PeriodSelectorState extends State<PeriodSelector> {
   }
 
   buildSelector(context) {
+    final isHome = GoRouter.of(context).location == '/home';
     final color = T(context, 'primary');
     final highlightColor = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
+    final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     final assetBloc = BlocProvider.of<AssetBloc>(context);
-    final period = assetBloc.period;
+    final period = isHome ? portfolioBloc.period : assetBloc.period;
 
     return Align(
       alignment: Alignment.centerLeft,
@@ -79,7 +82,11 @@ class PeriodSelectorState extends State<PeriodSelector> {
                   onTap: () {
                     logPeriodSelect(p);
                     if (period == p) return;
-                    assetBloc.setPeriod(p);
+                    if (isHome) {
+                      portfolioBloc.setPeriod(p);
+                    } else {
+                      assetBloc.setPeriod(p);
+                    }
                   },
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,

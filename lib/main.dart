@@ -29,7 +29,8 @@ Future<void> main() async {
           BlocProvider<ChartBloc>(
             create: (context) {
               final assetBloc = BlocProvider.of<AssetBloc>(context);
-              return ChartBloc(chart: Chart(), assetBloc: assetBloc);
+              final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
+              return ChartBloc(chart: Chart(), assetBloc: assetBloc, portfolioBloc: portfolioBloc);
             },
           ),
         ],
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> fetchData() async {
     _newsBloc.fetchArticles();
-    _portfolioBloc.fetchPortfolio("1");
+    // _portfolioBloc.fetchPortfolio(1);
     _assetBloc.fetchAsset("GOOGL");
   }
 

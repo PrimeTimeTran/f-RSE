@@ -23,7 +23,7 @@ class CarouselState
     _tickerBarKey = GlobalKey(); // Initialize GlobalKey
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 60),
+      duration: const Duration(seconds: 100),
     );
 
     _animationController.addStatusListener((status) {

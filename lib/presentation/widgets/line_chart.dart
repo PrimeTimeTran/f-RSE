@@ -49,13 +49,18 @@ class LineChartState extends State<LineChart> {
     return BlocBuilder<PortfolioBloc, PortfolioState>(
       builder: (context, state) {
         if (state is PortfolioLoading) {
-          return const CircularProgressIndicator();
+          return Container( // Wrap with a Container
+            height: MediaQuery.of(context).size.height * .48, // Set the height to fill the screen
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         } else if (state is PortfolioLoaded) {
           context.read<ChartBloc>().chartPortfolio(state.portfolio);
           final data = state.portfolio.series;
           return buildChart(data);
         } else {
-          return const Text('Error:');
+          return const SizedBox();
         }
       },
     );
@@ -110,7 +115,7 @@ class LineChartState extends State<LineChart> {
                 series: <LineSeries<DataPoint, DateTime>>[
                   LineSeries<DataPoint, DateTime>(
                     color: Colors.green,
-                    dataSource: data.take(50).toList(),
+                    dataSource: data,
                     yValueMapper: (DataPoint d, _) => d.y,
                     xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
                   ),

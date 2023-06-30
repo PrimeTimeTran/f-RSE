@@ -118,7 +118,6 @@ class Meta {
     loDay: 0,
     hiYear: 0,
     loYear: 0,
-
   );
 
   factory Meta.fromJSON(Map<String, dynamic> json) {

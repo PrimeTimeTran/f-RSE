@@ -18,6 +18,7 @@ class ChartHeader extends StatelessWidget {
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.portfolioStartValue;
               return ChartHeaderDetails(
+                hovering: true,
                 title: 'Investing',
                 startValue: startValue,
                 focusValue: focusedValue,
@@ -27,6 +28,7 @@ class ChartHeader extends StatelessWidget {
               final focusedValue = state.chart.focusedPoint.y;
               final startValue = state.chart.assetStartValue;
               return ChartHeaderDetails(
+                hovering: true,
                 title: state.chart.sym,
                 startValue: startValue,
                 focusValue: focusedValue,
@@ -36,6 +38,7 @@ class ChartHeader extends StatelessWidget {
               final focusedValue = state.chart.latestValue;
               final startValue = state.chart.sym == 'Investing' ? state.chart.startValue : state.chart.assetStartValue;
               return ChartHeaderDetails(
+                hovering: false,
                 startValue: startValue,
                 title: state.chart.sym,
                 focusValue: focusedValue,

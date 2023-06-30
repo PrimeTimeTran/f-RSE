@@ -6,14 +6,14 @@ import 'package:rse/all.dart';
 class PortfolioService {
   final LocalStorageService _localStorage = LocalStorageService();
 
-  Future<Portfolio> fetchPortfolio(String id) async {
+  Future<Portfolio> fetchPortfolio(int id, String period) async {
     try {
-      // if (kDebugMode) throw Error();
-      final response = await http.get(Uri.parse("$api/portfolios/$id"));
+      var path = await Uri.parse("$api/portfolios/$id?period=$period");
+      final response = await http.get(path);
       if (response.statusCode == 200) {
-        final d = Portfolio.fromJson(json.decode(response.body));
+        final p = Portfolio.fromJson(json.decode(response.body), period: period);
         _localStorage.saveData('portfolio', response.body);
-        return d;
+        return p;
       } else {
         throw Error();
       }

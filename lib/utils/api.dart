@@ -2,10 +2,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-var api = '';
+var api = 'http://localhost:7254';
 var newsApi = '';
-// var apiKey = dotenv.env['API_KEY'] ?? '';
-
 
 void setupAPI() {
   api = "http://localhost:7254";

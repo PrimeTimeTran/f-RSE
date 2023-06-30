@@ -84,13 +84,24 @@ class HoveringLineChart extends ChartState {
 class ChartBloc extends Bloc<ChartEvent, ChartState> {
   late Chart chart;
   final AssetBloc assetBloc;
+  final PortfolioBloc portfolioBloc;
 
-  ChartBloc({ required this.chart, required this.assetBloc}) :super(ChartInitial(chart)) {
+  ChartBloc({
+    required this.chart,
+    required this.assetBloc,
+    required this.portfolioBloc
+  }) :super(ChartInitial(chart)) {
     assetBloc.stream.listen((state) {
       if (state is AssetLoaded) {
         updateChart(state.asset, state.asset.sym);
       }
     });
+    portfolioBloc.stream.listen((state) {
+      if (state is PortfolioLoaded) {
+        updateChartPortfolio(state.portfolio);
+      }
+    });
+
     on<HoveredChart>((e, emit) {
       emit(HoveringChart(e.chart));
     });
@@ -106,9 +117,9 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
     final newChart = chart.copyWith(
       sym: 'Investing',
       data: p.series,
-      startValue: p.series.last.y,
-      latestValue: p.series.first.y,
-      portfolioStartValue: p.series.last.y,
+      startValue: p.series.first.y,
+      latestValue: p.series.last.y,
+      portfolioStartValue: p.series.first.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
@@ -146,6 +157,19 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       candleSeries: a.current,
       assetStartValue: a.current.first.open,
       portfolioStartValue: a.current.last.y,
+    );
+    chart = newChart;
+    add(ChartUpdate(newChart));
+  }
+
+  void updateChartPortfolio(Portfolio p) {
+    print('updateChartPortfolio ${p.series.first.y} ${p.series.last.y} ${p.series.last.y - p.series.first.y} ');
+    final newChart = chart.copyWith(
+      sym: 'Investing',
+      data: p.series,
+      startValue: p.series.first.y,
+      latestValue: p.series.last.y,
+      portfolioStartValue: p.series.first.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));

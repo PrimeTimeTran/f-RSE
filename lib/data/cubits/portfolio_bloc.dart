@@ -62,6 +62,7 @@ class PortfolioError extends PortfolioState {
 
 class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
   late Portfolio portfolio;
+  late String period = 'live';
   final PortfolioService portfolioService = PortfolioService();
 
   PortfolioBloc({ required this.portfolio }) : super(PortfolioInitial(portfolio)) {
@@ -70,11 +71,12 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     });
   }
 
-  Future<void> fetchPortfolio(String id) async {
+  Future<void> fetchPortfolio(int id) async {
     emit(PortfolioLoading());
     try {
-      final Portfolio p = await portfolioService.fetchPortfolio(id);
+      final Portfolio p = await portfolioService.fetchPortfolio(id, period);
       portfolio = p;
+      print('fetch prortfolio ${p.id}');
       add(LoadedPortfolio(p));
     } catch (e) {
       add(LoadError('fetching portfolio $e'));
@@ -83,7 +85,13 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
 
   List<DataPoint> getDataPoints(List<CandleStick> list) {
     return list
-      .map((time) => DataPoint(time.time, 0))
-      .toList();
+        .map((time) => DataPoint(time.time, 0))
+        .toList();
+  }
+
+  void setPeriod(String p) {
+    period = p;
+    print(portfolio.id);
+    fetchPortfolio(portfolio.id);
   }
 }

@@ -25,7 +25,6 @@ class CandleChartState extends State<CandleChart> {
   @override
   Widget build(BuildContext context) {
     _setupTheme(context);
-
     return BlocBuilder<AssetBloc, AssetState>(
       builder: (context, state) {
         if (state is AssetLoaded) {
@@ -38,6 +37,7 @@ class CandleChartState extends State<CandleChart> {
   }
 
   buildChartBody(List<CandleStick> data) {
+    p('buildChartBody ${data.length}');
     return Column(
       children: [
         Column(
@@ -51,7 +51,8 @@ class CandleChartState extends State<CandleChart> {
                     top: -40,
                     left: 0,
                     right: 0,
-                    child: CandleHoveredDetails()),
+                    child: CandleHoveredDetails(),
+                  ),
                 SfCartesianChart(
                   plotAreaBorderWidth: 0,
                   zoomPanBehavior: _zoomPanBehavior,
