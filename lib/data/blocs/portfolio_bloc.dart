@@ -72,11 +72,9 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
   }
 
   Future<void> fetchPortfolio(int id) async {
-    emit(PortfolioLoading());
     try {
       final Portfolio p = await portfolioService.fetchPortfolio(id, period);
       portfolio = p;
-      print('fetch prortfolio ${p.id}');
       add(LoadedPortfolio(p));
     } catch (e) {
       add(LoadError('fetching portfolio $e'));
@@ -91,7 +89,6 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
 
   void setPeriod(String p) {
     period = p;
-    print(portfolio.id);
     fetchPortfolio(portfolio.id);
   }
 }

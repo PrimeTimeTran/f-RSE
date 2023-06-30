@@ -37,7 +37,6 @@ class CandleChartState extends State<CandleChart> {
   }
 
   buildChartBody(List<CandleStick> data) {
-    p('buildChartBody ${data.length}');
     return Column(
       children: [
         Column(

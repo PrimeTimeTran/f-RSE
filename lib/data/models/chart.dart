@@ -12,11 +12,10 @@ class Chart {
   late double startValue = 1;
   late double latestValue = 1;
   late String period = 'live';
-  late double assetStartValue = 1;
+  late double focusedValue = 1;
   late double portfolioStartValue = 1;
   late List<CandleStick> candleSeries = [];
   late CandleStick candle = CandleStick.fact();
-  late DataPoint focusedPoint = DataPoint('', 1);
   late List<DataPoint> data = [DataPoint(DateTime.now().toString(), 1)];
 
   Chart();
@@ -30,9 +29,8 @@ class Chart {
     double? startValue,
     double? latestValue,
     CandleStick? candle,
+    double? focusedValue,
     List<DataPoint>? data,
-    DataPoint? focusedPoint,
-    double? assetStartValue,
     double? portfolioStartValue,
     List<CandleStick>? candleSeries,
   }) {
@@ -47,8 +45,7 @@ class Chart {
       ..data = List.from(data ?? this.data)
       ..startValue = startValue ?? this.startValue
       ..latestValue = latestValue ?? this.latestValue
-      ..focusedPoint = focusedPoint ?? this.focusedPoint
-      ..assetStartValue = assetStartValue ?? this.assetStartValue
+      ..focusedValue = focusedValue ?? this.focusedValue
       ..candleSeries = List.from(candleSeries ?? this.candleSeries)
       ..portfolioStartValue = portfolioStartValue ?? this.portfolioStartValue;
   }

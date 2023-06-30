@@ -5,10 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rse/all.dart';
 
 class LineChart extends StatefulWidget {
-  final Function(bool) lockFlag;
-  final Function(bool) unLockFlag;
-  final bool lock;
-  const LineChart({super.key, required this.lockFlag, required this.unLockFlag, required this.lock});
+  const LineChart({super.key});
 
   @override
   LineChartState createState() => LineChartState();
@@ -33,31 +30,12 @@ class LineChartState extends State<LineChart> {
   }
 
   @override
-  void didUpdateWidget(covariant LineChart oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.lock && widget.lock == oldWidget.lock) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        var data = context.read<ChartBloc>().chart.data;
-        var idx = data.length;
-        _trackballBehavior?.showByIndex(idx);
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<PortfolioBloc, PortfolioState>(
       builder: (context, state) {
-        if (state is PortfolioLoading) {
-          return Container( // Wrap with a Container
-            height: MediaQuery.of(context).size.height * .48, // Set the height to fill the screen
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else if (state is PortfolioLoaded) {
-          context.read<ChartBloc>().chartPortfolio(state.portfolio);
+        if (state is PortfolioLoaded) {
           final data = state.portfolio.series;
+          context.read<ChartBloc>().chartPortfolio(state.portfolio);
           return buildChart(data);
         } else {
           return const SizedBox();

@@ -8,7 +8,7 @@ class PortfolioService {
 
   Future<Portfolio> fetchPortfolio(int id, String period) async {
     try {
-      var path = await Uri.parse("$api/portfolios/$id?period=$period");
+      var path = Uri.parse("$api/portfolios/$id?period=$period");
       final response = await http.get(path);
       if (response.statusCode == 200) {
         final p = Portfolio.fromJson(json.decode(response.body), period: period);

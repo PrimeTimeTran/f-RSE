@@ -12,7 +12,7 @@ class CandleHoveredDetails extends StatelessWidget {
       builder: (context, state) {
         if (state is UpdatedChart) {
           return buildCandleItem(context, state.chart.candle);
-        } else if (state is HoveringChart) {
+        } else if (state is ChartFocus) {
           return buildCandleItem(context, state.chart.candle);
         } else {
           return const SizedBox();

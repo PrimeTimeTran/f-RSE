@@ -47,28 +47,12 @@ class HomeScreenState extends State<HomeScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          LineChart(
-            lock: lock,
-            lockFlag: lockFlag,
-            unLockFlag: unLockFlag,
-          ),
+          LineChart(),
           mobileWatchList(context),
           const Articles(),
         ],
       ),
     );
-  }
-
-  unLockFlag(some) {
-    setState(() {
-      lock = true;
-    });
-  }
-
-  lockFlag(other) {
-    setState(() {
-      lock = true;
-    });
   }
 
   Widget buildDesktop(context) {
@@ -82,15 +66,7 @@ class HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   const TickerCarousel(),
-                  MouseRegion(
-                    onExit: (event) => lockFlag(true),
-                    onEnter: (event) => unLockFlag(false),
-                    child: LineChart(
-                      lock: lock,
-                      lockFlag: lockFlag,
-                      unLockFlag: unLockFlag,
-                    ),
-                  ),
+                  LineChart(),
                   const Articles(),
                 ],
               ),
