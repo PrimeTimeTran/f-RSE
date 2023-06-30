@@ -2,22 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rse/all.dart';
 
-import 'package:rse/data/all.dart';
+import 'package:rse/all.dart';
 
 @immutable
 abstract class ChartEvent extends Equatable {
   @override
   List<Object?> get props => [];
-}
-
-class ChartInitialized extends ChartEvent {
-  final Chart chart;
-  ChartInitialized(this.chart);
-
-  @override
-  List<Object?> get props => [chart];
 }
 
 class ChartUpdate extends ChartEvent {
@@ -49,17 +40,17 @@ class ChartInitial extends ChartState {
   List<Object?> get props => [chart];
 }
 
-class ChartFocus extends ChartState {
+class ChartFocusSuccess extends ChartState {
   final Chart chart;
-  ChartFocus(this.chart);
+  ChartFocusSuccess(this.chart);
 
   @override
   List<Object?> get props => [chart];
 }
 
-class UpdatedChart extends ChartState {
+class ChartUpdateSuccess extends ChartState {
   final Chart chart;
-  UpdatedChart(this.chart);
+  ChartUpdateSuccess(this.chart);
 
   @override
   List<Object?> get props => [chart];
@@ -85,13 +76,11 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
         updateChartPortfolio(state.portfolio);
       }
     });
-
     on<ChartFocused>((e, emit) {
-      emit(ChartFocus(e.chart));
+      emit(ChartFocusSuccess(e.chart));
     });
-
     on<ChartUpdate>((e, emit) {
-      emit(UpdatedChart(e.chart));
+      emit(ChartUpdateSuccess(e.chart));
     });
   }
 
@@ -101,7 +90,6 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       data: p.series,
       startValue: p.series.first.y,
       latestValue: p.series.last.y,
-      portfolioStartValue: p.series.first.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
@@ -130,14 +118,14 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
   }
 
   void updateChart(Asset a, String sym) {
-    final point = DataPoint(a.current.last.time, a.current.last.close);
+    final series = a.current;
+    final point = DataPoint(series.last.time, series.last.close);
     final newChart = chart.copyWith(
       sym: sym,
+      candle: series.last,
       latestValue: point.y,
-      candle: a.current.last,
-      candleSeries: a.current,
-      startValue: a.current.first.open,
-      portfolioStartValue: a.current.last.y,
+      candleSeries: series,
+      startValue: series.first.open,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
@@ -149,7 +137,6 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       data: p.series,
       startValue: p.series.first.y,
       latestValue: p.series.last.y,
-      portfolioStartValue: p.series.first.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));
@@ -161,7 +148,6 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       data: p.series,
       startValue: p.series.last.y,
       latestValue: p.current.totalValue,
-      portfolioStartValue: p.series.last.y,
     );
     chart = newChart;
     add(ChartUpdate(newChart));

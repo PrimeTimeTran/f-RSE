@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rse/all.dart';
 
@@ -16,7 +17,7 @@ class ChartHeader extends StatelessWidget {
           height: 100,
           child: BlocConsumer<ChartBloc, ChartState>(
             builder: (context, state) {
-              if (state is ChartFocus) {
+              if (state is ChartFocusSuccess) {
                 final startValue = state.chart.startValue;
                 final focusedValue = state.chart.focusedValue;
                 return ChartHeaderDetails(
@@ -26,21 +27,27 @@ class ChartHeader extends StatelessWidget {
                   focusValue: focusedValue,
                   gain: calculatePercentageChange(focusedValue, startValue),
                 );
-              } else if (state is UpdatedChart) {
-                final focusedValue = state.chart.latestValue;
+              } else if (state is ChartUpdateSuccess) {
                 final startValue = state.chart.startValue;
+                final focusedValue = state.chart.latestValue;
+                final router = GoRouter.of(context);
+                final isHome = router.location.contains('/home');
+                p('router.location ${router.location}');
+
+                // Race condition:
+                // Asset vs Portfolio
                 return ChartHeaderDetails(
                   hovering: false,
                   startValue: startValue,
-                  title: state.chart.sym,
+                  title: isHome ? 'Investing' : state.chart.sym,
                   focusValue: focusedValue,
                   gain: calculatePercentageChange(focusedValue, startValue),
                 );
-              } else {
-                return const SizedBox();
               }
+              return const SizedBox();
             },
-            listener: (context, state) {},
+            listener: (context, state) {
+            },
           ),
         ),
       ),

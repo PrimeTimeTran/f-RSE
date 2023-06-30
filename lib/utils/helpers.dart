@@ -12,6 +12,6 @@ extension Log on Object {
 // Sometimes we do need to see print statements in prod.
 void p(v) {
   if (kDebugMode) {
-    print(v);
+    print('📚 $v');
   }
 }

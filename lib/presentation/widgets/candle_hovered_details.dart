@@ -10,9 +10,9 @@ class CandleHoveredDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChartBloc, ChartState>(
       builder: (context, state) {
-        if (state is UpdatedChart) {
+        if (state is ChartUpdateSuccess) {
           return buildCandleItem(context, state.chart.candle);
-        } else if (state is ChartFocus) {
+        } else if (state is ChartFocusSuccess) {
           return buildCandleItem(context, state.chart.candle);
         } else {
           return const SizedBox();

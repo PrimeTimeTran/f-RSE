@@ -42,6 +42,10 @@ class LineChartState extends State<LineChart> {
       },
       listener: (context, state) {
         if (state is PortfolioLoaded) {
+          // BlocProvider.of<ChartBloc>(context).add(ChartUpdate(state.portfolio));
+
+          // For making sure the header of the chart is loaded on initial load
+          // Change if better solution is found.
           context.read<ChartBloc>().chartPortfolio(state.portfolio);
         }
       },
@@ -60,6 +64,20 @@ class LineChartState extends State<LineChart> {
               SfCartesianChart(
                 plotAreaBorderWidth: 0,
                 trackballBehavior: _trackballBehavior,
+                onTrackballPositionChanging: (TrackballArgs args) =>
+                    _trackballChange(args, data),
+                primaryXAxis: DateTimeAxis(
+                  isVisible: false,
+                  majorGridLines: const MajorGridLines(width: 0),
+                ),
+                series: <LineSeries<DataPoint, DateTime>>[
+                  LineSeries<DataPoint, DateTime>(
+                    color: Colors.green,
+                    dataSource: data,
+                    yValueMapper: (DataPoint d, _) => d.y,
+                    xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                  ),
+                ],
                 primaryYAxis: NumericAxis(
                   isVisible: false,
                   majorGridLines: const MajorGridLines(
@@ -77,31 +95,6 @@ class LineChartState extends State<LineChart> {
                     ),
                   ],
                 ),
-                primaryXAxis: DateTimeAxis(
-                  isVisible: false,
-                  majorGridLines: const MajorGridLines(width: 0),
-                ),
-                onTrackballPositionChanging: (TrackballArgs args) {
-                  final offset = args.chartPointInfo.xPosition;
-                  final point =
-                      args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                  if (offset != null &&
-                      point != null &&
-                      data[point] != null) {
-                    final item = data[point];
-                    context
-                        .read<ChartBloc>()
-                        .hoveredLineChart(item, offset);
-                  }
-                },
-                series: <LineSeries<DataPoint, DateTime>>[
-                  LineSeries<DataPoint, DateTime>(
-                    color: Colors.green,
-                    dataSource: data,
-                    yValueMapper: (DataPoint d, _) => d.y,
-                    xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
-                  ),
-                ],
               ),
               const TimeLabel(),
             ],
@@ -110,5 +103,14 @@ class LineChartState extends State<LineChart> {
         ],
       ),
     );
+  }
+
+  _trackballChange(TrackballArgs args, data) {
+    final offset = args.chartPointInfo.xPosition;
+    final point = args.chartPointInfo.chartDataPoint!.overallDataPointIndex;
+    if (offset != null && point != null && data[point] != null) {
+      final item = data[point];
+      context.read<ChartBloc>().hoveredLineChart(item, offset);
+    }
   }
 }

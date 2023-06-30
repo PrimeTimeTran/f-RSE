@@ -10,8 +10,9 @@ class TimeLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChartBloc, ChartState>(
         builder: (c, state) {
-          if (state is ChartFocus) {
+          if (state is ChartFocusSuccess) {
             final p = c.read<AssetBloc>().period;
+            // state.chart.period;
             return buildTimeLabel(context, p, state.chart.xOffSet, state.chart.time);
           } else {
             return const SizedBox.shrink();

@@ -1,24 +1,15 @@
-abstract class Point {
-  final String x;
-  final double y;
-  Point(this.x, this.y);
-}
-
 class Chart {
-  late String sym = 'BAC';
-  late String time = '';
-  late double xOffSet = 0;
-  late String type = 'line';
-  late double startValue = 1;
-  late double latestValue = 1;
-  late String period = 'live';
-  late double focusedValue = 1;
-  late double portfolioStartValue = 1;
-  late List<CandleStick> candleSeries = [];
-  late CandleStick candle = CandleStick.fact();
-  late List<DataPoint> data = [DataPoint(DateTime.now().toString(), 1)];
-
-  Chart();
+  String time = '';
+  String sym = 'BAC';
+  double xOffSet = 0;
+  String type = 'line';
+  double startValue = 1;
+  double latestValue = 1;
+  String period = 'live';
+  double focusedValue = 1;
+  List<CandleStick> candleSeries = [];
+  CandleStick candle = CandleStick.fact();
+  List<DataPoint> data = [DataPoint(DateTime.now().toString(), 1)];
 
   Chart copyWith({
     String? type,
@@ -31,7 +22,6 @@ class Chart {
     CandleStick? candle,
     double? focusedValue,
     List<DataPoint>? data,
-    double? portfolioStartValue,
     List<CandleStick>? candleSeries,
   }) {
     var temp = sym == '' ? this.sym : sym;
@@ -46,12 +36,11 @@ class Chart {
       ..startValue = startValue ?? this.startValue
       ..latestValue = latestValue ?? this.latestValue
       ..focusedValue = focusedValue ?? this.focusedValue
-      ..candleSeries = List.from(candleSeries ?? this.candleSeries)
-      ..portfolioStartValue = portfolioStartValue ?? this.portfolioStartValue;
+      ..candleSeries = List.from(candleSeries ?? this.candleSeries);
   }
 }
 
-class CandleStick extends Point{
+class CandleStick {
   final double low;
   final String time;
   final double open;
@@ -68,7 +57,7 @@ class CandleStick extends Point{
     required this.time,
     String x = '',
     double y = 0,
-  }) : super(x, y);
+  });
 
   factory CandleStick.fromJson(Map<String, dynamic> j) => CandleStick(
     low: j['l'],
@@ -88,7 +77,7 @@ class CandleStick extends Point{
       'high: $high, '
       'value: $value, '
       'close: $close, '
-      '}';
+    '}';
   }
 
   factory CandleStick.fact() => CandleStick(
@@ -119,13 +108,16 @@ class CandleStick extends Point{
   }
 }
 
-class DataPoint extends Point {
+class DataPoint {
   final String x;
   final double y;
+  DataPoint(
+    this.x,
+    this.y
+  );
 
-  DataPoint(this.x, this.y) : super(x, y);
   factory DataPoint.fact() => DataPoint(
-      DateTime.now().toIso8601String(),
-      0,
-    );
+    DateTime.now().toIso8601String(),
+    0,
+  );
 }
