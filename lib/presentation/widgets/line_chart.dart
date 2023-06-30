@@ -31,14 +31,18 @@ class LineChartState extends State<LineChart> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PortfolioBloc, PortfolioState>(
+    return BlocConsumer<PortfolioBloc, PortfolioState>(
       builder: (context, state) {
         if (state is PortfolioLoaded) {
           final data = state.portfolio.series;
-          context.read<ChartBloc>().chartPortfolio(state.portfolio);
           return buildChart(data);
         } else {
           return const SizedBox();
+        }
+      },
+      listener: (context, state) {
+        if (state is PortfolioLoaded) {
+          context.read<ChartBloc>().chartPortfolio(state.portfolio);
         }
       },
     );
