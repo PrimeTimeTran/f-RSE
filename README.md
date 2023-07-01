@@ -1,7 +1,8 @@
 # [Royal Stock Exchange(RSE) Flutter Client](https://github.com/PrimeTimeTran/f-RSE)
-# [Royal Stock Exchange(RSE) Flutter Client](https://royal-stock-exchange.netlify.app/)
 
-![Preview](https://s11.gifyu.com/images/SQLgu.gif)
+![Preview](https://s11.gifyu.com/images/SQAUR.gif)
+
+[//]: # (![Preview]&#40;./preview.gif&#41;)
 
 A stock exchange for the next generation.
 
@@ -17,8 +18,7 @@ A stock exchange for the next generation.
 ## Getting Started
 
 - Get a copy of `.env`
-- Create a NOTES.md for saving code snippets and notes for yourself.
-- Create a SCRATCHPAD.md for saving snippets while working which you don't necessarily want to keep "long term"
+- Create `./notes` for notes.
 
 ### Deployment
 
@@ -27,8 +27,9 @@ A stock exchange for the next generation.
 - flutter build web
 - flutter run -d chrome
 
+#### iOS
 
-
+#### Android
 
 ## FAQ
 

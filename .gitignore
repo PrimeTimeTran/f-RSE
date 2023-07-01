@@ -43,10 +43,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-notes/NOTES.md
-SCRATCHPAD.md
-
 .env
 
-/notes
 /notes/*
