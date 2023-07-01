@@ -64,7 +64,6 @@ DateTime roundToNearestHour(DateTime dt) {
       .add(Duration(minutes: roundedMinutes));
 }
 
-
 int calculateIntervals(period, data){
   final map = {
     'live': 5,

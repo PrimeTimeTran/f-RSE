@@ -72,8 +72,8 @@ class LineChartState extends State<LineChart> {
                 ),
                 series: <LineSeries<DataPoint, DateTime>>[
                   LineSeries<DataPoint, DateTime>(
-                    color: Colors.green,
                     dataSource: data,
+                    color: Colors.green,
                     yValueMapper: (DataPoint d, _) => d.y,
                     xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
                   ),
@@ -88,8 +88,8 @@ class LineChartState extends State<LineChart> {
                     PlotBand(
                       opacity: 0.5,
                       borderWidth: 1,
-                      end: data.last.y,
-                      start: data.last.y,
+                      end: data.first.y,
+                      start: data.first.y,
                       dashArray: const [4, 3],
                       borderColor: T(context, 'inversePrimary'),
                     ),
