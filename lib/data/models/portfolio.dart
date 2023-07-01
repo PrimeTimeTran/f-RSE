@@ -4,10 +4,11 @@ import 'package:rse/data/all.dart';
 
 class Portfolio {
   final int id;
+  String period;
   final Current current;
+  List<DataPoint> series;
   final List<Stock> stocks;
   final List<Crypto> cryptos;
-  late List<DataPoint> series;
 
   Portfolio({
     required this.id,
@@ -15,6 +16,7 @@ class Portfolio {
     required this.series,
     required this.current,
     required this.cryptos,
+    required this.period,
   });
 
   factory Portfolio.fromJson(Map<String, dynamic> json, {String period = 'live' }) {
@@ -32,6 +34,7 @@ class Portfolio {
     final v = jsonDecode(json['valuation']);
     return Portfolio(
       id: 1,
+      period: 'live',
       current: Current.fromJson(v['current']),
       stocks: [
         for (var s in v['stocks']['items']) Stock.fromJson(s)
@@ -50,6 +53,7 @@ class Portfolio {
     stocks: [],
     series: [],
     cryptos: [],
+    period: 'live',
     current: Current(
       totalValue: 0.0,
       cryptocurrencies: Cryptocurrencies(
@@ -65,6 +69,7 @@ class Portfolio {
 
   Portfolio copyWith({
     int? id,
+    String? period,
     Current? current,
     List<Stock>? stocks,
     List<Crypto>? cryptos,
@@ -72,10 +77,11 @@ class Portfolio {
   }) {
     return Portfolio(
       id: id ?? this.id,
-      current: current ?? this.current,
+      period: period ?? this.period,
       stocks: stocks ?? this.stocks,
-      cryptos: cryptos ?? this.cryptos,
       series: series ?? this.series,
+      cryptos: cryptos ?? this.cryptos,
+      current: current ?? this.current,
     );
   }
 

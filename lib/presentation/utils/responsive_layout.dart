@@ -14,7 +14,7 @@ class ResponsiveLayout extends StatelessWidget {
       builder: (context, constraints) {
         if (isS(context)) {
           return Container(
-            // color: Colors.red,
+            color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: mobile,
@@ -22,7 +22,7 @@ class ResponsiveLayout extends StatelessWidget {
           );
         } else if (isM(context)){
           return Container(
-            // color: Colors.yellow,
+            color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: desktop
@@ -30,7 +30,7 @@ class ResponsiveLayout extends StatelessWidget {
           );
         } else if (isL(context)) {
           return Container(
-            // color: Colors.blue,
+            color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               child: desktop
@@ -38,7 +38,7 @@ class ResponsiveLayout extends StatelessWidget {
           );
         } else {
           return Container(
-            // color: Colors.red,
+            color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
               child: desktop

@@ -46,10 +46,11 @@ class ChartHeaderDetails extends StatelessWidget {
     final isHome = GoRouter.of(context).location == '/home';
     final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     final assetBloc = BlocProvider.of<AssetBloc>(context);
-    var prompt = isHome ? portfolioBloc.period : assetBloc.period;
+    var prompt = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
     prompt = getPrompt(prompt);
 
     final gained = getChangePercent(focusValue, startValue) > 0;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,7 +76,7 @@ class ChartHeaderDetails extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                '${calculateValueChange(focusValue, startValue)} ($gain)  ',
+                '${formatValueChange(focusValue, startValue)} ($gain)  ',
                 style: TextStyle(
                   color: gained ? T(context, 'primary') : Colors.red,
                   fontSize: 14,

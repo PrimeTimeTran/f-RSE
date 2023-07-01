@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:rse/data/all.dart';
+
+import 'package:rse/all.dart';
 
 Future<dynamic> loadJsonFile(String path) async {
   try {
@@ -20,9 +20,9 @@ Future<dynamic> loadJsonFile(String path) async {
 
 void printResponse(http.Response response) {
   final responseMap = json.decode(response.body) as Map<String, dynamic>;
-  responseMap.forEach((key, value) {
+  responseMap.forEach((key, v) {
     if (kDebugMode) {
-      debugPrint('$key: $value');
+      debugPrint('$key: $v');
     }
   });
 }
@@ -33,117 +33,37 @@ int randomInt(int to, int from) {
   return randomNumber;
 }
 
-String formatMoney(value) {
-  value = value.toString();
-  final numberFormat = NumberFormat.currency(symbol: '\$');
-  final moneyValue = double.parse(value.replaceAll(',', ''));
-  return numberFormat.format(moneyValue);
-}
-
-String shortenMoney(String value) {
-  final numberFormat = NumberFormat.currency(symbol: '\$');
-  final moneyValue = double.parse(value.replaceAll(',', ''));
-
-  if (moneyValue >= 1e9) {
-    final shortenedValue = moneyValue / 1e9;
-    return '${numberFormat.format(shortenedValue)} B';
-  } else if (moneyValue >= 1e6) {
-    final shortenedValue = moneyValue / 1e6;
-    return '${numberFormat.format(shortenedValue)} M';
-  } else if (moneyValue >= 1e3) {
-    final shortenedValue = moneyValue / 1e3;
-    return '${numberFormat.format(shortenedValue)} K';
-  }
-
-  return numberFormat.format(moneyValue);
-}
-
-String formatUtcToDM(DateTime utcTime) {
-  final localTime = utcTime.toLocal();
-  final day = localTime.day;
-  final month = localTime.month;
-  final formattedDate = '$day/$month';
-  return formattedDate;
-}
-
-formatField(data, field) {
-  switch (field) {
-    case 'name':
-      return data.name;
-    case 'value' || 'totalValue':
-      return formatMoney(data.getValue(field).toString());
-    case 'quantity':
-      return data.quantity.toString();
-    default:
-      return "${data.getValue(field)}%";
-  }
-}
-
-String formatPercent(double value) {
-  return '${(value * 100).toStringAsFixed(2)}%';
-}
-
-String calculatePercentageChange(double newValue, double oldValue) {
-  double gainLoss = getChangePercent(newValue, oldValue);
+String calculatePercentageChange(double newVal, double oldVal) {
+  double gainLoss = getChangePercent(newVal, oldVal);
   String formatted = formatPercentage(gainLoss);
   return formatted;
 }
 
-double getChangePercent(double newValue, double oldValue) {
-  return ((newValue - oldValue) / oldValue) * 100;
-}
-
-String formatPercentage(double gainLoss) {
-  String sign = (gainLoss >= 0) ? '+' : '-';
-  double absoluteChange = gainLoss.abs();
-  return '$sign ${absoluteChange.toStringAsFixed(2)} %';
-}
-
-String calculateValueChange(double newValue, double oldValue) {
-  double valueChange = newValue - oldValue;
-  String sign = (valueChange >= 0) ? '+' : '-';
-  double absoluteChange = valueChange.abs();
-  return '$sign ${formatMoney(absoluteChange.toStringAsFixed(2))}';
+double getChangePercent(double newVal, double oldVal) {
+  return ((newVal - oldVal) / oldVal) * 100;
 }
 
 double getLowestVal(List<CandleStick> series) {
-  return series.reduce((value, element) => value.low < element.low ? value : element).low;
+  return series.reduce((v, e) => v.low < e.low ? v : e).low;
 }
 
 double getHighestVal(List<CandleStick> series) {
-  return series.reduce((value, element) => value.high > element.high ? value : element).high;
+  return series.reduce((v, e) => v.high > e.high ? v : e).high;
 }
 
-DateTime roundDownToNearest5Minutes(DateTime dateTime) {
-  final minute = dateTime.minute;
+DateTime roundDownToNearest5Minutes(DateTime dt) {
+  final minute = dt.minute;
   final roundedMinute = (minute ~/ 5) * 5;
-  return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, roundedMinute);
+  return DateTime(dt.year, dt.month, dt.day, dt.hour, roundedMinute);
 }
 
-DateTime roundToNearestHour(DateTime dateTime) {
-  final minutes = dateTime.minute;
+DateTime roundToNearestHour(DateTime dt) {
+  final minutes = dt.minute;
   final roundedMinutes = (minutes >= 30) ? 0 : 30;
-  return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour)
+  return DateTime(dt.year, dt.month, dt.day, dt.hour)
       .add(Duration(minutes: roundedMinutes));
 }
 
-String chooseFormat(String period, time) {
-  final map = {
-    'live': 'h:mma',
-    '1d': 'h:mma',
-    '1w': 'hh:mma, MMM d',
-    '1m': 'hh:mma, MMM d',
-    '3m': 'MMM d, yyyy',
-    '1y': 'MMM d, yyyy',
-    'ytd': 'MMM d, yyyy',
-  };
-
-  final dateFormat = map[period] ?? 'yMd';
-  if (period == '1w' || period == '1m') {
-    return DateFormat(dateFormat).format(DateTime.parse(time)).toString();
-  }
-  return DateFormat(dateFormat).format(DateTime.parse(time)).toString();
-}
 
 int calculateIntervals(period, data){
   final map = {

@@ -72,7 +72,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       }
     });
     portfolioBloc.stream.listen((state) {
-      if (state is PortfolioLoaded) {
+      if (state is PortfolioLoadedSuccess) {
         updateChartPortfolio(state.portfolio);
       }
     });
@@ -86,8 +86,9 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
 
   void chartPortfolio(Portfolio p) {
     final newChart = chart.copyWith(
-      sym: 'Investing',
       data: p.series,
+      sym: 'Investing',
+      period: p.period,
       startValue: p.series.first.y,
       latestValue: p.series.last.y,
     );

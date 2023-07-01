@@ -59,13 +59,15 @@ class PeriodSelectorState extends State<PeriodSelector> {
   }
 
   buildSelector(context) {
-    final isHome = GoRouter.of(context).location == '/home';
     final color = T(context, 'primary');
     final highlightColor = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
+
     final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     final assetBloc = BlocProvider.of<AssetBloc>(context);
-    final period = isHome ? portfolioBloc.period : assetBloc.period;
+
+    final isHome = GoRouter.of(context).location == '/home';
+    final period = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
 
     return Align(
       alignment: Alignment.centerLeft,

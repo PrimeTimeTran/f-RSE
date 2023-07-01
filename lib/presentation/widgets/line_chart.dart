@@ -33,7 +33,7 @@ class LineChartState extends State<LineChart> {
   Widget build(BuildContext context) {
     return BlocConsumer<PortfolioBloc, PortfolioState>(
       builder: (context, state) {
-        if (state is PortfolioLoaded) {
+        if (state is PortfolioLoadedSuccess) {
           final data = state.portfolio.series;
           return buildChart(data);
         } else {
@@ -41,7 +41,7 @@ class LineChartState extends State<LineChart> {
         }
       },
       listener: (context, state) {
-        if (state is PortfolioLoaded) {
+        if (state is PortfolioLoadedSuccess) {
           // BlocProvider.of<ChartBloc>(context).add(ChartUpdate(state.portfolio));
 
           // For making sure the header of the chart is loaded on initial load

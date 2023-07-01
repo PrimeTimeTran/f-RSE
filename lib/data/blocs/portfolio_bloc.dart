@@ -8,10 +8,10 @@ abstract class PortfolioEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadedPortfolio extends PortfolioEvent {
+class PortfolioLoaded extends PortfolioEvent {
   final Portfolio portfolio;
 
-  LoadedPortfolio(this.portfolio);
+  PortfolioLoaded(this.portfolio);
 
   @override
   List<Object?> get props => [portfolio];
@@ -42,10 +42,10 @@ class PortfolioInitial extends PortfolioState {
 
 class PortfolioLoading extends PortfolioState {}
 
-class PortfolioLoaded extends PortfolioState {
+class PortfolioLoadedSuccess extends PortfolioState {
   final Portfolio portfolio;
 
-  PortfolioLoaded(this.portfolio);
+  PortfolioLoadedSuccess(this.portfolio);
 
   @override
   List<Object?> get props => [portfolio];
@@ -62,20 +62,19 @@ class PortfolioError extends PortfolioState {
 
 class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
   late Portfolio portfolio;
-  late String period = 'live';
   final PortfolioService portfolioService = PortfolioService();
 
   PortfolioBloc({ required this.portfolio }) : super(PortfolioInitial(portfolio)) {
-    on<LoadedPortfolio>((e, emit) async {
-      emit(PortfolioLoaded(e.portfolio));
+    on<PortfolioLoaded>((e, emit) async {
+      emit(PortfolioLoadedSuccess(e.portfolio));
     });
   }
 
   Future<void> fetchPortfolio(int id) async {
     try {
-      final Portfolio p = await portfolioService.fetchPortfolio(id, period);
+      final Portfolio p = await portfolioService.fetchPortfolio(id, portfolio.period);
       portfolio = p;
-      add(LoadedPortfolio(p));
+      add(PortfolioLoaded(p));
     } catch (e) {
       add(LoadError('fetching portfolio $e'));
     }
@@ -87,8 +86,16 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
         .toList();
   }
 
-  void setPeriod(String p) {
-    period = p;
-    fetchPortfolio(portfolio.id);
+  void setPeriod(String p) async {
+    try {
+      final port = await portfolioService.fetchPortfolio(portfolio.id, p);
+      final newPort = port.copyWith(
+        period: p,
+      );
+      portfolio = newPort;
+      add(PortfolioLoaded(newPort));
+    } catch (e) {
+      add(LoadError('fetching portfolio $e'));
+    }
   }
 }

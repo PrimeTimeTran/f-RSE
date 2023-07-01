@@ -37,7 +37,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
             builder: (context, state) {
               if (state is PortfolioLoading) {
                 return const CircularProgressIndicator();
-              } else if (state is PortfolioLoaded) {
+              } else if (state is PortfolioLoadedSuccess) {
                 final p = state.portfolio;
                 return Column(
                   children: [
