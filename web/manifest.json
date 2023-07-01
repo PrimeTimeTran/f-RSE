@@ -34,12 +34,19 @@
     ],
     "assets": [
         "assets/news.json",
-        "assets/portfolio.json",
-        "assets/GOOGL-live.json",
-        "assets/GOOGL-1d.json",
-        "assets/GOOGL-1w.json",
-        "assets/GOOGL-1m.json",
-        "assets/GOOGL-3m.json",
-        "assets/GOOGL-1y.json"
+        "assets/portfolio-live.json",
+        "assets/portfolio-1d.json",
+        "assets/portfolio-1w.json",
+        "assets/portfolio-1m.json",
+        "assets/portfolio-3m.json",
+        "assets/portfolio-ytd.json",
+        "assets/portfolio-1y.json",
+        "assets/googl-live.json",
+        "assets/googl-1d.json",
+        "assets/googl-1w.json",
+        "assets/googl-1m.json",
+        "assets/googl-3m.json",
+        "assets/googl-ytd.json",
+        "assets/googl-1y.json"
     ]
 }

@@ -19,7 +19,7 @@ class PortfolioService {
       }
     } catch (e) {
       p("Error: Fetching portfolio. Loading from cache.");
-      return await _localStorage.getCachedPortfolio();
+      return await _localStorage.getCachedPortfolio(period);
     }
   }
 }

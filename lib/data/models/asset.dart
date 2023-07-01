@@ -2,6 +2,17 @@ import 'dart:convert';
 
 import 'package:rse/all.dart';
 
+Map<String, dynamic> mapping = {
+  "live": "live",
+  "1d": "oneDay",
+  "1w": "oneWeek",
+  "1m": "oneMonth",
+  "3m": "threeMonths",
+  "ytd": "yearToDate",
+  "1y": "oneYear",
+  "all": "allData",
+};
+
 class Asset {
   final double o;
   final Meta meta;
@@ -18,17 +29,8 @@ class Asset {
     required this.company,
   });
   factory Asset.fromJson(Map<String, dynamic> j , String period) {
-    Map<String, dynamic> mapping = {
-      "live": "live",
-      "1d": "oneDay",
-      "1w": "oneWeek",
-      "1m": "oneMonth",
-      "3m": "threeMonths",
-      "ytd": "yearToDate",
-      "1y": "oneYear",
-      "all": "allData",
-    };
-    final series = [for (var cs in jsonDecode(j[mapping[period]])['series']) CandleStick.fromJson(cs)];
+    final data = jsonDecode(j[mapping[period]])['series'];
+    final series = [for (var cs in data) CandleStick.fromJson(cs)];
     final Meta meta = Meta.fromJSON(jsonDecode(j['meta']));
     meta.o = series.last.open;
     return Asset(

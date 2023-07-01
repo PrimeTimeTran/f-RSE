@@ -40,20 +40,23 @@ class LocalStorageService {
       .toList();
   }
 
-  Future<Portfolio> getCachedPortfolio() async {
-    var data = await loadData('portfolio');
+  Future<Portfolio> getCachedPortfolio(period) async {
+    var data = await loadData('portfolio-$period');
     if (data != null && data.isNotEmpty) {
-      return Portfolio.fromJson(jsonDecode(data));
+      return Portfolio.fromJson(jsonDecode(data), period: period);
     } else {
-      final d = await loadJsonFile('assets/portfolio.json');
+      final path = 'assets/portfolio-$period.json';
+      print('$period $path');
+      final d = await loadJsonFile(path);
       if (d != null && d.isNotEmpty) {
-        return Portfolio.fromJson(d);
+        return Portfolio.fromJson(d, period: period);
       }
     }
     return Portfolio.defaultPortfolio();
   }
 
   Future<Asset> getCachedAsset(String symbol, period) async {
+    symbol = symbol.toLowerCase();
     var data = await loadData('$symbol-$period');
     if (data != null && data.isNotEmpty) {
       return Asset.fromJson(jsonDecode(data), period);

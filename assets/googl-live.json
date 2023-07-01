@@ -1,0 +1,25 @@
+{
+  "id": 0,
+  "sym": "GOOGL",
+  "live": "{\r\n    \"sym\": \"\",\r\n    \"period\": \"live\",\r\n    \"name\": \"\",\r\n    \"o\": 0.00,\r\n    \"l\": 0.00,\r\n    \"h\": 0.00,\r\n    \"c\": 0.00,\r\n    \"vwa\": 0.00,\r\n    \"v\": 0.00,\r\n    \"series\": [{\r\n                \"o\": 118.10,\r\n                \"l\": 117.92,\r\n                \"h\": 118.05,\r\n                \"c\": 118.04,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:20:33\"\r\n            },{\r\n                \"o\": 118.04,\r\n                \"l\": 118.04,\r\n                \"h\": 118.17,\r\n                \"c\": 118.17,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:25:33\"\r\n            },{\r\n                \"o\": 118.17,\r\n                \"l\": 118.03,\r\n                \"h\": 118.10,\r\n                \"c\": 118.10,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:30:33\"\r\n            },{\r\n                \"o\": 118.10,\r\n                \"l\": 117.89,\r\n                \"h\": 118.06,\r\n                \"c\": 118.02,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:35:33\"\r\n            },{\r\n                \"o\": 118.02,\r\n                \"l\": 117.90,\r\n                \"h\": 118.03,\r\n                \"c\": 118.01,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:40:33\"\r\n            },{\r\n                \"o\": 118.01,\r\n                \"l\": 117.85,\r\n                \"h\": 117.95,\r\n                \"c\": 117.95,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:45:33\"\r\n            },{\r\n                \"o\": 117.95,\r\n                \"l\": 117.91,\r\n                \"h\": 118.03,\r\n                \"c\": 118.03,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:50:33\"\r\n            },{\r\n                \"o\": 118.03,\r\n                \"l\": 117.86,\r\n                \"h\": 117.99,\r\n                \"c\": 117.96,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:55:33\"\r\n            },{\r\n                \"o\": 117.96,\r\n                \"l\": 117.83,\r\n                \"h\": 117.99,\r\n                \"c\": 117.95,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:00:33\"\r\n            },{\r\n                \"o\": 117.95,\r\n                \"l\": 117.94,\r\n                \"h\": 118.13,\r\n                \"c\": 118.08,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:05:33\"\r\n            },{\r\n                \"o\": 118.08,\r\n                \"l\": 117.96,\r\n                \"h\": 118.06,\r\n                \"c\": 118.03,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:10:33\"\r\n            },{\r\n                \"o\": 118.03,\r\n                \"l\": 118.01,\r\n                \"h\": 118.09,\r\n                \"c\": 118.08,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:15:33\"\r\n            }]\r\n}",
+  "oneDay": null,
+  "oneWeek": null,
+  "oneYear": null,
+  "allData": null,
+  "oneMonth": null,
+  "yearToDate": null,
+  "threeMonths": null,
+  "meta": "{\r\n        \"MC\": \"\",\r\n        \"PE\": \"\",\r\n        \"dy\": 25.37,\r\n        \"O\": \"\",\r\n        \"V\": \"\",\r\n        \"AV\": \"\",\r\n        \"VWA\": \"\",\r\n        \"hiYear\": 125.83,\r\n        \"loYear\": 117.92\r\n    }",
+  "company": {
+    "ec": 1000,
+    "f": "2000-09-04T00:00:00",
+    "hq": "Mountain View, California, United States",
+    "ceo": "Sundar Pichai",
+    "eh": "Impressive",
+    "sym": "GOOGL",
+    "name": "Google",
+    "id": 1,
+    "industry": "Technology",
+    "desc": "Google is a multinational technology company specializing in Internet-related services and products. It offers a wide range of services including search engines, online advertising technologies, cloud computing, software, and hardware."
+  }
+}

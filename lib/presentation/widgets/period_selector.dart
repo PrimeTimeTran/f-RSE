@@ -13,7 +13,7 @@ class PeriodSelector extends StatefulWidget {
 
 class PeriodSelectorState extends State<PeriodSelector> {
   late String hoveredPeriod;
-  final List<String> periods = ['live', '1d', '1w', '1m', '3m', 'ytd', '1y', 'all'];
+  final List<String> periods = ['live', '1d', '1w', '1m', '3m', 'ytd', '1y'];
 
   @override
   void initState() {
