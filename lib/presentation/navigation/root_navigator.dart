@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/rendering.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
@@ -88,39 +89,52 @@ class App extends StatelessWidget {
           ],
         ),
       ),
-      appBar: AppBar(leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
-        },
-      ), title: Consumer<ThemeModel>(
-        builder: (context, themeModel, _) {
-          return GestureDetector(
-            onDoubleTap: () {
-              themeModel.toggleTheme();
-            },
-            onLongPressStart: (details) {
-              _handleLongPress(details, context);
-            },
-            child: const Text(
-              'Royal Stock Exchange',
-            ),
-          );
-        },
-      )),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+        title: Consumer<ThemeModel>(
+          builder: (context, themeModel, _) {
+            return GestureDetector(
+              onDoubleTap: () {
+                themeModel.toggleTheme();
+              },
+              onLongPressStart: (details) {
+                _handleLongPress(details, context);
+              },
+              child: const Text(
+                'Royal Stock Exchange',
+              ),
+            );
+          },
+        ),
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: const [
-          NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
           NavigationDestination(
-              label: 'Investing', icon: Icon(Icons.candlestick_chart)),
+            label: 'Home',
+            icon: Icon(Icons.home),
+          ),
           NavigationDestination(
-              label: 'Notifications', icon: Icon(Icons.notifications)),
-          NavigationDestination(label: 'Profile', icon: Icon(Icons.person)),
+            label: 'Investing',
+            icon: Icon(Icons.candlestick_chart),
+          ),
+          NavigationDestination(
+            label: 'Notifications',
+            icon: Icon(Icons.notifications),
+          ),
+          NavigationDestination(
+            label: 'Profile',
+            icon: Icon(Icons.person),
+          ),
         ],
         onDestinationSelected: _goBranch,
       ),

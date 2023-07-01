@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:rse/data/all.dart';
+import 'package:rse/all.dart';
 
 class Portfolio {
   final int id;
@@ -20,17 +20,6 @@ class Portfolio {
   });
 
   factory Portfolio.fromJson(Map<String, dynamic> json, {String period = 'live' }) {
-    Map<String, dynamic> mapping = {
-      "live": "live",
-      "1d": "oneDay",
-      "1w": "oneWeek",
-      "1m": "oneMonth",
-      "3m": "threeMonths",
-      "ytd": "ytd",
-      "1y": "oneYear",
-      "all": "allData",
-    };
-
     final v = jsonDecode(json['valuation']);
 
     return Portfolio(
@@ -44,7 +33,7 @@ class Portfolio {
         for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)
       ],
       series: [
-        for (var cs in jsonDecode(json[mapping[period]]) ) DataPoint(cs['time'], cs['value'])
+        for (var cs in jsonDecode(json[periodMapping[period]]) ) DataPoint(cs['time'], cs['value'])
       ],
     );
   }

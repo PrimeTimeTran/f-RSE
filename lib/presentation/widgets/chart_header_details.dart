@@ -49,7 +49,7 @@ class ChartHeaderDetails extends StatelessWidget {
     var prompt = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
     prompt = getPrompt(prompt);
 
-    final gained = getChangePercent(focusValue, startValue) > 0;
+    final gained = getChangePercent(focusValue, startValue) >= 0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

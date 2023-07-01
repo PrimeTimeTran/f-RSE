@@ -59,7 +59,6 @@ class PeriodSelectorState extends State<PeriodSelector> {
   }
 
   buildSelector(context) {
-    final color = T(context, 'primary');
     final highlightColor = T(context, 'primary');
     final unselectedColor = Theme.of(context).unselectedWidgetColor;
 
@@ -78,6 +77,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
           child: Row(
             mainAxisAlignment: isM(context) ? MainAxisAlignment.start : MainAxisAlignment.start,
             children: periods.map((p) {
+              final color = period == p ? T(context, 'primary') : hoveredPeriod == p ? highlightColor : unselectedColor;
               return Flexible(
                 fit: FlexFit.tight,
                 child: GestureDetector(
@@ -96,7 +96,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
                       margin: const EdgeInsets.only(right: 5.0),
                       decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(width: 1.5, color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor),
+                          bottom: BorderSide(width: 1.5, color: color),
                         ),
                       ),
                       child: Align(
@@ -106,9 +106,9 @@ class PeriodSelectorState extends State<PeriodSelector> {
                           child: HoverText(
                             p,
                             textStyle: TextStyle(
-                                fontSize: getTextSize(context),
-                                fontWeight: FontWeight.bold,
-                                color: period == p ? color : hoveredPeriod == p ? highlightColor : unselectedColor
+                              color: color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: getTextSize(context),
                             ),
                           ),
                         ),
@@ -133,6 +133,4 @@ class PeriodSelectorState extends State<PeriodSelector> {
       ),
     );
   }
-
-  void setPeriod(String period) {}
 }
