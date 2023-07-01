@@ -27,7 +27,17 @@ A stock exchange for the next generation.
 - flutter build web
 - flutter run -d chrome
 
+
+
+
 ## FAQ
 
 - Why isn't an asset in assets available on web?
   - Because we have to include them in web/assets & declare them in web/manifest.json for them to be bundled in the build process
+
+- How to ensure firebase events are sent to the correct project?
+  - Android:
+    - [Enable live debugging of events](https://stackoverflow.com/questions/42769236/firebase-analytics-debug-view-does-not-show-anything):
+      - `adb shell setprop debug.firebase.analytics.app 231022961791`
+      - `adb shell setprop debug.firebase.analytics.app com.example.rse`
+    - Restart emulator.

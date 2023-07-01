@@ -50,7 +50,6 @@ class ChartHeaderDetails extends StatelessWidget {
     prompt = getPrompt(prompt);
 
     final gained = getChangePercent(focusValue, startValue) > 0;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -62,34 +61,32 @@ class ChartHeaderDetails extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Expanded(
-          child: Text(
-            formatMoney(focusValue),
-            style: TextStyle(
-              color: T(context, 'inversePrimary'),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+        // If this container is removed the text
+        // shifts down and leaves whitespace above it.
+        Text(
+          formatMoney(focusValue),
+          style: TextStyle(
+            color: T(context, 'inversePrimary'),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        Expanded(
-          child: Row(
-            children: [
-              Text(
-                '${formatValueChange(focusValue, startValue)} ($gain)  ',
-                style: TextStyle(
-                  color: gained ? T(context, 'primary') : Colors.red,
-                  fontSize: 14,
-                ),
+        Row(
+          children: [
+            Text(
+              '${formatValueChange(focusValue, startValue)} ($gain)  ',
+              style: TextStyle(
+                color: gained ? T(context, 'primary') : Colors.red,
+                fontSize: 14,
               ),
-              if (!hovering) Text(
-                prompt,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+            ),
+            if (!hovering) Text(
+              prompt,
+              style: const TextStyle(
+                fontSize: 14,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

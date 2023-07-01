@@ -32,7 +32,6 @@ class ChartHeader extends StatelessWidget {
                 final focusedValue = state.chart.latestValue;
                 final router = GoRouter.of(context);
                 final isHome = router.location.contains('/home');
-                p('router.location ${router.location}');
 
                 // Race condition:
                 // Asset vs Portfolio

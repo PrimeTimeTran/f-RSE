@@ -14,9 +14,9 @@ class Portfolio {
     required this.id,
     required this.stocks,
     required this.series,
+    required this.period,
     required this.current,
     required this.cryptos,
-    required this.period,
   });
 
   factory Portfolio.fromJson(Map<String, dynamic> json, {String period = 'live' }) {
@@ -32,6 +32,7 @@ class Portfolio {
     };
 
     final v = jsonDecode(json['valuation']);
+
     return Portfolio(
       id: 1,
       period: 'live',
@@ -43,7 +44,7 @@ class Portfolio {
         for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)
       ],
       series: [
-        for (var cs in period == 'live' ? v['series'] : jsonDecode(json[mapping[period]]) ) DataPoint(cs['time'], cs['value'])
+        for (var cs in jsonDecode(json[mapping[period]]) ) DataPoint(cs['time'], cs['value'])
       ],
     );
   }

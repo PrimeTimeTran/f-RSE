@@ -13,6 +13,7 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   void initState() {
     super.initState();
+    logAssetView(widget.sym);
   }
 
   @override

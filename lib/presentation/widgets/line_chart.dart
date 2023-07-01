@@ -52,7 +52,7 @@ class LineChartState extends State<LineChart> {
     );
   }
 
-  Widget buildChart(dynamic data) {
+  Widget buildChart(List<DataPoint> data) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,8 +72,8 @@ class LineChartState extends State<LineChart> {
                 ),
                 series: <LineSeries<DataPoint, DateTime>>[
                   LineSeries<DataPoint, DateTime>(
-                    dataSource: data,
                     color: Colors.green,
+                    dataSource: data,
                     yValueMapper: (DataPoint d, _) => d.y,
                     xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
                   ),
