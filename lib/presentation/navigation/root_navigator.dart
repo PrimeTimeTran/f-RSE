@@ -118,6 +118,8 @@ class App extends StatelessWidget {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
+        indicatorColor: Theme.of(context).appBarTheme.foregroundColor,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         destinations: const [
           NavigationDestination(
             label: 'Home',

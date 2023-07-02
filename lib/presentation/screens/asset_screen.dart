@@ -69,9 +69,8 @@ class _AssetScreeState extends State<AssetScreen> {
           ),
         ],
       );
-    } else {
-      return Container();
     }
+    return Container();
   }
 
   Widget buildOneColumn(context) {
@@ -108,7 +107,7 @@ class _AssetScreeState extends State<AssetScreen> {
           child: SingleChildScrollView(
             child: Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black)
+                  border: Border.all(color: T(context, 'outline'),)
               ),
               child: const OrderPanel(),
             ),

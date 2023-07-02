@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,
-  bottomAppBarTheme: const BottomAppBarTheme(
-    color: Colors.white,
-    surfaceTintColor: Colors.white,
-  ),
-  navigationBarTheme: const NavigationBarThemeData(
-    indicatorColor: Colors.white,
+  indicatorColor: Colors.black,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.white,
+    foregroundColor: Colors.grey,
+    titleTextStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+    ),
   ),
   colorScheme: const ColorScheme.light(
     primary: Colors.green,
@@ -18,18 +20,18 @@ final lightTheme = ThemeData(
     onError: Color(0xFFC62828),
     inversePrimary: Colors.black,
     onPrimaryContainer: Colors.white,
-    outline: Colors.black26,
-  ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.green,
+    outline: Colors.grey,
+    secondaryContainer: Colors.white,
   ),
 );
 
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
   indicatorColor: Colors.white,
-  navigationBarTheme: const NavigationBarThemeData(
-    indicatorColor: Colors.green,
+  scaffoldBackgroundColor: Colors.black,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.black,
+    foregroundColor: Colors.grey,
   ),
   colorScheme: const ColorScheme.dark(
     primary: Colors.green,
@@ -38,11 +40,9 @@ final darkTheme = ThemeData(
     tertiary: Color(0xFF30BFBF),
     onError: Color(0xFFC62828),
     inversePrimary: Colors.white,
-    // background: Colors.green,
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: Colors.grey[900]!,
-  ),
+    outline: Colors.grey,
+    secondaryContainer: Colors.black38,
+  ).copyWith(background: Colors.black),
 );
 
 class ThemeModel with ChangeNotifier {
@@ -96,7 +96,8 @@ Color T(BuildContext context, String key) {
     case 'tertiary':
     case 'background':
       return colorScheme.background;
-      return colorScheme.tertiary;
+    case 'secondaryContainer':
+      return colorScheme.secondaryContainer;
     default:
       throw Exception('Invalid color key: $key');
   }
