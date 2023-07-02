@@ -16,8 +16,8 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   void initState() {
     super.initState();
-    setScreenName('securities/${widget.sym}');
     logAssetView(widget.sym);
+    setScreenName('securities/${widget.sym}');
   }
 
   void _showAction(BuildContext context, int index) {

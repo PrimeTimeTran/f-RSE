@@ -5,8 +5,7 @@ import 'package:flutter/rendering.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
-import 'package:rse/data/all.dart';
-import 'package:rse/presentation/all.dart';
+import 'package:rse/all.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
@@ -16,83 +15,23 @@ final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-class App extends StatelessWidget {
-  const App({
-    Key? key,
-    required this.navigationShell,
-  }) : super(key: key ?? const ValueKey('App'));
+//Make this widget a stateful widget
+
+class App extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
+  App({super.key, required this.navigationShell});
 
-  void _goBranch(int index) {
-    navigationShell.goBranch(
-      index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
-      initialLocation: index == navigationShell.currentIndex,
-    );
-  }
+  @override
+  State<App> createState() => _AppState();
+}
 
-  void _showModal(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          children: [
-            Text('Screen Width: $width'),
-            Text('Screen Height: $height'),
-            TextButton(
-              onPressed: () => throw Exception(),
-              child: const Text("Throw Test Exception"),
-            ),
-            TextButton(
-              onPressed: () {
-                final bool value = debugPaintSizeEnabled;
-                debugPaintSizeEnabled = !value;
-              },
-              child: const Text("Enable Debug Paint Size"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _handleLongPress(LongPressStartDetails details, context) {
-    _showModal(context);
-  }
-
-  getIconColor(context, idx) {
-    return navigationShell.currentIndex == idx ? T(context, 'primaryContainer') : T(context, 'inversePrimary');
-  }
-
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: navigationShell,
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: const Text('Drawer Item 1'),
-              onTap: () {
-                // Handle drawer item 1 tap
-              },
-            ),
-            ListTile(
-              title: const Text('Drawer Item 2'),
-              onTap: () {
-                // Handle drawer item 2 tap
-              },
-            ),
-            // Add more drawer items as needed
-          ],
-        ),
-      ),
+      body: widget.navigationShell,
+      drawer: const MyDrawer(),
       appBar: AppBar(
         leading: Builder(
           builder: (BuildContext context) {
@@ -107,9 +46,7 @@ class App extends StatelessWidget {
         title: Consumer<ThemeModel>(
           builder: (context, themeModel, _) {
             return GestureDetector(
-              onDoubleTap: () {
-                themeModel.toggleTheme();
-              },
+              onDoubleTap: themeModel.toggleTheme,
               onLongPressStart: (details) {
                 _handleLongPress(details, context);
               },
@@ -120,41 +57,8 @@ class App extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        indicatorColor: Theme.of(context).indicatorColor,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        destinations: [
-          NavigationDestination(
-            label: 'Home',
-            icon: Icon(
-              Icons.home,
-              color: getIconColor(context, 0),
-            ),
-          ),
-          NavigationDestination(
-            label: 'Investing',
-            icon: Icon(
-              Icons.candlestick_chart,
-              color: getIconColor(context, 1),
-            ),
-          ),
-          NavigationDestination(
-            label: 'Notifications',
-            icon: Icon(
-              Icons.notifications,
-              color: getIconColor(context, 2),
-            ),
-          ),
-          NavigationDestination(
-            label: 'Profile',
-            icon: Icon(
-              Icons.person,
-              color: getIconColor(context, 3),
-            ),
-          ),
-        ],
-        onDestinationSelected: _goBranch,
+      bottomNavigationBar: BottomNavBar(
+        navigationShell: widget.navigationShell,
       ),
     );
   }
@@ -247,3 +151,34 @@ final goRouter = GoRouter(
     ),
   ],
 );
+
+void _showModal(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+  double height = MediaQuery.of(context).size.height;
+  showModalBottomSheet<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return Column(
+        children: [
+          Text('Screen Width: $width'),
+          Text('Screen Height: $height'),
+          TextButton(
+            onPressed: () => throw Exception(),
+            child: const Text("Throw Test Exception"),
+          ),
+          TextButton(
+            onPressed: () {
+              final bool value = debugPaintSizeEnabled;
+              debugPaintSizeEnabled = !value;
+            },
+            child: const Text("Enable Debug Paint Size"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _handleLongPress(LongPressStartDetails details, context) {
+  _showModal(context);
+}

@@ -72,7 +72,6 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       routerConfig: goRouter,
-      title: 'Royal Stock Exchange',
       debugShowCheckedModeBanner: false,
       themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
     );

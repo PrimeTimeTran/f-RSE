@@ -11,13 +11,24 @@ class HomeScreen extends StatefulWidget {
   HomeScreenState createState() => HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
-  late bool lock = true;
-
+class HomeScreenState extends State<HomeScreen>  with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    setScreenName('home');
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setScreenName('home');
+    }
   }
 
   @override

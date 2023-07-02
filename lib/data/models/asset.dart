@@ -94,7 +94,6 @@ class Meta {
   });
 
   factory Meta.defaultMeta() => Meta(
-    // add all fields needed
     o: 0,
     h: 0,
     l: 0,
