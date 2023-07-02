@@ -19,6 +19,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
   @override
   void initState() {
     super.initState();
+    setScreenName('investing');
   }
 
   @override

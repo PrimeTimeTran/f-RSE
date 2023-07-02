@@ -38,7 +38,12 @@ A stock exchange for the next generation.
 
 - How to ensure firebase events are sent to the correct project?
   - iOS:
+    - Open from XCode so CLI args respected:
+      - These guys: -FIRDebugEnabled, -FIRAnalyticsDebugEnabled
     - Restart emulator.
+    - Open issue:
+      - https://github.com/flutter/flutter/issues/17043
+      - https://github.com/flutter/flutter/issues/17043
   - Android:
     - [Enable live debugging of events](https://stackoverflow.com/questions/42769236/firebase-analytics-debug-view-does-not-show-anything):
       - `adb shell setprop debug.firebase.analytics.app 231022961791`

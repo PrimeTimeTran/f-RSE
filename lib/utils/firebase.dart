@@ -47,3 +47,25 @@ void logAssetView(String name) async {
     },
   );
 }
+
+void logTradeAsset(String name) async {
+  await FirebaseAnalytics.instance.logEvent(
+    name: "choose_trade_asset",
+    parameters: {
+      "name": name,
+    },
+  );
+}
+
+void logTradeAssetOption(String name) async {
+  await FirebaseAnalytics.instance.logEvent(
+    name: "choose_trade_asset_option",
+    parameters: {
+      "name": name,
+    },
+  );
+}
+
+void setScreenName(String name) async {
+  FirebaseAnalytics.instance.setCurrentScreen(screenName: name);
+}

@@ -8,10 +8,12 @@ class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
     super.key,
     this.initialOpen,
+    required this.sym,
     required this.distance,
     required this.children,
   });
 
+  final String sym;
   final double distance;
   final bool? initialOpen;
   final List<Widget> children;
@@ -52,6 +54,7 @@ class _ExpandableFabState extends State<ExpandableFab>
     setState(() {
       _open = !_open;
       if (_open) {
+        logTradeAsset(widget.sym);
         _controller.forward();
       } else {
         _controller.reverse();
@@ -107,10 +110,10 @@ class _ExpandableFabState extends State<ExpandableFab>
     i++, angleInDegrees += step) {
       children.add(
         _ExpandingActionButton(
-          child: widget.children[i],
           progress: _expandAnimation,
           maxDistance: widget.distance,
           directionInDegrees: angleInDegrees,
+          child: widget.children[i],
         ),
       );
     }
@@ -206,7 +209,10 @@ class ActionButton extends StatelessWidget {
       elevation: 4,
       shape: const CircleBorder(),
       child: TextButton(
-        onPressed: onPressed,
+        onPressed: () {
+          logTradeAssetOption(title);
+          onPressed!();
+        },
         style: TextButton.styleFrom(
           shape: const CircleBorder(),
           minimumSize: const Size(56, 56),

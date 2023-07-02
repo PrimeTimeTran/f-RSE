@@ -16,6 +16,7 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   void initState() {
     super.initState();
+    setScreenName('securities/${widget.sym}');
     logAssetView(widget.sym);
   }
 
@@ -50,6 +51,7 @@ class _AssetScreeState extends State<AssetScreen> {
   Widget _getFAB(context) {
     if (isS(context)) {
       return ExpandableFab(
+        sym: widget.sym,
         distance: 112,
         children: [
           ActionButton(
