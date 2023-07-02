@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/rendering.dart';
-
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
@@ -15,17 +14,41 @@ final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-//Make this widget a stateful widget
-
 class App extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
-  App({super.key, required this.navigationShell});
+  const App({super.key, required this.navigationShell});
 
   @override
   State<App> createState() => _AppState();
 }
 
+final MyNavigatorObserver observer = MyNavigatorObserver(
+  onPushStack: (int i) {},
+);
+
 class _AppState extends State<App> {
+  bool home = true;
+
+  void onPushStack(int idx) {
+    setState(() {
+      home = !home;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    observer.onPushStack = onPushStack;
+    _shellNavigatorAKey.currentState?.widget.observers.add(observer);
+  }
+
+  resetStack(int idx) {
+    widget.navigationShell.goBranch(
+      idx,
+      initialLocation: idx == widget.navigationShell.currentIndex,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +59,13 @@ class _AppState extends State<App> {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu),
+              icon: Icon(home ? Icons.menu : Icons.arrow_back),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                if (home) {
+                  Scaffold.of(context).openDrawer();
+                } else {
+                  resetStack(0);
+                }
               },
             );
           },
@@ -50,14 +77,15 @@ class _AppState extends State<App> {
               onLongPressStart: (details) {
                 _handleLongPress(details, context);
               },
-              child: const Text(
-                'Royal Stock Exchange',
+              child: Text(
+                home ? 'Royal Stock Exchange' : 'Security',
               ),
             );
           },
         ),
       ),
       bottomNavigationBar: BottomNavBar(
+        resetStack: resetStack,
         navigationShell: widget.navigationShell,
       ),
     );
@@ -98,6 +126,7 @@ final goRouter = GoRouter(
       branches: [
         StatefulShellBranch(
           navigatorKey: _shellNavigatorAKey,
+          observers: [observer],
           routes: [
             GoRoute(
               path: '/home',
