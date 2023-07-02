@@ -8,8 +8,10 @@ import 'package:rse/all.dart';
 
 Future<dynamic> loadJsonFile(String path) async {
   try {
-    String content = await rootBundle.loadString(path);
-    return json.decode(content);
+    // String jsonContent = await rootBundle.loadString(path);
+    final ByteData data = await rootBundle.load(path);
+    String jsonContent = utf8.decode(data.buffer.asUint8List());
+    return json.decode(jsonContent);
   } catch (e) {
     if (kDebugMode) {
       debugPrint('Error loading JSON file: $e');
