@@ -53,7 +53,7 @@ class CandleChartState extends State<CandleChart> {
                     child: CandleHoveredDetails(),
                   ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40, right: 40),
+                  padding: isS(context) ? const EdgeInsets.all(0) : const EdgeInsets.only(left: 40, right: 40),
                   child: SfCartesianChart(
                     plotAreaBorderWidth: 0,
                     zoomPanBehavior: _zoomPanBehavior,
@@ -88,7 +88,7 @@ class CandleChartState extends State<CandleChart> {
                           borderWidth: 1,
                           end: data.first.close,
                           start: data.first.close,
-                          dashArray: const [4, 3],
+                          dashArray: const [1, 3],
                           borderColor: T(context, 'inversePrimary'),
                         ),
                       ],

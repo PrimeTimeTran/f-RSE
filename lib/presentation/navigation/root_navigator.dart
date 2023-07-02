@@ -65,6 +65,10 @@ class App extends StatelessWidget {
     _showModal(context);
   }
 
+  getIconColor(context, idx) {
+    return navigationShell.currentIndex == idx ? T(context, 'primaryContainer') : T(context, 'inversePrimary');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,24 +122,36 @@ class App extends StatelessWidget {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
-        indicatorColor: Theme.of(context).appBarTheme.foregroundColor,
+        indicatorColor: Theme.of(context).indicatorColor,
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        destinations: const [
+        destinations: [
           NavigationDestination(
             label: 'Home',
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              color: getIconColor(context, 0),
+            ),
           ),
           NavigationDestination(
             label: 'Investing',
-            icon: Icon(Icons.candlestick_chart),
+            icon: Icon(
+              Icons.candlestick_chart,
+              color: getIconColor(context, 1),
+            ),
           ),
           NavigationDestination(
             label: 'Notifications',
-            icon: Icon(Icons.notifications),
+            icon: Icon(
+              Icons.notifications,
+              color: getIconColor(context, 2),
+            ),
           ),
           NavigationDestination(
             label: 'Profile',
-            icon: Icon(Icons.person),
+            icon: Icon(
+              Icons.person,
+              color: getIconColor(context, 3),
+            ),
           ),
         ],
         onDestinationSelected: _goBranch,

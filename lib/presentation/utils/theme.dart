@@ -6,21 +6,22 @@ final lightTheme = ThemeData(
   indicatorColor: Colors.black,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
-    foregroundColor: Colors.grey,
+    foregroundColor: Colors.black,
     titleTextStyle: TextStyle(
-      color: Colors.black,
       fontSize: 20,
+      color: Colors.black
     ),
   ),
   colorScheme: const ColorScheme.light(
+    outline: Colors.grey,
     primary: Colors.green,
-    primaryContainer: Colors.lightGreenAccent,
+    primaryContainer: Colors.white,
+    onPrimaryContainer: Colors.white,
+    inversePrimary: Colors.black,
     secondary: Color(0xFF227C9D),
     tertiary: Color(0xFF30BFBF),
     onError: Color(0xFFC62828),
-    inversePrimary: Colors.black,
-    onPrimaryContainer: Colors.white,
-    outline: Colors.grey,
+    surface: Colors.white,
     secondaryContainer: Colors.white,
   ),
 );
@@ -31,18 +32,24 @@ final darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.black,
-    foregroundColor: Colors.grey,
+    foregroundColor: Colors.white,
+    titleTextStyle: TextStyle(
+        fontSize: 20,
+        color: Colors.white
+    ),
   ),
   colorScheme: const ColorScheme.dark(
+    outline: Colors.grey,
     primary: Colors.green,
-    primaryContainer: Colors.lightGreenAccent,
+    primaryContainer: Colors.black,
+    onPrimaryContainer: Colors.black,
+    inversePrimary: Colors.white,
     secondary: Color(0xFF227C9D),
     tertiary: Color(0xFF30BFBF),
     onError: Color(0xFFC62828),
-    inversePrimary: Colors.white,
-    outline: Colors.grey,
+    surface: Colors.black38,
     secondaryContainer: Colors.black38,
-  ).copyWith(background: Colors.black),
+  )
 );
 
 class ThemeModel with ChangeNotifier {

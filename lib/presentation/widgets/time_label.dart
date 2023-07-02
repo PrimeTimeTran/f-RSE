@@ -10,17 +10,16 @@ class TimeLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChartBloc, ChartState>(
-        builder: (c, state) {
-          if (state is ChartFocusSuccess) {
-            final isHome = GoRouter.of(context).location == '/home';
-            final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
-            final assetBloc = BlocProvider.of<AssetBloc>(context);
-            var period = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
-            return buildTimeLabel(context, period, state.chart.xOffSet, state.chart.time);
-          } else {
-            return const SizedBox.shrink();
-          }
+      builder: (c, state) {
+        if (state is ChartFocusSuccess) {
+          final isHome = GoRouter.of(context).location == '/home';
+          final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
+          final assetBloc = BlocProvider.of<AssetBloc>(context);
+          final period = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
+          return buildTimeLabel(context, period, state.chart.xOffSet, state.chart.time);
         }
+        return const SizedBox.shrink();
+      }
     );
   }
 
@@ -31,7 +30,7 @@ class TimeLabel extends StatelessWidget {
       top: -10,
       left: value,
       child: Padding(
-        padding: const EdgeInsets.only(left: 40, right: 45),
+        padding: isS(c) ? const EdgeInsets.all(0) : const EdgeInsets.only(left: 40, right: 40),
         child: Text(
           time == '' ? '' :  formatted,
           style: TextStyle(

@@ -37,8 +37,8 @@ class Watchlist extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height,
         width: getWidth(context),
+        height: MediaQuery.of(context).size.height,
         child: Container(
           margin: getMargin(context),
           decoration: BoxDecoration(

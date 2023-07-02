@@ -68,7 +68,7 @@ class _ExpandableFabState extends State<ExpandableFab>
         children: [
           _buildTapToCloseFab(context),
           ..._buildExpandingActionButtons(),
-          _buildTapToOpenFab(context  ),
+          _buildTapToOpenFab(context),
         ],
       ),
     );
@@ -135,7 +135,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           child: FloatingActionButton(
             onPressed: _toggle,
-            backgroundColor: T(context, 'onPrimaryContainer'),
+            backgroundColor: T(context, 'surface'),
             child: Icon(
               Icons.create,
               color: T(context, 'primary')
@@ -202,14 +202,12 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = T(context, 'background');
     return Material(
       elevation: 4,
       shape: const CircleBorder(),
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          backgroundColor: theme,
           shape: const CircleBorder(),
           minimumSize: const Size(56, 56),
           padding: const EdgeInsets.all(16),

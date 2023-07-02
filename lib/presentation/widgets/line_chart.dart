@@ -62,15 +62,14 @@ class LineChartState extends State<LineChart> {
             clipBehavior: Clip.none,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40),
+                padding: isS(context) ? const EdgeInsets.all(0) : const EdgeInsets.only(left: 40, right: 40),
                 child: SfCartesianChart(
                   plotAreaBorderWidth: 0,
                   trackballBehavior: _trackballBehavior,
                   onTrackballPositionChanging: (TrackballArgs args) =>
                       _trackballChange(args, data),
-                  primaryXAxis: DateTimeAxis(
+                  primaryXAxis: CategoryAxis(
                     isVisible: false,
-                    majorGridLines: const MajorGridLines(width: 0),
                   ),
                   series: <LineSeries<DataPoint, DateTime>>[
                     LineSeries<DataPoint, DateTime>(
@@ -82,17 +81,13 @@ class LineChartState extends State<LineChart> {
                   ],
                   primaryYAxis: NumericAxis(
                     isVisible: false,
-                    majorGridLines: const MajorGridLines(
-                      width: 2,
-                      dashArray: <double>[4, 3],
-                    ),
                     plotBands: [
                       PlotBand(
                         opacity: 0.5,
                         borderWidth: 1,
                         end: data.first.y,
                         start: data.first.y,
-                        dashArray: const [4, 3],
+                        dashArray: const [1, 3],
                         borderColor: T(context, 'inversePrimary'),
                       ),
                     ],
