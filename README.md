@@ -31,6 +31,8 @@ A stock exchange for the next generation.
 
 #### Android
 
+- Make sure asset files are in Android as well?
+
 ## FAQ
 
 - Why isn't an asset in assets available on web?

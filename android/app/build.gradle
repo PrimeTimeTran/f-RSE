@@ -71,6 +71,7 @@ android {
         production {
             dimension "env"
             applicationId "com.example.rse"
+            resValue "string", "app_name", "RSE"
         }
         development {
             dimension "env"

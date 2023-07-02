@@ -37,7 +37,7 @@ class LineChartState extends State<LineChart> {
           final data = state.portfolio.series;
           return buildChart(data);
         } else {
-          return const SizedBox();
+          return Text('$state');
         }
       },
       listener: (context, state) {
