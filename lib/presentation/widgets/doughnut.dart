@@ -29,7 +29,6 @@ class DoughnutState extends State<Doughnut> {
   @override
   Widget build(BuildContext context) {
     final String field = widget.data[widget.explodeIdx].totalValue.toString();
-    //get theme
     final bool dark = isDarkMode(context);
 
     return Column(

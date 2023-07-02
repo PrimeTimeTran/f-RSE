@@ -89,8 +89,9 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
   void setPeriod(String p) async {
     try {
       final port = await portfolioService.fetchPortfolio(portfolio.id, p);
-      final newPort = port.copyWith(
+      final newPort = portfolio.copyWith(
         period: p,
+        series: port.series
       );
       portfolio = newPort;
       add(PortfolioLoaded(newPort));

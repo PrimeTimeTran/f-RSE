@@ -148,7 +148,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       sym: 'Investing',
       data: p.series,
       startValue: p.series.last.y,
-      latestValue: p.current.totalValue,
+      latestValue: p.meta!.totalValue,
     );
     chart = newChart;
     add(ChartUpdate(newChart));

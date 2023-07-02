@@ -44,15 +44,13 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
                   children: [
                     InvestmentGroup(
                       title: 'Stocks',
-                      current: p.current,
-                      num: p.stocks.length,
-                      securities: p.stocks
+                      num: p.stocks != null ? p.stocks!.length : 0,
+                      securities: p.stocks != null ? p.stocks! : []
                     ),
                     InvestmentGroup(
                       title: 'Cryptos',
-                      current: p.current,
-                      num: p.cryptos.length,
-                      securities: p.cryptos
+                      num: p.cryptos != null ? p.cryptos!.length : 0,
+                      securities: p.cryptos != null ? p.cryptos! : []
                     ),
                   ],
                 );

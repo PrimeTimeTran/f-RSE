@@ -105,7 +105,7 @@ final goRouter = GoRouter(
     if (location == '/home') {
       final bloc = context.read<PortfolioBloc>();
       bloc.fetchPortfolio(1);
-      if (bloc.portfolio.current.totalValue != 0) {
+      if (bloc.portfolio.meta != null ? bloc.portfolio.meta!.totalValue != 0 : false) {
         context.read<ChartBloc>().updateChartPortfolioValues(bloc.portfolio);
       }
     }

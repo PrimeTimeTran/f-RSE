@@ -7,14 +7,12 @@ import 'package:rse/all.dart';
 class InvestmentGroup extends StatefulWidget {
   final int num;
   final String title;
-  final Current current;
   final List<dynamic> securities;
 
   const InvestmentGroup({
     Key? key,
     required this.num,
     required this.title,
-    required this.current,
     required this.securities,
   }) : super(key: key);
 
@@ -34,14 +32,14 @@ class InvestmentGroupState extends State<InvestmentGroup> {
   void initState() {
     super.initState();
     sortedSecurities = widget.securities.mapIndexed((idx, s) =>
-        Investment(
-          idx: idx,
-          name: s.symbol,
-          value: s.price,
-          quantity: s.quantity,
-          totalValue: s.totalValue,
-          percentage: s.percentOfGroup,
-        ),
+      Investment(
+        idx: idx,
+        name: s.symbol,
+        value: s.price,
+        quantity: s.quantity,
+        totalValue: s.totalValue,
+        percentage: s.percentOfGroup,
+      ),
     ).toList();
   }
 
@@ -107,19 +105,19 @@ class InvestmentGroupState extends State<InvestmentGroup> {
             hoveredRowIndex: hoveredRowIdx,
           ),
           SummaryTable(
-              num: widget.num,
-              title: widget.title,
-              items: sortedSecurities,
-              sortSecurities: sortSecurities,
-              onCategoryHover: (int idx) {
-                setState(() {
-                  hoveredRowIdx = idx;
-                });
-                handleHover(idx);
-              },
-              onCategoryExit: (int idx) {
-                resetExplosion(idx);
-              }
+            num: widget.num,
+            title: widget.title,
+            items: sortedSecurities,
+            sortSecurities: sortSecurities,
+            onCategoryHover: (int idx) {
+              setState(() {
+                hoveredRowIdx = idx;
+              });
+              handleHover(idx);
+            },
+            onCategoryExit: (int idx) {
+              resetExplosion(idx);
+            }
           ),
         ],
       );

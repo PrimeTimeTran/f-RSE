@@ -5,33 +5,44 @@ import 'package:rse/all.dart';
 class Portfolio {
   final int id;
   String period;
-  final Current current;
+  List<Stock>? stocks;
+  List<Crypto>? cryptos;
   List<DataPoint> series;
-  final List<Stock> stocks;
-  final List<Crypto> cryptos;
+  PortMeta? meta = PortMeta(
+    stocksAndOptions: StocksAndOptions(
+      value: 0.0,
+      percentage: 0.0,
+    ),
+    cryptocurrencies: Cryptocurrencies(
+      value: 0.0,
+      percentage: 0.0,
+    ),
+  );
 
   Portfolio({
+    this.meta,
+    this.stocks,
+    this.cryptos,
     required this.id,
-    required this.stocks,
     required this.series,
     required this.period,
-    required this.current,
-    required this.cryptos,
   });
 
   factory Portfolio.fromJson(Map<String, dynamic> json, {String period = 'live' }) {
-    final v = jsonDecode(json['valuation']);
-
+    // Allow portfolios to have valuations included & not.
+    // The initial live portfolio load will have it included whilst the subsequent
+    // period selections won't. In this way we improve performance of server calculations & reduce json for Android.
+    final v = json['valuation'] != null ? jsonDecode(json['valuation']) : null;
     return Portfolio(
       id: 1,
       period: 'live',
-      current: Current.fromJson(v['current']),
-      stocks: [
-        for (var s in v['stocks']['items']) Stock.fromJson(s)
-      ],
-      cryptos: [
-        for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)
-      ],
+      meta: v != null ? PortMeta.fromJson(v['current']) : null,
+      stocks: v?['stocks'] != null
+          ? [for (var s in v['stocks']['items']) Stock.fromJson(s)]
+          : null,
+      cryptos: v?['cryptocurrencies'] != null
+          ? [for (var c in v['cryptocurrencies']['items']) Crypto.fromJson(c)]
+          : null,
       series: [
         for (var cs in jsonDecode(json[periodMapping[period]]) ) DataPoint(cs['time'], cs['value'])
       ],
@@ -40,17 +51,16 @@ class Portfolio {
 
   factory Portfolio.defaultPortfolio() => Portfolio(
     id: 1,
-    stocks: [],
     series: [],
+    stocks: [],
     cryptos: [],
     period: 'live',
-    current: Current(
-      totalValue: 0.0,
-      cryptocurrencies: Cryptocurrencies(
+    meta: PortMeta(
+      stocksAndOptions: StocksAndOptions(
         value: 0.0,
         percentage: 0.0,
       ),
-      stocksAndOptions: StocksAndOptions(
+      cryptocurrencies: Cryptocurrencies(
         value: 0.0,
         percentage: 0.0,
       ),
@@ -59,40 +69,40 @@ class Portfolio {
 
   Portfolio copyWith({
     int? id,
+    PortMeta? meta,
     String? period,
-    Current? current,
     List<Stock>? stocks,
     List<Crypto>? cryptos,
     List<DataPoint>? series,
   }) {
     return Portfolio(
       id: id ?? this.id,
+      meta: meta ?? this.meta,
       period: period ?? this.period,
       stocks: stocks ?? this.stocks,
       series: series ?? this.series,
       cryptos: cryptos ?? this.cryptos,
-      current: current ?? this.current,
     );
   }
 
-  setCurrent(v) {
+  setSeries(v) {
     series = [for (var cs in v['series']) DataPoint(cs['time'], cs['value'])];
   }
 }
 
-class Current {
-  final double totalValue;
-  final StocksAndOptions stocksAndOptions;
-  final Cryptocurrencies cryptocurrencies;
+class PortMeta {
+  double totalValue;
+  StocksAndOptions stocksAndOptions;
+  Cryptocurrencies cryptocurrencies;
 
-  Current({
-    required this.totalValue,
+  PortMeta({
+    this.totalValue = 0,
     required this.stocksAndOptions,
     required this.cryptocurrencies,
   });
 
-  factory Current.fromJson(Map<String, dynamic> json) {
-    return Current(
+  factory PortMeta.fromJson(Map<String, dynamic> json) {
+    return PortMeta(
       totalValue: json['totalValue'],
       stocksAndOptions: StocksAndOptions.fromJson(json['stocks_and_options']),
       cryptocurrencies: Cryptocurrencies.fromJson(json['cryptocurrencies']),
