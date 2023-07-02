@@ -61,39 +61,42 @@ class LineChartState extends State<LineChart> {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              SfCartesianChart(
-                plotAreaBorderWidth: 0,
-                trackballBehavior: _trackballBehavior,
-                onTrackballPositionChanging: (TrackballArgs args) =>
-                    _trackballChange(args, data),
-                primaryXAxis: DateTimeAxis(
-                  isVisible: false,
-                  majorGridLines: const MajorGridLines(width: 0),
-                ),
-                series: <LineSeries<DataPoint, DateTime>>[
-                  LineSeries<DataPoint, DateTime>(
-                    color: Colors.green,
-                    dataSource: data,
-                    yValueMapper: (DataPoint d, _) => d.y,
-                    xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+              Padding(
+                padding: const EdgeInsets.only(left: 40, right: 40),
+                child: SfCartesianChart(
+                  plotAreaBorderWidth: 0,
+                  trackballBehavior: _trackballBehavior,
+                  onTrackballPositionChanging: (TrackballArgs args) =>
+                      _trackballChange(args, data),
+                  primaryXAxis: DateTimeAxis(
+                    isVisible: false,
+                    majorGridLines: const MajorGridLines(width: 0),
                   ),
-                ],
-                primaryYAxis: NumericAxis(
-                  isVisible: false,
-                  majorGridLines: const MajorGridLines(
-                    width: 2,
-                    dashArray: <double>[4, 3],
-                  ),
-                  plotBands: [
-                    PlotBand(
-                      opacity: 0.5,
-                      borderWidth: 1,
-                      end: data.first.y,
-                      start: data.first.y,
-                      dashArray: const [4, 3],
-                      borderColor: T(context, 'inversePrimary'),
+                  series: <LineSeries<DataPoint, DateTime>>[
+                    LineSeries<DataPoint, DateTime>(
+                      color: Colors.green,
+                      dataSource: data,
+                      yValueMapper: (DataPoint d, _) => d.y,
+                      xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
                     ),
                   ],
+                  primaryYAxis: NumericAxis(
+                    isVisible: false,
+                    majorGridLines: const MajorGridLines(
+                      width: 2,
+                      dashArray: <double>[4, 3],
+                    ),
+                    plotBands: [
+                      PlotBand(
+                        opacity: 0.5,
+                        borderWidth: 1,
+                        end: data.first.y,
+                        start: data.first.y,
+                        dashArray: const [4, 3],
+                        borderColor: T(context, 'inversePrimary'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const TimeLabel(),

@@ -105,11 +105,14 @@ class _AssetScreeState extends State<AssetScreen> {
         Expanded(
           flex: 2,
           child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: T(context, 'outline'),)
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: T(context, 'outline'),)
+                ),
+                child: const OrderPanel(),
               ),
-              child: const OrderPanel(),
             ),
           ),
         ),

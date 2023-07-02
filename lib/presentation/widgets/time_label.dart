@@ -26,15 +26,18 @@ class TimeLabel extends StatelessWidget {
 
   buildTimeLabel(c, p, value, time) {
     final formatted = chooseFormat(p, time);
-    final length = formatted.length / 2;
+    // final length = formatted.length;
     return Positioned(
       top: -10,
-      left: value - length,
-      child: Text(
-        time == '' ? '' :  formatted,
-        style: TextStyle(
-          fontSize: 10,
-          color: T(c, 'inversePrimary'),
+      left: value,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 40, right: 45),
+        child: Text(
+          time == '' ? '' :  formatted,
+          style: TextStyle(
+            fontSize: 10,
+            color: T(c, 'inversePrimary'),
+          ),
         ),
       ),
     );

@@ -52,44 +52,47 @@ class CandleChartState extends State<CandleChart> {
                     right: 0,
                     child: CandleHoveredDetails(),
                   ),
-                SfCartesianChart(
-                  plotAreaBorderWidth: 0,
-                  zoomPanBehavior: _zoomPanBehavior,
-                  trackballBehavior: _trackballBehavior,
-                  primaryXAxis: CategoryAxis(
-                    isVisible: false,
-                  ),
-                  onTrackballPositionChanging: (TrackballArgs args) {
-                    final xOffSet = args.chartPointInfo.xPosition;
-                    final dataPoint = args
-                        .chartPointInfo.chartDataPoint!.overallDataPointIndex;
-                    final CandleStick candle = data[dataPoint!];
-                    context.read<ChartBloc>().hoveredChart(candle, xOffSet!);
-                  },
-                  series: <CandleSeries<CandleStick, String>>[
-                    CandleSeries<CandleStick, String>(
-                      dataSource: data,
-                      lowValueMapper: (CandleStick d, _) => d.low,
-                      highValueMapper: (CandleStick d, _) => d.high,
-                      openValueMapper: (CandleStick d, _) => d.open,
-                      closeValueMapper: (CandleStick d, _) => d.close,
-                      xValueMapper: (CandleStick d, int index) => d.time,
+                Padding(
+                  padding: const EdgeInsets.only(left: 40, right: 40),
+                  child: SfCartesianChart(
+                    plotAreaBorderWidth: 0,
+                    zoomPanBehavior: _zoomPanBehavior,
+                    trackballBehavior: _trackballBehavior,
+                    primaryXAxis: CategoryAxis(
+                      isVisible: false,
                     ),
-                  ],
-                  primaryYAxis: NumericAxis(
-                    isVisible: false,
-                    minimum: getLowestVal(data),
-                    maximum: getHighestVal(data),
-                    plotBands: [
-                      PlotBand(
-                        opacity: 0.5,
-                        borderWidth: 1,
-                        end: data.first.close,
-                        start: data.first.close,
-                        dashArray: const [4, 3],
-                        borderColor: T(context, 'inversePrimary'),
+                    onTrackballPositionChanging: (TrackballArgs args) {
+                      final xOffSet = args.chartPointInfo.xPosition;
+                      final dataPoint = args
+                          .chartPointInfo.chartDataPoint!.overallDataPointIndex;
+                      final CandleStick candle = data[dataPoint!];
+                      context.read<ChartBloc>().hoveredChart(candle, xOffSet!);
+                    },
+                    series: <CandleSeries<CandleStick, String>>[
+                      CandleSeries<CandleStick, String>(
+                        dataSource: data,
+                        lowValueMapper: (CandleStick d, _) => d.low,
+                        highValueMapper: (CandleStick d, _) => d.high,
+                        openValueMapper: (CandleStick d, _) => d.open,
+                        closeValueMapper: (CandleStick d, _) => d.close,
+                        xValueMapper: (CandleStick d, int index) => d.time,
                       ),
                     ],
+                    primaryYAxis: NumericAxis(
+                      isVisible: false,
+                      minimum: getLowestVal(data),
+                      maximum: getHighestVal(data),
+                      plotBands: [
+                        PlotBand(
+                          opacity: 0.5,
+                          borderWidth: 1,
+                          end: data.first.close,
+                          start: data.first.close,
+                          dashArray: const [4, 3],
+                          borderColor: T(context, 'inversePrimary'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const TimeLabel(),
