@@ -6,12 +6,31 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:rse/all.dart';
 
+String _twoDigits(int n) {
+  if (n >= 10) {
+    return "$n";
+  }
+  return "0$n";
+}
+
+String formatTime(DateTime startTime, DateTime endTime) {
+  Duration difference = endTime.difference(startTime);
+  int hours = difference.inHours;
+  int minutes = difference.inMinutes.remainder(60);
+  int seconds = difference.inSeconds.remainder(60);
+  return '$hours:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
+}
+
 Future<dynamic> loadJsonFile(String path) async {
   try {
-    // String jsonContent = await rootBundle.loadString(path);
+    DateTime startTime = DateTime.now();
     final ByteData data = await rootBundle.load(path);
     String jsonContent = utf8.decode(data.buffer.asUint8List());
-    return json.decode(jsonContent);
+    final decoded = json.decode(jsonContent);
+    DateTime endTime = DateTime.now();
+
+    logJsonLoadTime(formatTime(startTime, endTime));
+    return decoded;
   } catch (e) {
     if (kDebugMode) {
       debugPrint('Error loading JSON file: $e');

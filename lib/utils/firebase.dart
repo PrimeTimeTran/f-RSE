@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -68,4 +69,17 @@ void logTradeAssetOption(String name) async {
 
 void setScreenName(String name) async {
   FirebaseAnalytics.instance.setCurrentScreen(screenName: name);
+}
+
+void logJsonLoadTime(String duration) async {
+  var platform = kIsWeb ? "web" : Platform.operatingSystem;
+
+  await FirebaseAnalytics.instance.logEvent(
+    name: "load_time_json_file",
+    parameters: {
+      "platform": platform,
+      "duration": duration,
+      "env": kReleaseMode ? "release" : "debug",
+    },
+  );
 }
