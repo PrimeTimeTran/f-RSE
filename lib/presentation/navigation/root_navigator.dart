@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class App extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
+
   const App({super.key, required this.navigationShell});
 
   @override
@@ -114,7 +116,9 @@ final goRouter = GoRouter(
     if (location == '/home') {
       final bloc = context.read<PortfolioBloc>();
       bloc.fetchPortfolio(1);
-      if (bloc.portfolio.meta != null ? bloc.portfolio.meta!.totalValue != 0 : false) {
+      if (bloc.portfolio.meta != null
+          ? bloc.portfolio.meta!.totalValue != 0
+          : false) {
         context.read<ChartBloc>().updateChartPortfolioValues(bloc.portfolio);
       }
     }
@@ -210,8 +214,8 @@ void _showModal(BuildContext context) {
     builder: (BuildContext context) {
       return Column(
         children: [
-          Text('Screen Width: $width'),
-          Text('Screen Height: $height'),
+          Text('Screen Width: ${width.toStringAsFixed(2)}'),
+          Text('Screen Height: ${height.toStringAsFixed(2)}'),
           TextButton(
             onPressed: () => throw Exception(),
             child: const Text("Throw Test Exception"),
@@ -228,17 +232,26 @@ void _showModal(BuildContext context) {
               future: getVersionId(),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  // Return a loading indicator while the future is still loading
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
-                  // Handle any error that occurred while fetching the version ID
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  // Return the Text widget with the version ID once it's available
-                  return Text(snapshot.data ?? ''); // Use snapshot.data ?? '' to handle null case
+                  return Text(snapshot.data ?? '');
                 }
               },
             ),
+          FutureBuilder<String>(
+            future: getVersionId(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return Text(remoteConfig.getValue('app_secret').toString() ?? '');
+              }
+            },
+          ),
         ],
       );
     },

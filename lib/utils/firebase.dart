@@ -24,14 +24,12 @@ void setupFirebase() async {
       await remoteConfig.activate();
     });
 
-    if (kDebugMode) {
-      await remoteConfig.setConfigSettings(
-        RemoteConfigSettings(
-          fetchTimeout: const Duration(minutes: 1),
-          minimumFetchInterval: const Duration(minutes: 5),
-        ),
-      );
-    }
+    await remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(minutes: 1),
+        minimumFetchInterval: const Duration(minutes: kDebugMode ? 5 : 720),
+      ),
+    );
 
     // Crashlytics isn't supported on web.
     // https://github.com/firebase/flutterfire/issues/4631

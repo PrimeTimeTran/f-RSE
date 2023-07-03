@@ -1,0 +1,55 @@
+name: Build & distribute
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ android ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump Android version name & code
+        if: ${{ matrix.platform == 'android' }}
+        uses: Devofure/advance-android-version-actions@v1.4
+        with:
+          gradlePath: ./android/app/build.gradle
+          versionCode: ${{ github.run_number }}
+          versionName: ${{ vars.APP_VERSION }}
+
+      - name: Install Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'zulu'
+
+      - name: Build APK & bundle
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.10.5'
+
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter build apk --flavor=production
+
+      - name: Firebase App distribution upload
+        if: ${{ matrix.platform == 'android' }}
+        uses: w9jds/firebase-action@v11.5.0
+        with:
+          args: appdistribution:distribute ./build/app/outputs/flutter-apk/app-production-release.apk --app ${{ vars.FIREBASE_APP_ID }} --groups ${{ vars.FIREBASE_TEST_GROUPS }}
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_TOKEN }}
+
+#       When we have iOS account
+#      - name: Bump iOS build bundle version &
+#        if: ${{ matrix.platform == 'ios' }}
+#        uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
+#        with:
+#          bundle-short-version-string: ${{ vars.APP_VERSION }}
+#          info-plist-path: './ios/Runner/Info.plist'
+#          bundle-version: ${{ github.run_number }}
