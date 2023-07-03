@@ -46,7 +46,6 @@ class LocalStorageService {
       return Portfolio.fromJson(jsonDecode(data), period: period);
     } else {
       final path = 'assets/portfolio-$period.json';
-      print('$period $path');
       final d = await loadJsonFile(path);
       if (d != null && d.isNotEmpty) {
         return Portfolio.fromJson(d, period: period);

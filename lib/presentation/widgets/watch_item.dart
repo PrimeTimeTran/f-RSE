@@ -52,10 +52,10 @@ class WatchItemState extends State<WatchItem> {
             ),
             series: <ChartSeries>[
               LineSeries<ChartData, int>(
-                  dataSource: data,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y,
-                  color: color
+                color: color,
+                dataSource: data,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.y,
               ),
             ],
           ),
@@ -63,6 +63,7 @@ class WatchItemState extends State<WatchItem> {
       ),
     );
   }
+
   Widget buildSmall(context, navigate, data, item, color) {
     // The nested container with transparent color
     // ensures that a tap on the entire row results in a navigate.
@@ -82,7 +83,6 @@ class WatchItemState extends State<WatchItem> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    // color: Colors.green.shade50,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +227,7 @@ class WatchItemState extends State<WatchItem> {
                 ),
                 Expanded(
                   flex: 2,
-                  child: buildSmallChart(context, color, data, true)
+                  child: buildSmallChart(context, color, data, true),
                 ),
                 Expanded(
                   flex: 1,
@@ -245,8 +245,8 @@ class WatchItemState extends State<WatchItem> {
                       Text(
                         formatMoney(item.change),
                         style: TextStyle(
-                          fontSize: 10,
                           color: color,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

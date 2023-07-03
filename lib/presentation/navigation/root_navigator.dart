@@ -28,10 +28,17 @@ final MyNavigatorObserver observer = MyNavigatorObserver(
 
 class _AppState extends State<App> {
   bool home = true;
+  String header = 'Royal Stock Exchange';
 
   void onPushStack(int idx) {
     setState(() {
       home = !home;
+    });
+  }
+
+  setHeader(String header) {
+    setState(() {
+      this.header = header;
     });
   }
 
@@ -168,10 +175,10 @@ final goRouter = GoRouter(
           navigatorKey: _shellNavigatorDKey,
           routes: [
             GoRoute(
-              path: '/spending',
+              path: '/profile',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: const AssetScreen(sym: 'BAC'),
+                child: const ProfileScreen(),
               ),
             ),
           ],
