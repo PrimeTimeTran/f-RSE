@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter/rendering.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:rse/all.dart';
 
@@ -47,6 +48,7 @@ class _AppState extends State<App> {
     super.initState();
     observer.onPushStack = onPushStack;
     _shellNavigatorAKey.currentState?.widget.observers.add(observer);
+    logAppLoadSuccess();
   }
 
   resetStack(int idx) {
@@ -188,9 +190,21 @@ final goRouter = GoRouter(
   ],
 );
 
+Future<String> getVersionId() async {
+  try {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    return '$version $buildNumber';
+  } on Exception catch (_) {
+    return '';
+  }
+}
+
 void _showModal(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
+  bool showAppConfig = remoteConfig.getValue('app_show_config').asBool();
   showModalBottomSheet<void>(
     context: context,
     builder: (BuildContext context) {
@@ -209,6 +223,22 @@ void _showModal(BuildContext context) {
             },
             child: const Text("Enable Debug Paint Size"),
           ),
+          if (showAppConfig)
+            FutureBuilder<String>(
+              future: getVersionId(),
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Return a loading indicator while the future is still loading
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // Handle any error that occurred while fetching the version ID
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  // Return the Text widget with the version ID once it's available
+                  return Text(snapshot.data ?? ''); // Use snapshot.data ?? '' to handle null case
+                }
+              },
+            ),
         ],
       );
     },
