@@ -11,20 +11,17 @@ import 'firebase_options.dart';
 import 'package:rse/all.dart';
 
 final remoteConfig = FirebaseRemoteConfig.instance;
+late FirebaseAnalyticsObserver fbAnalyticsObserver;
 
-FirebaseAnalyticsObserver fbAnalyticsObserver = FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
-
-void setupFirebase() async {
+setupFirebase() async {
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    await remoteConfig.fetchAndActivate();
+    fbAnalyticsObserver = FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
 
-    remoteConfig.onConfigUpdated.listen((event) async {
-      await remoteConfig.activate();
-    });
+    await remoteConfig.fetchAndActivate();
 
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
@@ -36,6 +33,10 @@ void setupFirebase() async {
     // Crashlytics isn't supported on web.
     // https://github.com/firebase/flutterfire/issues/4631
     if (!kIsWeb) {
+      remoteConfig.onConfigUpdated.listen((event) async {
+        await remoteConfig.activate();
+      });
+
       FlutterError.onError = (errorDetails) {
         FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
       };

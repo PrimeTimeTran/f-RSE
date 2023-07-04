@@ -4,12 +4,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'api.dart';
 import 'firebase.dart';
 
-void setupAPP() {
+setup() async {
   setupEnvironments();
-  setupFirebase();
+  await setupFirebase();
 }
 
 void setupEnvironments() async {
+  if (kIsWeb && kReleaseMode) return;
   try {
     await dotenv.load(fileName: "assets/.env");
     debugPrint('Env loaded? ${dotenv.env['ENV_LOADED']}');

@@ -3,11 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 var api = 'http://localhost:7254';
-var newsApi = '';
+var newsApi = 'https://newsdata.io/api/1/news?category=business&language=en';
 
 void setupAPI() {
-  api = "http://localhost:7254";
-
   // Platform isn't available on web.
   if (!kIsWeb) {
     // Android has connection issues with localhost. "Connection refused..."
@@ -17,8 +15,8 @@ void setupAPI() {
     api = Platform.isAndroid ? "http://10.0.2.2:7254" : "http://localhost:7254";
   }
 
-  var apiKey = dotenv.env['API_KEY'];
-  newsApi = "https://newsdata.io/api/1/news?category=business&language=en&${apiKey}";
+  final apiKey = dotenv.env['API_KEY'];
+  newsApi += '&apikey=${apiKey}';
 }
 
 class MyHttpOverrides extends HttpOverrides {

@@ -251,7 +251,7 @@ void _showModal(BuildContext context) {
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
-                return Text(remoteConfig.getValue('app_secret').toString() ?? '');
+                return Text(remoteConfig.getValue('app_secret').asString() ?? '');
               }
             },
           ),

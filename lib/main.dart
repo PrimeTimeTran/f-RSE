@@ -10,8 +10,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  setupAPP();
-
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeModel(),
@@ -68,12 +66,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      routerConfig: goRouter,
-      debugShowCheckedModeBanner: false,
-      themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
+    return FutureBuilder(
+      future: setup(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const SizedBox();
+        }
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp.router(
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            routerConfig: goRouter,
+            debugShowCheckedModeBanner: false,
+            themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          );
+        }
+        return const SizedBox();
+      },
     );
   }
 }
