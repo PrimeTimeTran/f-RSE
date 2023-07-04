@@ -139,7 +139,7 @@ final goRouter = GoRouter(
       branches: [
         StatefulShellBranch(
           navigatorKey: _shellNavigatorAKey,
-          observers: [observer],
+          observers: [observer, fbAnalyticsObserver],
           routes: [
             GoRoute(
               path: '/home',
@@ -155,6 +155,7 @@ final goRouter = GoRouter(
         ),
         StatefulShellBranch(
           navigatorKey: _shellNavigatorBKey,
+          observers: [observer, fbAnalyticsObserver],
           routes: [
             GoRoute(
               path: '/investing',
@@ -167,6 +168,7 @@ final goRouter = GoRouter(
         ),
         StatefulShellBranch(
           navigatorKey: _shellNavigatorCKey,
+          observers: [observer, fbAnalyticsObserver],
           routes: [
             GoRoute(
               path: '/notifications',
@@ -179,6 +181,7 @@ final goRouter = GoRouter(
         ),
         StatefulShellBranch(
           navigatorKey: _shellNavigatorDKey,
+          observers: [observer, fbAnalyticsObserver],
           routes: [
             GoRoute(
               path: '/profile',

@@ -12,6 +12,8 @@ import 'package:rse/all.dart';
 
 final remoteConfig = FirebaseRemoteConfig.instance;
 
+FirebaseAnalyticsObserver fbAnalyticsObserver = FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
+
 void setupFirebase() async {
   try {
     await Firebase.initializeApp(
