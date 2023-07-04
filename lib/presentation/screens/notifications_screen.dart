@@ -7,7 +7,7 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    setScreenName('notifications');
+    setScreenName('/notifications');
     return Scaffold(
       body: ResponsiveLayout(
         mobile: buildMobile(context),

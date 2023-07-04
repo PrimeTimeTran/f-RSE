@@ -17,7 +17,7 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   void initState() {
     super.initState();
-    setScreenName('securities/${widget.sym}');
+    setScreenName('/securities/${widget.sym}');
   }
 
   void _showAction(BuildContext context, int index) {
@@ -40,6 +40,16 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.sym),
+        leading: const ArrowBackButton(screenCode: '0-0', root: '/'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => context.go('/search'),
+          ),
+        ],
+      ),
       body: ResponsiveLayout(
         mobile: buildOneColumn(context),
         desktop: buildTwoColumn(),

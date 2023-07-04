@@ -11,18 +11,11 @@ class HomeScreen extends StatefulWidget {
   HomeScreenState createState() => HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen>  with WidgetsBindingObserver {
+class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
-    setScreenName('home');
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
-    super.dispose();
+    setScreenName('/home');
   }
 
   @override
@@ -68,12 +61,12 @@ class HomeScreenState extends State<HomeScreen>  with WidgetsBindingObserver {
           child: ScrollConfiguration(
             behavior:
                 ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: SingleChildScrollView(
+            child: const SingleChildScrollView(
               child: Column(
                 children: [
-                  const TickerCarousel(),
+                  TickerCarousel(),
                   LineChart(),
-                  const Articles(),
+                  Articles(),
                 ],
               ),
             ),

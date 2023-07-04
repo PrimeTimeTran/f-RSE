@@ -15,6 +15,9 @@ Future<void> main() async {
       create: (_) => ThemeModel(),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<NavBloc>(
+            create: (_) => NavBloc(),
+          ),
           BlocProvider<PortfolioBloc>(
             create: (_) => PortfolioBloc(portfolio: Portfolio.defaultPortfolio()),
           ),

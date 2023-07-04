@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
-// ignore: depend_on_referenced_packages
-import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rse/all.dart';
 
@@ -17,103 +14,94 @@ final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class App extends StatefulWidget {
-  final StatefulNavigationShell navigationShell;
+  final StatefulNavigationShell shell;
 
-  const App({super.key, required this.navigationShell});
+  const App({super.key, required this.shell});
 
   @override
   State<App> createState() => _AppState();
 }
 
-final MyNavigatorObserver observer = MyNavigatorObserver(
-  onPushStack: (int i) {},
-);
+// A drawer wraps a bottom tab bar wraps nested stacks:
+
+// - Drawer:
+//   - Hamburger menu icon in app bar leading of all root bottom tab screens.
+//   - Hamburger icon press opens drawer.
+// - Bottom Tab:
+//   - Contains stacks in each tab.
+//   - Push replaces hamburger icon with back arrow icon.
+//   - Back arrow icon press pops stack to previous screen.
+//   - Popping from stack replaces back arrow with hamburger icon when root reached.
+//   - Bottom tab icon press when already on this tab resets the stack to root screen of the stack.
+//   - State should be preserved between stacks:
+//      - Leaving tab and returning should maintain scroll position.
+//      - Navigate to 2nd screen of home, asset.
+//      - Press 2nd tab, investing.
+//      - Press 1st tab, home.
+//      - 1st tab 2nd screen, asset, should still be present.
+
+// https://codewithandrea.com/articles/flutter-bottom-navigation-bar-nested-routes-gorouter/
+
+// https://github.com/flutter/flutter/issues/112196
+// The messy code from this navigation comes from goRouter lack
+// of API for observers working correctly within nested navigators.
+// We can't easily know when a nested Stack is pushed or popped.
+// So we have to manually track it in order to know when to show/hide the appbar.
+
+// If we don't do this, the appbar will be shown when the user navigates to nested stacks.
+// We have to manually hide it when the user navigates to a nested stack.
 
 class _AppState extends State<App> {
-  bool home = true;
-  String header = 'Royal Stock Exchange';
-
-  void onPushStack(int idx) {
-    setState(() {
-      home = !home;
-    });
-  }
-
-  setHeader(String header) {
-    setState(() {
-      this.header = header;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    observer.onPushStack = onPushStack;
-    _shellNavigatorAKey.currentState?.widget.observers.add(observer);
     logAppLoadSuccess();
   }
 
-  resetStack(int idx) {
-    widget.navigationShell.goBranch(
-      idx,
-      initialLocation: idx == widget.navigationShell.currentIndex,
+  resetStack(int tabIdx) {
+    final shell = widget.shell;
+    if (tabIdx == shell.currentIndex) {
+      BlocProvider.of<NavBloc>(context).add(NavChanged('$tabIdx-0'));
+    }
+
+    shell.goBranch(
+      tabIdx,
+      initialLocation: tabIdx == shell.currentIndex,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: widget.navigationShell,
-      drawer: const MyDrawer(),
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(home ? Icons.menu : Icons.arrow_back),
-              onPressed: () {
-                if (home) {
-                  Scaffold.of(context).openDrawer();
-                } else {
-                  resetStack(0);
-                }
-              },
-            );
-          },
-        ),
-        title: Consumer<ThemeModel>(
-          builder: (context, themeModel, _) {
-            return GestureDetector(
-              onDoubleTap: themeModel.toggleTheme,
-              onLongPressStart: (details) {
-                _handleLongPress(details, context);
-              },
-              child: Text(
-                home ? 'Royal Stock Exchange' : 'Security',
-              ),
-            );
-          },
-        ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        resetStack: resetStack,
-        navigationShell: widget.navigationShell,
-      ),
+    return BlocConsumer<NavBloc, NavState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          key: _scaffoldKey,
+          body: widget.shell,
+          drawer: const MyDrawer(),
+          appBar: state.states[widget.shell.currentIndex] == 0 ? buildDevOptions(context) : null,
+          bottomNavigationBar: BottomNavBar(
+            resetStack: resetStack,
+            shell: widget.shell,
+          ),
+        );
+      },
     );
   }
 }
 
 final goRouter = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/',
   // * Passing a navigatorKey causes an issue on hot reload:
   // * https://github.com/flutter/flutter/issues/113757#issuecomment-1518421380
   // * However it's still necessary otherwise the navigator pops back to
   // * root on hot reload
-  debugLogDiagnostics: true,
+  // debugLogDiagnostics: true,
   navigatorKey: _rootNavigatorKey,
+  observers: [fbAnalyticsObserver],
   redirect: (context, state) {
     String location = state.location;
-    if (location == '/home') {
+    if (location == '/') {
       final bloc = context.read<PortfolioBloc>();
       bloc.fetchPortfolio(1);
       if (bloc.portfolio.meta != null
@@ -133,23 +121,26 @@ final goRouter = GoRouter(
     // Stateful navigation based on:
     // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
     StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return App(navigationShell: navigationShell);
+      builder: (context, state, shell) {
+        return App(shell: shell);
       },
       branches: [
         StatefulShellBranch(
           navigatorKey: _shellNavigatorAKey,
-          observers: [observer, fbAnalyticsObserver],
           routes: [
             GoRoute(
-              path: '/home',
+              path: '/',
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: HomeScreen(label: 'Home'),
               ),
-            ),
-            GoRoute(
-              path: '/securities/:sym',
-              builder: (context, state) => AssetScreen(sym: state.pathParameters['sym']!),
+              routes: [
+                GoRoute(
+                  path: 'securities/:sym',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child: AssetScreen(sym: state.pathParameters['sym']!),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -186,6 +177,15 @@ final goRouter = GoRouter(
                 key: state.pageKey,
                 child: const ProfileScreen(),
               ),
+              routes: [
+                GoRoute(
+                  path: 'settings',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const ProfileSettingsScreen(),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -193,71 +193,3 @@ final goRouter = GoRouter(
     ),
   ],
 );
-
-Future<String> getVersionId() async {
-  try {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String version = packageInfo.version;
-    String buildNumber = packageInfo.buildNumber;
-    return '$version $buildNumber';
-  } on Exception catch (_) {
-    return '';
-  }
-}
-
-void _showModal(BuildContext context) {
-  double width = MediaQuery.of(context).size.width;
-  double height = MediaQuery.of(context).size.height;
-  bool showAppConfig = remoteConfig.getValue('app_show_config').asBool();
-  showModalBottomSheet<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return Column(
-        children: [
-          Text('Screen Width: ${width.toStringAsFixed(2)}'),
-          Text('Screen Height: ${height.toStringAsFixed(2)}'),
-          TextButton(
-            onPressed: () => throw Exception(),
-            child: const Text("Throw Test Exception"),
-          ),
-          TextButton(
-            onPressed: () {
-              final bool value = debugPaintSizeEnabled;
-              debugPaintSizeEnabled = !value;
-            },
-            child: const Text("Enable Debug Paint Size"),
-          ),
-          if (showAppConfig)
-            FutureBuilder<String>(
-              future: getVersionId(),
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Text(snapshot.data ?? '');
-                }
-              },
-            ),
-          FutureBuilder<String>(
-            future: getVersionId(),
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return Text(remoteConfig.getValue('app_secret').asString() ?? '');
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-void _handleLongPress(LongPressStartDetails details, context) {
-  _showModal(context);
-}

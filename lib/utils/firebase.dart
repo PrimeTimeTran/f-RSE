@@ -13,6 +13,12 @@ import 'package:rse/all.dart';
 
 StreamSubscription? subscription;
 final remoteConfig = FirebaseRemoteConfig.instance;
+
+// Doesn't fix screen_view events for FB analytics.
+// May fix GA page path & screen class.
+// https://analytics.google.com/analytics/web/#/p388273837/reports/explorer?params=_u..nav%3Dmaui&r=all-pages-and-screens&ruid=all-pages-and-screens,life-cycle,engagement&collectionId=life-cycle
+
+// https://stackoverflow.com/questions/55830575/how-do-i-track-flutter-screens-in-firebase-analytics
 late FirebaseAnalyticsObserver fbAnalyticsObserver;
 
 setupFirebase() async {

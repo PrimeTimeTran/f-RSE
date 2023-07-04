@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:rse/all.dart';
@@ -165,6 +166,7 @@ class WatchItemState extends State<WatchItem> {
     // Context when passed to buildSmall is not the same as the
     // context so we define navigate here and pass it to the button.
     navigate() {
+      BlocProvider.of<NavBloc>(context).add(NavChanged('0-1'));
       context.go("/securities/${widget.item.sym}");
     }
 

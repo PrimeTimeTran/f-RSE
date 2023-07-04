@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:rse/all.dart';
 
 class BottomNavBar extends StatelessWidget {
-  final StatefulNavigationShell navigationShell;
+  final StatefulNavigationShell shell;
   final Function resetStack;
 
-  const BottomNavBar({super.key, required this.navigationShell, required this.resetStack});
+  const BottomNavBar({super.key, required this.shell, required this.resetStack});
 
   void _goBranch(int index) {
     resetStack(index);
   }
 
   getIconColor(context, idx) {
-    return navigationShell.currentIndex == idx
+    return shell.currentIndex == idx
         ? T(context, 'primaryContainer')
         : T(context, 'inversePrimary');
   }
@@ -23,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return NavigationBar(
       onDestinationSelected: _goBranch,
-      selectedIndex: navigationShell.currentIndex,
+      selectedIndex: shell.currentIndex,
       indicatorColor: Theme.of(context).indicatorColor,
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       destinations: [

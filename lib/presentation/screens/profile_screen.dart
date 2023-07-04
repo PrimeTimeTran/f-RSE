@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:rse/all.dart';
@@ -15,6 +17,12 @@ class ProfileScreenState extends State<ProfileScreen> {
   ProfileForm formData = ProfileForm();
 
   @override
+  void initState() {
+    super.initState();
+    setScreenName('/profile');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ResponsiveLayout(
@@ -25,9 +33,15 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   mobile(BuildContext context) {
+    navigate() {
+      BlocProvider.of<NavBloc>(context).add(NavChanged('3-1'));
+      context.go("/profile/settings",);
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
+          TextButton(onPressed: navigate, child: Text('Settings')),
           buildForm(context),
           const SizedBox(height: 20),
           buildBankAccounts(context),
