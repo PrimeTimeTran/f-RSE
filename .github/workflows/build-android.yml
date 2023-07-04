@@ -27,17 +27,19 @@ jobs:
           java-version: '11'
           distribution: 'zulu'
 
-      - name: Build APK & bundle
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: '3.10.5'
+      - name: Build APK
+        if: ${{ matrix.platform == 'android' }}
+        run: |
+          flutter --version
+          flutter pub get
+          flutter build apk --flavor=production
 
-      - run: flutter --version
-      - run: flutter pub get
-      - run: flutter build apk --flavor=production
-
-      - name: Firebase App distribution upload
+      - name: Upload to Firebase App Distribution
         if: ${{ matrix.platform == 'android' }}
         uses: w9jds/firebase-action@v11.5.0
         with:
