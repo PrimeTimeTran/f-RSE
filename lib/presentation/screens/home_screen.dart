@@ -16,19 +16,13 @@ class HomeScreenState extends State<HomeScreen>  with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
+    setScreenName('home');
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      setScreenName('home');
-    }
   }
 
   @override

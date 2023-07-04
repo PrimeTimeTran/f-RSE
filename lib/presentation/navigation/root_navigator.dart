@@ -149,7 +149,7 @@ final goRouter = GoRouter(
             ),
             GoRoute(
               path: '/securities/:sym',
-              builder: (context, state) => const AssetScreen(sym: ''),
+              builder: (context, state) => AssetScreen(sym: state.pathParameters['sym']!),
             ),
           ],
         ),

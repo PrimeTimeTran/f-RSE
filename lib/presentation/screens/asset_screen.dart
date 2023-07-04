@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rse/all.dart';
 
@@ -16,7 +17,6 @@ class _AssetScreeState extends State<AssetScreen> {
   @override
   void initState() {
     super.initState();
-    logAssetView(widget.sym);
     setScreenName('securities/${widget.sym}');
   }
 

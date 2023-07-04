@@ -98,27 +98,54 @@ class ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-        inputField('Email', Icons.email, 'john@example.com', formData.email,
-            (v) => formData.email = v),
-        inputField('Phone Number', Icons.phone, '123-456-7890',
-            formData.phoneNumber, (v) => formData.phoneNumber = v),
-        inputField('Address', Icons.home, '1234 Main St', formData.address,
-            (v) => formData.address = v),
-        inputField('City', Icons.location_city, 'New York', formData.city,
-            (v) => formData.city = v),
+        inputField(
+          'Email',
+          Icons.email,
+          'john@example.com',
+          formData.email,
+          (v) => formData.email = v,
+        ),
+        inputField(
+          'Phone Number',
+          Icons.phone,
+          '123-456-7890',
+          formData.phoneNumber,
+          (v) => formData.phoneNumber = v,
+        ),
+        inputField(
+          'Address',
+          Icons.home,
+          '1234 Main St',
+          formData.address,
+          (v) => formData.address = v,
+        ),
+        inputField(
+          'City',
+          Icons.location_city,
+          'New York',
+          formData.city,
+          (v) => formData.city = v,
+        ),
         Row(
           children: [
             Expanded(
+              flex: 4,
               child: stateTypeAhead(),
             ),
             Expanded(
+              flex: 3,
               child: inputField('Zip Code', Icons.location_pin, '12345',
                   formData.zipCode, (v) => formData.zipCode = v),
             ),
           ],
         ),
-        inputField('Country', Icons.flag, 'United States', formData.country,
-            (v) => formData.country = v),
+        inputField(
+          'Country',
+          Icons.flag,
+          'United States',
+          formData.country,
+          (v) => formData.country = v,
+        ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 50),
@@ -136,8 +163,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget inputField(
-      label, icon, hint, value, Function(String) onChanged) {
+  Widget inputField(label, icon, hint, value, Function(String) onChanged) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: TextFormField(
@@ -146,8 +172,8 @@ class ProfileScreenState extends State<ProfileScreen> {
         readOnly: kDebugMode,
         showCursor: kDebugMode,
         decoration: InputDecoration(
-          labelText: label,
           hintText: hint,
+          labelText: label,
           prefixIcon: Icon(icon),
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
@@ -261,7 +287,7 @@ class _ExpansionPanelListExampleState extends State<ExpansionPanelListExample> {
           body: ListTile(
               title: Text(item.expandedValue),
               subtitle:
-              const Text('To delete this panel, tap the trash can icon'),
+                  const Text('To delete this panel, tap the trash can icon'),
               trailing: const Icon(Icons.delete),
               onTap: () {
                 setState(() {
