@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ import 'firebase_options.dart';
 
 import 'package:rse/all.dart';
 
+StreamSubscription? subscription;
 final remoteConfig = FirebaseRemoteConfig.instance;
 late FirebaseAnalyticsObserver fbAnalyticsObserver;
 
@@ -33,7 +35,12 @@ setupFirebase() async {
     // Crashlytics isn't supported on web.
     // https://github.com/firebase/flutterfire/issues/4631
     if (!kIsWeb) {
-      remoteConfig.onConfigUpdated.listen((event) async {
+      if (subscription != null) {
+        await subscription!.cancel();
+        subscription = null;
+      }
+
+      subscription = remoteConfig.onConfigUpdated.listen((event) async {
         await remoteConfig.activate();
       });
 
