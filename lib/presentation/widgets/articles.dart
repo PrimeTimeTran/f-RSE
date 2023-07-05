@@ -26,7 +26,7 @@ class Articles extends StatelessWidget {
       child: Column(
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 8.0),
+            padding: EdgeInsets.only(left: 8.0, bottom: 8),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -38,11 +38,10 @@ class Articles extends StatelessWidget {
               ),
             ),
           ),
-          BlocBuilder<NewsBloc, List<NewsArticle>>(
-            builder: (context, articles) {
-              if (articles.isEmpty) {
-                return const CircularProgressIndicator();
-              } else {
+          BlocBuilder<NewsBloc, NewsState>(
+            builder: (context, state) {
+              if (state is NewsLoaded) {
+                final articles = state.articles;
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: articles.length,
@@ -52,6 +51,7 @@ class Articles extends StatelessWidget {
                   },
                 );
               }
+              return const CircularProgressIndicator();
             },
           ),
         ],
