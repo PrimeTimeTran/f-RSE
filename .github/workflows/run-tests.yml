@@ -1,0 +1,34 @@
+name: Run tests & code analysis
+
+on:
+  push:
+    branches: [main, feature/*, hotfix/*, bugfix/*]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  run-tests-and-code-analysis-then-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Install and set Flutter version
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.5'
+
+      - name: Restore packages
+        run: flutter pub get
+
+      - name: Analyze syntax
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

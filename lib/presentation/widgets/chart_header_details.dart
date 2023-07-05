@@ -43,7 +43,7 @@ class ChartHeaderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isHome = GoRouter.of(context).location == '/';
+    final isHome = GoRouterState.of(context).location == '/';
     final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     final assetBloc = BlocProvider.of<AssetBloc>(context);
     var prompt = isHome ? portfolioBloc.portfolio.period : assetBloc.period;

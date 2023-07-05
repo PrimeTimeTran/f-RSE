@@ -83,74 +83,66 @@ class WatchItemState extends State<WatchItem> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            item.sym,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          item.shares.toString(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          item.sym,
                           style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        item.shares.toString(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    // color: Colors.lightBlue.shade50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        buildSmallChart(context, color, data, false),
-                      ],
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildSmallChart(context, color, data, false),
+                    ],
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    // color: Colors.red.shade50,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        OutlinedButton(
-                          onPressed: () {
-                            navigate();
-                          },
-                          style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(
-                              const Size(100, 35),
-                            ),
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                              color,
-                            ),
-                            side: MaterialStateProperty.all<BorderSide>(
-                              BorderSide(
-                                color: color,
-                              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          navigate();
+                        },
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                            const Size(100, 35),
+                          ),
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                            color,
+                          ),
+                          side: MaterialStateProperty.all<BorderSide>(
+                            BorderSide(
+                              color: color,
                             ),
                           ),
-                          child: Text(formatMoney(item.price.toString())),
                         ),
-                      ],
-                    ),
+                        child: Text(formatMoney(item.price.toString())),
+                      ),
+                    ],
                   ),
                 )
               ],

@@ -16,13 +16,12 @@ class NavChanged extends NavEvent {
 }
 
 abstract class NavState extends Equatable {
-  final List<int> states = [];
-  @override
-  List<Object?> get props => [states];
+  List<int> get states;
 }
 
 class NavChangeSuccess extends NavState {
   final String location;
+  @override
   final List<int> states;
 
   NavChangeSuccess(this.location, this.states);

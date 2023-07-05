@@ -43,57 +43,54 @@ class YourPosition extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-          child: Container(
-            // color: Colors.red,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(title,
+                      style: TextStyle(fontSize: getFontSize(context)))
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 2, bottom: 10),
+                child: Row(
                   children: [
-                    Text(title,
-                        style: TextStyle(fontSize: getFontSize(context)))
+                    Text('\$100,000',
+                        style: TextStyle(
+                            fontSize: getFontSize(context) * 2,
+                            fontWeight: FontWeight.bold))
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 2, bottom: 10),
-                  child: Row(
-                    children: [
-                      Text('\$100,000',
-                          style: TextStyle(
-                              fontSize: getFontSize(context) * 2,
-                              fontWeight: FontWeight.bold))
-                    ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    info1,
+                    style: TextStyle(fontSize: getFontSize(context)),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      info1,
-                      style: TextStyle(fontSize: getFontSize(context)),
-                    ),
-                    Text(
-                      '\$100,000',
-                      style: TextStyle(fontSize: getFontSize(context)),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      info2,
-                      style: TextStyle(fontSize: getFontSize(context)),
-                    ),
-                    Text(
-                      '\$100,000',
-                      style: TextStyle(fontSize: getFontSize(context)),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  Text(
+                    '\$100,000',
+                    style: TextStyle(fontSize: getFontSize(context)),
+                  ),
+                ],
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    info2,
+                    style: TextStyle(fontSize: getFontSize(context)),
+                  ),
+                  Text(
+                    '\$100,000',
+                    style: TextStyle(fontSize: getFontSize(context)),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -17,7 +17,7 @@ class _UpcomingActivityState extends State<UpcomingActivity> {
         children: [
           const Text('Upcoming Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const Divider(),
-          Container(
+          SizedBox(
             height: 100,
             child: ListView.builder(
               itemCount: 1,

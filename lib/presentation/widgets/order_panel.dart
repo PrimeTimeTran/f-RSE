@@ -21,22 +21,22 @@ class OrderPanelState extends State<OrderPanel> {
             color: T(context, 'secondaryContainer'),
             child: DefaultTabController(
               length: 2,
-              animationDuration: Duration(milliseconds: 0),
+              animationDuration: const Duration(milliseconds: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: TabBar(
                       labelColor: color,
                       indicatorColor: color,
                       unselectedLabelColor: Theme.of(context).indicatorColor,
-                      tabs: [
-                        Container(
+                      tabs: const [
+                        SizedBox(
                           width: 30,
                           child: Tab(text: 'Buy'),
                         ),
-                        Container(
+                        SizedBox(
                           width: 30,
                           child: Tab(text: 'Sell'),
                         ),
@@ -50,38 +50,38 @@ class OrderPanelState extends State<OrderPanel> {
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                           child: Column(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Row(
                                   children: [
                                     Text('Order Type'),
-                                    const Spacer(),
+                                    Spacer(),
                                     Text('0.00000000'),
                                   ],
                                 ),
                               ),
-                              Expanded(
+                              const Expanded(
                                 child: Row(
                                   children: [
                                     Text('Buy In'),
-                                    const Spacer(),
+                                    Spacer(),
                                     Text('0.00000000'),
                                   ],
                                 ),
                               ),
-                              Expanded(
+                              const Expanded(
                                 child: Row(
                                   children: [
                                     Text('Shares'),
-                                    const Spacer(),
+                                    Spacer(),
                                     Text('0.00000000'),
                                   ],
                                 ),
                               ),
-                              Expanded(
+                              const Expanded(
                                 child: Row(
                                   children: [
                                     Text('Market Price'),
-                                    const Spacer(),
+                                    Spacer(),
                                     Text('0.00000000'),
                                   ],
                                 ),
@@ -91,12 +91,12 @@ class OrderPanelState extends State<OrderPanel> {
                                 height: 1,
                                 color: Colors.grey[300],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
                                     Text('Estimated Cost'),
-                                    const Spacer(),
+                                    Spacer(),
                                     Text('0.00000000'),
                                   ],
                                 ),
@@ -106,11 +106,10 @@ class OrderPanelState extends State<OrderPanel> {
                                 child: TextButton(
                                   onPressed: () {},
                                   style: TextButton.styleFrom(
-                                    primary: Colors.white,
                                     backgroundColor: color,
-                                    minimumSize: Size(double.infinity, 50),
+                                    minimumSize: const Size(double.infinity, 50),
                                   ),
-                                  child: Text('Review Order'),
+                                  child: const Text('Review Order'),
                                 ),
                               ),
                               Container(
@@ -118,7 +117,7 @@ class OrderPanelState extends State<OrderPanel> {
                                 height: 1,
                                 color: Colors.grey[300],
                               ),
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('Buying Power \$100,000'),
@@ -131,38 +130,38 @@ class OrderPanelState extends State<OrderPanel> {
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                           child: Column(
                               children: [
-                                Expanded(
+                                const Expanded(
                                   child: Row(
                                     children: [
                                       Text('Order Type'),
-                                      const Spacer(),
+                                      Spacer(),
                                       Text('0.00000000'),
                                     ],
                                   ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   child: Row(
                                     children: [
                                       Text('Sell In'),
-                                      const Spacer(),
+                                      Spacer(),
                                       Text('0.00000000'),
                                     ],
                                   ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   child: Row(
                                     children: [
                                       Text('Shares'),
-                                      const Spacer(),
+                                      Spacer(),
                                       Text('0.00000000'),
                                     ],
                                   ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   child: Row(
                                     children: [
                                       Text('Market Price'),
-                                      const Spacer(),
+                                      Spacer(),
                                       Text('0.00000000'),
                                     ],
                                   ),
@@ -172,12 +171,12 @@ class OrderPanelState extends State<OrderPanel> {
                                   height: 1,
                                   color: Colors.grey[300],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
                                       Text('Estimated Credit'),
-                                      const Spacer(),
+                                      Spacer(),
                                       Text('0.00000000'),
                                     ],
                                   ),
@@ -187,11 +186,10 @@ class OrderPanelState extends State<OrderPanel> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                      primary: Colors.white,
                                       backgroundColor: color,
-                                      minimumSize: Size(double.infinity, 50),
+                                      minimumSize: const Size(double.infinity, 50),
                                     ),
-                                    child: Text('Review Order'),
+                                    child: const Text('Review Order'),
                                   ),
                                 ),
                                 Container(
@@ -199,7 +197,7 @@ class OrderPanelState extends State<OrderPanel> {
                                   height: 1,
                                   color: Colors.grey[300],
                                 ),
-                                Row(
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text('Buying Power \$100,000'),
