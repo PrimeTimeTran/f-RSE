@@ -1,4 +1,4 @@
-name: Tests
+name: Run tests & code analysis
 
 on:
   push:
@@ -7,18 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  tests:
+  run-tests-and-code-analysis-then-report:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
 
-      - name: Install Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'zulu'
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
@@ -33,6 +28,7 @@ jobs:
       - name: Run tests
         run: flutter test --coverage
 
-      - name: Upload coverage to codecov
-        run: curl -s https://codecov.io/bash
-        shell: bash
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

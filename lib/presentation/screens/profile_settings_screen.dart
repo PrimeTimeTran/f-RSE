@@ -17,7 +17,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
         title: const Text('Account Settings'),
         leading: const ArrowBackButton(screenCode: '3-0', root: '/profile'),
       ),
-      body: Text('Hi'),
+      body: const Text('Hi'),
     );
   }
 }

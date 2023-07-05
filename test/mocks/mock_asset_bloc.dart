@@ -4,11 +4,6 @@ import 'package:rse/all.dart';
 
 class MockBlocAsset<Event, State> extends Bloc<Event, State> {
   MockBlocAsset() : super(AssetInitial(Asset.defaultAsset()) as State);
-
-  @override
-  Stream<State> mapEventToState(Event event) async* {
-    yield* Stream.empty();
-  }
 }
 
 class MockAssetBloc extends MockBlocAsset<AssetEvent, AssetState>
@@ -31,6 +26,8 @@ class MockAssetBloc extends MockBlocAsset<AssetEvent, AssetState>
 
   @override
   void addError(Object error, [StackTrace? stackTrace]) {
+    super.addError(error, stackTrace);
+
     // TODO: implement addError
   }
 
@@ -40,6 +37,7 @@ class MockAssetBloc extends MockBlocAsset<AssetEvent, AssetState>
 
   @override
   Future<void> close() {
+    super.close();
     // TODO: implement close
     throw UnimplementedError();
   }
@@ -66,21 +64,29 @@ class MockAssetBloc extends MockBlocAsset<AssetEvent, AssetState>
 
   @override
   void onChange(Change<AssetState> change) {
+    super.onChange(change);
+
     // TODO: implement onChange
   }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+
     // TODO: implement onError
   }
 
   @override
   void onEvent(AssetEvent event) {
+    super.onEvent(event);
+
     // TODO: implement onEvent
   }
 
   @override
   void onTransition(Transition<AssetEvent, AssetState> transition) {
+    super.onTransition(transition);
+
     // TODO: implement onTransition
   }
 

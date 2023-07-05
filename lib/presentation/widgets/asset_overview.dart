@@ -13,11 +13,11 @@ class AssetOverview extends StatelessWidget {
         if (state is AssetLoaded) {
           final asset = state.asset;
           return Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
                 children: [
-                  HoverDarken(child: YourPosition()),
-                  UpcomingActivity(),
+                  const HoverDarken(child: YourPosition()),
+                  const UpcomingActivity(),
                   HoverDarken(child: About(asset: asset)),
                   HoverDarken(child: KeyStatistics(asset: asset)),
                   HoverDarken(child: AssetActivityHistory(asset: asset)),

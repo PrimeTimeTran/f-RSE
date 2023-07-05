@@ -5,6 +5,7 @@ import 'package:rse/all.dart';
 
 final fakerFa = Faker(provider: FakerDataProviderFa());
 
+// ignore: must_be_immutable
 class KeyStatistics extends StatelessWidget {
   late bool isSmall;
   final Asset asset;

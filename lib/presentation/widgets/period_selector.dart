@@ -65,7 +65,7 @@ class PeriodSelectorState extends State<PeriodSelector> {
     final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     final assetBloc = BlocProvider.of<AssetBloc>(context);
 
-    final isHome = GoRouter.of(context).namedLocation == '/';
+    final isHome = GoRouterState.of(context).location == '/';
     final period = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
 
     return Align(

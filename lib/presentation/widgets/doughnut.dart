@@ -36,9 +36,9 @@ class DoughnutState extends State<Doughnut> {
         SizedBox(
           height: MediaQuery.of(context).size.height * .7,
           child: SfCircularChart(
-            legend: Legend(
+            legend: const Legend(
               isVisible: true,
-              offset: const Offset(0, 40),
+              offset: Offset(0, 40),
               position: LegendPosition.top,
               alignment: ChartAlignment.center,
               overflowMode: LegendItemOverflowMode.wrap,

@@ -12,7 +12,7 @@ class TimeLabel extends StatelessWidget {
     return BlocBuilder<ChartBloc, ChartState>(
       builder: (c, state) {
         if (state is ChartFocusSuccess) {
-          final isHome = GoRouter.of(context).namedLocation == '/';
+          final isHome = GoRouterState.of(context).location == '/';
           final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
           final assetBloc = BlocProvider.of<AssetBloc>(context);
           final period = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
