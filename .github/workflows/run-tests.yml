@@ -2,7 +2,7 @@ name: Run tests & code analysis
 
 on:
   push:
-    branches: [main, feature/*, hotfix/*, bugfix/*]
+    branches: [main, feature/*, hotfix/*, bugfix/*, gh-pages]
   pull_request:
     branches: [main, develop]
 
@@ -19,16 +19,21 @@ jobs:
         with:
           flutter-version: '3.10.5'
 
-      - name: Restore packages
+      - name: Install packages
         run: flutter pub get
-
-      - name: Analyze syntax
-        run: flutter analyze
 
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' 
+          python-version: '3.10'
+
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
 
       - name: Run tests and generate coverage reports
         run: |
@@ -36,36 +41,38 @@ jobs:
           flutter pub global activate test_cov_console
           flutter pub global run test_cov_console -c
           COV="$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
-          echo "coverage=$COV" >> $GITHUB_OUTPUT
+          echo "$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
 
-      - name: Checkout gh-pages
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
+          # Defines for next step
+          echo "COV=$COV" >> $GITHUB_ENV
 
       - name: Create Badges
         shell: bash
         run: |
           npm i -g badgen-cli
-          export COV="${{ steps.run-tests-and-generate-coverage-reports.outputs.coverage }}"
-          echo ${{ steps.run-tests-and-generate-coverage-reports.outputs.coverage }}
-          COLOR=$(node -p '+process.env.COV >= 95 ? `green` : `orange`')
+
+          # Prints
+          echo $COV
+          
+          # Prints
+          echo ${{ env.COV }}
+
+          COLOR=$(node -p "const cov = process.env.COV.split(' ')[1]; +cov >= 95 ? 'green' : 'orange'")
+
           mkdir -p badges
-          badgen -j coverage -s $COV% -c $COLOR > badges/coverage.svg
-
-      - name: Deploy Badges
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Update badges [skip ci]"
-          skip_fetch: true
-          skip_checkout: true
-
-      - name: Checkout Back
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+          badgen -j coverage -s "${COV#*: }%" -c $COLOR > badges/coverage.svg
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Deploy Badges
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update badges [skip ci]"
+
+      - name: Checkout Back
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}

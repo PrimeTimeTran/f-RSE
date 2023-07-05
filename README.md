@@ -1,6 +1,5 @@
-[![cov](https://primetimetran.github.io/f-RSE/badges/coverage.svg)](https://github.com/primetimetran/f-RSE/actions)
+# Royal Stock Exchange(RSE) [![cov](https://primetimetran.github.io/f-RSE/badges/coverage.svg)](https://github.com/primetimetran/f-RSE/actions)
 
-# Royal Stock Exchange(RSE)
 
 A stock exchange for the next generation.
 
@@ -48,4 +47,4 @@ A stock exchange for the next generation.
     - [Enable live debugging of events](https://stackoverflow.com/questions/42769236/firebase-analytics-debug-view-does-not-show-anything):
       - `adb shell setprop debug.firebase.analytics.app 231022961791`
       - `adb shell setprop debug.firebase.analytics.app com.example.rse`
-    - Restart emulator.
+    - Restart emulator
