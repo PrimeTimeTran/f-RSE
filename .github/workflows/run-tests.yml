@@ -35,7 +35,8 @@ jobs:
           flutter test --coverage
           flutter pub global activate test_cov_console
           flutter pub global run test_cov_console -c
-          COV="$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
+          COV="$(p coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
+          echo "$COV"
           echo "coverage=$COV" >> $GITHUB_OUTPUT
 
       - name: Checkout gh-pages
