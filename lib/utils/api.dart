@@ -16,7 +16,7 @@ void setupAPI() {
   }
 
   final apiKey = dotenv.env['API_KEY'];
-  newsApi += '&apikey=${apiKey}';
+  newsApi += '&apikey=$apiKey';
 }
 
 class MyHttpOverrides extends HttpOverrides {

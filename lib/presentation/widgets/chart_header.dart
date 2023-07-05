@@ -30,8 +30,7 @@ class ChartHeader extends StatelessWidget {
               } else if (state is ChartUpdateSuccess) {
                 final startValue = state.chart.startValue;
                 final focusedValue = state.chart.latestValue;
-                final router = GoRouter.of(context);
-                final isHome = router.namedLocation == 1;
+                final isHome = GoRouterState.of(context).location.length == 1;
 
                 // Race condition:
                 // Asset vs Portfolio

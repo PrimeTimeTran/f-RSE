@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:rse/all.dart';
@@ -39,7 +37,7 @@ class ProfileScreenState extends State<ProfileScreen> {
           buildForm(context),
           const SizedBox(height: 20),
           buildBankAccounts(context),
-          ExpansionPanelListExample(),
+          const ExpansionPanelListExample(),
           const SizedBox(height: 100),
         ],
       ),
@@ -73,11 +71,11 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   buildBankAccount(context, index) {
-    return ListTile(
-      leading: const Icon(Icons.account_balance),
-      title: const Text('Bank of America'),
-      subtitle: const Text('Checking'),
-      trailing: const Icon(Icons.edit),
+    return const ListTile(
+      leading: Icon(Icons.account_balance),
+      title: Text('Bank of America'),
+      subtitle: Text('Checking'),
+      trailing: Icon(Icons.edit),
     );
   }
 
@@ -227,7 +225,9 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   void submitForm() {
-    print(formData);
+    if (kDebugMode) {
+      print(formData);
+    }
   }
 }
 

@@ -107,8 +107,7 @@ class _AppBarWithSearchState extends State<AppBarWithSearch> {
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
-            if (_searchQueryController == null ||
-                _searchQueryController.text.isEmpty) {
+            if (_searchQueryController.text.isEmpty) {
               Navigator.pop(context);
               return;
             }
@@ -215,7 +214,7 @@ void _showModal(BuildContext context) {
                 return Text('Error: ${snapshot.error}');
               } else {
                 return Text(
-                    remoteConfig.getValue('app_secret').asString() ?? '');
+                    remoteConfig.getValue('app_secret').asString());
               }
             },
           ),

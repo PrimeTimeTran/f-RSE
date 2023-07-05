@@ -1,15 +1,27 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:rse/data/all.dart';
 
-abstract class NewsEvent {}
+abstract class NewsEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-class FetchArticles extends NewsEvent {}
+class FetchNews extends NewsEvent {
+  final List<NewsArticle> articles;
+
+  FetchNews(this.articles);
+
+  @override
+  List<Object?> get props => [articles];
+}
 
 abstract class NewsState {}
 
-class NewsInitial extends NewsState {}
+class NewsInitial extends NewsState {
+}
 
 class NewsLoaded extends NewsState {
   final List<NewsArticle> articles;
@@ -31,30 +43,12 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   Future<void> fetchArticles() async {
     try {
       final articles = await _newsService.fetchArticles();
+      // ignore: invalid_use_of_visible_for_testing_member
       emit(NewsLoaded(articles));
     } catch (error) {
       if (kDebugMode) {
         print('Error fetching articles: $error');
       }
-    }
-  }
-
-  @override
-  Stream<NewsState> mapEventToState(NewsEvent event) async* {
-    if (event is FetchArticles) {
-      yield* _mapFetchArticlesToState();
-    }
-  }
-
-  Stream<NewsState> _mapFetchArticlesToState() async* {
-    try {
-      final articles = await _newsService.fetchArticles();
-      yield NewsLoaded(articles);
-    } catch (error) {
-      if (kDebugMode) {
-        print('Error fetching articles: $error');
-      }
-      yield NewsError(error);
     }
   }
 }

@@ -5,16 +5,12 @@ import 'package:rse/all.dart';
 class MockBlocPortfolio<Event, State> extends Bloc<Event, State> {
   MockBlocPortfolio(PortfolioInitial portfolioInitial)
       : super(portfolioInitial as State);
-
-  @override
-  Stream<State> mapEventToState(Event event) async* {
-    yield* Stream.empty();
-  }
 }
 
 class MockPortfolioBloc
     extends MockBlocPortfolio<PortfolioEvent, PortfolioState>
     implements PortfolioBloc {
+  @override
   late Portfolio portfolio = Portfolio.defaultPortfolio();
 
   MockPortfolioBloc() : super(PortfolioInitial(Portfolio.defaultPortfolio()));

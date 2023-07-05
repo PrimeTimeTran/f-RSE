@@ -8,26 +8,23 @@ class AssetActivityHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.green,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('History', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const Divider(),
-          Container(
-            height: 100,
-            child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Activity $index'),
-                );
-              },
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('History', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const Divider(),
+        SizedBox(
+          height: 100,
+          child: ListView.builder(
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text('Activity $index'),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

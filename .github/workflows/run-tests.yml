@@ -1,4 +1,4 @@
-name: Tests
+name: Tests & Code analysis
 
 on:
   push:

@@ -16,6 +16,7 @@ void setupFirebaseAnalyticsMocks([Callback? customHandlers]) {
   setupFirebaseCoreMocks();
 
   MethodChannelFirebaseAnalytics.channel
+      // ignore: deprecated_member_use
       .setMockMethodCallHandler((MethodCall methodCall) async {
     methodCallLog.add(methodCall);
     switch (methodCall.method) {
