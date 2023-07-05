@@ -102,7 +102,7 @@ final goRouter = GoRouter(
   // * root on hot reload
   // debugLogDiagnostics: true,
   navigatorKey: _rootNavigatorKey,
-  observers: [fbAnalyticsObserver],
+  observers: [],
   redirect: (context, state) {
     String location = state.location;
     if (location == '/') {

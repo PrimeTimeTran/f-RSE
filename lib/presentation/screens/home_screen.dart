@@ -15,7 +15,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    setScreenName('/home');
+    // setScreenName('/home');
   }
 
   @override
@@ -64,8 +64,8 @@ class HomeScreenState extends State<HomeScreen> {
             child: const SingleChildScrollView(
               child: Column(
                 children: [
-                  TickerCarousel(),
                   LineChart(),
+                  TickerCarousel(),
                   Articles(),
                 ],
               ),

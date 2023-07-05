@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'api.dart';
-import 'firebase.dart';
+import 'package:rse/all.dart';
 
 setup() async {
+  if (kDebugMode) p('Setup...');
   setupEnvironments();
   await setupFirebase();
 }

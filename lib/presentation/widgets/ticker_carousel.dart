@@ -64,7 +64,7 @@ class CarouselState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 35,
+      height: 70,
       width: double.infinity,
       child: ClipRect(
         child: SingleChildScrollView(
@@ -75,7 +75,7 @@ class CarouselState
               return SlideTransition(
                 position: _animation,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.all(16),
                   child: Row(
                     key: _tickerBarKey,
                     children: widget.tickers.map((ticker) {
