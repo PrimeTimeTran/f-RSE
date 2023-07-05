@@ -1,8 +1,6 @@
-# [Royal Stock Exchange(RSE) Flutter Client](https://github.com/PrimeTimeTran/f-RSE)
+[![cov](https://primetimetran.github.io/f-RSE/badges/coverage.svg)](https://github.com/primetimetran/f-RSE/actions)
 
-![Preview](https://s11.gifyu.com/images/SQAUR.gif)
-
-[//]: # (![Preview]&#40;./preview.gif&#41;)
+# Royal Stock Exchange(RSE)
 
 A stock exchange for the next generation.
 
