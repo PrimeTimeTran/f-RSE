@@ -46,7 +46,7 @@ class HomeScreenState extends State<HomeScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          LineChart(),
+          const LineChart(),
           mobileWatchList(context),
           const Articles(),
         ],

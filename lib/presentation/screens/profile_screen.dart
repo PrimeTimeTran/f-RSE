@@ -33,15 +33,9 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   mobile(BuildContext context) {
-    navigate() {
-      BlocProvider.of<NavBloc>(context).add(NavChanged('3-1'));
-      context.go("/profile/settings",);
-    }
-
     return SingleChildScrollView(
       child: Column(
         children: [
-          TextButton(onPressed: navigate, child: Text('Settings')),
           buildForm(context),
           const SizedBox(height: 20),
           buildBankAccounts(context),

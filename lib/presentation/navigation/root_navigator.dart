@@ -79,7 +79,11 @@ class _AppState extends State<App> {
           key: _scaffoldKey,
           body: widget.shell,
           drawer: const MyDrawer(),
-          appBar: state.states[widget.shell.currentIndex] == 0 ? buildDevOptions(context) : null,
+          appBar: state.states[widget.shell.currentIndex] == 0 ?
+          PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: AppBarWithSearch(tabIndex: widget.shell.currentIndex),
+          ) : null,
           bottomNavigationBar: BottomNavBar(
             resetStack: resetStack,
             shell: widget.shell,
