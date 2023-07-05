@@ -23,7 +23,7 @@ void main() {
     // Clean up any resources or reset any state if needed
   });
 
-  testWidgets('Ensure app setups correctly', (WidgetTester tester) async {
+  testWidgets('Ensure app sets up', (WidgetTester tester) async {
     await pumpMyApp(tester);
 
     for (int i = 0; i < 5; i++) {
