@@ -6,6 +6,7 @@ export 'articles.dart';
 export 'watchlist.dart';
 export 'hover_text.dart';
 export 'line_chart.dart';
+export 'alert_icon.dart';
 export 'time_label.dart';
 export 'watch_item.dart';
 export 'shareholder.dart';

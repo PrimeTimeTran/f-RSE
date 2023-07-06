@@ -28,7 +28,7 @@ class TimeLabel extends StatelessWidget {
     // final length = formatted.length;
     return Positioned(
       top: -10,
-      left: value,
+      left: value - 30,
       child: Padding(
         padding: isS(c) ? const EdgeInsets.all(0) : const EdgeInsets.only(left: 40, right: 40),
         child: Text(

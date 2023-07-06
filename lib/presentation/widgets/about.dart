@@ -102,7 +102,9 @@ class About extends StatelessWidget {
             child: Text(
               title,
               style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.grey),
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Text(value),

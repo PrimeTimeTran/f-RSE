@@ -61,37 +61,34 @@ class LineChartState extends State<LineChart> {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              Padding(
-                padding: isS(context) ? const EdgeInsets.all(0) : const EdgeInsets.only(left: 40, right: 40),
-                child: SfCartesianChart(
-                  plotAreaBorderWidth: 0,
-                  trackballBehavior: _trackballBehavior,
-                  onTrackballPositionChanging: (TrackballArgs args) =>
-                      _trackballChange(args, data),
-                  primaryXAxis: CategoryAxis(
-                    isVisible: false,
+              SfCartesianChart(
+                plotAreaBorderWidth: 0,
+                trackballBehavior: _trackballBehavior,
+                onTrackballPositionChanging: (TrackballArgs args) =>
+                    _trackballChange(args, data),
+                primaryXAxis: CategoryAxis(
+                  isVisible: false,
+                ),
+                series: <LineSeries<DataPoint, DateTime>>[
+                  LineSeries<DataPoint, DateTime>(
+                    color: Colors.green,
+                    dataSource: data,
+                    yValueMapper: (DataPoint d, _) => d.y,
+                    xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
                   ),
-                  series: <LineSeries<DataPoint, DateTime>>[
-                    LineSeries<DataPoint, DateTime>(
-                      color: Colors.green,
-                      dataSource: data,
-                      yValueMapper: (DataPoint d, _) => d.y,
-                      xValueMapper: (DataPoint d, _) => DateTime.parse(d.x),
+                ],
+                primaryYAxis: NumericAxis(
+                  isVisible: false,
+                  plotBands: [
+                    PlotBand(
+                      opacity: 0.5,
+                      borderWidth: 1,
+                      end: data.first.y,
+                      start: data.first.y,
+                      dashArray: const [1, 3],
+                      borderColor: T(context, 'inversePrimary'),
                     ),
                   ],
-                  primaryYAxis: NumericAxis(
-                    isVisible: false,
-                    plotBands: [
-                      PlotBand(
-                        opacity: 0.5,
-                        borderWidth: 1,
-                        end: data.first.y,
-                        start: data.first.y,
-                        dashArray: const [1, 3],
-                        borderColor: T(context, 'inversePrimary'),
-                      ),
-                    ],
-                  ),
                 ),
               ),
               const TimeLabel(),

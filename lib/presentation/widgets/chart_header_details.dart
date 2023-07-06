@@ -41,6 +41,13 @@ class ChartHeaderDetails extends StatelessWidget {
     }
   }
 
+  getFontSize(context) {
+    if (isS(context)) {
+      return 14.0;
+    }
+    return 20;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isHome = GoRouterState.of(context).location == '/';
@@ -50,44 +57,63 @@ class ChartHeaderDetails extends StatelessWidget {
     prompt = getPrompt(prompt);
 
     final gained = getChangePercent(focusValue, startValue) >= 0;
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: T(context, 'inversePrimary'),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  color: T(context, 'inversePrimary'),
+                  fontSize: getFontSize(context) + 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              // If this container is removed the text
+              // shifts down and leaves whitespace above it.
+              Text(
+                formatMoney(focusValue),
+                style: TextStyle(
+                  color: T(context, 'inversePrimary'),
+                  fontSize: getFontSize(context) + 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    '${formatValueChange(focusValue, startValue)} ($gain)  ',
+                    style: TextStyle(
+                      color: gained ? T(context, 'primary') : Colors.red,
+                      fontSize: 14,
+                    ),
+                  ),
+                  if (!hovering)
+                    Text(
+                      prompt,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                ],
+              ),
+            ],
           ),
         ),
-        // If this container is removed the text
-        // shifts down and leaves whitespace above it.
-        Text(
-          formatMoney(focusValue),
-          style: TextStyle(
-            color: T(context, 'inversePrimary'),
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+        const Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              AlertIcon(sym: 'bac')
+            ],
           ),
-        ),
-        Row(
-          children: [
-            Text(
-              '${formatValueChange(focusValue, startValue)} ($gain)  ',
-              style: TextStyle(
-                color: gained ? T(context, 'primary') : Colors.red,
-                fontSize: 14,
-              ),
-            ),
-            if (!hovering) Text(
-              prompt,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
+        )
       ],
     );
   }
