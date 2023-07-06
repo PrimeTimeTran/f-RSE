@@ -9,6 +9,8 @@ on:
 jobs:
   run-tests-and-code-analysis:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step8.outputs.COV }}
 
     steps:
       - name: Checkout code
@@ -35,16 +37,25 @@ jobs:
         with:
           ref: gh-pages
 
-      - name: Run tests and generate coverage reports
+      - name: Run tests
+        run: flutter test --coverage
+
+      - id: step8
+        name: Generate coverage report
         run: |
-          flutter test --coverage
           flutter pub global activate test_cov_console
           flutter pub global run test_cov_console -c
-          COV="$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
-          echo "$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
-
-          # Defines for next step
-          echo "COV=$COV" >> $GITHUB_ENV
+          export COV="$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
+          
+          # Value of COV:
+          echo $COV
+          
+          # Value for next step:
+          # Makes output1: ${{ steps.step8.outputs.COV }} work.          
+          echo "##[set-output name=COV]$COV"
+          
+          # Makes $COV available in subsequent steps in this job.
+          echo "COV='$COV'" >> $GITHUB_ENV
 
   update-badges:
     needs: run-tests-and-code-analysis
@@ -52,21 +63,20 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' &&
       needs.run-tests-and-code-analysis.result == 'success'
-
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Create Badges
         shell: bash
+        env:
+          COV: ${{ needs.run-tests-and-code-analysis.outputs.output1 }}
         run: |
           npm i -g badgen-cli
-          
-          echo "COV value: ${{ needs.run-tests-and-code-analysis.outputs.COV }}"
-          echo "COV=$COV" >> $GITHUB_ENV
-          
-          # Prints
-          echo $COV
 
-          # Prints
-          echo ${{ env.COV }}
+          # Both available
+          echo "Bash syntax: $COV"
+          echo "Brace syntax: ${{ env.COV }}"
 
           COLOR=$(node -p "const cov = process.env.COV.split(' ')[1]; +cov >= 95 ? 'green' : 'orange'")
 
@@ -82,8 +92,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Update badges [skip ci]"
-
-      - name: Checkout Back
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
