@@ -67,6 +67,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+
       - name: Create Badges
         shell: bash
         env:
