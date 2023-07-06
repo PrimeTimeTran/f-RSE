@@ -1,6 +1,7 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: Default issue template
+about: 'Help the team understand what we want, what we''ve done, and quickly find
+  related information quick & easy. '
 title: ''
 labels: ''
 assignees: ''
