@@ -25,7 +25,7 @@ Future<void> main() async {
             create: (_) => NewsBloc(),
           ),
           BlocProvider<AssetBloc>(
-            create: (_) => AssetBloc(asset: Asset.defaultAsset()),
+            create: (_) => AssetBloc(asset: Asset.defaultAsset(), assetService: AssetService()),
           ),
           BlocProvider<ChartBloc>(
             create: (context) {

@@ -57,9 +57,10 @@ class AssetBloc extends Bloc<AssetEvent, AssetState> {
   late Asset asset;
   String sym = 'GOOGL';
   String period = 'live';
-  final AssetService assetService = AssetService();
+  final AssetService assetService;
 
-  AssetBloc({ required this.asset }) : super(AssetInitial(asset)) {
+  AssetBloc({required this.asset, required this.assetService})
+      : super(AssetInitial(asset)) {
     on<AssetInitialized>((event, emit) async {
       emit(AssetLoaded(event.asset));
     });

@@ -4,10 +4,10 @@ on:
   push:
     branches: [main, feature/*, hotfix/*, bugfix/*, gh-pages]
   pull_request:
-    branches: [main, develop]
+    branches: [develop]
 
 jobs:
-  run-tests-and-code-analysis-then-report:
+  run-tests-and-code-analysis:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,14 +46,25 @@ jobs:
           # Defines for next step
           echo "COV=$COV" >> $GITHUB_ENV
 
+  update-badges:
+    needs: run-tests-and-code-analysis
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.run-tests-and-code-analysis.result == 'success'
+
+    steps:
       - name: Create Badges
         shell: bash
         run: |
           npm i -g badgen-cli
-
+          
+          echo "COV value: ${{ needs.run-tests-and-code-analysis.outputs.COV }}"
+          echo "COV=$COV" >> $GITHUB_ENV
+          
           # Prints
           echo $COV
-          
+
           # Prints
           echo ${{ env.COV }}
 
