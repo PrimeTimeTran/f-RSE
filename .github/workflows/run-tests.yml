@@ -2,7 +2,7 @@ name: Run tests & code analysis
 
 on:
   push:
-    branches: [main, feature/*, hotfix/*, bugfix/*, gh-pages]
+    branches: [main, feature/*, hotfix/*, bugfix/*]
   pull_request:
     branches: [develop]
 
@@ -10,10 +10,10 @@ jobs:
   run-tests-and-code-analysis:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.step8.outputs.COV }}
+      output1: ${{ steps.covReport.outputs.COV }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout branch
         uses: actions/checkout@v2
 
       - name: Install Flutter
@@ -32,26 +32,21 @@ jobs:
       - name: Analyze code
         run: flutter analyze
 
-      - name: Checkout gh-pages
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-
       - name: Run tests
         run: flutter test --coverage
 
-      - id: step8
-        name: Generate coverage report
+      - name: Generate coverage report
+        id: covReport
         run: |
           flutter pub global activate test_cov_console
           flutter pub global run test_cov_console -c
           export COV="$(python coverage/app.py | tr '\n' ' ' | cut -d' ' -f2-)"
-          
+
           # Value of COV:
           echo $COV
-          
+
           # Value for next step:
-          # Makes output1: ${{ steps.step8.outputs.COV }} work.          
+          # Makes output1: ${{ steps.covReport.outputs.COV }} work.          
           echo "##[set-output name=COV]$COV"
           
           # Makes $COV available in subsequent steps in this job.
@@ -63,10 +58,8 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' &&
       needs.run-tests-and-code-analysis.result == 'success'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
+    steps:
       - name: Checkout gh-pages
         uses: actions/checkout@v3
         with:
@@ -86,7 +79,7 @@ jobs:
           COLOR=$(node -p "const cov = process.env.COV.split(' ')[1]; +cov >= 95 ? 'green' : 'orange'")
 
           mkdir -p badges
-          badgen -j coverage -s "${COV#*: }%" -c $COLOR > badges/coverage.svg
+          badgen -j "code coverage" -s "${COV#*: }%" -c $COLOR > badges/coverage.svg
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
