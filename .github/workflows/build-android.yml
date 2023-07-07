@@ -1,7 +1,7 @@
 name: Build & distribute
 on:
   push:
-    branches: [hi]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -47,12 +47,3 @@ jobs:
           args: appdistribution:distribute ./build/app/outputs/flutter-apk/app-production-release.apk --app ${{ vars.FIREBASE_APP_ID }} --groups ${{ vars.FIREBASE_TEST_GROUPS }}
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_TOKEN }}
-
-#       When we have iOS account
-#      - name: Bump iOS build bundle version &
-#        if: ${{ matrix.platform == 'ios' }}
-#        uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
-#        with:
-#          bundle-short-version-string: ${{ vars.APP_VERSION }}
-#          info-plist-path: './ios/Runner/Info.plist'
-#          bundle-version: ${{ github.run_number }}

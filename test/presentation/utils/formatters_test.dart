@@ -4,7 +4,7 @@ import 'package:rse/all.dart';
 
 void main() {
   testFormatMoney();
-  // testFormatPercent();
+  testFormatPercent();
   testFormatPercentage();
   testChooseFormat();
   testFormatValueChange();
