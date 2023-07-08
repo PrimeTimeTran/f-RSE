@@ -3,8 +3,10 @@ name: Run tests & code analysis
 on:
   push:
     branches: [main, feature/*, hotfix/*, bugfix/*]
+    paths: ['lib/**']
   pull_request:
     branches: [develop]
+  workflow_dispatch:
 
 jobs:
   run-tests-and-code-analysis:

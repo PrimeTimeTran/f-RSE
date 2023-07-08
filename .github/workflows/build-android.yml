@@ -1,8 +1,11 @@
 name: Build & distribute
+
 on:
   push:
     branches: [main]
+    paths: ['lib/**']
   workflow_dispatch:
+
 
 jobs:
   build-and-distribute:
