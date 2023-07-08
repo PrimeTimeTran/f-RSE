@@ -1,0 +1,20 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "home": "Home",
+  "feed": "Feed",
+  "completed": "Completed",
+  "chat": "Chat",
+  "history": "History",
+  "settings": "Settings",
+  "toggle": "Toggle",
+  "about": "About",
+  "careers": "Careers",
+  "docs": "Docs",
+  "contact": "Contact Us",
+  "help": "Help",
+  "request": "Request",
+  "bug_report": "Bug Report"
+}

@@ -1,3 +1,4 @@
+export 'lang_bloc.dart';
 export 'news_bloc.dart';
 export 'asset_bloc.dart';
 export 'chart_bloc.dart';

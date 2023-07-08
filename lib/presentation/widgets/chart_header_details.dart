@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 
 import 'package:rse/all.dart';
 
@@ -73,18 +74,33 @@ class ChartHeaderDetails extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                formatMoney(focusValue),
-                style: TextStyle(
+              AnimatedFlipCounter(
+                prefix: '\$',
+                value: focusValue,
+                fractionDigits: 2,
+                thousandSeparator: ',',
+                duration: const Duration(milliseconds: 500),
+                textStyle: TextStyle(
                   color: T(context, 'inversePrimary'),
                   fontSize: getFontSize(context) + 8,
                   fontWeight: FontWeight.bold,
-                ),
+                )
               ),
               Row(
                 children: [
+                  AnimatedFlipCounter(
+                      prefix: '\$',
+                      fractionDigits: 2,
+                      thousandSeparator: ',',
+                      value: focusValue - startValue,
+                      duration: const Duration(milliseconds: 500),
+                      textStyle: TextStyle(
+                      color: gained ? T(context, 'primary') : Colors.red,
+                      fontSize: 14,
+                    ),
+                  ),
                   Text(
-                    '${formatValueChange(focusValue, startValue)} ($gain)  ',
+                    ' ($gain)',
                     style: TextStyle(
                       color: gained ? T(context, 'primary') : Colors.red,
                       fontSize: 14,

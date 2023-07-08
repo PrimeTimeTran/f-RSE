@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -181,6 +182,19 @@ void _showModal(BuildContext context) {
         children: [
           Text('Screen Width: ${width.toStringAsFixed(2)}'),
           Text('Screen Height: ${height.toStringAsFixed(2)}'),
+          Text(AppLocalizations.of(context)!.helloWorld),
+          TextButton(
+            onPressed: () {
+              BlocProvider.of<LangBloc>(context).changeLang('es');
+            },
+            child: const Text("es"),
+          ),
+          TextButton(
+            onPressed: () {
+              BlocProvider.of<LangBloc>(context).changeLang('en');
+            },
+            child: const Text("en"),
+          ),
           TextButton(
             onPressed: () => throw Exception(),
             child: const Text("Throw Test Exception"),
@@ -213,8 +227,7 @@ void _showModal(BuildContext context) {
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
-                return Text(
-                    remoteConfig.getValue('app_secret').asString());
+                return Text(remoteConfig.getValue('app_secret').asString());
               }
             },
           ),

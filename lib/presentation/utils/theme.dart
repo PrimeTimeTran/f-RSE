@@ -20,6 +20,7 @@ final lightTheme = ThemeData(
     secondary: Color(0xFF227C9D),
     tertiary: Color(0xFF30BFBF),
     onError: Color(0xFFC62828),
+    onErrorContainer: Color(0xFFC62828),
     surface: Colors.white,
     secondaryContainer: Colors.white,
   ),
@@ -43,6 +44,7 @@ final darkTheme = ThemeData(
     secondary: Color(0xFF227C9D),
     tertiary: Color(0xFF30BFBF),
     onError: Color(0xFFC62828),
+    onErrorContainer: Color(0xFFC62828),
     surface: Colors.black38,
     secondaryContainer: Colors.black38,
   ),
@@ -70,6 +72,10 @@ Color T(BuildContext context, String key) {
       return colorScheme.background;
     case 'secondaryContainer':
       return colorScheme.secondaryContainer;
+    case 'onError':
+      return colorScheme.onError;
+    case 'onErrorContainer':
+      return colorScheme.onErrorContainer;
     default:
       throw Exception('Invalid color key: $key');
   }

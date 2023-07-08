@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -15,6 +16,9 @@ Future<void> main() async {
       create: (_) => ThemeModel(),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<LangBloc>(
+            create: (_) => LangBloc(),
+          ),
           BlocProvider<NavBloc>(
             create: (_) => NavBloc(),
           ),
@@ -77,12 +81,20 @@ class _MyAppState extends State<MyApp> {
         }
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp.router(
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            routerConfig: goRouter,
-            debugShowCheckedModeBanner: false,
-            themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          return BlocBuilder<LangBloc, LangState>(
+            builder: (context, state) {
+              return MaterialApp.router(
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                routerConfig: goRouter,
+                locale: Locale(state.locale),
+                debugShowCheckedModeBanner: false,
+                supportedLocales: supportedLocales,
+                localizationsDelegates: localizationsDelegates,
+                localeResolutionCallback: localeResolutionCallback,
+                themeMode: Provider.of<ThemeModel>(context).isDarkMode ? ThemeMode.dark : ThemeMode.light,
+              );
+            },
           );
         }
         return const SizedBox();
