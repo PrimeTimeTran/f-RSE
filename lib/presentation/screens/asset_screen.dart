@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:rse/all.dart';
 
 class AssetScreen extends StatefulWidget {
   final String sym;
+
   const AssetScreen({super.key, required this.sym});
 
   @override
@@ -44,10 +44,8 @@ class _AssetScreeState extends State<AssetScreen> {
         title: Text(widget.sym),
         leading: const ArrowBackButton(screenCode: '0-0', root: '/'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => context.go('/search'),
-          ),
+          AlertIcon(sym: widget.sym),
+          AlertIcon(sym: widget.sym),
         ],
       ),
       body: ResponsiveLayout(
@@ -103,7 +101,8 @@ class _AssetScreeState extends State<AssetScreen> {
         Expanded(
           flex: 5,
           child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
             child: const SingleChildScrollView(
               child: Column(
                 children: [
@@ -121,8 +120,9 @@ class _AssetScreeState extends State<AssetScreen> {
               padding: const EdgeInsets.only(left: 10.0),
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: T(context, 'outline'),)
-                ),
+                    border: Border.all(
+                  color: T(context, 'outline'),
+                )),
                 child: const OrderPanel(),
               ),
             ),

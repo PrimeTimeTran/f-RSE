@@ -28,28 +28,28 @@ class BottomNavBar extends StatelessWidget {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       destinations: [
         NavigationDestination(
-          label: 'Home',
+          label: context.l.home,
           icon: Icon(
             Icons.home,
             color: getIconColor(context, 0),
           ),
         ),
         NavigationDestination(
-          label: 'Investing',
+          label: context.l.investing,
           icon: Icon(
             Icons.candlestick_chart,
             color: getIconColor(context, 1),
           ),
         ),
         NavigationDestination(
-          label: 'Notifications',
+          label: context.l.notifications,
           icon: Icon(
             Icons.notifications,
             color: getIconColor(context, 2),
           ),
         ),
         NavigationDestination(
-          label: 'Profile',
+          label: context.l.profile,
           icon: Icon(
             Icons.person,
             color: getIconColor(context, 3),

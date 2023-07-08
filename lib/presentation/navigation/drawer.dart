@@ -99,6 +99,7 @@ class DrawerState extends State<MyDrawer> {
                         Consumer<ThemeModel>(
                           builder: (context, themeModel, _) {
                             return Toggler(
+                              type: 'theme',
                               initialValue: isDark,
                               onChanged: (newValue) {
                                 toggleTheme(themeModel);

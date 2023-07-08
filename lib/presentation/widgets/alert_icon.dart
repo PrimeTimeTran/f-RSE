@@ -16,21 +16,28 @@ class _AlertIconState extends State<AlertIcon> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _dialogBuilder(context);
+        if (isS(context)) {
+          _showActionSheet(context, widget.sym);
+        } else {
+          _dialogBuilder(context);
+        }
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-            width: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              width: 1,
+              color: Colors.grey,
+            ),
           ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Icon(
-          Icons.notifications,
-          color: T(context, 'outline'),
-          size: 20,
+          child: Icon(
+            size: 20,
+            Icons.notifications,
+            color: T(context, 'outline'),
+          ),
         ),
       ),
     );
@@ -41,13 +48,8 @@ class _AlertIconState extends State<AlertIcon> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
-          ),
+          title: Text('Price alerts for ${widget.sym}'),
+          content: const Text("We'll send an alert when you want us to.\n"),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -72,4 +74,38 @@ class _AlertIconState extends State<AlertIcon> {
       },
     );
   }
+}
+
+void _showActionSheet(BuildContext context, sym) {
+  showModalBottomSheet<void>(
+    showDragHandle: true,
+    constraints: const BoxConstraints(maxHeight: 300),
+    context: context,
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('$sym  custom alerts.'),
+            const Text("We'll send alerts when you want us to."),
+            Row(children: [
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Price moves above'),
+                  Text('Toggle to enter price'),
+                ],
+              ),
+              Toggler(
+                type: '',
+                onChanged: (hi) {},
+                initialValue: true,
+              )
+            ])
+          ],
+        ),
+      );
+    },
+  );
 }

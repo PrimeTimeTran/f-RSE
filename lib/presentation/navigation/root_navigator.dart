@@ -78,18 +78,25 @@ class _AppState extends State<App> {
           key: _scaffoldKey,
           body: widget.shell,
           drawer: const MyDrawer(),
-          appBar: state.states[widget.shell.currentIndex] == 0 ?
-          PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: AppBarWithSearch(tabIndex: widget.shell.currentIndex),
-          ) : null,
+          appBar: tabRootAppBar(state.states[widget.shell.currentIndex]),
           bottomNavigationBar: BottomNavBar(
-            resetStack: resetStack,
             shell: widget.shell,
+            resetStack: resetStack,
           ),
         );
       },
     );
+  }
+
+  PreferredSize? tabRootAppBar(int tabStackIdx) {
+    return tabStackIdx == 0
+        ? PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: AppBarWithSearch(
+              tabIndex: widget.shell.currentIndex,
+            ),
+          )
+        : null;
   }
 }
 

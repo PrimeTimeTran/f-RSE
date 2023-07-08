@@ -118,16 +118,17 @@ class ChartHeaderDetails extends StatelessWidget {
             ],
           ),
         ),
-        const Expanded(
-          flex: 1,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              AlertIcon(sym: 'bac')
-            ],
-          ),
-        )
+        if (!isS(context))
+          const Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                AlertIcon(sym: 'bac')
+              ],
+            ),
+          )
       ],
     );
   }
