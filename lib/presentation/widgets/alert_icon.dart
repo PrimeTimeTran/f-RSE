@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:rse/all.dart';
+
 class AlertIcon extends StatefulWidget {
   final String sym;
 
@@ -25,9 +27,9 @@ class _AlertIconState extends State<AlertIcon> {
           ),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.notifications,
-          color: Colors.white,
+          color: T(context, 'outline'),
           size: 20,
         ),
       ),

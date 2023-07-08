@@ -9,10 +9,7 @@ final lightTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
     foregroundColor: Colors.black,
-    titleTextStyle: TextStyle(
-      fontSize: 20,
-      color: Colors.black
-    ),
+    titleTextStyle: TextStyle(fontSize: 20, color: Colors.black),
   ),
   colorScheme: const ColorScheme.light(
     outline: Colors.grey,
@@ -35,10 +32,7 @@ final darkTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.black,
     foregroundColor: Colors.white,
-    titleTextStyle: TextStyle(
-        fontSize: 20,
-        color: Colors.white
-    ),
+    titleTextStyle: TextStyle(fontSize: 20, color: Colors.white),
   ),
   colorScheme: const ColorScheme.dark(
     outline: Colors.grey,
@@ -51,8 +45,35 @@ final darkTheme = ThemeData(
     onError: Color(0xFFC62828),
     surface: Colors.black38,
     secondaryContainer: Colors.black38,
-  )
+  ),
 );
+
+Color T(BuildContext context, String key) {
+  final colorScheme = Theme.of(context).colorScheme;
+  switch (key) {
+    case 'primary':
+      return colorScheme.primary;
+    case 'primaryContainer':
+      return colorScheme.primaryContainer;
+    case 'secondary':
+      return colorScheme.secondary;
+    case 'surface':
+      return colorScheme.surface;
+    case 'inversePrimary':
+      return colorScheme.inversePrimary;
+    case 'onPrimaryContainer':
+      return colorScheme.onPrimaryContainer;
+    case 'outline':
+      return colorScheme.outline;
+    case 'tertiary':
+    case 'background':
+      return colorScheme.background;
+    case 'secondaryContainer':
+      return colorScheme.secondaryContainer;
+    default:
+      throw Exception('Invalid color key: $key');
+  }
+}
 
 class ThemeModel with ChangeNotifier {
   bool _isDarkMode = window.platformBrightness == Brightness.dark;
@@ -83,31 +104,4 @@ class ThemeModel with ChangeNotifier {
 bool isDarkMode(BuildContext context) {
   final theme = Theme.of(context).brightness;
   return theme == Brightness.dark;
-}
-
-Color T(BuildContext context, String key) {
-  final colorScheme = Theme.of(context).colorScheme;
-  switch (key) {
-    case 'primary':
-      return colorScheme.primary;
-    case 'primaryContainer':
-      return colorScheme.primaryContainer;
-    case 'secondary':
-      return colorScheme.secondary;
-    case 'surface':
-      return colorScheme.surface;
-    case 'inversePrimary':
-      return colorScheme.inversePrimary;
-    case 'onPrimaryContainer':
-      return colorScheme.onPrimaryContainer;
-    case 'outline':
-      return colorScheme.outline;
-    case 'tertiary':
-    case 'background':
-      return colorScheme.background;
-    case 'secondaryContainer':
-      return colorScheme.secondaryContainer;
-    default:
-      throw Exception('Invalid color key: $key');
-  }
 }

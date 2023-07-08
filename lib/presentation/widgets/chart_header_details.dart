@@ -61,7 +61,7 @@ class ChartHeaderDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 1,
+          flex: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -69,17 +69,15 @@ class ChartHeaderDetails extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color: T(context, 'inversePrimary'),
-                  fontSize: getFontSize(context) + 15,
+                  fontSize: getFontSize(context) + 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              // If this container is removed the text
-              // shifts down and leaves whitespace above it.
               Text(
                 formatMoney(focusValue),
                 style: TextStyle(
                   color: T(context, 'inversePrimary'),
-                  fontSize: getFontSize(context) + 10,
+                  fontSize: getFontSize(context) + 8,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -107,8 +105,8 @@ class ChartHeaderDetails extends StatelessWidget {
         const Expanded(
           flex: 1,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AlertIcon(sym: 'bac')
             ],
