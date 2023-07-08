@@ -1,9 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: bug, help wanted
-assignees: ''
+about: Create a bug report on an existing feature. 
+title: Bug 🐛 when I...
+labels: bug
+assignees: primetimetran
 
 ---
 

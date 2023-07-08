@@ -1,20 +1,33 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: enhancement
-assignees: ''
+about: Suggest a feature which improves user experience or adds value to the product.
+title: Add.. to product 📲...
+labels: feature
+assignees: primetimetran
 
 ---
 
-## Is your feature request related to a problem? Please describe.
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Description
 
-## Describe the solution you'd like
-A clear and concise description of what you want to happen.
+"Provide a way for non English speakers to use the app in their native language."
 
-## Describe alternatives you've considered
-A clear and concise description of any alternative solutions or features you've considered.
+### As a user I want/need to
 
-## Additional context
-Add any other context or screenshots about the feature request here.
+"be able to change my language"
+
+### So that I
+
+"can use the product in my native language"
+
+### Context
+
+"I don't speak english."
+"30% of users are from none english speaking countries."
+
+### Screenshots/Videos
+
+### Acceptance Criteria
+
+- [ ] "The app is automatically translated to my devices locale"
+- [ ] "If my locale is not supported, we default to English"
+- [ ] "I can see a list of languages to choose from"
