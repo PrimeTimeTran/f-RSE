@@ -1,3 +1,19 @@
 {
-    "helloWorld": "¡Hola Mundo!"
+  "home": "Hogar",
+  "feed": "Alimentar",
+  "completed": "Terminado",
+  "chat": "Charlar",
+  "history": "Historia",
+  "settings": "Ajustes",
+  "toggle": "Palanca",
+  "about": "Acerca de",
+  "careers": "Carreras",
+  "docs": "Documentos",
+  "contact": "Contáctenos",
+  "help": "Ayuda",
+  "request": "Pedido",
+  "bug_report": "Informe de error",
+  "investing": "invertir",
+  "notifications": "Notificaciones",
+  "profile": "Perfil"
 }

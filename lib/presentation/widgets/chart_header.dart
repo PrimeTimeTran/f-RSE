@@ -37,7 +37,7 @@ class ChartHeader extends StatelessWidget {
                 return ChartHeaderDetails(
                   hovering: false,
                   startValue: startValue,
-                  title: isHome ? 'Investing' : state.chart.sym,
+                  title: isHome ? context.l.investing : state.chart.sym,
                   focusValue: focusedValue,
                   gain: calculatePercentageChange(focusedValue, startValue),
                 );

@@ -1,11 +1,14 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 const supportedLocales = [
   Locale('en', null),
   Locale('es', null),
+  Locale('vi', null),
 ];
 
 const localizationsDelegates = [
@@ -15,7 +18,7 @@ const localizationsDelegates = [
   GlobalCupertinoLocalizations.delegate,
 ];
 
-Locale? localeResolutionCallback (locale, supportedLocales) {
+Locale? localeResolutionCallback(locale, supportedLocales) {
   if (locale == null) {
     Intl.defaultLocale = supportedLocales.first.toLanguageTag();
     return supportedLocales.first;
@@ -28,4 +31,10 @@ Locale? localeResolutionCallback (locale, supportedLocales) {
   }
   Intl.defaultLocale = supportedLocales.first.toLanguageTag();
   return supportedLocales.first;
+}
+
+extension BuildContextHelper on BuildContext {
+  AppLocalizations get l {
+    return AppLocalizations.of(this) ?? AppLocalizationsEn();
+  }
 }

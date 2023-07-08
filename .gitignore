@@ -47,3 +47,6 @@ app.*.map.json
 
 /notes/*
 /secrets/*
+
+/lib/l10n/venv
+/lib/l10n/venv/*

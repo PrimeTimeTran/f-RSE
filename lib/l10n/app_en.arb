@@ -1,8 +1,4 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  },
   "home": "Home",
   "feed": "Feed",
   "completed": "Completed",
@@ -16,5 +12,8 @@
   "contact": "Contact Us",
   "help": "Help",
   "request": "Request",
-  "bug_report": "Bug Report"
+  "bug_report": "Bug Report",
+  "investing": "Investing",
+  "notifications": "Notifications",
+  "profile": "Profile"
 }
