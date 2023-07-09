@@ -100,7 +100,7 @@ void _showActionSheet(BuildContext context, sym) {
               Toggler(
                 type: '',
                 onChanged: (hi) {},
-                initialValue: true,
+                value: true,
               )
             ])
           ],

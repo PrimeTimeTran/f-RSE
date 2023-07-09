@@ -36,6 +36,7 @@ dependencies:
   flutter_switch: ^0.3.2
   flutter_localizations:
     sdk: flutter
+  slider_button: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

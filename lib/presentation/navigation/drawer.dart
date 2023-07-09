@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slider_button/slider_button.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -100,7 +101,7 @@ class DrawerState extends State<MyDrawer> {
                           builder: (context, themeModel, _) {
                             return Toggler(
                               type: 'theme',
-                              initialValue: isDark,
+                              value: isDark,
                               onChanged: (newValue) {
                                 toggleTheme(themeModel);
                               },
@@ -111,34 +112,35 @@ class DrawerState extends State<MyDrawer> {
                     ),
                   ),
                   Divider(
-                    color: T(context, 'inversePrimary'),
                     thickness: 0.5,
+                    color: T(context, 'inversePrimary'),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: TextButton(
-
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-
-                          vertical: 10,
-                          horizontal: 10,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 40,
+                    ),
+                    child: Center(
+                      child: SliderButton(
+                        width: 85,
+                        height: 30,
+                        shimmer: false,
+                        buttonSize: 30,
+                        highlightedColor: Colors.red,
+                        action: () {
+                          Navigator.of(context).pop();
+                        },
+                        label: const Text(
+                          "Sign out",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                        side: BorderSide(
-                          width: 1,
-                          color: T(context, 'onError'),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: T(context, 'primaryContainer'),
-                      ),
-                      child: Text(
-                        'Sign out',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: T(context, 'onError'),
+                        icon: const Icon(
+                          Icons.logout,
+                          color: Colors.red,
                         ),
                       ),
                     ),
