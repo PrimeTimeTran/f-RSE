@@ -1,7 +1,10 @@
 export 'news.dart';
+export 'meta.dart';
 export 'asset.dart';
 export 'watch.dart';
 export 'chart.dart';
 export 'company.dart';
 export 'portfolio.dart';
+export 'data_point.dart';
+export 'candlestick.dart';
 export 'profile_form.dart';

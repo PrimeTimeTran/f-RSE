@@ -111,7 +111,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
       candle: c,
       time: c.time,
       xOffSet: xOffSet,
-      focusedValue: c.value,
+      focusedValue: c.c,
     );
 
     chart = newChart;
@@ -120,13 +120,13 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
 
   void updateChart(Asset a, String sym) {
     final series = a.current;
-    final point = DataPoint(series.last.time, series.last.close);
+    final point = DataPoint(series.last.time, series.last.c);
     final newChart = chart.copyWith(
       sym: sym,
       candle: series.last,
       latestValue: point.y,
       candleSeries: series,
-      startValue: series.first.open,
+      startValue: series.first.o,
     );
     chart = newChart;
     add(ChartUpdate(newChart));

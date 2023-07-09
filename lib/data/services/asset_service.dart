@@ -15,7 +15,7 @@ class AssetService {
       final response = await http.get(Uri.parse(path));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final d = Asset.fromJson(data, period);
+        final d = Asset.fromJson(data);
         _localStorage.saveData('$sym-$period', response.body);
         return d;
       } else {

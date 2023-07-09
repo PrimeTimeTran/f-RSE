@@ -1,55 +1,37 @@
-class Company {
-  int id;
-  int ec;
-  String hq;
-  String eh;
-  String sym;
-  DateTime f;
-  String ceo;
-  String name;
-  String industry;
-  String desc;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Company({
-    required this.f,
-    required this.eh,
-    required this.id,
-    required this.ec,
-    required this.hq,
-    required this.ceo,
-    required this.sym,
-    required this.name,
-    required this.industry,
-    required this.desc,
-  });
+part 'company.freezed.dart';
+part 'company.g.dart';
 
-  factory Company.fromJSON(Map<String, dynamic> json) {
-    return Company(
-      ec: json['ec'],
-      hq: json['hq'],
-      id: json['id'],
-      eh: json['eh'],
-      ceo: json['ceo'],
-      sym: json['sym'],
-      name: json['name'],
-      desc: json['desc'],
-      industry: json['industry'],
-      f: DateTime.parse(json['f']),
-    );
-  }
+@freezed
+class Company with _$Company {
+  factory Company({
+    required int id,
+    required int ec,
+    required String hq,
+    required String eh,
+    required String sym,
+    required DateTime f,
+    required String ceo,
+    required String name,
+    required String industry,
+    required String desc,
+  }) = _Company;
 
-  factory Company.defaultCompany() {
-    return Company(
-      ec: 0,
-      id: 0,
-      hq: '',
-      eh: '',
-      sym: '',
-      ceo: '',
-      name: '',
-      desc: '',
-      industry: '',
-      f: DateTime(1900, 1, 1),
-    );
-  }
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      _$CompanyFromJson(json);
+
+  factory Company.defaultCompany() => Company(
+    ec: 0,
+    id: 0,
+    hq: '',
+    eh: '',
+    sym: '',
+    ceo: '',
+    name: '',
+    desc: '',
+    industry: '',
+    f: DateTime(1900, 1, 1),
+  );
 }
+

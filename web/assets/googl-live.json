@@ -1,25 +1,19 @@
 {
   "id": 0,
-  "sym": "GOOGL",
-  "live": "{\r\n    \"sym\": \"\",\r\n    \"period\": \"live\",\r\n    \"name\": \"\",\r\n    \"o\": 0.00,\r\n    \"l\": 0.00,\r\n    \"h\": 0.00,\r\n    \"c\": 0.00,\r\n    \"vwa\": 0.00,\r\n    \"v\": 0.00,\r\n    \"series\": [{\r\n                \"o\": 118.10,\r\n                \"l\": 117.92,\r\n                \"h\": 118.05,\r\n                \"c\": 118.04,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:20:33\"\r\n            },{\r\n                \"o\": 118.04,\r\n                \"l\": 118.04,\r\n                \"h\": 118.17,\r\n                \"c\": 118.17,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:25:33\"\r\n            },{\r\n                \"o\": 118.17,\r\n                \"l\": 118.03,\r\n                \"h\": 118.10,\r\n                \"c\": 118.10,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:30:33\"\r\n            },{\r\n                \"o\": 118.10,\r\n                \"l\": 117.89,\r\n                \"h\": 118.06,\r\n                \"c\": 118.02,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:35:33\"\r\n            },{\r\n                \"o\": 118.02,\r\n                \"l\": 117.90,\r\n                \"h\": 118.03,\r\n                \"c\": 118.01,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:40:33\"\r\n            },{\r\n                \"o\": 118.01,\r\n                \"l\": 117.85,\r\n                \"h\": 117.95,\r\n                \"c\": 117.95,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:45:33\"\r\n            },{\r\n                \"o\": 117.95,\r\n                \"l\": 117.91,\r\n                \"h\": 118.03,\r\n                \"c\": 118.03,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:50:33\"\r\n            },{\r\n                \"o\": 118.03,\r\n                \"l\": 117.86,\r\n                \"h\": 117.99,\r\n                \"c\": 117.96,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 08:55:33\"\r\n            },{\r\n                \"o\": 117.96,\r\n                \"l\": 117.83,\r\n                \"h\": 117.99,\r\n                \"c\": 117.95,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:00:33\"\r\n            },{\r\n                \"o\": 117.95,\r\n                \"l\": 117.94,\r\n                \"h\": 118.13,\r\n                \"c\": 118.08,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:05:33\"\r\n            },{\r\n                \"o\": 118.08,\r\n                \"l\": 117.96,\r\n                \"h\": 118.06,\r\n                \"c\": 118.03,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:10:33\"\r\n            },{\r\n                \"o\": 118.03,\r\n                \"l\": 118.01,\r\n                \"h\": 118.09,\r\n                \"c\": 118.08,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-06-28 09:15:33\"\r\n            }]\r\n}",
-  "oneDay": null,
-  "oneWeek": null,
-  "oneYear": null,
-  "allData": null,
-  "oneMonth": null,
-  "yearToDate": null,
-  "threeMonths": null,
-  "meta": "{\r\n        \"MC\": \"\",\r\n        \"PE\": \"\",\r\n        \"dy\": 25.37,\r\n        \"O\": \"\",\r\n        \"V\": \"\",\r\n        \"AV\": \"\",\r\n        \"VWA\": \"\",\r\n        \"hiYear\": 125.83,\r\n        \"loYear\": 117.92\r\n    }",
+  "sym": "BAC",
+  "meta": "{\r\n    \"o\": 0.0,\r\n    \"h\": 0.0,\r\n    \"l\": 0.0,\r\n    \"c\": 0.0,\r\n    \"v\": 0.0,\r\n    \"mc\": 0.0,\r\n    \"dy\": 53.83,\r\n    \"pe\": 0.0,\r\n    \"av\": 0.0,\r\n    \"awv\": 0.0,\r\n    \"hiDay\": 0.0,\r\n    \"loDay\": 0.0,\r\n    \"hiYear\": 37.42,\r\n    \"loYear\": 28.16\r\n}",
   "company": {
-    "ec": 1000,
-    "f": "2000-09-04T00:00:00",
-    "hq": "Mountain View, California, United States",
-    "ceo": "Sundar Pichai",
-    "eh": "Impressive",
-    "sym": "GOOGL",
-    "name": "Google",
-    "id": 1,
-    "industry": "Technology",
-    "desc": "Google is a multinational technology company specializing in Internet-related services and products. It offers a wide range of services including search engines, online advertising technologies, cloud computing, software, and hardware."
-  }
+    "ec": 2100,
+    "f": "1904-10-17T00:00:00",
+    "hq": "Charlotte, North Carolina, United States",
+    "ceo": "Brian Moynihan",
+    "eh": "Profitable",
+    "sym": "BAC",
+    "name": "Bank of America",
+    "id": 19,
+    "industry": "Banking",
+    "desc": "Bank of America is one of the largest banks in the United States, providing a comprehensive range of financial services to individual consumers, small and middle-market businesses, and large corporations. It operates through multiple business segments."
+  },
+  "current": "{\r\n    \"sym\": \"\",\r\n    \"period\": \"live\",\r\n    \"name\": \"\",\r\n    \"o\": 0.00,\r\n    \"l\": 0.00,\r\n    \"h\": 0.00,\r\n    \"c\": 0.00,\r\n    \"vwa\": 0.00,\r\n    \"v\": 0.00,\r\n    \"series\": [{\r\n                \"o\": 28.29,\r\n                \"l\": 28.25,\r\n                \"h\": 28.34,\r\n                \"c\": 28.34,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 20:30:49\"\r\n            },{\r\n                \"o\": 28.34,\r\n                \"l\": 28.34,\r\n                \"h\": 28.45,\r\n                \"c\": 28.44,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 20:35:49\"\r\n            },{\r\n                \"o\": 28.44,\r\n                \"l\": 28.31,\r\n                \"h\": 28.43,\r\n                \"c\": 28.41,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 20:40:49\"\r\n            },{\r\n                \"o\": 28.41,\r\n                \"l\": 28.30,\r\n                \"h\": 28.41,\r\n                \"c\": 28.38,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 20:45:49\"\r\n            },{\r\n                \"o\": 28.38,\r\n                \"l\": 28.29,\r\n                \"h\": 28.35,\r\n                \"c\": 28.35,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 20:50:49\"\r\n            },{\r\n                \"o\": 28.35,\r\n                \"l\": 28.35,\r\n                \"h\": 28.44,\r\n                \"c\": 28.44,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 20:55:49\"\r\n            },{\r\n                \"o\": 28.44,\r\n                \"l\": 28.43,\r\n                \"h\": 28.54,\r\n                \"c\": 28.54,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 21:00:49\"\r\n            },{\r\n                \"o\": 28.54,\r\n                \"l\": 28.33,\r\n                \"h\": 28.47,\r\n                \"c\": 28.47,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 21:05:49\"\r\n            },{\r\n                \"o\": 28.47,\r\n                \"l\": 28.30,\r\n                \"h\": 28.41,\r\n                \"c\": 28.37,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 21:10:49\"\r\n            },{\r\n                \"o\": 28.37,\r\n                \"l\": 28.19,\r\n                \"h\": 28.32,\r\n                \"c\": 28.32,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 21:15:49\"\r\n            },{\r\n                \"o\": 28.32,\r\n                \"l\": 28.21,\r\n                \"h\": 28.33,\r\n                \"c\": 28.33,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 21:20:49\"\r\n            },{\r\n                \"o\": 28.33,\r\n                \"l\": 28.13,\r\n                \"h\": 28.27,\r\n                \"c\": 28.25,\r\n                \"vwa\": 1000,\r\n                \"time\": \"2023-07-09 21:25:49\"\r\n            }]\r\n}",
+  "o": 0
 }

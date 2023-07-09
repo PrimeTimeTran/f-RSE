@@ -18,7 +18,7 @@ class CandleChartState extends State<CandleChart> {
 
   @override
   void initState() {
-    hoveredCandle = CandleStick.fact();
+    hoveredCandle = CandleStick.defaultCandleStick();
     super.initState();
   }
 
@@ -69,10 +69,10 @@ class CandleChartState extends State<CandleChart> {
                   series: <CandleSeries<CandleStick, String>>[
                     CandleSeries<CandleStick, String>(
                       dataSource: data,
-                      lowValueMapper: (CandleStick d, _) => d.low,
-                      highValueMapper: (CandleStick d, _) => d.high,
-                      openValueMapper: (CandleStick d, _) => d.open,
-                      closeValueMapper: (CandleStick d, _) => d.close,
+                      lowValueMapper: (CandleStick d, _) => d.l,
+                      highValueMapper: (CandleStick d, _) => d.h,
+                      openValueMapper: (CandleStick d, _) => d.o,
+                      closeValueMapper: (CandleStick d, _) => d.c,
                       xValueMapper: (CandleStick d, int index) => d.time,
                     ),
                   ],
@@ -84,8 +84,8 @@ class CandleChartState extends State<CandleChart> {
                       PlotBand(
                         opacity: 0.5,
                         borderWidth: 1,
-                        end: data.first.close,
-                        start: data.first.close,
+                        end: data.first.c,
+                        start: data.first.c,
                         dashArray: const [1, 3],
                         borderColor: T(context, 'inversePrimary'),
                       ),

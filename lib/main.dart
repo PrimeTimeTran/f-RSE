@@ -35,7 +35,7 @@ Future<void> main() async {
             create: (context) {
               final assetBloc = BlocProvider.of<AssetBloc>(context);
               final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
-              return ChartBloc(chart: Chart(), assetBloc: assetBloc, portfolioBloc: portfolioBloc);
+              return ChartBloc(chart: Chart.defaultChart(), assetBloc: assetBloc, portfolioBloc: portfolioBloc);
             },
           ),
         ],

@@ -65,11 +65,11 @@ double getChangePercent(double newVal, double oldVal) {
 }
 
 double getLowestVal(List<CandleStick> series) {
-  return series.reduce((v, e) => v.low < e.low ? v : e).low;
+  return series.reduce((v, e) => v.l < e.l ? v : e).l;
 }
 
 double getHighestVal(List<CandleStick> series) {
-  return series.reduce((v, e) => v.high > e.high ? v : e).high;
+  return series.reduce((v, e) => v.h > e.h ? v : e).h;
 }
 
 DateTime roundDownToNearest5Minutes(DateTime dt) {

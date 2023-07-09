@@ -58,11 +58,11 @@ class LocalStorageService {
     symbol = symbol.toLowerCase();
     var data = await loadData('$symbol-$period');
     if (data != null && data.isNotEmpty) {
-      return Asset.fromJson(jsonDecode(data), period);
+      return Asset.fromJson(jsonDecode(data));
     } else {
       final d = await loadJsonFile('assets/$symbol-$period.json');
       if (d != null && d.isNotEmpty) {
-        return Asset.fromJson(d as Map<String, dynamic>, period);
+        return Asset.fromJson(d as Map<String, dynamic>);
       }
     }
     return Asset.defaultAsset();

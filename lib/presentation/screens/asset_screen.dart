@@ -45,7 +45,6 @@ class _AssetScreeState extends State<AssetScreen> {
         leading: const ArrowBackButton(screenCode: '0-0', root: '/'),
         actions: [
           AlertIcon(sym: widget.sym),
-          AlertIcon(sym: widget.sym),
         ],
       ),
       body: ResponsiveLayout(
@@ -120,9 +119,10 @@ class _AssetScreeState extends State<AssetScreen> {
               padding: const EdgeInsets.only(left: 10.0),
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(
-                  color: T(context, 'outline'),
-                )),
+                  border: Border.all(
+                    color: T(context, 'outline'),
+                  ),
+                ),
                 child: const OrderPanel(),
               ),
             ),

@@ -26,10 +26,10 @@ class CandleHoveredDetails extends StatelessWidget {
     return Row(
       mainAxisAlignment: alignment,
       children: [
-        IndicatorItem(c.open, 'Open: '),
-        IndicatorItem(c.low, 'Low: '),
-        IndicatorItem(c.high, 'High: '),
-        IndicatorItem(c.close, 'Close: '),
+        IndicatorItem(c.o, 'Open: '),
+        IndicatorItem(c.l, 'Low: '),
+        IndicatorItem(c.h, 'High: '),
+        IndicatorItem(c.c, 'Close: '),
       ],
     );
   }
