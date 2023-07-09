@@ -56,19 +56,18 @@ class _AppBarWithSearchState extends State<AppBarWithSearch> {
     );
   }
 
-  _buildTitle(context) {
-    return _isSearching ? _buildSearchField() : _buildTitleHelper(context);
+  _buildTitle(BuildContext context) {
+    return _isSearching ? _buildSearchField(context) : _buildTitleHelper(context);
   }
 
-  Widget _buildSearchField() {
+  Widget _buildSearchField(BuildContext c) {
     return TextField(
       focusNode: myFocusNode,
       controller: _searchQueryController,
       autofocus: true,
-      decoration: const InputDecoration(
-        hintText: "Search Assets...",
+      decoration: InputDecoration(
+        hintText: c.l.search_assets,
         border: InputBorder.none,
-        hintStyle: TextStyle(),
       ),
       style: const TextStyle(fontSize: 16.0),
       onChanged: (query) => updateSearchQuery(query),

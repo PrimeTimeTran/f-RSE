@@ -51,9 +51,9 @@ class ProfileScreenState extends State<ProfileScreen> {
   buildBankAccounts(BuildContext context) {
     return Column(
       children: [
-        const Text(
-          'Bank Accounts',
-          style: TextStyle(
+        Text(
+          context.l.bank_accounts,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -79,14 +79,14 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Column buildForm(context) {
+  Column buildForm(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
             Expanded(
               child: inputField(
-                'First Name',
+                context.l.first_name,
                 Icons.person,
                 'John',
                 formData.firstName,
@@ -95,7 +95,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             ),
             Expanded(
               child: inputField(
-                'Last Name',
+                context.l.last_name,
                 Icons.group,
                 'Doe',
                 formData.lastName,
@@ -105,28 +105,28 @@ class ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         inputField(
-          'Email',
+          context.l.email,
           Icons.email,
           'john@example.com',
           formData.email,
           (v) => formData.email = v,
         ),
         inputField(
-          'Phone Number',
+          context.l.phone_number,
           Icons.phone,
           '123-456-7890',
           formData.phoneNumber,
           (v) => formData.phoneNumber = v,
         ),
         inputField(
-          'Address',
+          context.l.address,
           Icons.home,
           '1234 Main St',
           formData.address,
           (v) => formData.address = v,
         ),
         inputField(
-          'City',
+          context.l.city,
           Icons.location_city,
           'New York',
           formData.city,
@@ -136,17 +136,17 @@ class ProfileScreenState extends State<ProfileScreen> {
           children: [
             Expanded(
               flex: 4,
-              child: stateTypeAhead(),
+              child: stateTypeAhead(context),
             ),
             Expanded(
               flex: 3,
-              child: inputField('Zip Code', Icons.location_pin, '12345',
+              child: inputField(context.l.zip_code, Icons.location_pin, '12345',
                   formData.zipCode, (v) => formData.zipCode = v),
             ),
           ],
         ),
         inputField(
-          'Country',
+          context.l.country,
           Icons.flag,
           'United States',
           formData.country,
@@ -163,7 +163,8 @@ class ProfileScreenState extends State<ProfileScreen> {
           onPressed: () {
             submitForm();
           },
-          child: const Text('Submit', style: TextStyle(color: Colors.white)),
+          child: Text(context.l.submit,
+              style: const TextStyle(color: Colors.white)),
         ),
       ],
     );
@@ -195,13 +196,13 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  TypeAheadField<Map<String, String>> stateTypeAhead() {
+  TypeAheadField<Map<String, String>> stateTypeAhead(BuildContext context) {
     return TypeAheadField(
-      textFieldConfiguration: const TextFieldConfiguration(
+      textFieldConfiguration: TextFieldConfiguration(
         decoration: InputDecoration(
           hintText: 'NY',
-          labelText: 'State',
-          prefixIcon: Icon(Icons.location_pin),
+          labelText: context.l.state,
+          prefixIcon: const Icon(Icons.location_pin),
         ),
       ),
       suggestionsCallback: (pattern) async {

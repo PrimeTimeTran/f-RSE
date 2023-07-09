@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rse/all.dart';
 import 'package:slider_button/slider_button.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
-
-import 'package:rse/presentation/all.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
@@ -63,11 +62,11 @@ class DrawerState extends State<MyDrawer> {
                     Column(
                       children: [
                         ListTile(
-                          title: const Text('Investing'),
+                          title: Text(context.l.home),
                           onTap: () {},
                         ),
                         ListTile(
-                          title: const Text('Watch'),
+                          title: Text(context.l.investing),
                           onTap: () {},
                         ),
                       ],
@@ -75,11 +74,11 @@ class DrawerState extends State<MyDrawer> {
                     Column(
                       children: [
                         ListTile(
-                          title: const Text('Account'),
+                          title: Text(context.l.account),
                           onTap: () {},
                         ),
                         ListTile(
-                          title: const Text('Settings'),
+                          title: Text(context.l.settings),
                           onTap: () {},
                         ),
                       ],
@@ -122,7 +121,7 @@ class DrawerState extends State<MyDrawer> {
                     ),
                     child: Center(
                       child: SliderButton(
-                        width: 85,
+                        width: 125,
                         height: 30,
                         shimmer: false,
                         buttonSize: 30,
@@ -130,9 +129,9 @@ class DrawerState extends State<MyDrawer> {
                         action: () {
                           Navigator.of(context).pop();
                         },
-                        label: const Text(
-                          "Sign out",
-                          style: TextStyle(
+                        label: Text(
+                          context.l.sign_out,
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Colors.red,
                             fontWeight: FontWeight.w500,

@@ -82,7 +82,7 @@ class WatchItemState extends State<WatchItem> {
             child: Row(
               children: [
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +109,7 @@ class WatchItemState extends State<WatchItem> {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -118,7 +118,7 @@ class WatchItemState extends State<WatchItem> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -140,7 +140,11 @@ class WatchItemState extends State<WatchItem> {
                             ),
                           ),
                         ),
-                        child: Text(formatMoney(item.price.toString())),
+                        child: Text(
+                          formatMoney(
+                            item.price.toString(),
+                          ),
+                        ),
                       ),
                     ],
                   ),

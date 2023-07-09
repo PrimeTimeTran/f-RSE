@@ -16,16 +16,16 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  allNotifications(context) {
+  allNotifications(BuildContext context) {
     return Expanded(
       flex: 2,
       child: Column(
         children: [
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Notifications",
-              style: TextStyle(
+              context.l.notifications,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -43,7 +43,7 @@ class NotificationsScreen extends StatelessWidget {
                 itemCount: 100,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text("Notifications $index"),
+                    title: Text("${context.l.notifications} $index"),
                   );
                 },
               ),
@@ -101,7 +101,6 @@ class NotificationsScreen extends StatelessWidget {
 
   buildDesktop(BuildContext context) {
     return Container(
-      // color: Colors.blue,
       alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.all(12.0),

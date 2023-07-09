@@ -7,7 +7,8 @@ import 'package:rse/all.dart';
 class InvestingSummaryScreen extends StatefulWidget {
   final String title;
 
-  const InvestingSummaryScreen({Key? key, required this.title}) : super(key: key);
+  const InvestingSummaryScreen({Key? key, required this.title})
+      : super(key: key);
 
   @override
   InvestingSummaryScreenState createState() => InvestingSummaryScreenState();
@@ -15,7 +16,6 @@ class InvestingSummaryScreen extends StatefulWidget {
 
 class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
     with SingleTickerProviderStateMixin {
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,7 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
     );
   }
 
-  SingleChildScrollView buildSingleChildScrollView() {
+  SingleChildScrollView buildSingleChildScrollView(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -43,15 +43,13 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
                 return Column(
                   children: [
                     InvestmentGroup(
-                      title: 'Stocks',
-                      num: p.stocks != null ? p.stocks!.length : 0,
-                      securities: p.stocks != null ? p.stocks! : []
-                    ),
+                        title: context.l.stocks,
+                        num: p.stocks != null ? p.stocks!.length : 0,
+                        securities: p.stocks != null ? p.stocks! : []),
                     InvestmentGroup(
-                      title: 'Cryptos',
-                      num: p.cryptos != null ? p.cryptos!.length : 0,
-                      securities: p.cryptos != null ? p.cryptos! : []
-                    ),
+                        title: context.l.crypto,
+                        num: p.cryptos != null ? p.cryptos!.length : 0,
+                        securities: p.cryptos != null ? p.cryptos! : []),
                   ],
                 );
               } else if (state is PortfolioError) {
@@ -71,7 +69,8 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
       ),
     );
   }
-  Widget _buildTabContainer(context) {
+
+  Widget _buildTabContainer(BuildContext context) {
     final color = T(context, 'primary');
     final unselectedColor = T(context, 'inversePrimary');
 
@@ -98,36 +97,20 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
               fontSize: getTextSize(),
               fontWeight: FontWeight.w600,
             ),
-            tabs: const [
-              Tab(text: 'Investing'),
-              Tab(text: 'Spending'),
-              Tab(text: 'Crypto'),
-              Tab(text: 'Transfers'),
-              // Tab(text: 'Recurring'),
-              // Tab(text: 'Stock Lending'),
-              // Tab(text: 'Margin Investing'),
-              // Tab(text: 'Reports & Statements'),
-              // Tab(text: 'Tax Center'),
-              // Tab(text: 'History'),
-              // Tab(text: 'Settings'),
-              // Tab(text: 'Help'),
+            tabs: [
+              Tab(text: context.l.investing),
+              Tab(text: context.l.spending),
+              Tab(text: context.l.crypto),
+              Tab(text: context.l.transfers),
             ],
           ),
           Expanded(
             child: TabBarView(
               children: [
-                buildSingleChildScrollView(),
-                const Text('Spending'),
-                const Text('Crypto'),
-                const Text('Transfers'),
-                // const Text('Recurring'),
-                // const Text('Stock Lending'),
-                // const Text('Margin Investing'),
-                // const Text('Reports & Statements'),
-                // const Text('Tax Center'),
-                // const Text('History'),
-                // const Text('Settings'),
-                // const Text('Help'),
+                buildSingleChildScrollView(context),
+                Text(context.l.spending),
+                Text(context.l.investing),
+                Text(context.l.transfers),
               ],
             ),
           ),
@@ -136,4 +119,3 @@ class InvestingSummaryScreenState extends State<InvestingSummaryScreen>
     );
   }
 }
-

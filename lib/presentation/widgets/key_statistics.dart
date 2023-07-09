@@ -21,9 +21,9 @@ class KeyStatistics extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Key Statistics',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Text(
+            context.l.key_statistics,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const Divider(),
           Row(
@@ -35,17 +35,17 @@ class KeyStatistics extends StatelessWidget {
     );
   }
 
-  List<Widget> buildChildren(context) {
+  List<Widget> buildChildren(BuildContext context) {
     if (isSmall) {
       return [
         Expanded(
           child: Column(
             children: [
-              buildDataPoint('Open', formatMoney(asset.meta.o)),
-              buildDataPoint('Today\'s high', formatMoney(asset.meta.hiDay)),
-              buildDataPoint('Today\'s low', formatMoney(asset.meta.loDay)),
-              buildDataPoint('52 Wk high', formatMoney(asset.meta.hiYear)),
-              buildDataPoint('52 Wk low', formatMoney(asset.meta.loYear)),
+              buildDataPoint(context.l.open, formatMoney(asset.meta.o)),
+              buildDataPoint(context.l.todays_high, formatMoney(asset.meta.hiDay)),
+              buildDataPoint(context.l.todays_low, formatMoney(asset.meta.loDay)),
+              buildDataPoint(context.l.fifty_two_week_hi, formatMoney(asset.meta.hiYear)),
+              buildDataPoint(context.l.fifty_two_week_lo, formatMoney(asset.meta.loYear)),
             ],
           ),
         ),
@@ -66,9 +66,9 @@ class KeyStatistics extends StatelessWidget {
       Expanded(
         child: Column(
           children: [
-            buildDataPoint('Market Cap', '${formatMoney(asset.meta.mc)} M'),
-            buildDataPoint('High Today', formatMoney(asset.meta.hiDay)),
-            buildDataPoint('52 Week High', formatMoney(asset.meta.hiYear)),
+            buildDataPoint(context.l.market_cap, '${formatMoney(asset.meta.mc)} M'),
+            buildDataPoint(context.l.todays_high, formatMoney(asset.meta.hiDay)),
+            buildDataPoint(context.l.fifty_two_week_hi, formatMoney(asset.meta.hiYear)),
           ],
         ),
       ),
@@ -76,8 +76,8 @@ class KeyStatistics extends StatelessWidget {
         child: Column(
           children: [
             buildDataPoint('Price-Earning Ratio', asset.meta.pe.toString()),
-            buildDataPoint('Low Today', formatMoney(asset.meta.loDay)),
-            buildDataPoint('52 Week Low', formatMoney(asset.meta.loYear)),
+            buildDataPoint(context.l.todays_low, formatMoney(asset.meta.loDay)),
+            buildDataPoint(context.l.fifty_two_week_lo, formatMoney(asset.meta.loYear)),
           ],
         ),
       ),
@@ -85,7 +85,7 @@ class KeyStatistics extends StatelessWidget {
         child: Column(
           children: [
             buildDataPoint('Dividend Yield', formatPercent(asset.meta.dy)),
-            buildDataPoint('Open Price', formatMoney(asset.meta.o)),
+            buildDataPoint(context.l.open, formatMoney(asset.meta.o)),
           ],
         ),
       ),

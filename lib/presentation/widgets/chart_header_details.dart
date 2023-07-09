@@ -21,24 +21,24 @@ class ChartHeaderDetails extends StatelessWidget {
     required this.startValue,
   });
 
-  getPrompt(p) {
+  getPrompt(p, BuildContext context) {
     switch (p) {
       case 'live':
-        return 'Past Hour';
+        return context.l.live;
       case '1d':
-        return 'Today';
+        return context.l.today;
       case '1w':
-        return 'Past Week';
+        return context.l.past_week;
       case '1m':
-        return 'Past Month';
+        return context.l.past_month;
       case '3m':
-        return '3 Months';
+        return context.l.past_three_months;
       case 'ytd':
-        return 'This Year';
+        return context.l.ytd;
       case '1y':
-        return 'Past Year';
+        return context.l.past_year;
       default:
-        return 'All Time';
+        return context.l.all_time;
     }
   }
 
@@ -55,7 +55,7 @@ class ChartHeaderDetails extends StatelessWidget {
     final portfolioBloc = BlocProvider.of<PortfolioBloc>(context);
     final assetBloc = BlocProvider.of<AssetBloc>(context);
     var prompt = isHome ? portfolioBloc.portfolio.period : assetBloc.period;
-    prompt = getPrompt(prompt);
+    prompt = getPrompt(prompt, context);
 
     final gained = getChangePercent(focusValue, startValue) >= 0;
     return Row(

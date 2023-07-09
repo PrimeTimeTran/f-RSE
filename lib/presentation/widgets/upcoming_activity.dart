@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rse/all.dart';
 
-class UpcomingActivity extends StatefulWidget {
+class UpcomingActivity extends StatelessWidget {
   const UpcomingActivity({super.key});
 
-  @override
-  State<UpcomingActivity> createState() => _UpcomingActivityState();
-}
-
-class _UpcomingActivityState extends State<UpcomingActivity> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +11,10 @@ class _UpcomingActivityState extends State<UpcomingActivity> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Upcoming Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            context.l.upcoming_activity,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           const Divider(),
           SizedBox(
             height: 100,
@@ -25,7 +24,6 @@ class _UpcomingActivityState extends State<UpcomingActivity> {
                 return ListTile(
                   title: Text('Upcoming item $index'),
                   subtitle: const Text('Tap here to go back'),
-                  // tileColor: Colors.blue[700],
                   onTap: () {
                     Navigator.pop(context);
                   },

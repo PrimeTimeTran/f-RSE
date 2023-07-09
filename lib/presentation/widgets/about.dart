@@ -18,9 +18,9 @@ class About extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'About',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                context.l.about,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const Divider(),
               Text(faker.lorem.sentences(10).join(' ')),
@@ -39,16 +39,16 @@ class About extends StatelessWidget {
     );
   }
 
-  List<Widget> buildChildren(context) {
+  List<Widget> buildChildren(BuildContext context) {
     if (isS(context)) {
       return [
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildDataPoint('CEO', asset.company.ceo, true),
+              buildDataPoint(context.l.ceo, asset.company.ceo, true),
               buildDataPoint(
-                'Employees',
+                context.l.employees,
                 asset.company.ec.toString(),
               ),
             ],
@@ -58,9 +58,9 @@ class About extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildDataPoint('Headquarters', asset.company.hq, true),
+              buildDataPoint(context.l.headquarters, asset.company.hq, true),
               buildDataPoint(
-                'Employees',
+                context.l.employees,
                 DateFormat('yyyy').format(asset.company.f),
               ),
             ],
@@ -72,19 +72,19 @@ class About extends StatelessWidget {
       Expanded(child: buildDataPoint('CEO', asset.company.ceo)),
       Expanded(
         child: buildDataPoint(
-          'Employees',
+          context.l.employees,
           asset.company.ec.toString(),
         ),
       ),
       Expanded(
         child: buildDataPoint(
-          'Headquarters',
+          context.l.headquarters,
           asset.company.hq,
         ),
       ),
       Expanded(
         child: buildDataPoint(
-          'Founded',
+          context.l.founded,
           DateFormat('yyyy').format(asset.company.f),
         ),
       ),

@@ -23,9 +23,19 @@ class YourPosition extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          buildOverview(context, 'Your market value', 'Today\'s return', 'Total return'),
+          buildOverview(
+            context,
+            context.l.your_market_value,
+            context.l.todays_return,
+            context.l.total_return,
+          ),
           const Text('   '),
-          buildOverview(context, 'Your average cost', 'Shares', 'Portfolio Diversity'),
+          buildOverview(
+            context,
+            context.l.your_average_cost,
+            context.l.shares,
+            context.l.portfolio_diversity,
+          ),
         ],
       ),
     );
@@ -48,18 +58,25 @@ class YourPosition extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(title,
-                      style: TextStyle(fontSize: getFontSize(context)))
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: getFontSize(context),
+                    ),
+                  )
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 2, bottom: 10),
                 child: Row(
                   children: [
-                    Text('\$100,000',
-                        style: TextStyle(
-                            fontSize: getFontSize(context) * 2,
-                            fontWeight: FontWeight.bold))
+                    Text(
+                      '\$100,000',
+                      style: TextStyle(
+                        fontSize: getFontSize(context) * 2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -68,11 +85,15 @@ class YourPosition extends StatelessWidget {
                 children: [
                   Text(
                     info1,
-                    style: TextStyle(fontSize: getFontSize(context)),
+                    style: TextStyle(
+                      fontSize: getFontSize(context),
+                    ),
                   ),
                   Text(
                     '\$100,000',
-                    style: TextStyle(fontSize: getFontSize(context)),
+                    style: TextStyle(
+                      fontSize: getFontSize(context),
+                    ),
                   ),
                 ],
               ),
@@ -82,11 +103,15 @@ class YourPosition extends StatelessWidget {
                 children: [
                   Text(
                     info2,
-                    style: TextStyle(fontSize: getFontSize(context)),
+                    style: TextStyle(
+                      fontSize: getFontSize(context),
+                    ),
                   ),
                   Text(
                     '\$100,000',
-                    style: TextStyle(fontSize: getFontSize(context)),
+                    style: TextStyle(
+                      fontSize: getFontSize(context),
+                    ),
                   ),
                 ],
               ),

@@ -11,7 +11,7 @@ class AssetActivityHistory extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('History', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(context.l.history, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const Divider(),
         SizedBox(
           height: 100,

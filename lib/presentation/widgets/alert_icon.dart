@@ -49,7 +49,7 @@ class _AlertIconState extends State<AlertIcon> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Price alerts for ${widget.sym}'),
-          content: const Text("We'll send an alert when you want us to.\n"),
+          content: Text(context.l.well_send_you_a_notification),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -88,13 +88,14 @@ void _showActionSheet(BuildContext context, sym) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('$sym  custom alerts.'),
-            const Text("We'll send alerts when you want us to."),
+            Text(context.l.well_send_you_a_notification),
             Row(children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Price moves above'),
-                  Text('Toggle to enter price'),
+                  Text(context.l.price_moves_above),
+                  Text(context.l.price_moves_below),
+                  Text(context.l.toggle_to_enter),
                 ],
               ),
               Toggler(
